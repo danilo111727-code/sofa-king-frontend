@@ -52,12 +52,12 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
   }, [open]);
 
   useEffect(() => {
-    if (user) {
+    if (user && open) {
       fetchAdminStatus().then((s) => setIsAdmin(s.isAdmin)).catch(() => setIsAdmin(false));
-    } else {
+    } else if (!user) {
       setIsAdmin(false);
     }
-  }, [user]);
+  }, [user, open]);
 
   return (
     <>
