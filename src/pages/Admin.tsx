@@ -231,6 +231,8 @@ interface ProdutoForm {
   images: string[];
   dimensions: string;
   prazoEntrega: string;
+  prazoEntregaDias?: number;
+  vagas?: number;
   disponibilidade: boolean;
   bestseller: boolean;
   sizes: SizeOption[];
@@ -240,7 +242,8 @@ interface ProdutoForm {
 
 const EMPTY_PRODUTO: ProdutoForm = {
   name: "", category: "", description: "", longDescription: "", images: [],
-  dimensions: "", prazoEntrega: "", disponibilidade: true, bestseller: false,
+  dimensions: "", prazoEntrega: "", prazoEntregaDias: undefined, vagas: undefined,
+  disponibilidade: true, bestseller: false,
   sizes: [], diagramaUrl: "", diagramaAnotacoes: [],
 };
 
@@ -309,6 +312,8 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       description: p.description, longDescription: p.longDescription,
       images: p.images && p.images.length ? [...p.images] : (p.image ? [p.image] : []),
       dimensions: p.dimensions, prazoEntrega: p.prazoEntrega,
+      prazoEntregaDias: (p as any).prazoEntregaDias ?? undefined,
+      vagas: (p as any).vagas ?? undefined,
       disponibilidade: p.disponibilidade,
       bestseller: Boolean((p as any).bestseller),
       sizes: p.sizes && p.sizes.length ? p.sizes : [],
@@ -327,6 +332,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     }
     setSaving(true);
     try {
+      const prazoStr = form.prazoEntregaDias
+        ? `${form.prazoEntregaDias} dias úteis`
+        : form.prazoEntrega || "";
       const payload: Omit<Product, "id"> = {
         name: form.name,
         category: form.category,
@@ -335,7 +343,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         images: form.images,
         image: form.images[0] || "/images/placeholder.png",
         dimensions: form.dimensions,
-        prazoEntrega: form.prazoEntrega || "A consultar",
+        prazoEntrega: prazoStr,
+        prazoEntregaDias: form.prazoEntregaDias,
+        vagas: form.vagas,
         disponibilidade: form.disponibilidade,
         bestseller: form.bestseller,
         sizes: form.sizes,
@@ -453,6 +463,11 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                   <span className={`text-xs px-2 py-0.5 rounded-full ${p.disponibilidade ? "bg-green-900/50 text-green-400 border border-green-800" : "bg-red-900/50 text-red-400 border border-red-800"}`}>
                     {p.disponibilidade ? "Disponível" : "Indisponível"}
                   </span>
+                  {(p as any).vagas !== undefined && (p as any).vagas !== null && (
+                    <span className={`text-xs px-2 py-0.5 rounded-full border ${(p as any).vagas > 0 ? "bg-blue-900/50 text-blue-300 border-blue-800" : "bg-orange-900/50 text-orange-300 border-orange-800"}`}>
+                      {(p as any).vagas > 0 ? `${(p as any).vagas} vaga${(p as any).vagas !== 1 ? "s" : ""}` : "Sem vagas"}
+                    </span>
+                  )}
                 </div>
                 <div className="flex items-center gap-4 mt-1 text-sm text-[#a08060] flex-wrap">
                   <span className="text-[#c9a96e] font-semibold">A partir de {brl(p.price)}</span>
@@ -724,8 +739,11 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               </Field>
 
               <div className="grid grid-cols-2 gap-4">
-                <Field label="Prazo de Entrega">
-                  <input className={inputCls} value={form.prazoEntrega} onChange={(e) => setForm({ ...form, prazoEntrega: e.target.value })} placeholder="Ex: A consultar" />
+                <Field label="Prazo de entrega (dias úteis)">
+                  <input type="number" min="0" className={inputCls} value={form.prazoEntregaDias ?? ""} onChange={(e) => setForm({ ...form, prazoEntregaDias: e.target.value ? Number(e.target.value) : undefined })} placeholder="Ex: 45" />
+                </Field>
+                <Field label="Vagas disponíveis (0 = consultar vaga)">
+                  <input type="number" min="0" className={inputCls} value={form.vagas ?? ""} onChange={(e) => setForm({ ...form, vagas: e.target.value !== "" ? Number(e.target.value) : undefined })} placeholder="Ex: 3" />
                 </Field>
                 <Field label="Disponibilidade">
                   <div className="flex items-center gap-2">
