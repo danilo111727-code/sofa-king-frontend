@@ -58,7 +58,8 @@ export default function Produto() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  const { pixDiscountPct, maxInstallments } = useSiteSettings();
+  const settings = useSiteSettings();
+  const { pixDiscountPct, maxInstallments } = settings;
   const selectedSize = product?.sizes[sizeIdx];
   const selectedAlbum = albums[albumIdx];
   const selectedFoam = foams[foamIdx];
