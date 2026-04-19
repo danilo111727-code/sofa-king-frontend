@@ -5,12 +5,29 @@ import { displayName } from "@/lib/categories";
 
 export function BestsellerStrip() {
   const [items, setItems] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProducts()
       .then((all) => setItems(all.filter((p) => p.disponibilidade && p.bestseller)))
-      .catch(() => setItems([]));
+      .catch(() => setItems([]))
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return (
+      <div className="bg-background border-t border-border/50 border-b border-border/50 py-3 sm:py-5 overflow-hidden">
+        <div className="flex items-end gap-6 sm:gap-12 whitespace-nowrap px-4">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="shrink-0 flex flex-col items-center gap-2">
+              <div className="w-[110px] h-[110px] sm:w-[150px] sm:h-[150px] bg-muted/50 animate-pulse rounded-sm" />
+              <div className="w-[80px] h-[14px] bg-muted/50 animate-pulse rounded" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   if (items.length === 0) return null;
 
