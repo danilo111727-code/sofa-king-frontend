@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { SideDrawer } from "./SideDrawer";
 import { Show, useUser, useClerk } from "@clerk/react";
-import logoImg from "@assets/sofa-king-logo.png";
+const logoImg = "/assets/sofa-king-logo.png";
 import { useCart } from "@/contexts/CartContext";
 
 function AuthButtons() {
