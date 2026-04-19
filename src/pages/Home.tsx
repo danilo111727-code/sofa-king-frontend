@@ -126,10 +126,10 @@ export default function Home() {
             <Link href="/modelos" data-testid="button-hero-cta">
               <Button
                 size="default"
-                variant="outline"
-                className="bg-background hover:bg-background/80 border-foreground/30 font-medium h-12 px-10 rounded-full text-sm tracking-widest uppercase"
+                variant="default"
+                className="bg-green-800 hover:bg-green-900 text-white border-green-800 font-medium h-12 px-10 rounded-full text-sm tracking-widest uppercase"
               >
-                Explorar catálogo <ArrowRight className="ml-2 w-4 h-4" />
+                Personalize e veja o preço agora <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
           </div>
@@ -230,7 +230,7 @@ export default function Home() {
                 className="inline-flex items-center gap-2 px-8 py-3 rounded-md bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
                 data-testid="button-view-all"
               >
-                Visualizar todos <ArrowRight className="w-4 h-4" />
+                Explorar Catálogo <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
