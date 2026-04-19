@@ -5,6 +5,8 @@ const DEFAULTS: SiteSettings = {
   heroImage: "/images/hero.png",
   pixDiscountPct: 10,
   maxInstallments: 10,
+  vagas: 8,
+  prazoEntregaDias: 30,
 };
 
 const SiteSettingsContext = createContext<SiteSettings>(DEFAULTS);
