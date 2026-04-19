@@ -141,10 +141,18 @@ export async function fetchProduct(id: string): Promise<Product> {
 }
 
 export async function fetchAdminStatus(): Promise<{ isAdmin: boolean; signedIn: boolean; email?: string }> {
-  const res = await fetch(`${BASE}/admin/me`, { headers: await adminHeaders() });
-  if (!res.ok) return { isAdmin: false, signedIn: false };
-  return res.json();
-}
+    for (let attempt = 0; attempt < 5; attempt++) {
+      if (attempt > 0) await new Promise<void>((r) => setTimeout(r, attempt * 400));
+      try {
+        const res = await fetch(`${BASE}/admin/me`, { headers: await adminHeaders() });
+        if (!res.ok) continue;
+        const result = await res.json();
+        if (result.signedIn === false && attempt < 4) continue;
+        return result;
+      } catch { /* retry */ }
+    }
+    return { isAdmin: false, signedIn: false };
+  }
 
 export async function createProduct(data: Omit<Product, "id">): Promise<Product> {
   const res = await fetch(`${BASE}/products`, {
