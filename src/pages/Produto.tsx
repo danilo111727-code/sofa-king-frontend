@@ -271,11 +271,25 @@ export default function Produto() {
                 {product.longDescription || product.description}
               </p>
 
-              {product.prazoEntrega && (
-                <p className="text-sm text-muted-foreground mb-4 flex items-center gap-1">
-                  🚚 Prazo de entrega: <strong>{product.prazoEntrega}</strong>
-                </p>
-              )}
+              {/* Vagas e prazo */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {(product as any).vagas !== undefined && (product as any).vagas !== null ? (
+                  (product as any).vagas > 0 ? (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
+                      ✅ {(product as any).vagas} {(product as any).vagas === 1 ? "vaga disponível" : "vagas disponíveis"}
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 text-orange-800 text-sm font-medium border border-orange-200">
+                      🔔 Consultar vaga
+                    </span>
+                  )
+                ) : null}
+                {product.prazoEntrega && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm border border-border">
+                    🚚 Prazo: <strong className="text-foreground">{product.prazoEntrega}</strong>
+                  </span>
+                )}
+              </div>
 
               {/* Price highlight — mostra o preço total e condições de pagamento antes das seleções */}
               {!noSizes && (
@@ -495,28 +509,39 @@ export default function Produto() {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => handleAddToCart(false)}
-                  disabled={!product.disponibilidade || noSizes}
-                  className="h-14 text-base font-semibold"
-                  data-testid="button-add-to-cart"
+              {(product as any).vagas === 0 ? (
+                <a
+                  href="https://wa.me/5575991495793"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 h-14 rounded-md bg-orange-500 hover:bg-orange-600 text-white text-base font-semibold transition-colors shadow-lg"
                 >
-                  <ShoppingCart className="w-4 h-4 mr-2" />
-                  Adicionar ao carrinho
-                </Button>
-                <Button
-                  size="lg"
-                  onClick={() => handleAddToCart(true)}
-                  disabled={!product.disponibilidade || noSizes}
-                  className="h-14 text-base font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg"
-                  data-testid="button-buy-now"
-                >
-                  {product.disponibilidade ? "Comprar agora" : "Indisponível"}
-                </Button>
-              </div>
+                  🔔 Consultar vaga pelo WhatsApp
+                </a>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => handleAddToCart(false)}
+                    disabled={!product.disponibilidade || noSizes}
+                    className="h-14 text-base font-semibold"
+                    data-testid="button-add-to-cart"
+                  >
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Adicionar ao carrinho
+                  </Button>
+                  <Button
+                    size="lg"
+                    onClick={() => handleAddToCart(true)}
+                    disabled={!product.disponibilidade || noSizes}
+                    className="h-14 text-base font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg"
+                    data-testid="button-buy-now"
+                  >
+                    {product.disponibilidade ? "Comprar agora" : "Indisponível"}
+                  </Button>
+                </div>
+              )}
               <p className="text-xs text-center text-muted-foreground mt-2">
                 O fechamento do pedido é feito pelo WhatsApp, direto do seu carrinho.
               </p>
