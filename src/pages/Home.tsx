@@ -81,19 +81,24 @@ export default function Home() {
   }, [activeCategory, onlyBestsellers]);
 
   useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash) return;
-    const id = hash.slice(1);
-    const tryScroll = (attempts = 0) => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else if (attempts < 10) {
-        setTimeout(() => tryScroll(attempts + 1), 100);
+      function scrollToHash(hash: string) {
+        if (!hash) return;
+        const id = hash.startsWith("#") ? hash.slice(1) : hash;
+        const tryScroll = (attempts = 0) => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          } else if (attempts < 10) {
+            setTimeout(() => tryScroll(attempts + 1), 100);
+          }
+        };
+        tryScroll();
       }
-    };
-    tryScroll();
-  }, []);
+      scrollToHash(window.location.hash);
+      const onHashChange = () => scrollToHash(window.location.hash);
+      window.addEventListener("hashchange", onHashChange);
+      return () => window.removeEventListener("hashchange", onHashChange);
+    }, []);
 
   const filteredProducts = useMemo(() => {
     let avail = products.filter((p) => p.disponibilidade);
