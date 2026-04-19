@@ -69,11 +69,15 @@ import { useEffect, useRef } from "react";
   }
 
   function ClerkTokenBridge() {
-    const { getToken } = useAuth();
+    const { getToken, isLoaded, isSignedIn } = useAuth();
     useEffect(() => {
+      if (!isLoaded || !isSignedIn) {
+        setAuthTokenGetter(async () => null);
+        return;
+      }
       setAuthTokenGetter(() => getToken());
       return () => setAuthTokenGetter(async () => null);
-    }, [getToken]);
+    }, [getToken, isLoaded, isSignedIn]);
     return null;
   }
 
