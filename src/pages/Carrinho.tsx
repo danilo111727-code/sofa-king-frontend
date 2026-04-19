@@ -227,12 +227,12 @@ import { Link } from "wouter";
                                   </p>
                                 )}
                               </div>
-                              <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{opt.description}</p>
                               {opt.id === "cartao" && subtotal > 0 && (
-                                <p className="text-xs text-muted-foreground mt-1">
-                                  ou {MAX_INSTALLMENTS}x de ~{brl(installment)}
+                                <p className="text-xs text-muted-foreground mt-0.5">
+                                  {MAX_INSTALLMENTS}x de ~{brl(installment)}
                                 </p>
                               )}
+                              <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{opt.description}</p>
                             </div>
                           </div>
                         </button>
