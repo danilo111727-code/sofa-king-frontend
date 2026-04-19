@@ -219,11 +219,18 @@ import { Link } from "wouter";
                           <div className="flex items-start gap-2">
                             <span className="text-lg leading-none mt-0.5">{opt.icon}</span>
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium text-sm text-foreground">{opt.label}</p>
+                              <div className="flex items-baseline justify-between gap-2">
+                                <p className="font-medium text-sm text-foreground">{opt.label}</p>
+                                {subtotal > 0 && (
+                                  <p className={`text-sm font-bold flex-shrink-0 ${opt.id === "pix" ? "text-green-700" : "text-accent"}`}>
+                                    {opt.id === "pix" ? brl(pixTotal) : brl(cardTotal)}
+                                  </p>
+                                )}
+                              </div>
                               <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{opt.description}</p>
-                              {opt.id === "cartao" && payment === "cartao" && subtotal > 0 && (
-                                <p className="text-xs text-accent font-medium mt-1">
-                                  ~{brl(installment)} / mês em {MAX_INSTALLMENTS}x
+                              {opt.id === "cartao" && subtotal > 0 && (
+                                <p className="text-xs text-muted-foreground mt-1">
+                                  ou {MAX_INSTALLMENTS}x de ~{brl(installment)}
                                 </p>
                               )}
                             </div>
