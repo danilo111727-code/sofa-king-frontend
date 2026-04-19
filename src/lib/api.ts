@@ -29,8 +29,6 @@ export interface Product {
   fabrics: string[];
   disponibilidade: boolean;
   prazoEntrega: string;
-  prazoEntregaDias?: number;
-  vagas?: number;
   sizes: SizeOption[];
   bestseller?: boolean;
   diagramaUrl?: string;
@@ -256,11 +254,13 @@ export interface SiteSettings {
   heroImage: string;
   pixDiscountPct: number;
   maxInstallments: number;
+  vagas: number;
+  prazoEntregaDias: number;
 }
 
 export async function fetchSiteSettings(): Promise<SiteSettings> {
   const res = await fetch(`${BASE}/settings`);
-  if (!res.ok) return { heroImage: "/images/hero.png", pixDiscountPct: 10, maxInstallments: 10 };
+  if (!res.ok) return { heroImage: "/images/hero.png", pixDiscountPct: 10, maxInstallments: 10, vagas: 8, prazoEntregaDias: 30 };
   return res.json();
 }
 
