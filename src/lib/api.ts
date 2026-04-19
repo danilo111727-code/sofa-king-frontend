@@ -108,7 +108,24 @@ export interface WhatsappEvent {
   ts: number;
 }
 
-const BASE = "/api";
+
+  // Auth token provider — set by ClerkTokenProvider in App.tsx
+  let _getAuthToken: (() => Promise<string | null>) | null = null;
+  export function setAuthTokenGetter(fn: () => Promise<string | null>): void {
+    _getAuthToken = fn;
+  }
+  async function adminHeaders(): Promise<Record<string, string>> {
+    const h: Record<string, string> = { "Content-Type": "application/json" };
+    if (_getAuthToken) {
+      try {
+        const t = await _getAuthToken();
+        if (t) h["Authorization"] = `Bearer ${t}`;
+      } catch { /* ignore */ }
+    }
+    return h;
+  }
+
+  const BASE = "/api";
 const jsonHeaders: HeadersInit = { "Content-Type": "application/json" };
 
 export async function fetchProducts(): Promise<Product[]> {
@@ -124,14 +141,14 @@ export async function fetchProduct(id: string): Promise<Product> {
 }
 
 export async function fetchAdminStatus(): Promise<{ isAdmin: boolean; signedIn: boolean; email?: string }> {
-  const res = await fetch(`${BASE}/admin/me`, { credentials: "include" });
+  const res = await fetch(`${BASE}/admin/me`, { headers: await adminHeaders() });
   if (!res.ok) return { isAdmin: false, signedIn: false };
   return res.json();
 }
 
 export async function createProduct(data: Omit<Product, "id">): Promise<Product> {
   const res = await fetch(`${BASE}/products`, {
-    method: "POST", headers: jsonHeaders, credentials: "include", body: JSON.stringify(data),
+    method: "POST", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Erro ao criar produto");
   return res.json();
@@ -139,14 +156,14 @@ export async function createProduct(data: Omit<Product, "id">): Promise<Product>
 
 export async function updateProduct(id: string, data: Partial<Omit<Product, "id">>): Promise<Product> {
   const res = await fetch(`${BASE}/products/${id}`, {
-    method: "PUT", headers: jsonHeaders, credentials: "include", body: JSON.stringify(data),
+    method: "PUT", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Erro ao atualizar produto");
   return res.json();
 }
 
 export async function deleteProduct(id: string): Promise<void> {
-  const res = await fetch(`${BASE}/products/${id}`, { method: "DELETE", credentials: "include" });
+  const res = await fetch(`${BASE}/products/${id}`, { method: "DELETE", headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao excluir produto");
 }
 
@@ -167,14 +184,14 @@ export async function fetchMaterials(): Promise<Material[]> {
 }
 
 export async function fetchAdminMaterials(): Promise<Material[]> {
-  const res = await fetch(`${BASE}/admin/materials`, { credentials: "include" });
+  const res = await fetch(`${BASE}/admin/materials`, { headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao carregar materiais");
   return res.json();
 }
 
 export async function createMaterial(data: Omit<Material, "id">): Promise<Material> {
   const res = await fetch(`${BASE}/admin/materials`, {
-    method: "POST", headers: jsonHeaders, credentials: "include", body: JSON.stringify(data),
+    method: "POST", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Erro ao criar material");
   return res.json();
@@ -182,14 +199,14 @@ export async function createMaterial(data: Omit<Material, "id">): Promise<Materi
 
 export async function updateMaterial(id: string, data: Partial<Omit<Material, "id">>): Promise<Material> {
   const res = await fetch(`${BASE}/admin/materials/${id}`, {
-    method: "PUT", headers: jsonHeaders, credentials: "include", body: JSON.stringify(data),
+    method: "PUT", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Erro ao atualizar material");
   return res.json();
 }
 
 export async function deleteMaterial(id: string): Promise<void> {
-  const res = await fetch(`${BASE}/admin/materials/${id}`, { method: "DELETE", credentials: "include" });
+  const res = await fetch(`${BASE}/admin/materials/${id}`, { method: "DELETE", headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao excluir material");
 }
 
@@ -200,51 +217,51 @@ export async function fetchAlbums(): Promise<Album[]> {
   return res.json();
 }
 export async function fetchAdminAlbums(): Promise<Album[]> {
-  const res = await fetch(`${BASE}/admin/albums`, { credentials: "include" });
+  const res = await fetch(`${BASE}/admin/albums`, { headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao carregar álbuns");
   return res.json();
 }
 export async function createAlbum(data: Omit<Album, "id">): Promise<Album> {
   const res = await fetch(`${BASE}/admin/albums`, {
-    method: "POST", headers: jsonHeaders, credentials: "include", body: JSON.stringify(data),
+    method: "POST", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Erro ao criar álbum");
   return res.json();
 }
 export async function updateAlbum(id: string, data: Partial<Omit<Album, "id">>): Promise<Album> {
   const res = await fetch(`${BASE}/admin/albums/${id}`, {
-    method: "PUT", headers: jsonHeaders, credentials: "include", body: JSON.stringify(data),
+    method: "PUT", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Erro ao atualizar álbum");
   return res.json();
 }
 export async function deleteAlbum(id: string): Promise<void> {
-  const res = await fetch(`${BASE}/admin/albums/${id}`, { method: "DELETE", credentials: "include" });
+  const res = await fetch(`${BASE}/admin/albums/${id}`, { method: "DELETE", headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao excluir álbum");
 }
 
 // --- Stats / WhatsApp / Clients ---
 export async function fetchStats(): Promise<Stats> {
-  const res = await fetch(`${BASE}/admin/stats`, { credentials: "include" });
+  const res = await fetch(`${BASE}/admin/stats`, { headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao carregar estatísticas");
   return res.json();
 }
 
 export async function fetchWhatsappEvents(): Promise<WhatsappEvent[]> {
-  const res = await fetch(`${BASE}/admin/whatsapp-events`, { credentials: "include" });
+  const res = await fetch(`${BASE}/admin/whatsapp-events`, { headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao carregar eventos");
   return res.json();
 }
 
 export async function fetchClients(): Promise<{ totalCount: number; users: Client[] }> {
-  const res = await fetch(`${BASE}/admin/clients`, { credentials: "include" });
+  const res = await fetch(`${BASE}/admin/clients`, { headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao carregar clientes");
   return res.json();
 }
 
 // --- Known sizes (union across all products) ---
 export async function fetchKnownSizes(): Promise<string[]> {
-  const res = await fetch(`${BASE}/admin/known-sizes`, { credentials: "include" });
+  const res = await fetch(`${BASE}/admin/known-sizes`, { headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao carregar metragens");
   return res.json();
 }
@@ -266,7 +283,7 @@ export async function fetchSiteSettings(): Promise<SiteSettings> {
 
 export async function updateSiteSettings(data: Partial<SiteSettings>): Promise<SiteSettings> {
   const res = await fetch(`${BASE}/admin/settings`, {
-    method: "PUT", headers: jsonHeaders, credentials: "include", body: JSON.stringify(data),
+    method: "PUT", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Erro ao salvar configurações");
   return res.json();
@@ -276,7 +293,7 @@ export async function updateSiteSettings(data: Partial<SiteSettings>): Promise<S
 export async function uploadImage(file: File): Promise<{ url: string; objectPath: string }> {
   const fd = new FormData();
   fd.append("file", file);
-  const res = await fetch(`${BASE}/admin/upload-image`, { method: "POST", credentials: "include", body: fd });
+  const res = await fetch(`${BASE}/admin/upload-image`, { method: "POST", headers: await (async () => { const h = await adminHeaders(); delete h["Content-Type"]; return h; })(), body: fd });
   if (!res.ok) throw new Error("Erro no upload da imagem");
   return res.json();
 }
