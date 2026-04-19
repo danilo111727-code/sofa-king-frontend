@@ -271,22 +271,20 @@ export default function Produto() {
                 {product.longDescription || product.description}
               </p>
 
-              {/* Vagas e prazo */}
+              {/* Vagas e prazo — configuração global do site */}
               <div className="flex flex-wrap gap-2 mb-4">
-                {(product as any).vagas !== undefined && (product as any).vagas !== null ? (
-                  (product as any).vagas > 0 ? (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
-                      ✅ {(product as any).vagas} {(product as any).vagas === 1 ? "vaga disponível" : "vagas disponíveis"}
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 text-orange-800 text-sm font-medium border border-orange-200">
-                      🔔 Consultar vaga
-                    </span>
-                  )
-                ) : null}
-                {product.prazoEntrega && (
+                {settings.vagas > 0 ? (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
+                    ✅ {settings.vagas} {settings.vagas === 1 ? "vaga disponível" : "vagas disponíveis"}
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 text-orange-800 text-sm font-medium border border-orange-200">
+                    🔔 Consultar vaga
+                  </span>
+                )}
+                {settings.prazoEntregaDias > 0 && (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm border border-border">
-                    🚚 Prazo: <strong className="text-foreground">{product.prazoEntrega}</strong>
+                    🚚 Prazo: <strong className="text-foreground">{settings.prazoEntregaDias} dias úteis</strong>
                   </span>
                 )}
               </div>
@@ -509,7 +507,7 @@ export default function Produto() {
                 </div>
               )}
 
-              {(product as any).vagas === 0 ? (
+              {settings.vagas === 0 ? (
                 <a
                   href="https://wa.me/5575991495793"
                   target="_blank"
