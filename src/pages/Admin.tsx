@@ -231,8 +231,6 @@ interface ProdutoForm {
   images: string[];
   dimensions: string;
   prazoEntrega: string;
-  prazoEntregaDias?: number;
-  vagas?: number;
   disponibilidade: boolean;
   bestseller: boolean;
   sizes: SizeOption[];
@@ -242,7 +240,7 @@ interface ProdutoForm {
 
 const EMPTY_PRODUTO: ProdutoForm = {
   name: "", category: "", description: "", longDescription: "", images: [],
-  dimensions: "", prazoEntrega: "", prazoEntregaDias: undefined, vagas: undefined,
+  dimensions: "", prazoEntrega: "",
   disponibilidade: true, bestseller: false,
   sizes: [], diagramaUrl: "", diagramaAnotacoes: [],
 };
@@ -312,8 +310,6 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       description: p.description, longDescription: p.longDescription,
       images: p.images && p.images.length ? [...p.images] : (p.image ? [p.image] : []),
       dimensions: p.dimensions, prazoEntrega: p.prazoEntrega,
-      prazoEntregaDias: (p as any).prazoEntregaDias ?? undefined,
-      vagas: (p as any).vagas ?? undefined,
       disponibilidade: p.disponibilidade,
       bestseller: Boolean((p as any).bestseller),
       sizes: p.sizes && p.sizes.length ? p.sizes : [],
@@ -332,9 +328,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     }
     setSaving(true);
     try {
-      const prazoStr = form.prazoEntregaDias
-        ? `${form.prazoEntregaDias} dias úteis`
-        : form.prazoEntrega || "";
+      const prazoStr = form.prazoEntrega || "";
       const payload: Omit<Product, "id"> = {
         name: form.name,
         category: form.category,
@@ -344,8 +338,6 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         image: form.images[0] || "/images/placeholder.png",
         dimensions: form.dimensions,
         prazoEntrega: prazoStr,
-        prazoEntregaDias: form.prazoEntregaDias,
-        vagas: form.vagas,
         disponibilidade: form.disponibilidade,
         bestseller: form.bestseller,
         sizes: form.sizes,
@@ -463,11 +455,6 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                   <span className={`text-xs px-2 py-0.5 rounded-full ${p.disponibilidade ? "bg-green-900/50 text-green-400 border border-green-800" : "bg-red-900/50 text-red-400 border border-red-800"}`}>
                     {p.disponibilidade ? "Disponível" : "Indisponível"}
                   </span>
-                  {(p as any).vagas !== undefined && (p as any).vagas !== null && (
-                    <span className={`text-xs px-2 py-0.5 rounded-full border ${(p as any).vagas > 0 ? "bg-blue-900/50 text-blue-300 border-blue-800" : "bg-orange-900/50 text-orange-300 border-orange-800"}`}>
-                      {(p as any).vagas > 0 ? `${(p as any).vagas} vaga${(p as any).vagas !== 1 ? "s" : ""}` : "Sem vagas"}
-                    </span>
-                  )}
                 </div>
                 <div className="flex items-center gap-4 mt-1 text-sm text-[#a08060] flex-wrap">
                   <span className="text-[#c9a96e] font-semibold">A partir de {brl(p.price)}</span>
@@ -739,12 +726,6 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               </Field>
 
               <div className="grid grid-cols-2 gap-4">
-                <Field label="Prazo de entrega (dias úteis)">
-                  <input type="number" min="0" className={inputCls} value={form.prazoEntregaDias ?? ""} onChange={(e) => setForm({ ...form, prazoEntregaDias: e.target.value ? Number(e.target.value) : undefined })} placeholder="Ex: 45" />
-                </Field>
-                <Field label="Vagas disponíveis (0 = consultar vaga)">
-                  <input type="number" min="0" className={inputCls} value={form.vagas ?? ""} onChange={(e) => setForm({ ...form, vagas: e.target.value !== "" ? Number(e.target.value) : undefined })} placeholder="Ex: 3" />
-                </Field>
                 <Field label="Disponibilidade">
                   <div className="flex items-center gap-2">
                     <button type="button" onClick={() => setForm({ ...form, disponibilidade: true })} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${form.disponibilidade ? "bg-green-900/50 border-green-700 text-green-400" : "bg-[#120d06] border-[#2d1f10] text-[#5a4030]"}`}>✓ Sim</button>
@@ -1341,6 +1322,8 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
   const [heroImage, setHeroImage] = useState("/images/hero.png");
   const [pixDiscountPct, setPixDiscountPct] = useState(10);
   const [maxInstallments, setMaxInstallments] = useState(10);
+  const [vagas, setVagas] = useState(8);
+  const [prazoEntregaDias, setPrazoEntregaDias] = useState(30);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -1352,6 +1335,8 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
         setHeroImage(s.heroImage);
         setPixDiscountPct(s.pixDiscountPct ?? 10);
         setMaxInstallments(s.maxInstallments ?? 10);
+        setVagas(s.vagas ?? 8);
+        setPrazoEntregaDias(s.prazoEntregaDias ?? 30);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -1375,7 +1360,7 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
   async function handleSave() {
     setSaving(true);
     try {
-      await updateSiteSettings({ heroImage, pixDiscountPct, maxInstallments });
+      await updateSiteSettings({ heroImage, pixDiscountPct, maxInstallments, vagas, prazoEntregaDias });
       flash("ok", "Configurações salvas com sucesso!");
     } catch (err: any) {
       flash("err", err.message ?? "Erro ao salvar");
@@ -1399,6 +1384,62 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
       <div className="mb-6">
         <h1 className="text-xl font-semibold">Configurações do Site</h1>
         <p className="text-[#a08060] text-sm mt-0.5">Personalize a aparência e preços do site</p>
+      </div>
+
+
+      {/* Vagas e Prazo */}
+      <div className={`${cardCls} mb-6`}>
+        <h2 className="font-semibold text-white mb-1">Vagas e Prazo de Entrega</h2>
+        <p className="text-[#a08060] text-sm mb-4">
+          Controle global do ateliê. Com <strong className="text-white">vagas = 0</strong>, todos os produtos mostram "Consultar vaga" no lugar dos botões de compra.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label className="block text-sm font-medium text-[#c8a87a] mb-1">
+              Vagas disponíveis no ateliê
+            </label>
+            <input
+              type="number"
+              min={0}
+              step={1}
+              value={vagas}
+              onChange={(e) => setVagas(Math.max(0, Math.round(Number(e.target.value))))}
+              className="w-full rounded-md bg-[#1e1208] border border-[#3d2e1e] text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#c8a87a]"
+            />
+            <p className="text-xs text-[#7a6040] mt-1">0 = sem vagas, mostra &quot;Consultar vaga&quot; em todos os produtos.</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-[#c8a87a] mb-1">
+              Prazo de entrega (dias úteis)
+            </label>
+            <input
+              type="number"
+              min={1}
+              step={1}
+              value={prazoEntregaDias}
+              onChange={(e) => setPrazoEntregaDias(Math.max(1, Math.round(Number(e.target.value))))}
+              className="w-full rounded-md bg-[#1e1208] border border-[#3d2e1e] text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#c8a87a]"
+            />
+            <p className="text-xs text-[#7a6040] mt-1">Ex: 30 = &quot;Prazo: 30 dias úteis&quot; exibido em todos os produtos.</p>
+          </div>
+        </div>
+        <div className="mt-4 rounded-lg bg-[#1a1005] border border-[#3d2e1e] p-4">
+          <p className="text-xs text-[#7a6040] uppercase tracking-wider mb-2">Preview nos produtos</p>
+          <div className="flex flex-wrap gap-2">
+            {vagas > 0 ? (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
+                ✅ {vagas} {vagas === 1 ? "vaga disponível" : "vagas disponíveis"}
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 text-orange-800 text-sm font-medium border border-orange-200">
+                🔔 Consultar vaga
+              </span>
+            )}
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm border border-border">
+              🚚 Prazo: <strong className="ml-1 text-foreground">{prazoEntregaDias} dias úteis</strong>
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Precificação */}
