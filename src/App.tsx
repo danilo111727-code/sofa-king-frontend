@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
   import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
   import { QueryClient, QueryClientProvider, useQueryClient } from "@tanstack/react-query";
-  import { ClerkProvider, SignIn, SignUp, useClerk, useAuth } from "@clerk/react";
+  import { ClerkProvider, SignIn, SignUp, useClerk, useSession } from "@clerk/react";
   import { Toaster } from "@/components/ui/toaster";
   import { TooltipProvider } from "@/components/ui/tooltip";
   import NotFound from "@/pages/not-found";
@@ -69,15 +69,15 @@ import { useEffect, useRef } from "react";
   }
 
   function ClerkTokenBridge() {
-    const { getToken, isLoaded, isSignedIn } = useAuth();
+    const { session } = useSession();
     useEffect(() => {
-      if (!isLoaded || !isSignedIn) {
+      if (!session) {
         setAuthTokenGetter(async () => null);
         return;
       }
-      setAuthTokenGetter(() => getToken());
+      setAuthTokenGetter(() => session.getToken());
       return () => setAuthTokenGetter(async () => null);
-    }, [getToken, isLoaded, isSignedIn]);
+    }, [session]);
     return null;
   }
 
