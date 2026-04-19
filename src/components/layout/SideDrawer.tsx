@@ -15,7 +15,7 @@ const menu: MenuItem[] = [
     label: "SOFÁS",
     children: [
       { label: "Sofá Retrátil", href: "/modelos?categoria=retratil" },
-      { label: "Sofá-cama", href: "/modelos?categoria=cama" },
+      { label: "Sofá-cama", href: "/modelos?categoria=sofa-cama" },
       { label: "Sofá de Canto", href: "/modelos?categoria=canto" },
       { label: "Sofá Orgânico", href: "/modelos?categoria=organicos" },
       { label: "Sofá Living", href: "/modelos?categoria=living" },
@@ -25,8 +25,22 @@ const menu: MenuItem[] = [
       { label: "Módulos", href: "/modelos?categoria=modulos" },
     ],
   },
-  { label: "POLTRONAS E PUFFS", href: "/modelos" },
-  { label: "CAMA", href: "/modelos?categoria=cama" },
+  {
+      label: "POLTRONAS E PUFFS",
+      children: [
+        { label: "Poltronas", href: "/modelos?categoria=poltronas" },
+        { label: "Puffs", href: "/modelos?categoria=puffs" },
+        { label: "Almofadas", href: "/modelos?categoria=almofadas" },
+      ],
+    },
+  {
+      label: "CAMA",
+      children: [
+        { label: "Cama", href: "/modelos?categoria=cama" },
+        { label: "Cabeceira", href: "/modelos?categoria=cabeceira" },
+        { label: "Box", href: "/modelos?categoria=box" },
+      ],
+    },
   { label: "PRAZO DE ENTREGA", href: "/#prazo-entrega" },
   { label: "GARANTIA", href: "/#garantia" },
   { label: "FORMA DE PAGAMENTO", href: "/#pagamento" },
