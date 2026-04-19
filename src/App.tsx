@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider, useQueryClient } from "@tanstack/react-query";
-import { ClerkProvider, SignIn, SignUp, useClerk } from "@clerk/react";
+import { ClerkProvider, SignIn, SignUp, useClerk, useAuth } from "@clerk/react";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
@@ -15,6 +15,7 @@ import Favoritos from "@/pages/Favoritos";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CartProvider } from "@/contexts/CartContext";
 import { SiteSettingsProvider } from "@/contexts/SiteSettingsContext";
+import { setAuthTokenGetter } from "@/lib/api";
 
 const queryClient = new QueryClient();
 
@@ -71,7 +72,17 @@ function ClerkQueryClientCacheInvalidator() {
   return null;
 }
 
-function Router() {
+
+  function ClerkTokenBridge() {
+    const { getToken } = useAuth();
+    useEffect(() => {
+      setAuthTokenGetter(getToken);
+      return () => setAuthTokenGetter(async () => null);
+    }, [getToken]);
+    return null;
+  }
+
+  function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
@@ -106,6 +117,7 @@ function ClerkProviderWithRoutes() {
     >
       <QueryClientProvider client={queryClient}>
         <ClerkQueryClientCacheInvalidator />
+        <ClerkTokenBridge />
         <SiteSettingsProvider>
           <CartProvider>
             <TooltipProvider>
