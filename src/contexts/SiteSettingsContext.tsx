@@ -3,6 +3,7 @@ import { fetchSiteSettings, type SiteSettings } from "@/lib/api";
 
 const DEFAULTS: SiteSettings = {
   heroImage: "/images/hero.png",
+  heroImages: [],
   pixDiscountPct: 10,
   maxInstallments: 10,
   vagas: 8,
