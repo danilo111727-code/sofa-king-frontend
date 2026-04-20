@@ -1320,6 +1320,7 @@ function WhatsappTab() {
 
 function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
   const [heroImage, setHeroImage] = useState("/images/hero.png");
+  const [heroImages, setHeroImages] = useState<string[]>([]);
   const [pixDiscountPct, setPixDiscountPct] = useState(10);
   const [maxInstallments, setMaxInstallments] = useState(10);
   const [vagas, setVagas] = useState(8);
@@ -1337,6 +1338,8 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
         setMaxInstallments(s.maxInstallments ?? 10);
         setVagas(s.vagas ?? 8);
         setPrazoEntregaDias(s.prazoEntregaDias ?? 30);
+        const imgs = (s as any).heroImages as string[] | undefined;
+        setHeroImages(Array.isArray(imgs) && imgs.length > 0 ? imgs : (s.heroImage ? [s.heroImage] : []));
       })
       .catch(() => {})
       .finally(() => setLoading(false));
