@@ -299,10 +299,7 @@ export default function Home() {
             </div>
 
             <div className="mt-20 max-w-3xl mx-auto text-center">
-              <p className="font-serif text-2xl md:text-3xl italic text-foreground/90 leading-relaxed">
-                "Não fazemos sofás em série.<br className="hidden md:block" /> Fazemos o seu sofá."
-              </p>
-              <p className="mt-6 text-xs tracking-[0.3em] uppercase text-muted-foreground">— Sofá King · Estofados planejados</p>
+              <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground">— Sofá King · Estofados planejados</p>
             </div>
           </div>
         </section>
