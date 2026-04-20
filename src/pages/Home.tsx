@@ -114,7 +114,11 @@ export default function Home() {
       .catch(() => {})
       .finally(() => setLoading(false));
     fetchSiteSettings()
-      .then((s) => setHeroImage(s.heroImage))
+      .then((s) => {
+        const imgs = (s as any).heroImages as string[] | undefined;
+        if (Array.isArray(imgs) && imgs.length > 0) setHeroImages(imgs);
+        else if (s.heroImage) setHeroImages([s.heroImage]);
+      })
       .catch(() => {});
   }, []);
 
@@ -133,14 +137,48 @@ export default function Home() {
       <main className="flex-grow pb-20 sm:pb-8">
         {/* Hero Section */}
           <section className="bg-secondary/30">
-            <div className="w-full aspect-[16/10] sm:aspect-[21/9] overflow-hidden bg-secondary/50">
-              <img
-                src={heroImage}
-                alt="Sofá minimalista moderno em sala clara e arejada"
-                className="w-full h-full object-cover object-center"
-                data-testid="img-hero"
-              />
-            </div>
+            <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] overflow-hidden bg-secondary/50 group">
+                {heroImages.map((src, i) => (
+                  <img
+                    key={`${src}-${i}`}
+                    src={src}
+                    alt={`Sofá Sofa King — ${i + 1}`}
+                    className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700 ease-in-out ${i === heroIdx ? "opacity-100" : "opacity-0"}`}
+                    data-testid={i === heroIdx ? "img-hero" : undefined}
+                  />
+                ))}
+                {heroImages.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      aria-label="Imagem anterior"
+                      onClick={() => setHeroIdx((p) => (p - 1 + heroImages.length) % heroImages.length)}
+                      className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/70 hover:bg-white text-foreground rounded-full backdrop-blur shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Próxima imagem"
+                      onClick={() => setHeroIdx((p) => (p + 1) % heroImages.length)}
+                      className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white/70 hover:bg-white text-foreground rounded-full backdrop-blur shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                    <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+                      {heroImages.map((_, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          aria-label={`Ir para imagem ${i + 1}`}
+                          onClick={() => setHeroIdx(i)}
+                          className={`h-1.5 rounded-full transition-all ${i === heroIdx ? "bg-white w-6" : "bg-white/60 w-1.5 hover:bg-white/90"}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
 
             <BestsellerStrip />
 
