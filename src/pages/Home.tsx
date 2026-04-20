@@ -140,7 +140,7 @@ export default function Home() {
                 <Button
                   size="default"
                   variant="default"
-                  className="bg-green-800 hover:bg-green-900 text-white border-green-800 font-medium h-12 px-10 rounded-full text-sm tracking-widest uppercase"
+                  className="bg-black hover:bg-neutral-800 text-white border-black font-medium h-12 px-10 rounded-full text-sm tracking-widest uppercase"
                 >
                   Personalize e veja o preço agora <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
