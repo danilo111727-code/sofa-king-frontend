@@ -77,54 +77,54 @@
   --elevate-2: rgba(0,0,0, .08);
 
   /* Backgrounds & Foregrounds */
-  --background: 42 33% 97%; /* Soft warm off-white #F8F6F2 */
-  --foreground: 30 10% 20%; /* Dark taupe/charcoal */
+  --background: 38 33% 93%; /* Areia warm #F4EFE6 */
+  --foreground: 33 22% 10%; /* Carvão #1F1A14 */
   
-  --border: 30 15% 90%; /* Soft beige border */
+  --border: 38 25% 82%; /* Bege border */
   
-  --card: 40 20% 99%; /* Pureish warm white */
-  --card-foreground: 30 10% 20%;
-  --card-border: 30 15% 90%;
+  --card: 38 30% 96%; /* Warm white card */
+  --card-foreground: 33 22% 10%;
+  --card-border: 38 25% 82%;
 
   /* Brand Colors */
-  --primary: 144 16% 25%; /* Deep forest green */
-  --primary-foreground: 42 33% 97%; /* Light text */
+  --primary: 129 15% 28%; /* Verde musgo #3D5240 */
+  --primary-foreground: 38 33% 95%; /* Areia clara */
 
-  --secondary: 39 24% 86%; /* Warm taupe/sand */
-  --secondary-foreground: 30 10% 20%;
+  --secondary: 39 38% 84%; /* Bege quente #E5DCC9 */
+  --secondary-foreground: 33 22% 10%;
 
-  --muted: 39 20% 93%;
-  --muted-foreground: 30 5% 45%;
+  --muted: 38 28% 90%;
+  --muted-foreground: 33 12% 38%;
 
-  --accent: 18 45% 52%; /* Terracotta / Burnt Orange */
+  --accent: 38 39% 54%; /* Dourado fosco #B8965A */
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 70% 50%;
   --destructive-foreground: 0 0% 100%;
 
-  --input: 30 15% 85%;
-  --ring: 144 16% 25%;
+  --input: 38 25% 82%;
+  --ring: 129 15% 28%;
 
   /* Sidebars / Modals */
-  --sidebar: 42 33% 97%;
-  --sidebar-foreground: 30 10% 20%;
-  --sidebar-border: 30 15% 90%;
-  --sidebar-primary: 144 16% 25%;
-  --sidebar-primary-foreground: 42 33% 97%;
-  --sidebar-accent: 39 24% 86%;
-  --sidebar-accent-foreground: 30 10% 20%;
-  --sidebar-ring: 144 16% 25%;
+  --sidebar: 38 33% 93%;
+  --sidebar-foreground: 33 22% 10%;
+  --sidebar-border: 38 25% 82%;
+  --sidebar-primary: 129 15% 28%;
+  --sidebar-primary-foreground: 38 33% 95%;
+  --sidebar-accent: 39 38% 84%;
+  --sidebar-accent-foreground: 33 22% 10%;
+  --sidebar-ring: 129 15% 28%;
 
-  --popover: 40 20% 99%;
-  --popover-foreground: 30 10% 20%;
-  --popover-border: 30 15% 90%;
+  --popover: 38 30% 96%;
+  --popover-foreground: 33 22% 10%;
+  --popover-border: 38 25% 82%;
 
   /* Charts */
-  --chart-1: 144 16% 25%;
-  --chart-2: 39 24% 75%;
-  --chart-3: 18 45% 52%;
-  --chart-4: 25 30% 65%;
-  --chart-5: 42 33% 85%;
+  --chart-1: 129 15% 28%;
+  --chart-2: 39 38% 75%;
+  --chart-3: 38 39% 54%;
+  --chart-4: 33 25% 50%;
+  --chart-5: 38 33% 88%;
 
   /* Typography */
   --app-font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
