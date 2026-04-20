@@ -277,6 +277,7 @@ export async function fetchKnownSizes(): Promise<string[]> {
 // --- Site settings ---
 export interface SiteSettings {
   heroImage: string;
+  heroImages?: string[];
   pixDiscountPct: number;
   maxInstallments: number;
   vagas: number;
@@ -285,7 +286,7 @@ export interface SiteSettings {
 
 export async function fetchSiteSettings(): Promise<SiteSettings> {
   const res = await fetch(`${BASE}/settings`);
-  if (!res.ok) return { heroImage: "/images/hero.png", pixDiscountPct: 10, maxInstallments: 10, vagas: 8, prazoEntregaDias: 30 };
+  if (!res.ok) return { heroImage: "/images/hero.png", heroImages: [], pixDiscountPct: 10, maxInstallments: 10, vagas: 8, prazoEntregaDias: 30 };
   return res.json();
 }
 
