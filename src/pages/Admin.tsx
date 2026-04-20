@@ -1507,44 +1507,90 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
       </div>
 
       {/* Hero */}
-      <div className={cardCls}>
-        <h2 className="font-semibold text-white mb-1">Foto de Capa (Hero)</h2>
-        <p className="text-[#a08060] text-sm mb-4">Imagem exibida em destaque na página inicial.</p>
-
-        <div className="space-y-4">
-          <div className="w-full aspect-[21/9] max-h-72 overflow-hidden rounded-xl bg-[#261a0e] border border-[#3d2e1e]">
-            <img
-              src={heroImage}
-              alt="Capa atual do home"
-              className="w-full h-full object-cover object-center"
-              onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.2"; }}
-            />
-          </div>
-
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => handleUpload(e.target.files)}
-          />
-
-          <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              disabled={uploading}
-              onClick={() => fileRef.current?.click()}
-              className={`${ghostBtn} disabled:opacity-50`}
-            >
-              {uploading ? "Enviando..." : "📷 Trocar imagem"}
-            </button>
-          </div>
-
-          <p className="text-xs text-[#7a6040]">
-            Proporção ideal: <strong className="text-[#a08060]">21:9</strong> (panorâmica). Formatos aceitos: JPG, PNG, WebP.
+        <div className={cardCls}>
+          <h2 className="font-semibold text-white mb-1">Galeria de Capa (Hero)</h2>
+          <p className="text-[#a08060] text-sm mb-4">
+            Adicione uma ou várias imagens. Elas serão exibidas em destaque na página inicial em formato carrossel. As imagens são redimensionadas automaticamente para otimização.
           </p>
+
+          <div className="space-y-4">
+            {heroImages.length === 0 ? (
+              <div className="w-full aspect-[21/9] max-h-72 overflow-hidden rounded-xl bg-[#261a0e] border border-dashed border-[#3d2e1e] flex items-center justify-center">
+                <span className="text-[#5a4030] text-sm">Nenhuma imagem cadastrada</span>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {heroImages.map((img, i) => (
+                  <div key={`${img}-${i}`} className="relative group rounded-xl overflow-hidden bg-[#261a0e] border border-[#3d2e1e]">
+                    <div className="aspect-[21/9] w-full overflow-hidden">
+                      <img
+                        src={img}
+                        alt={`Capa ${i + 1}`}
+                        className="w-full h-full object-cover object-center"
+                        onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.2"; }}
+                      />
+                    </div>
+                    <div className="absolute top-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded-md backdrop-blur">
+                      {i === 0 ? "Capa principal" : `#${i + 1}`}
+                    </div>
+                    <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        type="button"
+                        onClick={() => moveHeroImage(i, -1)}
+                        disabled={i === 0}
+                        title="Mover para o início"
+                        className="w-7 h-7 flex items-center justify-center bg-black/70 hover:bg-black text-white rounded-md text-xs disabled:opacity-30"
+                      >
+                        ↑
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => moveHeroImage(i, 1)}
+                        disabled={i === heroImages.length - 1}
+                        title="Mover para o final"
+                        className="w-7 h-7 flex items-center justify-center bg-black/70 hover:bg-black text-white rounded-md text-xs disabled:opacity-30"
+                      >
+                        ↓
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeHeroImage(i)}
+                        title="Remover"
+                        className="w-7 h-7 flex items-center justify-center bg-red-900/80 hover:bg-red-800 text-white rounded-md text-xs"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={(e) => handleUpload(e.target.files)}
+            />
+
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                disabled={uploading}
+                onClick={() => fileRef.current?.click()}
+                className={`${ghostBtn} disabled:opacity-50`}
+              >
+                {uploading ? "Enviando..." : "📷 Adicionar imagens"}
+              </button>
+            </div>
+
+            <p className="text-xs text-[#7a6040]">
+              Proporção ideal: <strong className="text-[#a08060]">21:9</strong> (panorâmica). Formatos aceitos: JPG, PNG, WebP. As imagens são redimensionadas para no máximo 1920px e otimizadas no upload.
+            </p>
+          </div>
         </div>
-      </div>
 
       <div className="mt-6 flex justify-end">
         <button
