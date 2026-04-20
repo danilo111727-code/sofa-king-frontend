@@ -123,37 +123,30 @@ export default function Home() {
 
       <main className="flex-grow pb-20 sm:pb-8">
         {/* Hero Section */}
-        <section className="bg-secondary/30">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-14 pb-6 sm:pb-10">
-            <h1 className="text-3xl sm:text-5xl md:text-7xl font-serif font-bold tracking-tight leading-[1.1] text-foreground" data-testid="text-hero-title">
-              Não fazemos em série.{" "}
-              <em className="italic font-normal">Fazemos o seu sofá.</em>
-            </h1>
-          </div>
+          <section className="bg-secondary/30">
+            <div className="w-full aspect-[16/10] sm:aspect-[21/9] overflow-hidden bg-secondary/50">
+              <img
+                src={heroImage}
+                alt="Sofá minimalista moderno em sala clara e arejada"
+                className="w-full h-full object-cover object-center"
+                data-testid="img-hero"
+              />
+            </div>
 
-          <BestsellerStrip />
+            <BestsellerStrip />
 
-          <div className="w-full aspect-[16/10] sm:aspect-[21/9] overflow-hidden bg-secondary/50">
-            <img
-              src={heroImage}
-              alt="Sofá minimalista moderno em sala clara e arejada"
-              className="w-full h-full object-cover object-center"
-              data-testid="img-hero"
-            />
-          </div>
-
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 flex justify-center sm:justify-start">
-            <Link href="/modelos" data-testid="button-hero-cta">
-              <Button
-                size="default"
-                variant="default"
-                className="bg-green-800 hover:bg-green-900 text-white border-green-800 font-medium h-12 px-10 rounded-full text-sm tracking-widest uppercase"
-              >
-                Personalize e veja o preço agora <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
-          </div>
-        </section>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 flex justify-center sm:justify-start">
+              <Link href="/modelos" data-testid="button-hero-cta">
+                <Button
+                  size="default"
+                  variant="default"
+                  className="bg-green-800 hover:bg-green-900 text-white border-green-800 font-medium h-12 px-10 rounded-full text-sm tracking-widest uppercase"
+                >
+                  Personalize e veja o preço agora <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+          </section>
 
         {/* Horizontal scroll row of models */}
         <section className="py-14 md:py-20 bg-background">
@@ -256,128 +249,6 @@ export default function Home() {
           </div>
         </section>
 
-        {false && (
-        <section id="produtos" className="py-24 bg-background scroll-mt-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-10">
-              <p className="text-xs tracking-[0.4em] uppercase text-accent mb-4 font-semibold">Vagas abertas</p>
-              <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-5" data-testid="text-section-title">
-                {onlyBestsellers ? "⭐ Bestsellers" : activeCatDef?.label ?? "Modelos disponíveis agora"}
-              </h2>
-              <div className="w-12 h-[2px] bg-accent mx-auto mb-6" />
-              <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                Vendas pelo site são feitas a partir dos nossos <strong className="text-foreground">modelos padronizados</strong>, que você pode personalizar em <strong className="text-foreground">tecido, espuma e metragem</strong>.
-              </p>
-            </div>
-
-            {/* Category filter pills */}
-            <div className="flex flex-wrap gap-2 justify-center mb-12" data-testid="category-filter">
-              <Link
-                href="/"
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                  !activeCategory && !onlyBestsellers
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-background text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
-                }`}
-                data-testid="filter-category-todos"
-              >
-                Todos
-              </Link>
-              <Link
-                href="/?destaque=1"
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                  onlyBestsellers
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-background text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
-                }`}
-                data-testid="filter-bestseller"
-              >
-                ⭐ Bestsellers
-              </Link>
-              {CATEGORIES.map((c) => (
-                <Link
-                  key={c.id}
-                  href={`/?categoria=${c.id}`}
-                  className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                    activeCategory === c.id
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-background text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
-                  }`}
-                  data-testid={`filter-category-${c.id}`}
-                >
-                  {c.label}
-                </Link>
-              ))}
-            </div>
-
-            {loading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-                {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="bg-muted/30 rounded-lg h-80 animate-pulse" />
-                ))}
-              </div>
-            ) : filteredProducts.length === 0 ? (
-              <div className="text-center py-16 border border-dashed border-border rounded-xl max-w-md mx-auto">
-                <p className="text-muted-foreground mb-4">
-                  {activeCatDef
-                    ? `Nenhum modelo de ${activeCatDef?.label} disponível no momento.`
-                    : "Nenhum modelo disponível no momento."}
-                </p>
-                {activeCatDef && (
-                  <Link href="/" className="text-primary font-medium hover:underline">
-                    Ver todos os modelos
-                  </Link>
-                )}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
-                {filteredProducts.map((product) => (
-                  <Link key={product.id} href={`/produto/${product.id}`} className="group group/card" data-testid={`card-product-${product.id}`}>
-                    <div className="flex flex-col h-full bg-card rounded-lg overflow-hidden border border-border/50 hover:border-primary/20 transition-all duration-500 hover:shadow-xl">
-                      <div className="relative aspect-[16/10] overflow-hidden bg-muted/30">
-                        <img
-                          src={product.image}
-                          alt={displayName(product.name, product.category)}
-                          className="w-full h-full object-cover object-center transition-transform duration-700 group-hover/card:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/5 transition-colors duration-500" />
-                        {product.category && (
-                          <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wider uppercase bg-white/90 backdrop-blur-sm text-foreground px-2.5 py-1 rounded-full border border-border/50">
-                            {getCategory(product.category)?.label}
-                          </span>
-                        )}
-                      </div>
-                      <div className="p-8 flex flex-col flex-grow">
-                        <div className="flex justify-between items-start mb-4 gap-4">
-                          <h3 className="text-2xl font-serif font-bold text-foreground group-hover/card:text-primary transition-colors" data-testid={`text-product-name-${product.id}`}>
-                            {displayName(product.name, product.category)}
-                          </h3>
-                          <span className="text-xl font-medium text-accent whitespace-nowrap" data-testid={`text-product-price-${product.id}`}>
-                            R$ {product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                          </span>
-                        </div>
-                        <p className="text-muted-foreground leading-relaxed flex-grow" data-testid={`text-product-desc-${product.id}`}>
-                          {product.description}
-                        </p>
-                        {product.prazoEntrega && (
-                          <p className="text-sm text-muted-foreground mt-2 flex items-center gap-1">
-                            🚚 Entrega: {product.prazoEntrega}
-                          </p>
-                        )}
-                        <div className="mt-8 pt-6 border-t border-border flex items-center justify-between text-sm font-medium text-primary">
-                          <span>Ver detalhes do produto</span>
-                          <ArrowRight className="w-4 h-4 transform group-hover/card:translate-x-2 transition-transform" />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-        )}
-
         {/* Manifesto / Sobre o Ateliê */}
         <section className="relative py-28 bg-gradient-to-b from-secondary/40 via-background to-background overflow-hidden">
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" aria-hidden="true">
@@ -387,9 +258,10 @@ export default function Home() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="max-w-3xl mx-auto text-center mb-20">
               <p className="text-xs tracking-[0.4em] uppercase text-accent mb-5 font-semibold">Nosso ateliê</p>
-              <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground leading-[1.1] mb-8">
-                Cada peça nasce de uma <em className="italic text-accent">conversa</em>, não de uma esteira.
-              </h2>
+              <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground leading-[1.1] mb-8" data-testid="text-hero-title">
+                  Não fazemos em série.{" "}
+                  <em className="italic font-normal text-accent">Fazemos o seu sofá.</em>
+                </h2>
               <div className="w-16 h-[2px] bg-accent mx-auto mb-8" />
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                 Somos um ateliê — não uma fábrica. Aqui o estofado começa quando você nos diz como quer viver na sua sala. A partir daí, escolhemos juntos o desenho, o tecido, as medidas e os acabamentos. Cada vaga aberta na nossa agenda é uma nova história sendo construída à mão.
