@@ -66,7 +66,8 @@ function useFilters(): { category: string; bestseller: boolean } {
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState("/images/hero.png");
+  const [heroImages, setHeroImages] = useState<string[]>(["/images/hero.png"]);
+    const [heroIdx, setHeroIdx] = useState(0);
   const { category: activeCategory, bestseller: onlyBestsellers } = useFilters();
   const activeCatDef = getCategory(activeCategory);
   const { isFavorite, toggle: toggleFavorite } = useFavorites();
@@ -117,7 +118,15 @@ export default function Home() {
       .catch(() => {});
   }, []);
 
-  return (
+  useEffect(() => {
+      if (heroImages.length <= 1) return;
+      const id = setInterval(() => {
+        setHeroIdx((p) => (p + 1) % heroImages.length);
+      }, 6000);
+      return () => clearInterval(id);
+    }, [heroImages.length]);
+
+    return (
     <div className="min-h-screen flex flex-col w-full bg-background selection:bg-primary/20">
       <Navbar />
 
