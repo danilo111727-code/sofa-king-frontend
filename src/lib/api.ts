@@ -128,6 +128,25 @@ export interface WhatsappEvent {
   const BASE = "/api";
 const jsonHeaders: HeadersInit = { "Content-Type": "application/json" };
 
+/** Acorda o servidor (Render free dorme após 15min). Chame ao abrir formulários. */
+export function pingApi(): void {
+  fetch(`${BASE}/healthz`, { method: "GET", cache: "no-store" }).catch(() => {});
+}
+
+async function readError(res: Response, fallback: string): Promise<string> {
+  try {
+    const ct = res.headers.get("content-type") || "";
+    if (ct.includes("application/json")) {
+      const body = await res.json();
+      if (body?.error) return String(body.error);
+    } else {
+      const txt = await res.text();
+      if (txt) return txt.slice(0, 200);
+    }
+  } catch { /* ignore */ }
+  return `${fallback} (HTTP ${res.status})`;
+}
+
 export async function fetchProducts(): Promise<Product[]> {
   const res = await fetch(`${BASE}/products`);
   if (!res.ok) throw new Error("Erro ao carregar produtos");
@@ -158,7 +177,7 @@ export async function createProduct(data: Omit<Product, "id">): Promise<Product>
   const res = await fetch(`${BASE}/products`, {
     method: "POST", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("Erro ao criar produto");
+  if (!res.ok) throw new Error(await readError(res, "Erro ao criar produto"));
   return res.json();
 }
 
@@ -166,7 +185,7 @@ export async function updateProduct(id: string, data: Partial<Omit<Product, "id"
   const res = await fetch(`${BASE}/products/${id}`, {
     method: "PUT", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("Erro ao atualizar produto");
+  if (!res.ok) throw new Error(await readError(res, "Erro ao atualizar produto"));
   return res.json();
 }
 
