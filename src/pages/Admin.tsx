@@ -19,6 +19,7 @@ import {
   fetchWhatsappEvents,
   fetchClients,
   uploadImage,
+  pingApi,
   fetchSiteSettings,
   updateSiteSettings,
   type Product,
@@ -299,8 +300,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     });
   }
 
-  function openNew() { setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
+  function openNew() { pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
   function openEdit(p: Product) {
+    pingApi();
     setEditId(p.id);
     const validCats: ProductCategory[] = CATEGORIES.map((c) => c.id);
     const cat: ProductCategory = validCats.includes(p.category as ProductCategory) ? (p.category as ProductCategory) : "";
@@ -327,6 +329,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       return;
     }
     setSaving(true);
+    const slowWarn = window.setTimeout(() => {
+      flash("ok", "Servidor acordando, isso pode levar até 1 minuto. Aguarde...");
+    }, 8000);
     try {
       const prazoStr = form.prazoEntrega || "";
       const payload: Omit<Product, "id"> = {
@@ -351,7 +356,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       else { await createProduct(payload); flash("ok", "Produto criado!"); }
       closeForm(); await load();
     } catch (err: any) { flash("err", err.message ?? "Erro ao salvar"); }
-    finally { setSaving(false); }
+    finally { window.clearTimeout(slowWarn); setSaving(false); }
   }
 
   async function handleDelete(id: string) {
