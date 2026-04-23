@@ -87,7 +87,7 @@ export default function Favoritos() {
                       className="group relative bg-card rounded-lg overflow-hidden border border-border/50 hover:border-primary/30 transition-all hover:shadow-md"
                       data-testid={`fav-fabric-${f.id}`}
                     >
-                      <div className="relative aspect-square overflow-hidden bg-muted/30">
+                      <div className="relative aspect-square overflow-hidden bg-white">
                         {f.imageUrl ? (
                           <img
                             src={f.imageUrl}
@@ -127,7 +127,7 @@ export default function Favoritos() {
                   key={product.id}
                   className="group flex flex-col bg-card rounded-lg overflow-hidden border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-muted/30">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-white">
                     {product.image ? (
                       <img
                         src={product.image}

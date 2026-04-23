@@ -238,7 +238,7 @@ export default function Modelos() {
                     onClick={() => navigate(`/produto/${product.id}`)}
                     data-testid={`card-product-${product.id}`}
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-muted/30">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-white">
                       {product.image ? (
                         <img
                           src={product.image}

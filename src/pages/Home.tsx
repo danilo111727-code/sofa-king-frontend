@@ -227,7 +227,7 @@ export default function Home() {
                       data-testid={`scroll-card-${product.id}`}
                     >
                       <div className="flex flex-col h-full bg-card rounded-lg overflow-hidden border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-lg">
-                        <div className="relative aspect-[4/3] overflow-hidden bg-muted/30">
+                        <div className="relative aspect-[4/3] overflow-hidden bg-white">
                           {product.image ? (
                             <img
                               src={product.image}
