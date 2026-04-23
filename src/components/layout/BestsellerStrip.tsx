@@ -16,7 +16,7 @@ export function BestsellerStrip() {
 
   if (loading) {
     return (
-      <div className="bg-white border-t border-border/50 border-b border-border/50 py-2 sm:py-3 overflow-hidden">
+      <div className="bg-white border-b border-border/50 py-2 sm:py-3 overflow-hidden">
         <div className="flex items-end gap-4 sm:gap-8 whitespace-nowrap px-4">
           {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="shrink-0 flex flex-col items-center gap-1.5">
@@ -34,7 +34,7 @@ export function BestsellerStrip() {
   const loop = [...items, ...items, ...items];
 
   return (
-    <div className="bg-white border-t border-border/50 border-b border-border/50 py-2 sm:py-3 overflow-hidden" data-testid="bestseller-strip">
+    <div className="bg-white border-b border-border/50 py-2 sm:py-3 overflow-hidden" data-testid="bestseller-strip">
       <div className="flex items-end gap-4 sm:gap-8 whitespace-nowrap animate-marquee">
         {loop.map((p, i) => (
           <Link
