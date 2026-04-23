@@ -210,7 +210,7 @@ export default function Produto() {
             {/* Image Gallery */}
             <div className="space-y-3">
               <div
-                className={`aspect-[4/3] rounded-xl overflow-hidden bg-muted border border-border relative group ${
+                className={`aspect-[4/3] rounded-xl overflow-hidden bg-white border border-border relative group ${
                   galleryImages[mainImageIdx] !== DIAGRAMA_SENTINEL ? "cursor-zoom-in" : ""
                 }`}
                 data-testid="img-product-main"
