@@ -33,6 +33,7 @@ export default function Modelos() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [priceRange, setPriceRange] = useState<{ min: number; max: number } | null>(null);
   const { category: activeCategory, bestseller: onlyBestsellers } = useFilters();
   const activeCatDef = getCategory(activeCategory);
   const { isFavorite, toggle: toggleFavorite } = useFavorites();
@@ -57,6 +58,11 @@ export default function Modelos() {
     let avail = products.filter((p) => p.disponibilidade);
     if (onlyBestsellers) avail = avail.filter((p) => p.bestseller);
     if (activeCategory) avail = avail.filter((p) => p.category === activeCategory);
+    if (priceRange) {
+      avail = avail.filter(
+        (p) => p.price > 0 && p.price >= priceRange.min && p.price <= priceRange.max,
+      );
+    }
     const q = normalize(query.trim());
     if (q) {
       avail = avail.filter((p) => {
@@ -65,7 +71,17 @@ export default function Modelos() {
       });
     }
     return [...avail].reverse();
-  }, [products, activeCategory, onlyBestsellers, query]);
+  }, [products, activeCategory, onlyBestsellers, query, priceRange]);
+
+  const PRICE_BUCKETS: { id: string; label: string; min: number; max: number }[] = [
+    { id: "ate-2k", label: "Até R$ 2.000", min: 0, max: 2000 },
+    { id: "2k-4k", label: "R$ 2.000 – R$ 4.000", min: 2000, max: 4000 },
+    { id: "4k-6k", label: "R$ 4.000 – R$ 6.000", min: 4000, max: 6000 },
+    { id: "acima-6k", label: "Acima de R$ 6.000", min: 6000, max: Number.MAX_SAFE_INTEGER },
+  ];
+  const activeBucket = priceRange
+    ? PRICE_BUCKETS.find((b) => b.min === priceRange.min && b.max === priceRange.max) ?? null
+    : null;
 
   const heading = onlyBestsellers
     ? "⭐ Bestsellers"
@@ -153,6 +169,39 @@ export default function Modelos() {
                   {c.label}
                 </Link>
               ))}
+            </div>
+
+            {/* Price range filter */}
+            <div className="flex flex-wrap gap-2 justify-center items-center mb-10" data-testid="price-filter">
+              <span className="text-xs uppercase tracking-wider text-muted-foreground mr-1">Faixa de preço:</span>
+              {PRICE_BUCKETS.map((b) => {
+                const active = activeBucket?.id === b.id;
+                return (
+                  <button
+                    key={b.id}
+                    type="button"
+                    onClick={() => setPriceRange(active ? null : { min: b.min, max: b.max })}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                      active
+                        ? "bg-accent text-accent-foreground border-accent"
+                        : "bg-background text-muted-foreground border-border hover:border-accent/50 hover:text-foreground"
+                    }`}
+                    data-testid={`filter-price-${b.id}`}
+                  >
+                    {b.label}
+                  </button>
+                );
+              })}
+              {priceRange && (
+                <button
+                  type="button"
+                  onClick={() => setPriceRange(null)}
+                  className="text-xs text-muted-foreground hover:text-foreground underline ml-1"
+                  data-testid="button-clear-price"
+                >
+                  limpar
+                </button>
+              )}
             </div>
 
             {loading ? (
