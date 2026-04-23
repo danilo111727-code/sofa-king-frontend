@@ -1,6 +1,6 @@
 import { useParams, Link, useLocation } from "wouter";
-import { ChevronRight, ArrowLeft, Ruler, Info, Check, ShieldCheck, ShoppingCart, ChevronDown, X } from "lucide-react";
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { ChevronRight, ArrowLeft, ChevronLeft, Ruler, Info, Check, ShieldCheck, ShoppingCart, ChevronDown, ChevronUp, X, Heart } from "lucide-react";
+import { useState, useEffect, useMemo, useCallback, useRef, type TouchEvent as ReactTouchEvent } from "react";
 import { ImageLightbox } from "@/components/ImageLightbox";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
+import { useFavorites } from "@/hooks/useFavorites";
 import { displayName } from "@/lib/categories";
 import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
 import { DiagramaViewer } from "@/components/DiagramaViewer";
@@ -34,14 +35,16 @@ export default function Produto() {
   const [notFound, setNotFound] = useState(false);
 
   const [sizeIdx, setSizeIdx] = useState(0);
-  const [albumIdx, setAlbumIdx] = useState(0);
+  const [albumIdx, setAlbumIdx] = useState(-1);
   const [fabric, setFabric] = useState<FabricSample | null>(null);
-  const [foamIdx, setFoamIdx] = useState(0);
+  const [foamIdx, setFoamIdx] = useState(-1);
   const [foamSheetOpen, setFoamSheetOpen] = useState(false);
   const [sizeSheetOpen, setSizeSheetOpen] = useState(false);
   const [mainImageIdx, setMainImageIdx] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState(0);
+  const [previewFabric, setPreviewFabric] = useState<FabricSample | null>(null);
+  const { isFavorite: isFabricFavorite, toggle: toggleFabricFavorite } = useFavorites();
 
   useEffect(() => {
     if (!id) return;
@@ -51,7 +54,6 @@ export default function Produto() {
         setProduct(p);
         setAlbums(al);
         setFoams(fo.filter((f) => f.active));
-        if (al.length > 0 && al[0].fabrics.length > 0) setFabric(al[0].fabrics[0]);
         trackView({ productId: p.id, productName: p.name, path: `/produto/${p.id}` });
       })
       .catch(() => setNotFound(true))
@@ -120,12 +122,8 @@ export default function Produto() {
   useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [id]);
 
   useEffect(() => {
-    // when album changes, pick its first fabric
-    if (selectedAlbum && selectedAlbum.fabrics.length > 0) {
-      setFabric(selectedAlbum.fabrics[0]);
-    } else {
-      setFabric(null);
-    }
+    // when album changes, clear fabric so the user picks one explicitly
+    setFabric(null);
   }, [albumIdx, selectedAlbum?.id]);
 
   if (loading) {
@@ -362,54 +360,104 @@ export default function Produto() {
                   <h3 className="text-xs font-semibold uppercase tracking-wider mb-3 text-foreground">
                     2. Escolha o álbum de tecido
                   </h3>
-                  <div className="flex flex-wrap gap-2 mb-3">
+                  {fabric && (
+                    <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
+                      <Check className="w-4 h-4" />
+                      Tecido selecionado: <strong>{fabric.name}</strong>
+                    </div>
+                  )}
+                  <div className="space-y-2">
                     {albums.map((a, i) => {
                       const s = selectedSize ? resolveAlbumSurcharge(a, selectedSize.label) : a.surcharge;
+                      const isOpen = albumIdx === i;
                       return (
-                      <button
-                        key={a.id}
-                        onClick={() => setAlbumIdx(i)}
-                        className={`px-4 py-2.5 rounded-md text-sm font-medium border transition-all text-left ${
-                          albumIdx === i
-                            ? "bg-primary text-primary-foreground border-primary"
-                            : "bg-transparent text-foreground border-border hover:border-primary/50"
-                        }`}
-                        data-testid={`button-album-${a.id}`}
-                      >
-                        <div className="font-semibold">{a.name}</div>
-                        <div className="text-xs opacity-80">{s > 0 ? `+${brl(s)}` : s < 0 ? brl(s) : "incluso"}</div>
-                      </button>
+                        <div key={a.id} className="rounded-md border border-border overflow-hidden">
+                          <button
+                            type="button"
+                            onClick={() => setAlbumIdx(isOpen ? -1 : i)}
+                            className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left transition-colors ${
+                              isOpen
+                                ? "bg-primary text-primary-foreground"
+                                : "bg-transparent text-foreground hover:bg-secondary/50"
+                            }`}
+                            data-testid={`button-album-${a.id}`}
+                            aria-expanded={isOpen}
+                          >
+                            <div className="min-w-0">
+                              <div className="font-semibold flex items-center gap-2">
+                                {a.name}
+                                {isOpen && fabric && a.fabrics.some((f) => f.id === fabric.id) && (
+                                  <span className="inline-flex items-center gap-1 text-xs bg-green-500/90 text-white px-1.5 py-0.5 rounded">
+                                    <Check className="w-3 h-3" /> selecionado
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-xs opacity-80">
+                                {s > 0 ? `+${brl(s)}` : s < 0 ? brl(s) : "incluso"}
+                                {a.fabrics.length > 0 && (
+                                  <> · {a.fabrics.length} {a.fabrics.length === 1 ? "tecido" : "tecidos"}</>
+                                )}
+                              </div>
+                            </div>
+                            {isOpen ? (
+                              <ChevronUp className="w-5 h-5 shrink-0" />
+                            ) : (
+                              <ChevronDown className="w-5 h-5 shrink-0 text-muted-foreground" />
+                            )}
+                          </button>
+
+                          {isOpen && a.fabrics.length > 0 && (
+                            <div className="p-3 bg-secondary/30 border-t border-border">
+                              <p className="text-xs text-muted-foreground mb-2">
+                                Toque em um tecido para ampliar e favoritar.
+                              </p>
+                              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                                {a.fabrics.map((f) => {
+                                  const isSelected = fabric?.id === f.id;
+                                  const isFav = isFabricFavorite(`fabric_${f.id}`);
+                                  return (
+                                    <button
+                                      key={f.id}
+                                      type="button"
+                                      onClick={() => setPreviewFabric(f)}
+                                      className={`group relative flex flex-col items-center gap-1 p-2 rounded-md border bg-background transition-all ${
+                                        isSelected
+                                          ? "border-green-600 ring-2 ring-green-500/30"
+                                          : "border-border hover:border-primary/50"
+                                      }`}
+                                      title={f.name}
+                                      data-testid={`button-fabric-${f.id}`}
+                                    >
+                                      <div className="relative w-full aspect-square rounded overflow-hidden bg-secondary">
+                                        {f.imageUrl ? (
+                                          <img src={f.imageUrl} alt={f.name} className="w-full h-full object-cover" loading="lazy" />
+                                        ) : (
+                                          <div className="w-full h-full bg-secondary" />
+                                        )}
+                                        {isFav && (
+                                          <span className="absolute top-1 left-1 bg-white/90 rounded-full p-0.5 shadow">
+                                            <Heart className="w-3 h-3 text-red-500 fill-red-500" />
+                                          </span>
+                                        )}
+                                        {isSelected && (
+                                          <span className="absolute top-1 right-1 bg-green-600 text-white rounded-full p-0.5 shadow">
+                                            <Check className="w-3 h-3" />
+                                          </span>
+                                        )}
+                                      </div>
+                                      <span className="text-[11px] font-medium text-center line-clamp-1 w-full">
+                                        {f.name}
+                                      </span>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       );
                     })}
                   </div>
-
-                  {selectedAlbum && selectedAlbum.fabrics.length > 0 && (
-                    <div className="p-3 rounded-lg bg-secondary/30 border border-border">
-                      <p className="text-xs text-muted-foreground mb-2">
-                        Cores disponíveis no {selectedAlbum.name}{fabric ? ` — ${fabric.name}` : ""}:
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedAlbum.fabrics.map((f) => (
-                          <button
-                            key={f.id}
-                            onClick={() => setFabric(f)}
-                            className={`flex items-center gap-2 px-2 py-1 rounded-md border transition-all ${
-                              fabric?.id === f.id ? "border-primary ring-2 ring-primary/30" : "border-border hover:border-primary/50"
-                            }`}
-                            title={f.name}
-                            data-testid={`button-fabric-${f.id}`}
-                          >
-                            {f.imageUrl ? (
-                              <img src={f.imageUrl} alt={f.name} className="w-8 h-8 rounded object-cover" />
-                            ) : (
-                              <div className="w-8 h-8 rounded bg-secondary border border-border" />
-                            )}
-                            <span className="text-xs font-medium">{f.name}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
 
@@ -419,20 +467,32 @@ export default function Produto() {
                   <h3 className="text-xs font-semibold uppercase tracking-wider mb-3 text-foreground">
                     3. Escolha a espuma
                   </h3>
+                  {selectedFoam && (
+                    <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
+                      <Check className="w-4 h-4" />
+                      Espuma selecionada: <strong>{selectedFoam.name}</strong>
+                    </div>
+                  )}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {foams.map((f, i) => {
                       const adj = selectedSize ? resolveFoamAdjustment(f, selectedSize.label) : f.priceAdjustment;
+                      const isSelected = foamIdx === i;
                       return (
                       <button
                         key={f.id}
                         onClick={() => { setFoamIdx(i); setFoamSheetOpen(true); }}
-                        className={`p-2 rounded-md text-sm font-medium border transition-all text-left flex flex-col ${
-                          foamIdx === i
-                            ? "bg-primary text-primary-foreground border-primary"
+                        className={`relative p-2 rounded-md text-sm font-medium border transition-all text-left flex flex-col ${
+                          isSelected
+                            ? "bg-primary text-primary-foreground border-primary ring-2 ring-green-500/40"
                             : "bg-transparent text-foreground border-border hover:border-primary/50"
                         }`}
                         data-testid={`button-foam-${f.id}`}
                       >
+                        {isSelected && (
+                          <span className="absolute top-1 right-1 bg-green-600 text-white rounded-full p-0.5 shadow z-10">
+                            <Check className="w-3.5 h-3.5" />
+                          </span>
+                        )}
                         {f.imageUrl && (
                           <div className="w-full aspect-[4/3] rounded bg-white/60 overflow-hidden mb-2 border border-border/50">
                             <img src={f.imageUrl} alt={f.name} className="w-full h-full object-contain" loading="lazy" />
@@ -699,6 +759,196 @@ export default function Produto() {
           onPrev={() => setLightboxIdx((i) => Math.max(i - 1, 0))}
         />
       )}
+
+      {previewFabric && (() => {
+        const previewAlbum = albums.find((a) => a.fabrics.some((f) => f.id === previewFabric.id)) || selectedAlbum;
+        const previewList = previewAlbum?.fabrics ?? [previewFabric];
+        const previewIdx = previewList.findIndex((f) => f.id === previewFabric.id);
+        const goPrev = () => {
+          if (previewIdx > 0) setPreviewFabric(previewList[previewIdx - 1]);
+        };
+        const goNext = () => {
+          if (previewIdx < previewList.length - 1) setPreviewFabric(previewList[previewIdx + 1]);
+        };
+        const hasPrev = previewIdx > 0;
+        const hasNext = previewIdx < previewList.length - 1;
+        const isFav = isFabricFavorite(`fabric_${previewFabric.id}`);
+        return (
+          <FabricPreviewModal
+            fabric={previewFabric}
+            album={previewAlbum ?? null}
+            indexLabel={previewList.length > 1 ? `${previewIdx + 1} / ${previewList.length}` : null}
+            isFavorite={isFav}
+            isSelected={fabric?.id === previewFabric.id}
+            onClose={() => setPreviewFabric(null)}
+            onToggleFavorite={() => toggleFabricFavorite(`fabric_${previewFabric.id}`)}
+            onSelect={() => {
+              if (previewAlbum) {
+                const idx = albums.findIndex((a) => a.id === previewAlbum.id);
+                if (idx >= 0 && idx !== albumIdx) setAlbumIdx(idx);
+              }
+              setFabric(previewFabric);
+              setPreviewFabric(null);
+            }}
+            onPrev={hasPrev ? goPrev : null}
+            onNext={hasNext ? goNext : null}
+          />
+        );
+      })()}
+    </div>
+  );
+}
+
+interface FabricPreviewModalProps {
+  fabric: FabricSample;
+  album: Album | null;
+  indexLabel: string | null;
+  isFavorite: boolean;
+  isSelected: boolean;
+  onClose: () => void;
+  onToggleFavorite: () => void;
+  onSelect: () => void;
+  onPrev: (() => void) | null;
+  onNext: (() => void) | null;
+}
+
+function FabricPreviewModal({
+  fabric, album, indexLabel, isFavorite, isSelected,
+  onClose, onToggleFavorite, onSelect, onPrev, onNext,
+}: FabricPreviewModalProps) {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      else if (e.key === "ArrowRight" && onNext) onNext();
+      else if (e.key === "ArrowLeft" && onPrev) onPrev();
+    };
+    document.addEventListener("keydown", handleKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose, onNext, onPrev]);
+
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const handleTouchStart = (e: ReactTouchEvent) => {
+    const t = e.touches[0];
+    touchStart.current = { x: t.clientX, y: t.clientY };
+  };
+  const handleTouchEnd = (e: ReactTouchEvent) => {
+    const start = touchStart.current;
+    if (!start) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0 && onNext) onNext();
+      else if (dx > 0 && onPrev) onPrev();
+    }
+    touchStart.current = null;
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 animate-in fade-in duration-150"
+      onClick={onClose}
+      data-testid="fabric-preview-overlay"
+    >
+      <div
+        className="relative bg-background rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute top-3 right-3 z-20 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+          aria-label="Fechar"
+          data-testid="button-close-fabric-preview"
+        >
+          <X className="w-5 h-5" />
+        </button>
+        <button
+          type="button"
+          onClick={onToggleFavorite}
+          className="absolute top-3 left-3 z-20 bg-white/90 hover:bg-white text-foreground rounded-full p-2 shadow transition-colors"
+          aria-label={isFavorite ? "Remover dos favoritos" : "Favoritar tecido"}
+          data-testid="button-favorite-fabric"
+        >
+          <Heart
+            className={`w-5 h-5 transition-colors ${
+              isFavorite ? "text-red-500 fill-red-500" : "text-foreground"
+            }`}
+          />
+        </button>
+
+        <div className="relative aspect-square bg-muted flex items-center justify-center select-none">
+          {fabric.imageUrl ? (
+            <img
+              src={fabric.imageUrl}
+              alt={fabric.name}
+              className="w-full h-full object-cover"
+              draggable={false}
+            />
+          ) : (
+            <div className="text-muted-foreground text-sm">Sem imagem</div>
+          )}
+
+          {onPrev && (
+            <button
+              type="button"
+              onClick={onPrev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+              aria-label="Tecido anterior"
+              data-testid="button-prev-fabric"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+          )}
+          {onNext && (
+            <button
+              type="button"
+              onClick={onNext}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+              aria-label="Próximo tecido"
+              data-testid="button-next-fabric"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          )}
+
+          {indexLabel && (
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/60 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm">
+              {indexLabel}
+            </div>
+          )}
+        </div>
+
+        <div className="p-4 space-y-3">
+          <div>
+            <h4 className="font-serif text-xl font-bold text-foreground">{fabric.name}</h4>
+            {album && (
+              <p className="text-xs text-muted-foreground">Álbum: {album.name}</p>
+            )}
+          </div>
+          {isSelected ? (
+            <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-green-100 text-green-800 text-sm font-medium border border-green-200">
+              <Check className="w-4 h-4" /> Tecido selecionado
+            </div>
+          ) : (
+            <Button
+              type="button"
+              className="w-full"
+              onClick={onSelect}
+              data-testid="button-select-fabric"
+            >
+              <Check className="w-4 h-4 mr-2" /> Selecionar este tecido
+            </Button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
