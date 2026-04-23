@@ -337,10 +337,10 @@ export default function Home() {
               <div className="bg-background p-10 md:p-12 hover:bg-secondary/30 transition-colors">
                 <div className="flex items-center gap-4 mb-6">
                   <span className="font-serif italic text-4xl text-accent">iii.</span>
-                  <h3 className="text-xl font-serif font-bold text-foreground">Vagas limitadas</h3>
+                  <h3 className="text-xl font-serif font-bold text-foreground">Produção limitada</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  Trabalhamos com agenda. Os modelos que aparecem disponíveis no site são as vagas que liberamos agora. Quando enche, abrimos as próximas.
+                  Trabalhamos com agenda. Os modelos que aparecem disponíveis no site são as peças que conseguimos produzir agora. Quando enche, abrimos a próxima janela.
                 </p>
               </div>
             </div>
@@ -361,7 +361,7 @@ export default function Home() {
               <p className="text-muted-foreground leading-relaxed">
                 Nossos estofados são planejados sob medida e produzidos artesanalmente,
                 por isso <strong className="text-foreground">não trabalhamos com prazo fixo</strong>.
-                As vagas de produção são liberadas conforme nossa disponibilidade — quando uma vaga é aberta,
+                Nossa produção é limitada e liberada conforme a disponibilidade do ateliê — quando há espaço na agenda,
                 o produto aparece como disponível aqui no site. Para confirmar o prazo da sua peça e a entrega na sua cidade,
                 fale com nosso vendedor pelo WhatsApp.
               </p>
