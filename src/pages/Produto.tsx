@@ -277,7 +277,7 @@ export default function Produto() {
               <div className="flex flex-wrap gap-2 mb-4">
                 {settings.vagas > 0 ? (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
-                    ✅ {settings.vagas} {settings.vagas === 1 ? "vaga disponível" : "vagas disponíveis"}
+                    ✅ Produção limitada disponível
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 text-orange-800 text-sm font-medium border border-orange-200">
