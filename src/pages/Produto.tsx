@@ -223,7 +223,7 @@ export default function Produto() {
                     <img
                       src={galleryImages[mainImageIdx] || product.image}
                       alt={fullName}
-                      className="w-full h-full object-cover object-center transition-transform duration-200 group-hover:scale-[1.02]"
+                      className="w-full h-full object-contain object-center transition-transform duration-200 group-hover:scale-[1.02]"
                     />
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                       <div className="bg-black/40 text-white text-xs font-medium px-3 py-1.5 rounded-full backdrop-blur-sm">

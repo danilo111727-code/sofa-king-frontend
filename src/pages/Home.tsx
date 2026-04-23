@@ -232,7 +232,7 @@ export default function Home() {
                             <img
                               src={product.image}
                               alt={displayName(product.name, product.category)}
-                              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                              className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-105"
                               loading="lazy"
                             />
                           ) : (

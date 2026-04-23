@@ -92,7 +92,7 @@ export default function Favoritos() {
                           <img
                             src={f.imageUrl}
                             alt={f.name}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                             loading="lazy"
                           />
                         ) : (
@@ -132,7 +132,7 @@ export default function Favoritos() {
                       <img
                         src={product.image}
                         alt={displayName(product.name, product.category)}
-                        className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
                       />
                     ) : (
