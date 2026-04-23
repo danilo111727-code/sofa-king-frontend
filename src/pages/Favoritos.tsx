@@ -26,10 +26,11 @@ export default function Favoritos() {
   }, []);
 
   const favoriteProducts = products.filter((p) => isFavorite(p.id));
-  const favoriteFabrics: FavoriteFabric[] = albums.flatMap((a) =>
+  const favoriteFabrics: Array<FavoriteFabric & { favKey: string }> = albums.flatMap((a) =>
     a.fabrics
-      .filter((f) => isFavorite(`fabric_${f.id}`))
-      .map((f) => ({ ...f, albumName: a.name })),
+      .map((f, i) => ({ f, i, key: `fab_${a.id}_${i}` }))
+      .filter(({ key }) => isFavorite(key))
+      .map(({ f, key }) => ({ ...f, albumName: a.name, favKey: key })),
   );
   const totalFavorites = favoriteProducts.length + favoriteFabrics.length;
 
@@ -82,7 +83,7 @@ export default function Favoritos() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {favoriteFabrics.map((f) => (
                     <div
-                      key={f.id}
+                      key={f.favKey}
                       className="group relative bg-card rounded-lg overflow-hidden border border-border/50 hover:border-primary/30 transition-all hover:shadow-md"
                       data-testid={`fav-fabric-${f.id}`}
                     >
@@ -101,7 +102,7 @@ export default function Favoritos() {
                         )}
                         <button
                           type="button"
-                          onClick={() => toggleFavorite(`fabric_${f.id}`)}
+                          onClick={() => toggleFavorite(f.favKey)}
                           className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:scale-110 transition-transform"
                           aria-label="Remover dos favoritos"
                         >

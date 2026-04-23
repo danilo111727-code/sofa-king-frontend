@@ -37,14 +37,16 @@ export default function Produto() {
   const [sizeIdx, setSizeIdx] = useState(0);
   const [albumIdx, setAlbumIdx] = useState(-1);
   const [fabric, setFabric] = useState<FabricSample | null>(null);
+  const [selectedFabricKey, setSelectedFabricKey] = useState<string | null>(null);
   const [foamIdx, setFoamIdx] = useState(-1);
   const [foamSheetOpen, setFoamSheetOpen] = useState(false);
   const [sizeSheetOpen, setSizeSheetOpen] = useState(false);
   const [mainImageIdx, setMainImageIdx] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState(0);
-  const [previewFabric, setPreviewFabric] = useState<FabricSample | null>(null);
+  const [previewFabric, setPreviewFabric] = useState<{ albumId: string; index: number } | null>(null);
   const { isFavorite: isFabricFavorite, toggle: toggleFabricFavorite } = useFavorites();
+  const fabricFavKey = (albumId: string, index: number) => `fab_${albumId}_${index}`;
 
   useEffect(() => {
     if (!id) return;
@@ -124,6 +126,7 @@ export default function Produto() {
   useEffect(() => {
     // when album changes, clear fabric so the user picks one explicitly
     setFabric(null);
+    setSelectedFabricKey(null);
   }, [albumIdx, selectedAlbum?.id]);
 
   if (loading) {
@@ -386,7 +389,7 @@ export default function Produto() {
                             <div className="min-w-0">
                               <div className="font-semibold flex items-center gap-2">
                                 {a.name}
-                                {isOpen && fabric && a.fabrics.some((f) => f.id === fabric.id) && (
+                                {selectedFabricKey && selectedFabricKey.startsWith(`fab_${a.id}_`) && (
                                   <span className="inline-flex items-center gap-1 text-xs bg-green-500/90 text-white px-1.5 py-0.5 rounded">
                                     <Check className="w-3 h-3" /> selecionado
                                   </span>
@@ -412,21 +415,22 @@ export default function Produto() {
                                 Toque em um tecido para ampliar e favoritar.
                               </p>
                               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                                {a.fabrics.map((f) => {
-                                  const isSelected = fabric?.id === f.id;
-                                  const isFav = isFabricFavorite(`fabric_${f.id}`);
+                                {a.fabrics.map((f, fIdx) => {
+                                  const favKey = fabricFavKey(a.id, fIdx);
+                                  const isSelected = selectedFabricKey === favKey;
+                                  const isFav = isFabricFavorite(favKey);
                                   return (
                                     <button
-                                      key={f.id}
+                                      key={`${a.id}-${fIdx}`}
                                       type="button"
-                                      onClick={() => setPreviewFabric(f)}
+                                      onClick={() => setPreviewFabric({ albumId: a.id, index: fIdx })}
                                       className={`group relative flex flex-col items-center gap-1 p-2 rounded-md border bg-background transition-all ${
                                         isSelected
                                           ? "border-green-600 ring-2 ring-green-500/30"
                                           : "border-border hover:border-primary/50"
                                       }`}
                                       title={f.name}
-                                      data-testid={`button-fabric-${f.id}`}
+                                      data-testid={`button-fabric-${a.id}-${fIdx}`}
                                     >
                                       <div className="relative w-full aspect-square rounded overflow-hidden bg-secondary">
                                         {f.imageUrl ? (
@@ -761,33 +765,35 @@ export default function Produto() {
       )}
 
       {previewFabric && (() => {
-        const previewAlbum = albums.find((a) => a.fabrics.some((f) => f.id === previewFabric.id)) || selectedAlbum;
-        const previewList = previewAlbum?.fabrics ?? [previewFabric];
-        const previewIdx = previewList.findIndex((f) => f.id === previewFabric.id);
+        const previewAlbum = albums.find((a) => a.id === previewFabric.albumId) || selectedAlbum;
+        const previewList = previewAlbum?.fabrics ?? [];
+        const previewIdx = previewFabric.index;
+        const currentFabric = previewList[previewIdx];
+        if (!previewAlbum || !currentFabric) return null;
+        const currentKey = fabricFavKey(previewAlbum.id, previewIdx);
         const goPrev = () => {
-          if (previewIdx > 0) setPreviewFabric(previewList[previewIdx - 1]);
+          if (previewIdx > 0) setPreviewFabric({ albumId: previewAlbum.id, index: previewIdx - 1 });
         };
         const goNext = () => {
-          if (previewIdx < previewList.length - 1) setPreviewFabric(previewList[previewIdx + 1]);
+          if (previewIdx < previewList.length - 1) setPreviewFabric({ albumId: previewAlbum.id, index: previewIdx + 1 });
         };
         const hasPrev = previewIdx > 0;
         const hasNext = previewIdx < previewList.length - 1;
-        const isFav = isFabricFavorite(`fabric_${previewFabric.id}`);
+        const isFav = isFabricFavorite(currentKey);
         return (
           <FabricPreviewModal
-            fabric={previewFabric}
-            album={previewAlbum ?? null}
+            fabric={currentFabric}
+            album={previewAlbum}
             indexLabel={previewList.length > 1 ? `${previewIdx + 1} / ${previewList.length}` : null}
             isFavorite={isFav}
-            isSelected={fabric?.id === previewFabric.id}
+            isSelected={selectedFabricKey === currentKey}
             onClose={() => setPreviewFabric(null)}
-            onToggleFavorite={() => toggleFabricFavorite(`fabric_${previewFabric.id}`)}
+            onToggleFavorite={() => toggleFabricFavorite(currentKey)}
             onSelect={() => {
-              if (previewAlbum) {
-                const idx = albums.findIndex((a) => a.id === previewAlbum.id);
-                if (idx >= 0 && idx !== albumIdx) setAlbumIdx(idx);
-              }
-              setFabric(previewFabric);
+              const idx = albums.findIndex((a) => a.id === previewAlbum.id);
+              if (idx >= 0 && idx !== albumIdx) setAlbumIdx(idx);
+              setFabric(currentFabric);
+              setSelectedFabricKey(currentKey);
               setPreviewFabric(null);
             }}
             onPrev={hasPrev ? goPrev : null}
