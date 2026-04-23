@@ -20,7 +20,7 @@ export function BestsellerStrip() {
         <div className="flex items-end gap-4 sm:gap-8 whitespace-nowrap px-4">
           {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="shrink-0 flex flex-col items-center gap-1.5">
-              <div className="w-[72px] h-[72px] sm:w-[220px] sm:h-[220px] bg-muted/50 animate-pulse rounded-sm" />
+              <div className="w-[72px] h-[72px] sm:w-[250px] sm:h-[250px] bg-muted/50 animate-pulse rounded-sm" />
               <div className="w-[60px] h-[10px] bg-muted/50 animate-pulse rounded" />
             </div>
           ))}
@@ -40,10 +40,10 @@ export function BestsellerStrip() {
           <Link
             key={`${p.id}-${i}`}
             href={`/produto/${p.id}`}
-            className="shrink-0 flex flex-col items-center text-center group w-[80px] sm:w-[230px]"
+            className="shrink-0 flex flex-col items-center text-center group w-[80px] sm:w-[260px]"
             data-testid={`bestseller-item-${p.id}`}
           >
-            <div className="w-[72px] h-[72px] sm:w-[220px] sm:h-[220px] overflow-hidden bg-white">
+            <div className="w-[72px] h-[72px] sm:w-[250px] sm:h-[250px] overflow-hidden bg-white">
               {p.image ? (
                 <img
                   src={p.image}
