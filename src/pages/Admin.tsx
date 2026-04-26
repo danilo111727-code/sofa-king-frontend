@@ -31,7 +31,8 @@ import {
   type WhatsappEvent,
   type Client,
 } from "@/lib/api";
-import { CATEGORIES, displayName, type ProductCategory } from "@/lib/categories";
+import { slugifyCategoryId, type CategoryDef, type ProductCategory } from "@/lib/categories";
+import { useCategories } from "@/hooks/useCategories";
 import { DiagramaEditor } from "@/components/DiagramaEditor";
 
 const inputCls = "w-full bg-[#1a1208] border border-[#3d2e1e] rounded-lg px-3 py-2.5 text-white text-sm placeholder-[#5a4030] focus:outline-none focus:border-[#c9a96e] transition-colors";
@@ -247,6 +248,7 @@ const EMPTY_PRODUTO: ProdutoForm = {
 };
 
 function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
+  const { categories: CATEGORIES, displayName } = useCategories();
   const [products, setProducts] = useState<Product[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [foams, setFoams] = useState<Material[]>([]);
@@ -1324,12 +1326,17 @@ function WhatsappTab() {
 // ======================================================================
 
 function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
+  const { categories: currentCategories } = useCategories();
   const [heroImage, setHeroImage] = useState("/images/hero.png");
   const [heroImages, setHeroImages] = useState<string[]>([]);
   const [pixDiscountPct, setPixDiscountPct] = useState(10);
   const [maxInstallments, setMaxInstallments] = useState(10);
   const [vagas, setVagas] = useState(8);
   const [prazoEntregaDias, setPrazoEntregaDias] = useState(30);
+  const [categories, setCategories] = useState<CategoryDef[]>(currentCategories);
+  const [newCatLabel, setNewCatLabel] = useState("");
+  const [newCatSuffix, setNewCatSuffix] = useState("");
+  const [savingCategories, setSavingCategories] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -1345,10 +1352,61 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
         setPrazoEntregaDias(s.prazoEntregaDias ?? 30);
         const imgs = (s as any).heroImages as string[] | undefined;
         setHeroImages(Array.isArray(imgs) && imgs.length > 0 ? imgs : (s.heroImage ? [s.heroImage] : []));
+        if (Array.isArray(s.categories) && s.categories.length > 0) {
+          setCategories(s.categories);
+        }
       })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  function updateCategoryAt(idx: number, patch: Partial<CategoryDef>) {
+    setCategories((prev) => prev.map((c, i) => (i === idx ? { ...c, ...patch } : c)));
+  }
+
+  function addCategory() {
+    const label = newCatLabel.trim();
+    if (!label) {
+      flash("err", "Informe o nome da nova categoria.");
+      return;
+    }
+    const id = slugifyCategoryId(label, categories.map((c) => c.id));
+    const suffix = newCatSuffix.trim() || label;
+    setCategories((prev) => [...prev, { id, label, suffix }]);
+    setNewCatLabel("");
+    setNewCatSuffix("");
+    flash("ok", "Categoria adicionada — clique em Salvar categorias para confirmar.");
+  }
+
+  async function handleSaveCategories() {
+    const cleaned: CategoryDef[] = [];
+    const seen = new Set<string>();
+    for (const c of categories) {
+      const id = c.id.trim();
+      const label = c.label.trim();
+      const suffix = c.suffix.trim();
+      if (!id || !label) {
+        flash("err", "Toda categoria precisa de id e nome.");
+        return;
+      }
+      if (seen.has(id)) {
+        flash("err", `Categoria duplicada: ${id}`);
+        return;
+      }
+      seen.add(id);
+      cleaned.push({ id, label, suffix });
+    }
+    setSavingCategories(true);
+    try {
+      await updateSiteSettings({ categories: cleaned });
+      setCategories(cleaned);
+      flash("ok", "Categorias salvas com sucesso!");
+    } catch (err: any) {
+      flash("err", err.message ?? "Erro ao salvar categorias");
+    } finally {
+      setSavingCategories(false);
+    }
+  }
 
   async function handleUpload(files: FileList | null) {
     if (!files || files.length === 0) return;
@@ -1508,6 +1566,97 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
               <span className="text-[#7a6040] ml-1">(total R$ {exampleCard.toLocaleString("pt-BR", { minimumFractionDigits: 2 })})</span>
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Categorias */}
+      <div className={`${cardCls} mb-6`}>
+        <h2 className="font-semibold text-white mb-1">Categorias</h2>
+        <p className="text-[#a08060] text-sm mb-4">
+          Edite o nome exibido e o sufixo de cada categoria, ou crie novas.
+          O <strong className="text-white">id</strong> é usado internamente para vincular produtos —
+          não altere o id de uma categoria que já tenha produtos cadastrados.
+          O <strong className="text-white">sufixo</strong> é o que aparece no nome do produto no site (ex: "Istambul <em>Retrátil</em>").
+        </p>
+
+        <div className="space-y-2">
+          <div className="hidden sm:grid grid-cols-12 gap-2 px-2 text-[10px] uppercase tracking-wider text-[#7a6040]">
+            <div className="col-span-3">id (interno)</div>
+            <div className="col-span-5">Nome exibido</div>
+            <div className="col-span-4">Sufixo no nome do produto</div>
+          </div>
+          {categories.map((c, i) => (
+            <div
+              key={`${c.id}-${i}`}
+              className="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-[#1a1005] border border-[#2d1f10] rounded-lg p-2"
+              data-testid={`category-row-${c.id}`}
+            >
+              <input
+                className={`${inputCls} sm:col-span-3 font-mono text-xs`}
+                value={c.id}
+                onChange={(e) => updateCategoryAt(i, { id: e.target.value })}
+                placeholder="id"
+                data-testid={`category-id-${i}`}
+              />
+              <input
+                className={`${inputCls} sm:col-span-5`}
+                value={c.label}
+                onChange={(e) => updateCategoryAt(i, { label: e.target.value })}
+                placeholder="Nome exibido"
+                data-testid={`category-label-${i}`}
+              />
+              <input
+                className={`${inputCls} sm:col-span-4`}
+                value={c.suffix}
+                onChange={(e) => updateCategoryAt(i, { suffix: e.target.value })}
+                placeholder="Sufixo (ex: Retrátil)"
+                data-testid={`category-suffix-${i}`}
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 pt-5 border-t border-[#2d1f10]">
+          <p className="text-xs uppercase tracking-wider text-[#7a6040] mb-2">Adicionar nova categoria</p>
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-2">
+            <input
+              className={`${inputCls} sm:col-span-5`}
+              value={newCatLabel}
+              onChange={(e) => setNewCatLabel(e.target.value)}
+              placeholder="Nome (ex: Sofá Modular)"
+              data-testid="new-category-label"
+            />
+            <input
+              className={`${inputCls} sm:col-span-4`}
+              value={newCatSuffix}
+              onChange={(e) => setNewCatSuffix(e.target.value)}
+              placeholder="Sufixo (opcional)"
+              data-testid="new-category-suffix"
+            />
+            <button
+              type="button"
+              onClick={addCategory}
+              className={`${ghostBtn} sm:col-span-3`}
+              data-testid="button-add-category"
+            >
+              + Adicionar
+            </button>
+          </div>
+          <p className="text-xs text-[#7a6040] mt-2">
+            O id será gerado automaticamente a partir do nome. Se o sufixo ficar vazio, será usado o próprio nome.
+          </p>
+        </div>
+
+        <div className="mt-5 flex justify-end">
+          <button
+            type="button"
+            disabled={savingCategories}
+            onClick={handleSaveCategories}
+            className={`${goldBtn} disabled:opacity-50`}
+            data-testid="button-save-categories"
+          >
+            {savingCategories ? "Salvando..." : "✓ Salvar categorias"}
+          </button>
         </div>
       </div>
 

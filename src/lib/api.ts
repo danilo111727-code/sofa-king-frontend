@@ -294,6 +294,9 @@ export async function fetchKnownSizes(): Promise<string[]> {
 }
 
 // --- Site settings ---
+import type { CategoryDef } from "./categories";
+export type { CategoryDef } from "./categories";
+
 export interface SiteSettings {
   heroImage: string;
   heroImages?: string[];
@@ -301,6 +304,7 @@ export interface SiteSettings {
   maxInstallments: number;
   vagas: number;
   prazoEntregaDias: number;
+  categories?: CategoryDef[];
 }
 
 export async function fetchSiteSettings(): Promise<SiteSettings> {
