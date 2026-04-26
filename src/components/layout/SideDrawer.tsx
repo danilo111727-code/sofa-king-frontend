@@ -1,50 +1,59 @@
 import { X, Search, ChevronDown, ChevronRight, User, LogOut, UserPlus, Settings, Heart } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { Show, useUser, useClerk } from "@clerk/react";
 import { fetchAdminStatus } from "@/lib/api";
+import { useCategories } from "@/hooks/useCategories";
+import type { CategoryDef } from "@/lib/categories";
 
 type MenuItem =
   | { label: string; href: string }
   | { label: string; children: { label: string; href: string }[] };
 
-const menu: MenuItem[] = [
-  { label: "⭐ BESTSELLERS", href: "/modelos?destaque=1" },
-  { label: "TODOS OS MODELOS", href: "/modelos" },
-  {
-    label: "SOFÁS",
-    children: [
-      { label: "Sofá Retrátil", href: "/modelos?categoria=retratil" },
-      { label: "Sofá-cama", href: "/modelos?categoria=sofa-cama" },
-      { label: "Sofá de Canto", href: "/modelos?categoria=canto" },
-      { label: "Sofá Orgânico", href: "/modelos?categoria=organicos" },
-      { label: "Sofá Living", href: "/modelos?categoria=living" },
-      { label: "Sofá Fixo", href: "/modelos?categoria=fixo" },
-      { label: "Sofá Chaise", href: "/modelos?categoria=chaise" },
-      { label: "Sofá Ilha", href: "/modelos?categoria=ilha" },
-      { label: "Módulos", href: "/modelos?categoria=modulos" },
-    ],
-  },
-  {
-      label: "POLTRONAS E PUFFS",
-      children: [
-        { label: "Poltronas", href: "/modelos?categoria=poltronas" },
-        { label: "Puffs", href: "/modelos?categoria=puffs" },
-        { label: "Almofadas", href: "/modelos?categoria=almofadas" },
-      ],
-    },
-  {
-      label: "CAMA",
-      children: [
-        { label: "Cama", href: "/modelos?categoria=cama" },
-        { label: "Cabeceira", href: "/modelos?categoria=cabeceira" },
-        { label: "Box", href: "/modelos?categoria=box" },
-      ],
-    },
-  { label: "PRAZO DE ENTREGA", href: "/#prazo-entrega" },
-  { label: "GARANTIA", href: "/#garantia" },
-  { label: "FORMA DE PAGAMENTO", href: "/#pagamento" },
+/**
+ * Agrupamento das categorias por seção do menu, usando o `id` interno.
+ * Os labels exibidos vêm sempre do estado dinâmico (admin pode renomear).
+ * Se o admin criar uma categoria nova fora desses grupos, ela aparece
+ * automaticamente em "OUTROS" no fim do menu.
+ */
+const CATEGORY_GROUPS: { label: string; ids: string[] }[] = [
+  { label: "SOFÁS",            ids: ["retratil", "sofa-cama", "canto", "organicos", "living", "fixo", "chaise", "ilha", "modulos"] },
+  { label: "POLTRONAS E PUFFS", ids: ["poltronas", "puffs", "almofadas"] },
+  { label: "CAMA",             ids: ["cama", "cabeceira", "box"] },
 ];
+
+function buildMenu(categories: CategoryDef[]): MenuItem[] {
+  const byId = new Map(categories.map((c) => [c.id, c]));
+  const used = new Set<string>();
+
+  const groups: MenuItem[] = CATEGORY_GROUPS.map((g) => {
+    const children = g.ids
+      .map((id) => byId.get(id))
+      .filter((c): c is CategoryDef => !!c)
+      .map((c) => {
+        used.add(c.id);
+        return { label: c.label, href: `/modelos?categoria=${c.id}` };
+      });
+    return { label: g.label, children };
+  }).filter((g) => "children" in g && g.children.length > 0);
+
+  const orphans = categories.filter((c) => !used.has(c.id));
+  if (orphans.length > 0) {
+    groups.push({
+      label: "OUTROS",
+      children: orphans.map((c) => ({ label: c.label, href: `/modelos?categoria=${c.id}` })),
+    });
+  }
+
+  return [
+    { label: "⭐ BESTSELLERS", href: "/modelos?destaque=1" },
+    { label: "TODOS OS MODELOS", href: "/modelos" },
+    ...groups,
+    { label: "PRAZO DE ENTREGA", href: "/#prazo-entrega" },
+    { label: "GARANTIA", href: "/#garantia" },
+    { label: "FORMA DE PAGAMENTO", href: "/#pagamento" },
+  ];
+}
 
 interface SideDrawerProps {
   open: boolean;
@@ -58,6 +67,8 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
   const { signOut } = useClerk();
   const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
   const firstName = user?.firstName || user?.username || user?.primaryEmailAddress?.emailAddress?.split("@")[0] || "";
+  const { categories } = useCategories();
+  const menu = useMemo(() => buildMenu(categories), [categories]);
 
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";
