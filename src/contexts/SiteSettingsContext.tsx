@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { fetchSiteSettings, type SiteSettings } from "@/lib/api";
+import { CATEGORIES as DEFAULT_CATEGORIES } from "@/lib/categories";
 
 const DEFAULTS: SiteSettings = {
   heroImage: "/images/hero.png",
@@ -8,6 +9,7 @@ const DEFAULTS: SiteSettings = {
   maxInstallments: 10,
   vagas: 8,
   prazoEntregaDias: 30,
+  categories: DEFAULT_CATEGORIES,
 };
 
 const SiteSettingsContext = createContext<SiteSettings>(DEFAULTS);
@@ -17,7 +19,7 @@ export function SiteSettingsProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     fetchSiteSettings()
-      .then(setSettings)
+      .then((s) => setSettings({ ...DEFAULTS, ...s }))
       .catch(() => {});
   }, []);
 

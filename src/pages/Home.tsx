@@ -43,12 +43,10 @@ function HorizontalScrollRow({ children }: { children: ReactNode }) {
   );
 }
 import { fetchProducts, fetchSiteSettings, trackView, type Product } from "@/lib/api";
-import { CATEGORIES, displayName, getCategory } from "@/lib/categories";
+import { useCategories } from "@/hooks/useCategories";
 import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
 
-const VALID_CATEGORY_IDS = new Set(CATEGORIES.map((c) => c.id));
-
-function useFilters(): { category: string; bestseller: boolean } {
+function useFilters(validCategoryIds: Set<string>): { category: string; bestseller: boolean } {
   const [location] = useLocation();
   return useMemo(() => {
     const noHash = location.split("#")[0];
@@ -57,10 +55,10 @@ function useFilters(): { category: string; bestseller: boolean } {
     const params = new URLSearchParams(search);
     const raw = params.get("categoria") ?? "";
     return {
-      category: VALID_CATEGORY_IDS.has(raw as any) ? raw : "",
+      category: validCategoryIds.has(raw) ? raw : "",
       bestseller: params.get("destaque") === "1",
     };
-  }, [location]);
+  }, [location, validCategoryIds]);
 }
 
 export default function Home() {
@@ -68,7 +66,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [heroImages, setHeroImages] = useState<string[]>(["/images/hero.png"]);
     const [heroIdx, setHeroIdx] = useState(0);
-  const { category: activeCategory, bestseller: onlyBestsellers } = useFilters();
+  const { categories: CATEGORIES, displayName, getCategory } = useCategories();
+  const validCategoryIds = useMemo(() => new Set(CATEGORIES.map((c) => c.id)), [CATEGORIES]);
+  const { category: activeCategory, bestseller: onlyBestsellers } = useFilters(validCategoryIds);
   const activeCatDef = getCategory(activeCategory);
   const { isFavorite, toggle: toggleFavorite } = useFavorites();
   const { pixDiscountPct, maxInstallments } = useSiteSettings();

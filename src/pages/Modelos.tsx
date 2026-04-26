@@ -4,22 +4,20 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { useEffect, useState, useMemo } from "react";
 import { fetchProducts, trackView, type Product } from "@/lib/api";
-import { CATEGORIES, displayName, getCategory } from "@/lib/categories";
+import { useCategories } from "@/hooks/useCategories";
 import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
 import { useFavorites } from "@/hooks/useFavorites";
 
-const VALID_CATEGORY_IDS = new Set(CATEGORIES.map((c) => c.id));
-
-function useFilters(): { category: string; bestseller: boolean } {
+function useFilters(validCategoryIds: Set<string>): { category: string; bestseller: boolean } {
   const search = useSearch();
   return useMemo(() => {
     const params = new URLSearchParams(search);
     const raw = params.get("categoria") ?? "";
     return {
-      category: VALID_CATEGORY_IDS.has(raw as any) ? raw : "",
+      category: validCategoryIds.has(raw) ? raw : "",
       bestseller: params.get("destaque") === "1",
     };
-  }, [search]);
+  }, [search, validCategoryIds]);
 }
 
 function normalize(s: string): string {
@@ -34,7 +32,9 @@ export default function Modelos() {
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [priceRange, setPriceRange] = useState<{ min: number; max: number } | null>(null);
-  const { category: activeCategory, bestseller: onlyBestsellers } = useFilters();
+  const { categories: CATEGORIES, displayName, getCategory } = useCategories();
+  const validCategoryIds = useMemo(() => new Set(CATEGORIES.map((c) => c.id)), [CATEGORIES]);
+  const { category: activeCategory, bestseller: onlyBestsellers } = useFilters(validCategoryIds);
   const activeCatDef = getCategory(activeCategory);
   const { isFavorite, toggle: toggleFavorite } = useFavorites();
   const { pixDiscountPct, maxInstallments } = useSiteSettings();
