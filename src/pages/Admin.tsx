@@ -1334,6 +1334,7 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
   const [vagas, setVagas] = useState(8);
   const [prazoEntregaDias, setPrazoEntregaDias] = useState(30);
   const [categories, setCategories] = useState<CategoryDef[]>(currentCategories);
+  const [productCountByCategory, setProductCountByCategory] = useState<Record<string, number>>({});
   const [newCatLabel, setNewCatLabel] = useState("");
   const [newCatSuffix, setNewCatSuffix] = useState("");
   const [savingCategories, setSavingCategories] = useState(false);
@@ -1343,8 +1344,8 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    fetchSiteSettings()
-      .then((s) => {
+    Promise.all([fetchSiteSettings(), fetchProducts().catch(() => [] as Product[])])
+      .then(([s, prods]) => {
         setHeroImage(s.heroImage);
         setPixDiscountPct(s.pixDiscountPct ?? 10);
         setMaxInstallments(s.maxInstallments ?? 10);
@@ -1355,10 +1356,30 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
         if (Array.isArray(s.categories) && s.categories.length > 0) {
           setCategories(s.categories);
         }
+        const counts: Record<string, number> = {};
+        for (const p of prods) {
+          const cat = String((p as any).category ?? "").trim();
+          if (!cat) continue;
+          counts[cat] = (counts[cat] ?? 0) + 1;
+        }
+        setProductCountByCategory(counts);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  function deleteCategoryAt(idx: number) {
+    const cat = categories[idx];
+    if (!cat) return;
+    const count = productCountByCategory[cat.id] ?? 0;
+    if (count > 0) {
+      flash("err", `Não é possível excluir "${cat.label}": ${count} produto(s) ainda usam essa categoria. Mude esses produtos de categoria primeiro.`);
+      return;
+    }
+    const ok = window.confirm(`Excluir a categoria "${cat.label}"?\n\nEla será removida só depois que você clicar em "Salvar categorias".`);
+    if (!ok) return;
+    setCategories((prev) => prev.filter((_, i) => i !== idx));
+  }
 
   function updateCategoryAt(idx: number, patch: Partial<CategoryDef>) {
     setCategories((prev) => prev.map((c, i) => (i === idx ? { ...c, ...patch } : c)));
@@ -1582,38 +1603,63 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
         <div className="space-y-2">
           <div className="hidden sm:grid grid-cols-12 gap-2 px-2 text-[10px] uppercase tracking-wider text-[#7a6040]">
             <div className="col-span-3">id (interno)</div>
-            <div className="col-span-5">Nome exibido</div>
-            <div className="col-span-4">Sufixo no nome do produto</div>
+            <div className="col-span-4">Nome exibido</div>
+            <div className="col-span-3">Sufixo no nome do produto</div>
+            <div className="col-span-1 text-center">Produtos</div>
+            <div className="col-span-1 text-center">Excluir</div>
           </div>
-          {categories.map((c, i) => (
-            <div
-              key={`${c.id}-${i}`}
-              className="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-[#1a1005] border border-[#2d1f10] rounded-lg p-2"
-              data-testid={`category-row-${c.id}`}
-            >
-              <input
-                className={`${inputCls} sm:col-span-3 font-mono text-xs`}
-                value={c.id}
-                onChange={(e) => updateCategoryAt(i, { id: e.target.value })}
-                placeholder="id"
-                data-testid={`category-id-${i}`}
-              />
-              <input
-                className={`${inputCls} sm:col-span-5`}
-                value={c.label}
-                onChange={(e) => updateCategoryAt(i, { label: e.target.value })}
-                placeholder="Nome exibido"
-                data-testid={`category-label-${i}`}
-              />
-              <input
-                className={`${inputCls} sm:col-span-4`}
-                value={c.suffix}
-                onChange={(e) => updateCategoryAt(i, { suffix: e.target.value })}
-                placeholder="Sufixo (ex: Retrátil)"
-                data-testid={`category-suffix-${i}`}
-              />
-            </div>
-          ))}
+          {categories.map((c, i) => {
+            const count = productCountByCategory[c.id] ?? 0;
+            const canDelete = count === 0;
+            return (
+              <div
+                key={`${c.id}-${i}`}
+                className="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-[#1a1005] border border-[#2d1f10] rounded-lg p-2 items-center"
+                data-testid={`category-row-${c.id}`}
+              >
+                <input
+                  className={`${inputCls} sm:col-span-3 font-mono text-xs`}
+                  value={c.id}
+                  onChange={(e) => updateCategoryAt(i, { id: e.target.value })}
+                  placeholder="id"
+                  data-testid={`category-id-${i}`}
+                />
+                <input
+                  className={`${inputCls} sm:col-span-4`}
+                  value={c.label}
+                  onChange={(e) => updateCategoryAt(i, { label: e.target.value })}
+                  placeholder="Nome exibido"
+                  data-testid={`category-label-${i}`}
+                />
+                <input
+                  className={`${inputCls} sm:col-span-3`}
+                  value={c.suffix}
+                  onChange={(e) => updateCategoryAt(i, { suffix: e.target.value })}
+                  placeholder="Sufixo (ex: Retrátil)"
+                  data-testid={`category-suffix-${i}`}
+                />
+                <div className="sm:col-span-1 text-center text-sm text-[#a08060]" data-testid={`category-count-${i}`}>
+                  {count}
+                </div>
+                <div className="sm:col-span-1 text-center">
+                  <button
+                    type="button"
+                    onClick={() => deleteCategoryAt(i)}
+                    disabled={!canDelete}
+                    title={canDelete ? "Excluir categoria" : `${count} produto(s) usam essa categoria`}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                      canDelete
+                        ? "bg-[#3d1010] hover:bg-[#5a1818] text-[#ff8080] border border-[#5a1818]"
+                        : "bg-[#1a1208] text-[#5a4030] border border-[#2d1f10] cursor-not-allowed"
+                    }`}
+                    data-testid={`button-delete-category-${i}`}
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-5 pt-5 border-t border-[#2d1f10]">
