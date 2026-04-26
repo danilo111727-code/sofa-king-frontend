@@ -77,7 +77,7 @@
   --elevate-2: rgba(0,0,0, .08);
 
   /* Backgrounds & Foregrounds */
-  --background: 38 33% 93%; /* Areia warm #F4EFE6 */
+  --background: 0 0% 100%; /* Branco */
   --foreground: 33 22% 10%; /* Carvão #1F1A14 */
   
   --border: 38 25% 82%; /* Bege border */
