@@ -129,10 +129,17 @@ export default function Produto() {
   useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [id]);
 
   useEffect(() => {
-    // when album changes, clear fabric so the user picks one explicitly
-    setFabric(null);
-    setSelectedFabricKey(null);
-  }, [albumIdx, selectedAlbum?.id]);
+    // Only clear fabric when the user switches to a DIFFERENT album.
+    // Closing/reopening the same album must NOT clear the chosen fabric.
+    if (
+      selectedAlbum?.id &&
+      selectedFabricKey &&
+      !selectedFabricKey.startsWith(`fab_${selectedAlbum.id}_`)
+    ) {
+      setFabric(null);
+      setSelectedFabricKey(null);
+    }
+  }, [selectedAlbum?.id, selectedFabricKey]);
 
   if (loading) {
     return (
