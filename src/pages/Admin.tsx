@@ -1543,11 +1543,32 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
 
   async function handleUpload(files: FileList | null) {
     if (!files || files.length === 0) return;
+    const list = Array.from(files);
+    const remaining = Math.max(0, 10 - heroImages.length);
+    if (remaining === 0) {
+      flash("err", "Limite de 10 imagens atingido. Remova alguma antes de adicionar.");
+      if (fileRef.current) fileRef.current.value = "";
+      return;
+    }
+    const toUpload = list.slice(0, remaining);
     setUploading(true);
     try {
-      const { url } = await uploadImage(files[0]);
-      setHeroImage(url);
-      flash("ok", "Imagem carregada! Clique em Salvar para aplicar.");
+      const uploaded: string[] = [];
+      for (const f of toUpload) {
+        const { url } = await uploadImage(f);
+        uploaded.push(url);
+      }
+      setHeroImages((prev) => {
+        const next = [...prev, ...uploaded];
+        if (next.length > 0) setHeroImage(next[0]);
+        return next;
+      });
+      const skipped = list.length - toUpload.length;
+      const msg =
+        uploaded.length === 1
+          ? "Imagem adicionada! Clique em Salvar para aplicar."
+          : `${uploaded.length} imagens adicionadas! Clique em Salvar para aplicar.`;
+      flash("ok", skipped > 0 ? `${msg} (${skipped} ignorada(s) por exceder o limite de 10)` : msg);
     } catch (err: any) {
       flash("err", err.message ?? "Erro no upload");
     } finally {
@@ -1556,10 +1577,37 @@ function ConfiguracoesTab({ flash }: { flash: (t: "ok" | "err", s: string) => vo
     }
   }
 
+  function moveHeroImage(idx: number, dir: -1 | 1) {
+    setHeroImages((prev) => {
+      const next = [...prev];
+      const target = idx + dir;
+      if (target < 0 || target >= next.length) return prev;
+      [next[idx], next[target]] = [next[target], next[idx]];
+      if (next.length > 0) setHeroImage(next[0]);
+      return next;
+    });
+  }
+
+  function removeHeroImage(idx: number) {
+    setHeroImages((prev) => {
+      const next = prev.filter((_, i) => i !== idx);
+      setHeroImage(next.length > 0 ? next[0] : "/images/hero.png");
+      return next;
+    });
+  }
+
   async function handleSave() {
     setSaving(true);
     try {
-      await updateSiteSettings({ heroImage, pixDiscountPct, maxInstallments, vagas, prazoEntregaDias });
+      const primary = heroImages.length > 0 ? heroImages[0] : heroImage;
+      await updateSiteSettings({
+        heroImage: primary,
+        heroImages,
+        pixDiscountPct,
+        maxInstallments,
+        vagas,
+        prazoEntregaDias,
+      });
       flash("ok", "Configurações salvas com sucesso!");
     } catch (err: any) {
       flash("err", err.message ?? "Erro ao salvar");
