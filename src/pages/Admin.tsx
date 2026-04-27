@@ -424,6 +424,32 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     setExpandedSizes(new Set());
     flash("ok", `Metragens e acréscimos copiados de "${p.name}".`);
   }
+  function copySurchargesFrom(id: string) {
+    const p = products.find((x) => x.id === id);
+    if (!p) return;
+    setForm((f) => {
+      let matched = 0;
+      const sizes = f.sizes.map((s, idx) => {
+        const byLabel = p.sizes.find((src) => src.label.trim() === s.label.trim());
+        const src = byLabel || p.sizes[idx];
+        if (!src) return s;
+        matched++;
+        return {
+          ...s,
+          albumSurcharges: src.albumSurcharges ? { ...src.albumSurcharges } : {},
+          foamSurcharges: src.foamSurcharges ? { ...src.foamSurcharges } : {},
+        };
+      });
+      const total = f.sizes.length;
+      const skipped = total - matched;
+      const msg = skipped > 0
+        ? `Acréscimos copiados de "${p.name}" (${matched}/${total} metragens — ${skipped} sem correspondência).`
+        : `Acréscimos de "${p.name}" aplicados em todas as ${matched} metragens. Preços base mantidos.`;
+      flash("ok", msg);
+      return { ...f, sizes };
+    });
+    setExpandedSizes(new Set());
+  }
   function fillStandardSizes() {
     const labels = ["1,60 m","1,80 m","2,00 m","2,20 m","2,40 m","2,60 m","2,80 m","3,00 m","3,20 m","3,40 m","3,60 m","3,80 m","4,00 m"];
     setForm((f) => ({ ...f, sizes: labels.map((label) => ({ label, basePrice: 0, albumSurcharges: {}, foamSurcharges: {} })) }));
@@ -716,16 +742,30 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                     <button type="button" onClick={addSize} className={ghostBtn}>+ Adicionar metragem</button>
                     <button type="button" onClick={fillStandardSizes} className={ghostBtn}>📐 Metragens padrão (1,60 – 4,00 m)</button>
                     {products.length > 0 && (
-                      <select
-                        onChange={(e) => { if (e.target.value) { copyFrom(e.target.value); e.target.value = ""; } }}
-                        defaultValue=""
-                        className="bg-[#261a0e] hover:bg-[#3d2e1e] border border-[#3d2e1e] rounded-lg px-3 py-1.5 text-sm text-[#c9a96e] cursor-pointer"
-                      >
-                        <option value="">↓ Copiar de outro modelo (metragens + acréscimos)</option>
-                        {products.filter((p) => p.id !== editId && p.sizes.length > 0).map((p) => (
-                          <option key={p.id} value={p.id}>{p.name} ({p.sizes.length} metragens)</option>
-                        ))}
-                      </select>
+                      <>
+                        <select
+                          onChange={(e) => { if (e.target.value) { copyFrom(e.target.value); e.target.value = ""; } }}
+                          defaultValue=""
+                          className="bg-[#261a0e] hover:bg-[#3d2e1e] border border-[#3d2e1e] rounded-lg px-3 py-1.5 text-sm text-[#c9a96e] cursor-pointer"
+                        >
+                          <option value="">↓ Copiar de outro modelo (metragens + acréscimos)</option>
+                          {products.filter((p) => p.id !== editId && p.sizes.length > 0).map((p) => (
+                            <option key={p.id} value={p.id}>{p.name} ({p.sizes.length} metragens)</option>
+                          ))}
+                        </select>
+                        <select
+                          onChange={(e) => { if (e.target.value) { copySurchargesFrom(e.target.value); e.target.value = ""; } }}
+                          defaultValue=""
+                          disabled={form.sizes.length === 0}
+                          title={form.sizes.length === 0 ? "Adicione metragens antes de copiar acréscimos" : ""}
+                          className="bg-[#261a0e] hover:bg-[#3d2e1e] border border-[#3d2e1e] rounded-lg px-3 py-1.5 text-sm text-[#c9a96e] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <option value="">↓ Copiar SÓ acréscimos de outro modelo (mantém preços)</option>
+                          {products.filter((p) => p.id !== editId && p.sizes.length > 0).map((p) => (
+                            <option key={p.id} value={p.id}>{p.name} ({p.sizes.length} metragens)</option>
+                          ))}
+                        </select>
+                      </>
                     )}
                   </div>
                   <p className="text-xs text-[#7a6040]">
