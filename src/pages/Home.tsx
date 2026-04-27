@@ -258,18 +258,22 @@ export default function Home() {
                           <h3 className="text-base font-serif font-bold text-foreground group-hover:text-primary transition-colors leading-tight mb-1 line-clamp-2 min-h-[2.6rem]">
                             {displayName(product.name, product.category)}
                           </h3>
-                          {product.price > 0 ? (
-                            <div className="space-y-0.5 mt-1">
-                              <p className="text-sm font-bold text-green-700">
-                                PIX R$ {product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                Cartão: {maxInstallments}x de R$ {(applyCardMarkup(product.price, pixDiscountPct) / maxInstallments).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                              </p>
-                            </div>
-                          ) : (
-                            <span className="text-sm text-muted-foreground">Consultar valor</span>
-                          )}
+                          {(() => {
+                            const pct = product.priceAdjustmentPercent;
+                            const adjustedPrice = (!pct || !Number.isFinite(pct)) ? product.price : Math.round(product.price * (1 + pct / 100) * 100) / 100;
+                            return adjustedPrice > 0 ? (
+                              <div className="space-y-0.5 mt-1">
+                                <p className="text-sm font-bold text-green-700">
+                                  PIX R$ {adjustedPrice.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  Cartão: {maxInstallments}x de R$ {(applyCardMarkup(adjustedPrice, pixDiscountPct) / maxInstallments).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                </p>
+                              </div>
+                            ) : (
+                              <span className="text-sm text-muted-foreground">Consultar valor</span>
+                            );
+                          })()}
                           <button
                             type="button"
                             onClick={(e) => { e.stopPropagation(); navigate(`/produto/${product.id}`); }}

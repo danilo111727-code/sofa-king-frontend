@@ -81,10 +81,15 @@ export default function Produto() {
     if (fromProduct !== undefined) return fromProduct;
     return resolveFoamAdjustment(selectedFoam, selectedSize.label);
   }, [selectedFoam, selectedSize]);
-  const finalPrice = useMemo(() => {
+  const adjustedBasePrice = useMemo(() => {
     const base = selectedSize?.basePrice ?? 0;
-    return base + albumSurcharge + foamAdjustment;
-  }, [selectedSize, albumSurcharge, foamAdjustment]);
+    const pct = product?.priceAdjustmentPercent;
+    if (!pct || !Number.isFinite(pct)) return base;
+    return Math.round(base * (1 + pct / 100) * 100) / 100;
+  }, [selectedSize, product?.priceAdjustmentPercent]);
+  const finalPrice = useMemo(() => {
+    return adjustedBasePrice + albumSurcharge + foamAdjustment;
+  }, [adjustedBasePrice, albumSurcharge, foamAdjustment]);
 
   const pixPrice = finalPrice;
   const cardPrice = useMemo(() => applyCardMarkup(finalPrice, pixDiscountPct), [finalPrice, pixDiscountPct]);
@@ -163,7 +168,7 @@ export default function Produto() {
       productId: product.id,
       productName: fullName,
       productImage: galleryImages[0] || product.image,
-      size: { label: selectedSize.label, basePrice: selectedSize.basePrice },
+      size: { label: selectedSize.label, basePrice: adjustedBasePrice },
       album: selectedAlbum
         ? { id: selectedAlbum.id, name: selectedAlbum.name, surcharge: albumSurcharge }
         : null,
@@ -337,7 +342,7 @@ export default function Produto() {
                         </div>
                         {selectedSize && (
                           <div className="text-xs text-muted-foreground">
-                            {brl(selectedSize.basePrice + resolveAlbumSurcharge(selectedAlbum, selectedSize.label) + resolveFoamAdjustment(selectedFoam, selectedSize.label))}
+                            {brl(adjustedBasePrice + resolveAlbumSurcharge(selectedAlbum, selectedSize.label) + resolveFoamAdjustment(selectedFoam, selectedSize.label))}
                           </div>
                         )}
                       </div>
@@ -565,7 +570,7 @@ export default function Produto() {
                     </p>
                   </div>
                   <div className="text-xs text-muted-foreground mt-3 space-y-0.5 pt-3 border-t border-border">
-                    {selectedSize && <div>• Metragem {selectedSize.label}: {brl(selectedSize.basePrice)}</div>}
+                    {selectedSize && <div>• Metragem {selectedSize.label}: {brl(adjustedBasePrice)}</div>}
                     {selectedAlbum && albumSurcharge !== 0 && <div>• {selectedAlbum.name}: {albumSurcharge > 0 ? "+" : ""}{brl(albumSurcharge)}</div>}
                     {selectedFoam && foamAdjustment !== 0 && <div>• {selectedFoam.name}: {foamAdjustment > 0 ? "+" : ""}{brl(foamAdjustment)}</div>}
                   </div>
@@ -705,7 +710,9 @@ export default function Produto() {
               {product.sizes.map((s, i) => {
                 const sizeAlbumSurcharge = resolveAlbumSurcharge(selectedAlbum, s.label);
                 const sizeFoamAdj = resolveFoamAdjustment(selectedFoam, s.label);
-                const sizeTotal = s.basePrice + sizeAlbumSurcharge + sizeFoamAdj;
+                const pct = product.priceAdjustmentPercent;
+                const sizeAdjustedBase = (!pct || !Number.isFinite(pct)) ? s.basePrice : Math.round(s.basePrice * (1 + pct / 100) * 100) / 100;
+                const sizeTotal = sizeAdjustedBase + sizeAlbumSurcharge + sizeFoamAdj;
                 const sizePix = sizeTotal;
                 const sizeCard = applyCardMarkup(sizeTotal, pixDiscountPct);
                 const sizeInstallment = sizeCard / maxInstallments;

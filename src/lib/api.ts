@@ -33,6 +33,19 @@ export interface Product {
   bestseller?: boolean;
   diagramaUrl?: string;
   diagramaAnotacoes?: DiagramaAnotacao[];
+  /** Optional %: positive markup, negative discount. Applies ONLY to size basePrice (NOT to album/foam surcharges). */
+  priceAdjustmentPercent?: number;
+}
+
+/**
+ * Apply per-product percentage adjustment to a base price.
+ * Returns adjusted price (rounded to 2 decimals). Falsy/invalid percent returns basePrice unchanged.
+ * IMPORTANT: only apply to size basePrice, never to album/foam surcharges.
+ */
+export function applyPriceAdjustment(basePrice: number, percent?: number | null): number {
+  if (!percent || !Number.isFinite(percent)) return basePrice;
+  const adjusted = basePrice * (1 + percent / 100);
+  return Math.round(adjusted * 100) / 100;
 }
 
 export interface Material {

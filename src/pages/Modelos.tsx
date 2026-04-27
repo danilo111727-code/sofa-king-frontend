@@ -59,9 +59,13 @@ export default function Modelos() {
     if (onlyBestsellers) avail = avail.filter((p) => p.bestseller);
     if (activeCategory) avail = avail.filter((p) => p.category === activeCategory);
     if (priceRange) {
-      avail = avail.filter(
-        (p) => p.price > 0 && p.price >= priceRange.min && p.price <= priceRange.max,
-      );
+      avail = avail.filter((p) => {
+        const pct = p.priceAdjustmentPercent;
+        const adjusted = (!pct || !Number.isFinite(pct)) ? p.price : Math.round(p.price * (1 + pct / 100) * 100) / 100;
+        const lo = priceRange.min ?? 0;
+        const hi = priceRange.max ?? Number.MAX_SAFE_INTEGER;
+        return adjusted > 0 && adjusted >= lo && adjusted <= hi;
+      });
     }
     const q = normalize(query.trim());
     if (q) {
@@ -73,15 +77,24 @@ export default function Modelos() {
     return [...avail].reverse();
   }, [products, activeCategory, onlyBestsellers, query, priceRange]);
 
-  const PRICE_BUCKETS: { id: string; label: string; min: number; max: number }[] = [
-    { id: "ate-2k", label: "Até R$ 2.000", min: 0, max: 2000 },
-    { id: "2k-4k", label: "R$ 2.000 – R$ 4.000", min: 2000, max: 4000 },
-    { id: "4k-6k", label: "R$ 4.000 – R$ 6.000", min: 4000, max: 6000 },
-    { id: "acima-6k", label: "Acima de R$ 6.000", min: 6000, max: Number.MAX_SAFE_INTEGER },
-  ];
-  const activeBucket = priceRange
-    ? PRICE_BUCKETS.find((b) => b.min === priceRange.min && b.max === priceRange.max) ?? null
-    : null;
+  const [priceMinInput, setPriceMinInput] = useState<string>("");
+  const [priceMaxInput, setPriceMaxInput] = useState<string>("");
+
+  function applyPriceFilter() {
+    const min = priceMinInput.trim() === "" ? 0 : Number(priceMinInput);
+    const max = priceMaxInput.trim() === "" ? Number.MAX_SAFE_INTEGER : Number(priceMaxInput);
+    if (!Number.isFinite(min) || !Number.isFinite(max) || min < 0 || max < 0) return;
+    if (priceMinInput.trim() === "" && priceMaxInput.trim() === "") {
+      setPriceRange(null);
+      return;
+    }
+    setPriceRange({ min, max });
+  }
+  function clearPriceFilter() {
+    setPriceMinInput("");
+    setPriceMaxInput("");
+    setPriceRange(null);
+  }
 
   const heading = onlyBestsellers
     ? "⭐ Bestsellers"
@@ -171,35 +184,55 @@ export default function Modelos() {
               ))}
             </div>
 
-            {/* Price range filter */}
-            <div className="flex flex-wrap gap-2 justify-center items-center mb-10" data-testid="price-filter">
-              <span className="text-xs uppercase tracking-wider text-muted-foreground mr-1">Faixa de preço:</span>
-              {PRICE_BUCKETS.map((b) => {
-                const active = activeBucket?.id === b.id;
-                return (
-                  <button
-                    key={b.id}
-                    type="button"
-                    onClick={() => setPriceRange(active ? null : { min: b.min, max: b.max })}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-                      active
-                        ? "bg-accent text-accent-foreground border-accent"
-                        : "bg-background text-muted-foreground border-border hover:border-accent/50 hover:text-foreground"
-                    }`}
-                    data-testid={`filter-price-${b.id}`}
-                  >
-                    {b.label}
-                  </button>
-                );
-              })}
-              {priceRange && (
+            {/* Price range filter — manual inputs */}
+            <div className="flex flex-wrap gap-2 justify-center items-end mb-10" data-testid="price-filter">
+              <span className="text-xs uppercase tracking-wider text-muted-foreground mr-1 mb-2">Faixa de preço:</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs text-muted-foreground">De R$</span>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  step={100}
+                  value={priceMinInput}
+                  onChange={(e) => setPriceMinInput(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") applyPriceFilter(); }}
+                  placeholder="0"
+                  className="w-24 bg-background border border-border rounded-md px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
+                  data-testid="input-price-min"
+                />
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs text-muted-foreground">Até R$</span>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  step={100}
+                  value={priceMaxInput}
+                  onChange={(e) => setPriceMaxInput(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") applyPriceFilter(); }}
+                  placeholder="∞"
+                  className="w-24 bg-background border border-border rounded-md px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
+                  data-testid="input-price-max"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={applyPriceFilter}
+                className="px-3.5 py-1.5 rounded-md text-xs font-medium border bg-accent text-accent-foreground border-accent hover:opacity-90 transition-opacity"
+                data-testid="button-apply-price"
+              >
+                Filtrar
+              </button>
+              {(priceRange || priceMinInput || priceMaxInput) && (
                 <button
                   type="button"
-                  onClick={() => setPriceRange(null)}
-                  className="text-xs text-muted-foreground hover:text-foreground underline ml-1"
+                  onClick={clearPriceFilter}
+                  className="text-xs text-muted-foreground hover:text-foreground underline ml-1 mb-2"
                   data-testid="button-clear-price"
                 >
-                  limpar
+                  Limpar
                 </button>
               )}
             </div>
@@ -278,18 +311,22 @@ export default function Modelos() {
                       >
                         {displayName(product.name, product.category)}
                       </h3>
-                      {product.price > 0 ? (
-                        <div className="space-y-0.5 mb-2" data-testid={`text-product-price-${product.id}`}>
-                          <p className="text-sm font-bold text-green-700">
-                            PIX R$ {product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            Cartão: {maxInstallments}x de R$ {(applyCardMarkup(product.price, pixDiscountPct) / maxInstallments).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                          </p>
-                        </div>
-                      ) : (
-                        <span className="text-sm text-muted-foreground mb-2">Consultar valor</span>
-                      )}
+                      {(() => {
+                        const pct = product.priceAdjustmentPercent;
+                        const adjustedPrice = (!pct || !Number.isFinite(pct)) ? product.price : Math.round(product.price * (1 + pct / 100) * 100) / 100;
+                        return adjustedPrice > 0 ? (
+                          <div className="space-y-0.5 mb-2" data-testid={`text-product-price-${product.id}`}>
+                            <p className="text-sm font-bold text-green-700">
+                              PIX R$ {adjustedPrice.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              Cartão: {maxInstallments}x de R$ {(applyCardMarkup(adjustedPrice, pixDiscountPct) / maxInstallments).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            </p>
+                          </div>
+                        ) : (
+                          <span className="text-sm text-muted-foreground mb-2">Consultar valor</span>
+                        );
+                      })()}
                       {product.description && (
                         <p
                           className="text-xs text-muted-foreground leading-relaxed flex-grow line-clamp-2"

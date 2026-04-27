@@ -240,6 +240,7 @@ interface ProdutoForm {
   sizes: SizeOption[];
   diagramaUrl: string;
   diagramaAnotacoes: import("@/lib/api").DiagramaAnotacao[];
+  priceAdjustmentPercent: number | "";
 }
 
 const EMPTY_PRODUTO: ProdutoForm = {
@@ -247,6 +248,7 @@ const EMPTY_PRODUTO: ProdutoForm = {
   dimensions: "", prazoEntrega: "",
   disponibilidade: true, bestseller: false,
   sizes: [], diagramaUrl: "", diagramaAnotacoes: [],
+  priceAdjustmentPercent: "",
 };
 
 function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
@@ -321,6 +323,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       sizes: p.sizes && p.sizes.length ? p.sizes : [],
       diagramaUrl: p.diagramaUrl ?? "",
       diagramaAnotacoes: p.diagramaAnotacoes ?? [],
+      priceAdjustmentPercent: (typeof p.priceAdjustmentPercent === "number" && Number.isFinite(p.priceAdjustmentPercent) && p.priceAdjustmentPercent !== 0) ? p.priceAdjustmentPercent : "",
     });
     setShowForm(true);
   }
@@ -355,6 +358,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         price: Math.min(...form.sizes.map((s) => s.basePrice).filter((n) => n > 0)) || 0,
         diagramaUrl: form.diagramaUrl || undefined,
         diagramaAnotacoes: form.diagramaAnotacoes.length > 0 ? form.diagramaAnotacoes : undefined,
+        priceAdjustmentPercent: (form.priceAdjustmentPercent === "" || !Number.isFinite(Number(form.priceAdjustmentPercent))) ? 0 : Number(form.priceAdjustmentPercent),
       };
       if (editId) { await updateProduct(editId, payload); flash("ok", "Produto atualizado!"); }
       else { await createProduct(payload); flash("ok", "Produto criado!"); }
@@ -788,6 +792,39 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                   </div>
                 </Field>
               </div>
+
+              <Field label="% Ajuste de preço (opcional — só no preço base do modelo, não nos acréscimos de álbum/espuma)">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    step="0.1"
+                    className={`${inputCls} flex-1`}
+                    value={form.priceAdjustmentPercent}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      setForm({ ...form, priceAdjustmentPercent: v === "" ? "" : Number(v) });
+                    }}
+                    placeholder="Ex: 10 (acréscimo) ou -15 (desconto). Em branco = sem ajuste"
+                    data-testid="input-price-adjustment-percent"
+                  />
+                  <span className="text-[#a08060] text-sm font-medium">%</span>
+                </div>
+                {form.priceAdjustmentPercent !== "" && Number(form.priceAdjustmentPercent) !== 0 && form.sizes.length > 0 && (
+                  <p className="text-[11px] text-[#a08060] mt-1">
+                    Preço base mínimo será exibido como{" "}
+                    <strong className="text-[#c9a96e]">
+                      {brl(
+                        Math.round(
+                          (Math.min(...form.sizes.map((s) => s.basePrice).filter((n) => n > 0)) || 0) *
+                            (1 + Number(form.priceAdjustmentPercent) / 100) *
+                            100
+                        ) / 100
+                      )}
+                    </strong>{" "}
+                    (acréscimos de álbum/espuma são somados depois, sem ajuste).
+                  </p>
+                )}
+              </Field>
 
               <Field label="Descrição Curta">
                 <input className={inputCls} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />

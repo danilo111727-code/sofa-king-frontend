@@ -153,19 +153,23 @@ export default function Favoritos() {
                     <h3 className="text-lg font-serif font-bold text-foreground group-hover:text-primary transition-colors leading-tight mb-2">
                       {displayName(product.name, product.category)}
                     </h3>
-                    {product.price > 0 ? (
-                      <div className="space-y-0.5 mb-3">
-                        <p className="text-sm font-semibold text-foreground">
-                          {MAX_INSTALLMENTS}x de R$ {(product.price / MAX_INSTALLMENTS).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                        </p>
-                        <p className="text-xs text-accent font-medium">
-                          PIX à vista R$ {applyPixDiscount(product.price).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                          <span className="text-muted-foreground font-normal ml-1">({PIX_DISCOUNT_PCT}% OFF)</span>
-                        </p>
-                      </div>
-                    ) : (
-                      <span className="text-sm text-muted-foreground mb-3">Consultar valor</span>
-                    )}
+                    {(() => {
+                      const pct = product.priceAdjustmentPercent;
+                      const adjustedPrice = (!pct || !Number.isFinite(pct)) ? product.price : Math.round(product.price * (1 + pct / 100) * 100) / 100;
+                      return adjustedPrice > 0 ? (
+                        <div className="space-y-0.5 mb-3">
+                          <p className="text-sm font-semibold text-foreground">
+                            {MAX_INSTALLMENTS}x de R$ {(adjustedPrice / MAX_INSTALLMENTS).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          </p>
+                          <p className="text-xs text-accent font-medium">
+                            PIX à vista R$ {applyPixDiscount(adjustedPrice).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            <span className="text-muted-foreground font-normal ml-1">({PIX_DISCOUNT_PCT}% OFF)</span>
+                          </p>
+                        </div>
+                      ) : (
+                        <span className="text-sm text-muted-foreground mb-3">Consultar valor</span>
+                      );
+                    })()}
                     <div className="mt-auto pt-3 border-t border-border">
                       <Link href={`/produto/${product.id}`}>
                         <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">
