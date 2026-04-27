@@ -1,12 +1,13 @@
 import { Link } from "wouter";
   import { ArrowLeft, Trash2, Minus, Plus, ShoppingBag } from "lucide-react";
   import { useState, useMemo } from "react";
+  import { useUser } from "@clerk/react";
   import { Navbar } from "@/components/layout/Navbar";
   import { Footer } from "@/components/layout/Footer";
   import { Button } from "@/components/ui/button";
   import { Separator } from "@/components/ui/separator";
   import { useCart } from "@/contexts/CartContext";
-  import { trackWhatsapp } from "@/lib/api";
+  import { trackWhatsapp, type OrderSnapshot, type OrderItemSnapshot } from "@/lib/api";
   import { MAX_INSTALLMENTS } from "@/lib/categories";
 
   const WHATSAPP = "5575991495793";
@@ -41,6 +42,7 @@ import { Link } from "wouter";
 
   export default function Carrinho() {
     const { items, subtotal, setQty, remove, clear } = useCart();
+    const { user } = useUser();
     const [payment, setPayment] = useState<Payment>("pix");
     const [notes, setNotes] = useState("");
 
@@ -51,7 +53,38 @@ import { Link } from "wouter";
     const finalTotal = payment === "pix" ? pixTotal : cardTotal;
 
     function handleSend() {
-      trackWhatsapp({});
+      const customerName = (
+        user?.fullName ||
+        [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
+        user?.username ||
+        ""
+      ).trim();
+      const customerEmail = user?.primaryEmailAddress?.emailAddress || "";
+
+      const orderItems: OrderItemSnapshot[] = items.map((it) => ({
+        productId: it.productId,
+        productName: it.productName,
+        sizeLabel: it.size?.label,
+        basePrice: it.size?.basePrice,
+        albumName: it.album?.name ?? null,
+        fabricName: it.fabric?.name ?? null,
+        foamName: it.foam?.name ?? null,
+        qty: it.qty,
+        unitPrice: it.unitPrice,
+      }));
+
+      const orderSnapshot: OrderSnapshot = {
+        items: orderItems,
+        subtotal,
+        payment,
+        paymentTotal: finalTotal,
+        installments: payment === "cartao" ? MAX_INSTALLMENTS : undefined,
+        notes: notes.trim() || undefined,
+        customerName: customerName || undefined,
+        customerEmail: customerEmail || undefined,
+      };
+      trackWhatsapp({ order: orderSnapshot });
+
       const lines: string[] = [];
       lines.push("Olá! Gostaria de fechar o pedido abaixo 👇\n");
       items.forEach((it, idx) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation } from "wouter";
 import { useUser, useClerk } from "@clerk/react";
 import {
@@ -41,7 +41,7 @@ const goldBtn = "bg-[#c9a96e] hover:bg-[#b8954f] text-[#1a1208] font-semibold px
 const ghostBtn = "px-3 py-1.5 bg-[#261a0e] hover:bg-[#3d2e1e] border border-[#3d2e1e] rounded-lg text-sm text-[#c9a96e]";
 const dangerBtn = "px-3 py-1.5 bg-red-950/50 hover:bg-red-900/50 border border-red-900/50 rounded-lg text-sm text-red-400";
 
-type Tab = "produtos" | "materiais" | "clientes" | "estatisticas" | "whatsapp" | "configuracoes";
+type Tab = "produtos" | "materiais" | "clientes" | "estatisticas" | "pedidos" | "whatsapp" | "configuracoes";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -164,6 +164,7 @@ export default function Admin() {
     { key: "materiais", label: "Materiais" },
     { key: "clientes", label: "Clientes" },
     { key: "estatisticas", label: "Estatísticas" },
+    { key: "pedidos", label: "Pedidos" },
     { key: "whatsapp", label: "WhatsApp" },
     { key: "configuracoes", label: "Configurações" },
   ];
@@ -214,6 +215,7 @@ export default function Admin() {
         {tab === "materiais" && <MateriaisTab flash={flash} />}
         {tab === "clientes" && <ClientesTab />}
         {tab === "estatisticas" && <EstatisticasTab />}
+        {tab === "pedidos" && <PedidosTab />}
         {tab === "whatsapp" && <WhatsappTab />}
         {tab === "configuracoes" && <ConfiguracoesTab flash={flash} />}
       </main>
@@ -1286,6 +1288,116 @@ function EstatisticasTab() {
       </div>
     </>
   );
+}
+
+// ======================================================================
+// PEDIDOS
+// ======================================================================
+
+function PedidosTab() {
+  const [events, setEvents] = useState<WhatsappEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchWhatsappEvents()
+      .then(setEvents)
+      .catch(() => setEvents([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const orders = useMemo(() => events.filter((e) => e.order && e.order.items && e.order.items.length > 0), [events]);
+
+  if (loading) return <div className="text-center text-[#a08060] py-16">Carregando...</div>;
+
+  return (
+    <>
+      <h1 className="text-xl font-semibold mb-1">Pedidos enviados pelo carrinho</h1>
+      <p className="text-sm text-[#a08060] mb-6">
+        {orders.length === 0
+          ? "Nenhum pedido recebido ainda."
+          : `${orders.length} pedido(s) — toque para ver os detalhes.`}
+      </p>
+
+      {orders.length === 0 ? (
+        <div className="text-center text-[#a08060] py-16 border border-dashed border-[#2d1f10] rounded-xl">
+          Quando um cliente enviar o carrinho pelo WhatsApp, o pedido aparecerá aqui.
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {orders.map((e) => {
+            const o = e.order!;
+            const isOpen = expandedId === e.id;
+            const customer = o.customerName || "Cliente não identificado";
+            const dateStr = new Date(e.ts).toLocaleString("pt-BR");
+            const itemsCount = o.items.reduce((s, it) => s + it.qty, 0);
+            return (
+              <div key={e.id} className={cardCls}>
+                <button
+                  type="button"
+                  onClick={() => setExpandedId(isOpen ? null : e.id)}
+                  className="w-full flex items-start justify-between gap-4 text-left"
+                >
+                  <div className="min-w-0">
+                    <p className="font-medium text-white truncate">{customer}</p>
+                    <p className="text-xs text-[#a08060] mt-0.5">
+                      {dateStr} · {itemsCount} item(ns) · Total {brlAdmin(o.paymentTotal)} ({o.payment === "pix" ? "PIX" : "Cartão"})
+                    </p>
+                    {o.customerEmail && (
+                      <p className="text-xs text-[#a08060] truncate">{o.customerEmail}</p>
+                    )}
+                  </div>
+                  <span className="text-[#c9a96e] text-xs whitespace-nowrap">{isOpen ? "Recolher ▲" : "Ver detalhes ▼"}</span>
+                </button>
+
+                {isOpen && (
+                  <div className="mt-4 pt-4 border-t border-[#2d1f10] space-y-3">
+                    {o.items.map((it, idx) => (
+                      <div key={idx} className="text-sm bg-[#1a1208] border border-[#2d1f10] rounded-lg p-3">
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="font-medium text-white">
+                            {it.qty}× {it.productName}
+                          </p>
+                          <p className="text-[#c9a96e] whitespace-nowrap">{brlAdmin(it.unitPrice * it.qty)}</p>
+                        </div>
+                        <div className="text-xs text-[#a08060] mt-1 space-y-0.5">
+                          {it.sizeLabel && <p>Tamanho: {it.sizeLabel}</p>}
+                          {it.albumName && <p>Álbum: {it.albumName}</p>}
+                          {it.fabricName && <p>Tecido: {it.fabricName}</p>}
+                          {it.foamName && <p>Espuma: {it.foamName}</p>}
+                          <p>Unitário: {brlAdmin(it.unitPrice)}</p>
+                        </div>
+                      </div>
+                    ))}
+
+                    <div className="text-sm space-y-1 pt-2 border-t border-[#2d1f10]">
+                      <div className="flex justify-between text-[#a08060]">
+                        <span>Subtotal</span>
+                        <span>{brlAdmin(o.subtotal)}</span>
+                      </div>
+                      <div className="flex justify-between text-white font-semibold">
+                        <span>Total ({o.payment === "pix" ? "PIX" : "Cartão"}{o.installments ? ` ${o.installments}x` : ""})</span>
+                        <span>{brlAdmin(o.paymentTotal)}</span>
+                      </div>
+                      {o.notes && (
+                        <p className="text-xs text-[#a08060] mt-2">
+                          <span className="text-white">Observações:</span> {o.notes}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </>
+  );
+}
+
+function brlAdmin(v: number): string {
+  return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(v || 0);
 }
 
 // ======================================================================

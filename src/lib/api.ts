@@ -101,11 +101,36 @@ export interface Stats {
   topWhatsapp: { id: string; name: string; count: number }[];
 }
 
+export interface OrderItemSnapshot {
+  productId: string;
+  productName: string;
+  sizeLabel?: string;
+  basePrice?: number;
+  albumName?: string | null;
+  fabricName?: string | null;
+  foamName?: string | null;
+  qty: number;
+  unitPrice: number;
+}
+
+export interface OrderSnapshot {
+  items: OrderItemSnapshot[];
+  subtotal: number;
+  payment: "pix" | "cartao";
+  paymentTotal: number;
+  installments?: number;
+  notes?: string;
+  customerName?: string;
+  customerEmail?: string;
+}
+
 export interface WhatsappEvent {
   id: string;
   productId?: string;
   productName?: string;
   ts: number;
+  /** Quando o evento veio do botão "Solicitar contato no WhatsApp" do carrinho. */
+  order?: OrderSnapshot;
 }
 
 
@@ -199,7 +224,7 @@ export function trackView(data: { productId?: string; productName?: string; path
   fetch(`${BASE}/events/view`, { method: "POST", headers: jsonHeaders, body: JSON.stringify(data) }).catch(() => {});
 }
 
-export function trackWhatsapp(data: { productId?: string; productName?: string }): void {
+export function trackWhatsapp(data: { productId?: string; productName?: string; order?: OrderSnapshot }): void {
   fetch(`${BASE}/events/whatsapp`, { method: "POST", headers: jsonHeaders, body: JSON.stringify(data) }).catch(() => {});
 }
 
