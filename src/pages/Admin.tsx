@@ -674,8 +674,8 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                                           className="bg-[#1a1208] border border-[#3d2e1e] rounded-lg pl-7 pr-2 py-1 text-xs text-white w-full focus:outline-none focus:border-[#c9a96e]/50"
                                           type="number" min="0" step="0.01"
                                           placeholder="0"
-                                          value={s.albumSurcharges?.[al.id] ?? 0}
-                                          onChange={(e) => updateAlbumSurcharge(i, al.id, Number(e.target.value))}
+                                          value={s.albumSurcharges?.[al.id] || ""}
+                                          onChange={(e) => updateAlbumSurcharge(i, al.id, Number(e.target.value) || 0)}
                                         />
                                       </div>
                                     </div>
@@ -696,8 +696,8 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                                           className="bg-[#1a1208] border border-[#3d2e1e] rounded-lg pl-7 pr-2 py-1 text-xs text-white w-full focus:outline-none focus:border-[#c9a96e]/50"
                                           type="number" min="0" step="0.01"
                                           placeholder="0"
-                                          value={s.foamSurcharges?.[fm.id] ?? 0}
-                                          onChange={(e) => updateFoamSurcharge(i, fm.id, Number(e.target.value))}
+                                          value={s.foamSurcharges?.[fm.id] || ""}
+                                          onChange={(e) => updateFoamSurcharge(i, fm.id, Number(e.target.value) || 0)}
                                         />
                                       </div>
                                     </div>
