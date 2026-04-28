@@ -129,17 +129,14 @@ export default function Produto() {
   useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [id]);
 
   useEffect(() => {
-    // Only clear fabric when the user switches to a DIFFERENT album.
-    // Closing/reopening the same album must NOT clear the chosen fabric.
-    if (
-      selectedAlbum?.id &&
-      selectedFabricKey &&
-      !selectedFabricKey.startsWith(`fab_${selectedAlbum.id}_`)
-    ) {
-      setFabric(null);
-      setSelectedFabricKey(null);
-    }
-  }, [selectedAlbum?.id, selectedFabricKey]);
+    // Reset selection only when navigating to a DIFFERENT product.
+    // Opening/closing/switching albums must NOT clear the chosen fabric — only
+    // explicitly picking another fabric does (handled in the preview's onSelect).
+    setAlbumIdx(-1);
+    setSelectedAlbumId(null);
+    setFabric(null);
+    setSelectedFabricKey(null);
+  }, [product?.id]);
 
   if (loading) {
     return (
@@ -806,6 +803,7 @@ export default function Produto() {
             onSelect={() => {
               const idx = albums.findIndex((a) => a.id === previewAlbum.id);
               if (idx >= 0 && idx !== albumIdx) setAlbumIdx(idx);
+              setSelectedAlbumId(previewAlbum.id);
               setFabric(currentFabric);
               setSelectedFabricKey(currentKey);
               setPreviewFabric(null);
