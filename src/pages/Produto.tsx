@@ -769,6 +769,73 @@ export default function Produto() {
 
       <Footer />
 
+      {/* Resumo flutuante das selecoes — visivel em qualquer scroll */}
+      {selectedSize && (
+        <div
+          data-testid="floating-price-summary"
+          className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40 bg-background/95 backdrop-blur-md border border-[#c9a96e]/50 shadow-2xl rounded-xl p-3 sm:p-3.5 w-[240px] sm:w-[300px]"
+        >
+          <div className="flex items-center gap-2.5 mb-2.5">
+            {fabric ? (
+              <button
+                type="button"
+                onClick={() => {
+                  if (!selectedFabricKey) return;
+                  const m = selectedFabricKey.match(/^fab_(.+)_(\d+)$/);
+                  if (m) setPreviewFabric({ albumId: m[1], index: parseInt(m[2], 10) });
+                }}
+                aria-label={`Ampliar tecido ${fabric.name}`}
+                data-testid="button-summary-fabric-thumb"
+                className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden border-2 border-[#c9a96e]/50 hover:border-[#c9a96e] hover:scale-110 transition-all"
+              >
+                <img src={fabric.imageUrl} alt={fabric.name} className="w-full h-full object-cover" />
+              </button>
+            ) : (
+              <div className="flex-shrink-0 w-10 h-10 rounded-full border-2 border-dashed border-[#c9a96e]/40 bg-[#c9a96e]/5" aria-hidden="true" />
+            )}
+            <div className="min-w-0 flex-1">
+              <div className="text-[10px] uppercase tracking-wider text-[#7a6040] leading-none">Resumo</div>
+              <div className="text-sm font-semibold text-foreground truncate">{fullName}</div>
+              <div className="text-[11px] text-muted-foreground">{selectedSize.label}</div>
+            </div>
+          </div>
+          <div className="space-y-1 text-xs">
+            <div className="flex justify-between gap-3 text-foreground/80">
+              <span className="truncate">Base</span>
+              <span className="flex-shrink-0 tabular-nums">{brl(adjustedBasePrice)}</span>
+            </div>
+            {selectedAlbum && (
+              <div className="flex justify-between gap-3 text-foreground/80">
+                <span className="truncate">
+                  + Tecido <span className="text-foreground/95">{fabric ? fabric.name : selectedAlbum.name}</span>
+                </span>
+                <span className="flex-shrink-0 tabular-nums">
+                  {albumSurcharge > 0
+                    ? `+${brl(albumSurcharge)}`
+                    : <span className="text-green-600 text-[10px] uppercase tracking-wide">incluso</span>}
+                </span>
+              </div>
+            )}
+            {selectedFoam && (
+              <div className="flex justify-between gap-3 text-foreground/80">
+                <span className="truncate">
+                  + Espuma <span className="text-foreground/95">{selectedFoam.name}</span>
+                </span>
+                <span className="flex-shrink-0 tabular-nums">
+                  {foamAdjustment > 0
+                    ? `+${brl(foamAdjustment)}`
+                    : <span className="text-green-600 text-[10px] uppercase tracking-wide">incluso</span>}
+                </span>
+              </div>
+            )}
+          </div>
+          <div className="border-t border-[#c9a96e]/30 mt-2 pt-2 flex justify-between items-baseline gap-3">
+            <span className="text-[10px] uppercase tracking-wider text-[#7a6040]">Total</span>
+            <span className="text-base sm:text-lg font-bold text-[#c9a96e] tabular-nums" data-testid="text-summary-total">{brl(finalPrice)}</span>
+          </div>
+        </div>
+      )}
+
       {lightboxOpen && lightboxImages.length > 0 && (
         <ImageLightbox
           images={lightboxImages}
