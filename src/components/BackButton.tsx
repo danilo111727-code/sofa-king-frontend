@@ -22,7 +22,7 @@ export function BackButton() {
       onClick={handleBack}
       aria-label="Voltar"
       data-testid="button-global-back"
-      className="fixed left-3 top-20 z-40 inline-flex items-center justify-center w-9 h-9 rounded-full bg-background/70 hover:bg-background text-foreground/70 hover:text-foreground border border-border/60 backdrop-blur-sm shadow-sm transition-all opacity-70 hover:opacity-100"
+      className="fixed left-3 top-32 sm:top-40 z-50 inline-flex items-center justify-center w-10 h-10 rounded-full bg-background border border-[#c9a96e]/60 text-[#c9a96e] hover:bg-[#c9a96e]/10 hover:border-[#c9a96e] shadow-md transition-all"
     >
       <ChevronLeft className="w-5 h-5" />
     </button>
