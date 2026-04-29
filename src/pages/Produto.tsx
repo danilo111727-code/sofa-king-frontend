@@ -128,15 +128,10 @@ export default function Produto() {
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [id]);
 
-  useEffect(() => {
-    // Reset selection only when navigating to a DIFFERENT product.
-    // Opening/closing/switching albums must NOT clear the chosen fabric — only
-    // explicitly picking another fabric does (handled in the preview's onSelect).
-    setAlbumIdx(-1);
-    setSelectedAlbumId(null);
-    setFabric(null);
-    setSelectedFabricKey(null);
-  }, [product?.id]);
+  // Regra do produto: o tecido escolhido SO e desmarcado quando o usuario
+  // explicitamente escolhe outro tecido (tratado no onSelect do preview).
+  // Abrir/fechar/trocar de album NAO limpa o tecido. Trocar de produto
+  // (navegacao na mesma instancia da pagina) tambem NAO limpa.
 
   if (loading) {
     return (
@@ -380,7 +375,12 @@ export default function Produto() {
                   )}
                   <div className="space-y-2">
                     {albums.map((a, i) => {
-                      const s = selectedSize ? resolveAlbumSurcharge(a, selectedSize.label) : a.surcharge;
+                      // Mesma prioridade usada no calculo do preco final:
+                      // 1) acrescimo por produto+tamanho (selectedSize.albumSurcharges)
+                      // 2) acrescimo do album por tamanho/padrao (resolveAlbumSurcharge)
+                      const s = selectedSize
+                        ? (selectedSize.albumSurcharges?.[a.id] ?? resolveAlbumSurcharge(a, selectedSize.label))
+                        : a.surcharge;
                       const isOpen = albumIdx === i;
                       return (
                         <div key={a.id} className="rounded-md border border-border overflow-hidden">
@@ -488,7 +488,12 @@ export default function Produto() {
                   )}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {foams.map((f, i) => {
-                      const adj = selectedSize ? resolveFoamAdjustment(f, selectedSize.label) : f.priceAdjustment;
+                      // Mesma prioridade usada no calculo do preco final:
+                      // 1) acrescimo por produto+tamanho (selectedSize.foamSurcharges)
+                      // 2) acrescimo da espuma por tamanho/padrao (resolveFoamAdjustment)
+                      const adj = selectedSize
+                        ? (selectedSize.foamSurcharges?.[f.id] ?? resolveFoamAdjustment(f, selectedSize.label))
+                        : f.priceAdjustment;
                       const isSelected = foamIdx === i;
                       return (
                       <button
@@ -803,7 +808,6 @@ export default function Produto() {
             onSelect={() => {
               const idx = albums.findIndex((a) => a.id === previewAlbum.id);
               if (idx >= 0 && idx !== albumIdx) setAlbumIdx(idx);
-              setSelectedAlbumId(previewAlbum.id);
               setFabric(currentFabric);
               setSelectedFabricKey(currentKey);
               setPreviewFabric(null);
