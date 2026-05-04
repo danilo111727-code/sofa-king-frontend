@@ -305,7 +305,6 @@ export default function Produto() {
                   <div className="mt-2 space-y-0.5">
                     <p className="text-sm text-muted-foreground">
                       No cartão: <strong className="text-foreground">{maxInstallments}x de {brl(installmentPrice)}</strong>{" "}
-                      <span className="text-muted-foreground">com juros da operadora</span>
                       <span className="text-muted-foreground ml-1">({brl(cardPrice)} total)</span>
                     </p>
                   </div>
@@ -571,8 +570,7 @@ export default function Produto() {
                   </p>
                   <div className="mt-2 space-y-1">
                     <p className="text-sm text-muted-foreground" data-testid="text-installment">
-                      No cartão: <strong className="text-foreground">{maxInstallments}x de {brl(installmentPrice)}</strong>{" "}
-                      <span className="text-muted-foreground">com juros da operadora</span>
+                      No cartão: <strong className="text-foreground">{maxInstallments}x de {brl(installmentPrice)}</strong>
                     </p>
                     <p className="text-xs text-muted-foreground" data-testid="text-pix-price">
                       Total no cartão: {brl(cardPrice)}
@@ -580,7 +578,7 @@ export default function Produto() {
                   </div>
                   <div className="text-xs text-muted-foreground mt-3 space-y-0.5 pt-3 border-t border-border">
                     {selectedSize && <div>• Metragem {selectedSize.label}: {brl(adjustedBasePrice)}</div>}
-                    {selectedAlbum && albumSurcharge !== 0 && <div>• {selectedAlbum.name}: {albumSurcharge > 0 ? "+" : ""}{brl(albumSurcharge)}</div>}
+                    {selectedAlbum && <div>• {selectedAlbum.name}{albumSurcharge !== 0 ? (": " + (albumSurcharge > 0 ? "+" : "") + brl(albumSurcharge)) : ""}</div>}
                     {selectedFoam && <div>• Espuma {selectedFoam.name}{foamAdjustment !== 0 ? (": " + (foamAdjustment > 0 ? "+" : "") + brl(foamAdjustment)) : ""}</div>}
                   </div>
                 </div>
