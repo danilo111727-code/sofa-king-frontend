@@ -1,5 +1,5 @@
 import { useParams, Link, useLocation } from "wouter";
-import { ChevronRight, ArrowLeft, ChevronLeft, Ruler, Info, Check, ShieldCheck, ShoppingCart, ChevronDown, ChevronUp, X, Heart } from "lucide-react";
+import { ChevronRight, ArrowLeft, ChevronLeft, Ruler, Info, Check, ShieldCheck, ShoppingCart, ChevronDown, ChevronUp, X, Heart, ZoomIn } from "lucide-react";
 import { useState, useEffect, useMemo, useCallback, useRef, type TouchEvent as ReactTouchEvent } from "react";
 import { ImageLightbox } from "@/components/ImageLightbox";
 import { Navbar } from "@/components/layout/Navbar";
@@ -305,7 +305,6 @@ export default function Produto() {
                   <div className="mt-2 space-y-0.5">
                     <p className="text-sm text-muted-foreground">
                       No cartão: <strong className="text-foreground">{maxInstallments}x de {brl(installmentPrice)}</strong>{" "}
-                      <span className="text-muted-foreground">sem juros</span>
                       <span className="text-muted-foreground ml-1">({brl(cardPrice)} total)</span>
                     </p>
                   </div>
@@ -571,8 +570,7 @@ export default function Produto() {
                   </p>
                   <div className="mt-2 space-y-1">
                     <p className="text-sm text-muted-foreground" data-testid="text-installment">
-                      No cartão: <strong className="text-foreground">{maxInstallments}x de {brl(installmentPrice)}</strong>{" "}
-                      <span className="text-muted-foreground">sem juros</span>
+                      No cartão: <strong className="text-foreground">{maxInstallments}x de {brl(installmentPrice)}</strong>
                     </p>
                     <p className="text-xs text-muted-foreground" data-testid="text-pix-price">
                       Total no cartão: {brl(cardPrice)}
@@ -580,8 +578,8 @@ export default function Produto() {
                   </div>
                   <div className="text-xs text-muted-foreground mt-3 space-y-0.5 pt-3 border-t border-border">
                     {selectedSize && <div>• Metragem {selectedSize.label}: {brl(adjustedBasePrice)}</div>}
-                    {selectedAlbum && albumSurcharge !== 0 && <div>• {selectedAlbum.name}: {albumSurcharge > 0 ? "+" : ""}{brl(albumSurcharge)}</div>}
-                    {selectedFoam && foamAdjustment !== 0 && <div>• {selectedFoam.name}: {foamAdjustment > 0 ? "+" : ""}{brl(foamAdjustment)}</div>}
+                    {selectedAlbum && <div>• {selectedAlbum.name}{fabric ? " — " + fabric.name : ""}{albumSurcharge !== 0 ? (": " + (albumSurcharge > 0 ? "+" : "") + brl(albumSurcharge)) : ""}</div>}
+                    {selectedFoam && <div>• Espuma {selectedFoam.name}{foamAdjustment !== 0 ? (": " + (foamAdjustment > 0 ? "+" : "") + brl(foamAdjustment)) : ""}</div>}
                   </div>
                 </div>
               )}
@@ -838,6 +836,7 @@ function FabricPreviewModal({
   fabric, album, indexLabel, isFavorite, isSelected,
   onClose, onToggleFavorite, onSelect, onPrev, onNext,
 }: FabricPreviewModalProps) {
+  const [zoomOpen, setZoomOpen] = useState(false);
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -872,6 +871,7 @@ function FabricPreviewModal({
   };
 
   return (
+    <>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 animate-in fade-in duration-150"
       onClick={onClose}
@@ -908,12 +908,23 @@ function FabricPreviewModal({
 
         <div className="relative aspect-[4/3] bg-muted flex items-center justify-center select-none">
           {fabric.imageUrl ? (
-            <img
-              src={fabric.imageUrl}
-              alt={fabric.name}
-              className="w-full h-full object-contain"
-              draggable={false}
-            />
+            <>
+              <img
+                src={fabric.imageUrl}
+                alt={fabric.name}
+                className="w-full h-full object-contain cursor-zoom-in"
+                draggable={false}
+                onClick={() => setZoomOpen(true)}
+              />
+              <button
+                type="button"
+                onClick={() => setZoomOpen(true)}
+                className="absolute bottom-3 right-3 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 transition-colors"
+                aria-label="Ampliar imagem"
+              >
+                <ZoomIn className="w-4 h-4" />
+              </button>
+            </>
           ) : (
             <div className="text-muted-foreground text-sm">Sem imagem</div>
           )}
@@ -972,5 +983,16 @@ function FabricPreviewModal({
         </div>
       </div>
     </div>
+    {zoomOpen && fabric.imageUrl && (
+      <ImageLightbox
+        images={[fabric.imageUrl]}
+        currentIndex={0}
+        onClose={() => setZoomOpen(false)}
+        onNext={() => {}}
+        onPrev={() => {}}
+        altBase={fabric.name}
+      />
+    )}
+    </>
   );
 }
