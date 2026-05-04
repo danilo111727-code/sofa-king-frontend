@@ -906,12 +906,12 @@ function FabricPreviewModal({
           />
         </button>
 
-        <div className="relative aspect-[4/3] bg-muted flex items-center justify-center select-none">
+        <div className="relative aspect-square bg-muted flex items-center justify-center select-none">
           {fabric.imageUrl ? (
             <img
               src={fabric.imageUrl}
               alt={fabric.name}
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover"
               draggable={false}
             />
           ) : (
