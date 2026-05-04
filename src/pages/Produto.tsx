@@ -578,7 +578,7 @@ export default function Produto() {
                   </div>
                   <div className="text-xs text-muted-foreground mt-3 space-y-0.5 pt-3 border-t border-border">
                     {selectedSize && <div>• Metragem {selectedSize.label}: {brl(adjustedBasePrice)}</div>}
-                    {selectedAlbum && <div>• {selectedAlbum.name}{albumSurcharge !== 0 ? (": " + (albumSurcharge > 0 ? "+" : "") + brl(albumSurcharge)) : ""}</div>}
+                    {selectedAlbum && <div>• {selectedAlbum.name}{fabric ? " — " + fabric.name : ""}{albumSurcharge !== 0 ? (": " + (albumSurcharge > 0 ? "+" : "") + brl(albumSurcharge)) : ""}</div>}
                     {selectedFoam && <div>• Espuma {selectedFoam.name}{foamAdjustment !== 0 ? (": " + (foamAdjustment > 0 ? "+" : "") + brl(foamAdjustment)) : ""}</div>}
                   </div>
                 </div>
