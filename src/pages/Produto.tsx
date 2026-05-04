@@ -873,6 +873,7 @@ function FabricPreviewModal({
   };
 
   return (
+    <>
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 animate-in fade-in duration-150"
       onClick={onClose}
@@ -994,5 +995,6 @@ function FabricPreviewModal({
         altBase={fabric.name}
       />
     )}
+    </>
   );
 }
