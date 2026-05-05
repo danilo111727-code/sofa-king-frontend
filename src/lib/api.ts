@@ -204,6 +204,10 @@ function saveCachedProducts(data: Product[]) {
   } catch {}
 }
 
+function clearProductsCache() {
+  try { localStorage.removeItem(PRODUCTS_CACHE_KEY); } catch {}
+}
+
 export async function fetchProducts(): Promise<Product[]> {
   const cached = getCachedProducts();
 
@@ -245,6 +249,7 @@ export async function fetchAdminStatus(): Promise<{ isAdmin: boolean; signedIn: 
   }
 
 export async function createProduct(data: Omit<Product, "id">): Promise<Product> {
+  clearProductsCache();
   const res = await fetch(`${BASE}/products`, {
     method: "POST", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
@@ -253,6 +258,7 @@ export async function createProduct(data: Omit<Product, "id">): Promise<Product>
 }
 
 export async function updateProduct(id: string, data: Partial<Omit<Product, "id">>): Promise<Product> {
+  clearProductsCache();
   const res = await fetch(`${BASE}/products/${id}`, {
     method: "PUT", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
@@ -261,6 +267,7 @@ export async function updateProduct(id: string, data: Partial<Omit<Product, "id"
 }
 
 export async function deleteProduct(id: string): Promise<void> {
+  clearProductsCache();
   const res = await fetch(`${BASE}/products/${id}`, { method: "DELETE", headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao excluir produto");
 }
