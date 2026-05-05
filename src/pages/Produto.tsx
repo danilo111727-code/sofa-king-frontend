@@ -965,6 +965,9 @@ function FabricPreviewModal({
             {album && (
               <p className="text-xs text-muted-foreground">Álbum: {album.name}</p>
             )}
+            {album?.description && (
+              <p className="text-sm text-muted-foreground mt-2 leading-snug whitespace-pre-line">{album.description}</p>
+            )}
           </div>
           {isSelected ? (
             <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-green-100 text-green-800 text-sm font-medium border border-green-200">
