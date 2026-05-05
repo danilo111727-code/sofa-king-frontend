@@ -747,6 +747,9 @@ export default function Produto() {
                         <div className={`text-[11px] ${active ? "opacity-90" : "text-muted-foreground"}`}>
                           PIX {brl(sizePix)} · {maxInstallments}x {brl(sizeInstallment)}
                         </div>
+                        <div className={`text-[11px] ${active ? "opacity-80" : "text-muted-foreground/70"}`}>
+                          Total cartão: {brl(sizeCard)}
+                        </div>
                       </div>
                     </div>
                     <div className="font-bold text-sm whitespace-nowrap">{brl(sizeTotal)}</div>
