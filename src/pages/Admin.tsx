@@ -754,7 +754,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                         >
                           <option value="">↓ Copiar de outro modelo (metragens + acréscimos)</option>
                           {products.filter((p) => p.id !== editId && p.sizes.length > 0).map((p) => (
-                            <option key={p.id} value={p.id}>{p.name} ({p.sizes.length} metragens)</option>
+                            <option key={p.id} value={p.id}>{displayName(p.name, p.category)} ({p.sizes.length} metragens)</option>
                           ))}
                         </select>
                         <select
@@ -766,7 +766,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                         >
                           <option value="">↓ Copiar SÓ acréscimos de outro modelo (mantém preços)</option>
                           {products.filter((p) => p.id !== editId && p.sizes.length > 0).map((p) => (
-                            <option key={p.id} value={p.id}>{p.name} ({p.sizes.length} metragens)</option>
+                            <option key={p.id} value={p.id}>{displayName(p.name, p.category)} ({p.sizes.length} metragens)</option>
                           ))}
                         </select>
                       </>
