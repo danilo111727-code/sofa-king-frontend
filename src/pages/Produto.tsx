@@ -198,9 +198,12 @@ export default function Produto() {
         <div className="bg-secondary/30 py-4 border-b border-border">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center text-sm text-muted-foreground">
-              <Link href="/" className="hover:text-primary transition-colors flex items-center gap-1">
-                <ArrowLeft className="w-3 h-3" /> Início
-              </Link>
+              <button
+                onClick={() => window.history.length > 1 ? window.history.back() : (window.location.href = "/")}
+                className="hover:text-primary transition-colors flex items-center gap-1"
+              >
+                <ArrowLeft className="w-3 h-3" /> Voltar
+              </button>
               <ChevronRight className="w-4 h-4 mx-2 text-border" />
               <span>Sofás</span>
               <ChevronRight className="w-4 h-4 mx-2 text-border" />
