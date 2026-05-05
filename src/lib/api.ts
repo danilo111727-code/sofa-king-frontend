@@ -185,10 +185,43 @@ async function readError(res: Response, fallback: string): Promise<string> {
   return `${fallback} (HTTP ${res.status})`;
 }
 
+const PRODUCTS_CACHE_KEY = "sfk_products_v1";
+const PRODUCTS_CACHE_TTL = 5 * 60 * 1000;
+
+function getCachedProducts(): { data: Product[]; timestamp: number } | null {
+  try {
+    const raw = localStorage.getItem(PRODUCTS_CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function saveCachedProducts(data: Product[]) {
+  try {
+    localStorage.setItem(PRODUCTS_CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() }));
+  } catch {}
+}
+
 export async function fetchProducts(): Promise<Product[]> {
+  const cached = getCachedProducts();
+
+  if (cached && Date.now() - cached.timestamp < PRODUCTS_CACHE_TTL) {
+    // Cache fresco: retorna imediatamente e atualiza em background
+    fetch(`${BASE}/products`)
+      .then(r => r.ok ? r.json() : null)
+      .then(fresh => { if (fresh) saveCachedProducts(fresh); })
+      .catch(() => {});
+    return cached.data;
+  }
+
+  // Cache expirado ou inexistente: busca normalmente
   const res = await fetch(`${BASE}/products`);
   if (!res.ok) throw new Error("Erro ao carregar produtos");
-  return res.json();
+  const data: Product[] = await res.json();
+  saveCachedProducts(data);
+  return data;
 }
 
 export async function fetchProduct(id: string): Promise<Product> {
