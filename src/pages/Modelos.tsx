@@ -271,13 +271,15 @@ export default function Modelos() {
                     onClick={() => navigate(`/produto/${product.id}`)}
                     data-testid={`card-product-${product.id}`}
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-white">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-muted/20">
+                      <div className="absolute inset-0 bg-muted/30 animate-pulse" />
                       {product.image ? (
                         <img
                           src={product.image}
                           alt={displayName(product.name, product.category)}
-                          className="w-full h-full object-contain object-center transition-transform duration-700 group-hover/card:scale-105"
+                          className="relative w-full h-full object-contain object-center transition-all duration-700 group-hover/card:scale-105 opacity-0"
                           loading="lazy"
+                          onLoad={(e) => { (e.target as HTMLElement).dataset.loaded = "true"; (e.target as HTMLElement).classList.remove("opacity-0"); }}
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-muted-foreground/50 text-xs">
