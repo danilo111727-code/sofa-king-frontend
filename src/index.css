@@ -87,7 +87,7 @@
   --card-border: 38 25% 82%;
 
   /* Brand Colors */
-  --primary: 129 15% 28%; /* Verde musgo #3D5240 */
+  --primary: 17 8% 17%; /* Carvão quente #2F2A28 */
   --primary-foreground: 38 33% 95%; /* Areia clara */
 
   --secondary: 39 38% 84%; /* Bege quente #E5DCC9 */
@@ -103,24 +103,24 @@
   --destructive-foreground: 0 0% 100%;
 
   --input: 38 25% 82%;
-  --ring: 129 15% 28%;
+  --ring: 17 8% 17%;
 
   /* Sidebars / Modals */
   --sidebar: 38 33% 93%;
   --sidebar-foreground: 33 22% 10%;
   --sidebar-border: 38 25% 82%;
-  --sidebar-primary: 129 15% 28%;
+  --sidebar-primary: 17 8% 17%;
   --sidebar-primary-foreground: 38 33% 95%;
   --sidebar-accent: 39 38% 84%;
   --sidebar-accent-foreground: 33 22% 10%;
-  --sidebar-ring: 129 15% 28%;
+  --sidebar-ring: 17 8% 17%;
 
   --popover: 38 30% 96%;
   --popover-foreground: 33 22% 10%;
   --popover-border: 38 25% 82%;
 
   /* Charts */
-  --chart-1: 129 15% 28%;
+  --chart-1: 17 8% 17%;
   --chart-2: 39 38% 75%;
   --chart-3: 38 39% 54%;
   --chart-4: 33 25% 50%;
