@@ -8,7 +8,7 @@ import { useCategories } from "@/hooks/useCategories";
 import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
 import { useFavorites } from "@/hooks/useFavorites";
 
-function useFilters(validCategoryIds: Set<string>): { category: string; bestseller: boolean } {
+function useFilters(validCategoryIds: Set<string>): { category: string; bestseller: boolean; designAutoral: boolean } {
   const search = useSearch();
   return useMemo(() => {
     const params = new URLSearchParams(search);
@@ -16,6 +16,7 @@ function useFilters(validCategoryIds: Set<string>): { category: string; bestsell
     return {
       category: validCategoryIds.has(raw) ? raw : "",
       bestseller: params.get("destaque") === "1",
+      designAutoral: params.get("design") === "1",
     };
   }, [search, validCategoryIds]);
 }
@@ -34,7 +35,7 @@ export default function Modelos() {
   const [priceRange, setPriceRange] = useState<{ min: number; max: number } | null>(null);
   const { categories: CATEGORIES, displayName, getCategory } = useCategories();
   const validCategoryIds = useMemo(() => new Set(CATEGORIES.map((c) => c.id)), [CATEGORIES]);
-  const { category: activeCategory, bestseller: onlyBestsellers } = useFilters(validCategoryIds);
+  const { category: activeCategory, bestseller: onlyBestsellers, designAutoral: onlyDesignAutoral } = useFilters(validCategoryIds);
   const activeCatDef = getCategory(activeCategory);
   const { isFavorite, toggle: toggleFavorite } = useFavorites();
   const { pixDiscountPct, maxInstallments } = useSiteSettings();
@@ -43,6 +44,8 @@ export default function Modelos() {
   useEffect(() => {
     const path = onlyBestsellers
       ? "/modelos?destaque=1"
+      : onlyDesignAutoral
+      ? "/modelos?design=1"
       : activeCategory ? `/modelos?categoria=${activeCategory}` : "/modelos";
     trackView({ path });
   }, [activeCategory, onlyBestsellers]);
@@ -57,6 +60,7 @@ export default function Modelos() {
   const filteredProducts = useMemo(() => {
     let avail = products.filter((p) => p.disponibilidade);
     if (onlyBestsellers) avail = avail.filter((p) => p.bestseller);
+    if (onlyDesignAutoral) avail = avail.filter((p) => (p as any).designAutoral);
     if (activeCategory) avail = avail.filter((p) => p.category === activeCategory);
     if (priceRange) {
       avail = avail.filter((p) => {
@@ -98,6 +102,8 @@ export default function Modelos() {
 
   const heading = onlyBestsellers
     ? "⭐ Bestsellers"
+    : onlyDesignAutoral
+    ? "✏️ Design Autorais"
     : activeCatDef
     ? activeCatDef.label
     : "Todos os modelos";
@@ -167,6 +173,17 @@ export default function Modelos() {
                 data-testid="filter-bestseller"
               >
                 ⭐ Bestsellers
+              </Link>
+              <Link
+                href="/modelos?design=1"
+                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+                  onlyDesignAutoral
+                    ? "bg-purple-700 text-white border-purple-600"
+                    : "bg-background text-muted-foreground border-border hover:border-purple-400/50 hover:text-foreground"
+                }`}
+                data-testid="filter-design-autoral"
+              >
+                ✏️ Design Autorais
               </Link>
               {CATEGORIES.map((c) => (
                 <Link
@@ -306,6 +323,11 @@ export default function Modelos() {
                       {product.bestseller && (
                         <span className="absolute top-3 right-3 text-[10px] font-bold tracking-wider uppercase bg-primary text-primary-foreground px-2.5 py-1 rounded-full">
                           ⭐ Bestseller
+                        </span>
+                      )}
+                      {(product as any).designAutoral && (
+                        <span className="absolute top-3 left-3 text-[10px] font-bold tracking-wider uppercase bg-purple-700 text-white px-2.5 py-1 rounded-full">
+                          ✏️ Design Autoral
                         </span>
                       )}
                       <button
