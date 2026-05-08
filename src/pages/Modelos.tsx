@@ -330,6 +330,11 @@ export default function Modelos() {
                         const adjustedPrice = (!pct || !Number.isFinite(pct)) ? product.price : Math.round(product.price * (1 + pct / 100) * 100) / 100;
                         return adjustedPrice > 0 ? (
                           <div className="space-y-0.5 mb-2" data-testid={`text-product-price-${product.id}`}>
+                            {(product as any).displaySizeLabel ? (
+                              <p className="text-[11px] text-muted-foreground/70">{(product as any).displaySizeLabel}</p>
+                            ) : (
+                              <p className="text-[11px] text-muted-foreground/70">A partir de</p>
+                            )}
                             <p className="text-sm font-bold text-green-700">
                               PIX R$ {adjustedPrice.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </p>
