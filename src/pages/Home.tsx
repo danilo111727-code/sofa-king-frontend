@@ -277,11 +277,11 @@ export default function Home() {
                             const adjustedPrice = (!pct || !Number.isFinite(pct)) ? product.price : Math.round(product.price * (1 + pct / 100) * 100) / 100;
                             return adjustedPrice > 0 ? (
                               <div className="space-y-0.5 mt-1">
-                                {(product as any).displaySizeLabel ? (
-                                  <p className="text-[11px] text-muted-foreground/70">{(product as any).displaySizeLabel}</p>
-                                ) : (
-                                  <p className="text-[11px] text-muted-foreground/70">A partir de</p>
-                                )}
+                                {(() => {
+                                  const lbl = (product as any).displaySizeLabel ||
+                                    (product.sizes?.filter((s: any) => s.basePrice > 0).sort((a: any, b: any) => a.basePrice - b.basePrice)[0]?.label ?? "");
+                                  return lbl ? <p className="text-[11px] text-muted-foreground/70">{lbl}</p> : null;
+                                })()}
                                 <p className="text-sm font-bold text-green-700">
                                   PIX R$ {adjustedPrice.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                 </p>
