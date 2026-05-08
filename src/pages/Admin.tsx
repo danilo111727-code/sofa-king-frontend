@@ -242,6 +242,8 @@ interface ProdutoForm {
   diagramaAnotacoes: import("@/lib/api").DiagramaAnotacao[];
   priceAdjustmentPercent: number | "";
   displaySizeLabel: string;
+  copiedFromName: string;
+  copiedFromDate: string;
 }
 
 const EMPTY_PRODUTO: ProdutoForm = {
@@ -251,6 +253,8 @@ const EMPTY_PRODUTO: ProdutoForm = {
   sizes: [], diagramaUrl: "", diagramaAnotacoes: [],
   priceAdjustmentPercent: "",
   displaySizeLabel: "",
+  copiedFromName: "",
+  copiedFromDate: "",
 };
 
 function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
@@ -327,6 +331,8 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       diagramaAnotacoes: p.diagramaAnotacoes ?? [],
       priceAdjustmentPercent: (typeof p.priceAdjustmentPercent === "number" && Number.isFinite(p.priceAdjustmentPercent) && p.priceAdjustmentPercent !== 0) ? p.priceAdjustmentPercent : "",
       displaySizeLabel: (p as any).displaySizeLabel ?? "",
+      copiedFromName: (p as any).copiedFromName ?? "",
+      copiedFromDate: (p as any).copiedFromDate ?? "",
     });
     setShowForm(true);
   }
@@ -370,6 +376,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         diagramaAnotacoes: form.diagramaAnotacoes.length > 0 ? form.diagramaAnotacoes : undefined,
         priceAdjustmentPercent: (form.priceAdjustmentPercent === "" || !Number.isFinite(Number(form.priceAdjustmentPercent))) ? 0 : Number(form.priceAdjustmentPercent),
         displaySizeLabel: form.displaySizeLabel || undefined,
+        ...(form.copiedFromName ? { copiedFromName: form.copiedFromName, copiedFromDate: form.copiedFromDate || new Date().toISOString() } : {}),
       };
       if (editId) { await updateProduct(editId, payload); flash("ok", "Produto atualizado!"); }
       else { await createProduct(payload); flash("ok", "Produto criado!"); }
@@ -436,6 +443,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         foamSurcharges: s.foamSurcharges ? { ...s.foamSurcharges } : {},
       })),
     }));
+    setForm((f2) => ({ ...f2, copiedFromName: p.name, copiedFromDate: new Date().toISOString() }));
     setExpandedSizes(new Set());
     flash("ok", `Metragens e acréscimos copiados de "${p.name}".`);
   }
@@ -461,6 +469,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         ? `Acréscimos copiados de "${p.name}" (${matched}/${total} metragens — ${skipped} sem correspondência).`
         : `Acréscimos de "${p.name}" aplicados em todas as ${matched} metragens. Preços base mantidos.`;
       flash("ok", msg);
+      setForm((f3) => ({ ...f3, copiedFromName: p.name, copiedFromDate: new Date().toISOString() }));
       return { ...f, sizes };
     });
     setExpandedSizes(new Set());
@@ -511,6 +520,18 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                   <span>{p.sizes.length} metragem{p.sizes.length !== 1 ? "s" : ""}</span>
                   {p.prazoEntrega && <span>🚚 {p.prazoEntrega}</span>}
                 </div>
+                {((p as any).copiedFromName || ((p as any).priceAdjustmentPercent !== undefined && (p as any).priceAdjustmentPercent !== 0)) && (
+                  <div className="mt-1 text-[11px] text-[#a08060]/70 flex flex-wrap gap-2">
+                    {(p as any).copiedFromName && (
+                      <span>📋 Copiado de «{(p as any).copiedFromName}»{(p as any).copiedFromDate ? ` em ${new Date((p as any).copiedFromDate).toLocaleDateString("pt-BR")}` : ""}</span>
+                    )}
+                    {(p as any).priceAdjustmentPercent !== undefined && (p as any).priceAdjustmentPercent !== 0 && (
+                      <span className={(p as any).priceAdjustmentPercent > 0 ? "text-amber-400/80" : "text-green-400/80"}>
+                        {(p as any).priceAdjustmentPercent > 0 ? "+" : ""}{(p as any).priceAdjustmentPercent}%
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
                 <button onClick={() => openEdit(p)} className={ghostBtn}>Editar</button>
