@@ -35,6 +35,8 @@ export interface Product {
   diagramaAnotacoes?: DiagramaAnotacao[];
   /** Optional %: positive markup, negative discount. Applies ONLY to size basePrice (NOT to album/foam surcharges). */
   priceAdjustmentPercent?: number;
+  /** Label da metragem exibida no catálogo (cards). Vazio = menor preço. */
+  displaySizeLabel?: string;
 }
 
 /**

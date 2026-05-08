@@ -241,6 +241,7 @@ interface ProdutoForm {
   diagramaUrl: string;
   diagramaAnotacoes: import("@/lib/api").DiagramaAnotacao[];
   priceAdjustmentPercent: number | "";
+  displaySizeLabel: string;
 }
 
 const EMPTY_PRODUTO: ProdutoForm = {
@@ -249,6 +250,7 @@ const EMPTY_PRODUTO: ProdutoForm = {
   disponibilidade: true, bestseller: false,
   sizes: [], diagramaUrl: "", diagramaAnotacoes: [],
   priceAdjustmentPercent: "",
+  displaySizeLabel: "",
 };
 
 function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
@@ -324,6 +326,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       diagramaUrl: p.diagramaUrl ?? "",
       diagramaAnotacoes: p.diagramaAnotacoes ?? [],
       priceAdjustmentPercent: (typeof p.priceAdjustmentPercent === "number" && Number.isFinite(p.priceAdjustmentPercent) && p.priceAdjustmentPercent !== 0) ? p.priceAdjustmentPercent : "",
+      displaySizeLabel: (p as any).displaySizeLabel ?? "",
     });
     setShowForm(true);
   }
@@ -355,10 +358,18 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         sizes: form.sizes,
         colors: [],
         fabrics: [],
-        price: Math.min(...form.sizes.map((s) => s.basePrice).filter((n) => n > 0)) || 0,
+        price: (() => {
+          const chosen = form.displaySizeLabel
+            ? form.sizes.find((s) => s.label === form.displaySizeLabel)
+            : null;
+          return chosen?.basePrice && chosen.basePrice > 0
+            ? chosen.basePrice
+            : Math.min(...form.sizes.map((s) => s.basePrice).filter((n) => n > 0)) || 0;
+        })(),
         diagramaUrl: form.diagramaUrl || undefined,
         diagramaAnotacoes: form.diagramaAnotacoes.length > 0 ? form.diagramaAnotacoes : undefined,
         priceAdjustmentPercent: (form.priceAdjustmentPercent === "" || !Number.isFinite(Number(form.priceAdjustmentPercent))) ? 0 : Number(form.priceAdjustmentPercent),
+        displaySizeLabel: form.displaySizeLabel || undefined,
       };
       if (editId) { await updateProduct(editId, payload); flash("ok", "Produto atualizado!"); }
       else { await createProduct(payload); flash("ok", "Produto criado!"); }
@@ -775,6 +786,26 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                   <p className="text-xs text-[#7a6040]">
                     Preço final = <strong>preço da metragem</strong> + acréscimo do álbum + acréscimo da espuma. Use "▼ Acréscimos" para definir cada combinação.
                   </p>
+                  {form.sizes.length > 0 && (
+                    <div className="mt-3 pt-3 border-t border-[#2d1f10]">
+                      <p className="text-xs font-medium text-[#c9a96e] mb-1.5">Metragem exibida no catálogo (cards)</p>
+                      <select
+                        value={form.displaySizeLabel}
+                        onChange={(e) => setForm({ ...form, displaySizeLabel: e.target.value })}
+                        className="w-full bg-[#1a1208] border border-[#3d2e1e] rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#c9a96e]/50"
+                      >
+                        <option value="">Menor preço (padrão)</option>
+                        {form.sizes.filter((s) => s.label.trim()).map((s) => (
+                          <option key={s.label} value={s.label}>
+                            {s.label}{s.basePrice > 0 ? ` — R$ ${s.basePrice.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : ""}
+                          </option>
+                        ))}
+                      </select>
+                      <p className="text-[11px] text-[#7a6040] mt-1">
+                        Define qual preço aparece nos cards da Home e Modelos.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </Field>
 
