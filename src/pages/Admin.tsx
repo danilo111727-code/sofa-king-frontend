@@ -507,7 +507,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                   </span>
                 </div>
                 <div className="flex items-center gap-4 mt-1 text-sm text-[#a08060] flex-wrap">
-                  <span className="text-[#c9a96e] font-semibold">A partir de {brl(p.price)}</span>
+                  <span className="text-[#c9a96e] font-semibold">
+                    {(p as any).displaySizeLabel ? `${(p as any).displaySizeLabel} — ${brl(p.price)}` : `A partir de ${brl(p.price)}`}
+                  </span>
                   <span>{p.sizes.length} metragem{p.sizes.length !== 1 ? "s" : ""}</span>
                   {p.prazoEntrega && <span>🚚 {p.prazoEntrega}</span>}
                 </div>
