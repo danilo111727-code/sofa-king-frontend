@@ -261,7 +261,7 @@ export default function Home() {
                           )}
                           {(product as any).designAutoral && (
                             <span className="absolute top-2 right-2 text-[10px] font-bold tracking-wider uppercase bg-purple-700 text-white px-2 py-0.5 rounded-full">
-                              ✏️ Design Autoral
+                              Design Autoral
                             </span>
                           )}
                           <button
@@ -405,7 +405,7 @@ export default function Home() {
               </p>
               <div className="grid sm:grid-cols-3 gap-4 mb-8">
                 <div className="bg-muted/40 rounded-lg p-5 border border-border/50">
-                  <p className="text-2xl font-serif font-bold text-foreground">02 anos</p>
+                  <p className="text-2xl font-serif font-bold text-foreground">01 ano</p>
                   <p className="text-sm text-muted-foreground mt-1">Estrutura de madeira</p>
                 </div>
                 <div className="bg-muted/40 rounded-lg p-5 border border-border/50">
