@@ -47,6 +47,7 @@ function buildMenu(categories: CategoryDef[]): MenuItem[] {
 
   return [
     { label: "⭐ BESTSELLERS", href: "/modelos?destaque=1" },
+    { label: "DESIGN AUTORAIS", href: "/modelos?design=1" },
     { label: "TODOS OS MODELOS", href: "/modelos" },
     ...groups,
     { label: "PRAZO DE ENTREGA", href: "/#prazo-entrega" },
