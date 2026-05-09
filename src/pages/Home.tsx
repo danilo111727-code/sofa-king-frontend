@@ -260,7 +260,7 @@ export default function Home() {
                             </span>
                           )}
                           {(product as any).designAutoral && (
-                            <span className="absolute top-2 right-2 text-[10px] font-bold tracking-wider uppercase bg-purple-700 text-white px-2 py-0.5 rounded-full">
+                            <span className="absolute top-2 right-2 text-[10px] font-bold tracking-wider uppercase bg-black text-white px-2 py-0.5 rounded-full">
                               Design Autoral
                             </span>
                           )}
