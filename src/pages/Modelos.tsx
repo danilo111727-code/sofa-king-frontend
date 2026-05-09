@@ -103,7 +103,7 @@ export default function Modelos() {
   const heading = onlyBestsellers
     ? "⭐ Bestsellers"
     : onlyDesignAutoral
-    ? "✏️ Design Autorais"
+    ? "Design Autorais"
     : activeCatDef
     ? activeCatDef.label
     : "Todos os modelos";
@@ -183,7 +183,7 @@ export default function Modelos() {
                 }`}
                 data-testid="filter-design-autoral"
               >
-                ✏️ Design Autorais
+                Design Autorais
               </Link>
               {CATEGORIES.map((c) => (
                 <Link
@@ -327,7 +327,7 @@ export default function Modelos() {
                       )}
                       {(product as any).designAutoral && (
                         <span className="absolute top-3 left-3 text-[10px] font-bold tracking-wider uppercase bg-purple-700 text-white px-2.5 py-1 rounded-full">
-                          ✏️ Design Autoral
+                          Design Autoral
                         </span>
                       )}
                       <button
