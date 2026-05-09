@@ -834,7 +834,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                 </Field>
                 <Field label="Design Autoral (exibe selo exclusivo nos cards)">
                   <div className="flex items-center gap-2">
-                    <button type="button" onClick={() => setForm({ ...form, designAutoral: true })} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${form.designAutoral ? "bg-purple-900/50 border-purple-500 text-purple-300" : "bg-[#120d06] border-[#2d1f10] text-[#5a4030]"}`}>Sim</button>
+                    <button type="button" onClick={() => setForm({ ...form, designAutoral: true })} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${form.designAutoral ? "bg-black/50 border-gray-400 text-white" : "bg-[#120d06] border-[#2d1f10] text-[#5a4030]"}`}>Sim</button>
                     <button type="button" onClick={() => setForm({ ...form, designAutoral: false })} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${!form.designAutoral ? "bg-[#1a1208] border-[#3d2b18] text-[#c9a96e]" : "bg-[#120d06] border-[#2d1f10] text-[#5a4030]"}`}>Não</button>
                   </div>
                 </Field>
