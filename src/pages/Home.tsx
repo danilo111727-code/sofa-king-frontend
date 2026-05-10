@@ -257,7 +257,7 @@ export default function Home() {
                           {(product as any).designAutoral && (
                             <span className="absolute top-2 left-2 flex items-center gap-1 text-[8px] font-bold tracking-[0.15em] uppercase bg-white text-black border border-black px-2 py-1 rounded-full">
                               DESIGN AUTORAL
-                              <img src="/assets/crown.png" alt="coroa" className="h-5 w-5 object-contain" />
+                              <img src="/assets/crown.png" alt="coroa" className="h-5 w-auto object-contain" />
                             </span>
                           )}
                           <button
