@@ -257,7 +257,7 @@ export default function Home() {
                           {(product as any).designAutoral && (
                             <span className="absolute top-2 left-2 flex items-center gap-1 text-[8px] font-bold tracking-[0.15em] uppercase bg-white text-black border border-black px-2 py-1 rounded-full">
                               DESIGN AUTORAL
-                              <svg width="14" height="11" viewBox="0 0 20 15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M1 14 L5 5 L10 10 L10 2 L10 10 L15 5 L19 14 Z"/><line x1="2" y1="14" x2="18" y2="14"/></svg>
+                              <img src="/assets/crown.png" alt="coroa" className="w-4 h-4 object-contain" />
                             </span>
                           )}
                           <button
