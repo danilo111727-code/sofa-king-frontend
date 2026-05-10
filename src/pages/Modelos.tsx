@@ -320,11 +320,6 @@ export default function Modelos() {
                           {getCategory(product.category)?.label}
                         </span>
                       )}
-                      {product.bestseller && (
-                        <span className="absolute top-3 right-3 text-[10px] font-bold tracking-wider uppercase bg-primary text-primary-foreground px-2.5 py-1 rounded-full">
-                          ⭐ Bestseller
-                        </span>
-                      )}
                       {(product as any).designAutoral && (
                         <span className="absolute top-3 left-3 text-[10px] font-bold tracking-wider uppercase bg-white text-black border border-black px-2.5 py-1 rounded-full">
                           Design Autoral
