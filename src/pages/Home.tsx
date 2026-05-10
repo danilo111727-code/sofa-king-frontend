@@ -254,9 +254,10 @@ export default function Home() {
                               Sem foto
                             </div>
                           )}
-                          {product.bestseller && (
-                            <span className="absolute top-2 left-2 text-[10px] font-bold tracking-wider uppercase bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
-                              ⭐ Bestseller
+                          {(product as any).designAutoral && (
+                            <span className="absolute top-2 left-2 flex items-center gap-1 text-[8px] font-bold tracking-[0.15em] uppercase bg-white text-black border border-black px-2 py-1 rounded-full">
+                              DESIGN AUTORAL
+                              <img src="/assets/crown.png" alt="coroa" className="h-3.5 w-auto object-contain" />
                             </span>
                           )}
                           <button
@@ -400,7 +401,7 @@ export default function Home() {
               </p>
               <div className="grid sm:grid-cols-3 gap-4 mb-8">
                 <div className="bg-muted/40 rounded-lg p-5 border border-border/50">
-                  <p className="text-2xl font-serif font-bold text-foreground">02 anos</p>
+                  <p className="text-2xl font-serif font-bold text-foreground">01 ano</p>
                   <p className="text-sm text-muted-foreground mt-1">Estrutura de madeira</p>
                 </div>
                 <div className="bg-muted/40 rounded-lg p-5 border border-border/50">

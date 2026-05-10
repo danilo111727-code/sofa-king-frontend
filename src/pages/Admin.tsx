@@ -242,6 +242,7 @@ interface ProdutoForm {
   diagramaAnotacoes: import("@/lib/api").DiagramaAnotacao[];
   priceAdjustmentPercent: number | "";
   displaySizeLabel: string;
+  designAutoral: boolean;
 }
 
 const EMPTY_PRODUTO: ProdutoForm = {
@@ -251,6 +252,7 @@ const EMPTY_PRODUTO: ProdutoForm = {
   sizes: [], diagramaUrl: "", diagramaAnotacoes: [],
   priceAdjustmentPercent: "",
   displaySizeLabel: "",
+  designAutoral: false,
 };
 
 function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
@@ -327,6 +329,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       diagramaAnotacoes: p.diagramaAnotacoes ?? [],
       priceAdjustmentPercent: (typeof p.priceAdjustmentPercent === "number" && Number.isFinite(p.priceAdjustmentPercent) && p.priceAdjustmentPercent !== 0) ? p.priceAdjustmentPercent : "",
       displaySizeLabel: (p as any).displaySizeLabel ?? "",
+      designAutoral: Boolean((p as any).designAutoral),
     });
     setShowForm(true);
   }
@@ -370,6 +373,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         diagramaAnotacoes: form.diagramaAnotacoes.length > 0 ? form.diagramaAnotacoes : undefined,
         priceAdjustmentPercent: (form.priceAdjustmentPercent === "" || !Number.isFinite(Number(form.priceAdjustmentPercent))) ? 0 : Number(form.priceAdjustmentPercent),
         displaySizeLabel: form.displaySizeLabel || undefined,
+        designAutoral: form.designAutoral,
       };
       if (editId) { await updateProduct(editId, payload); flash("ok", "Produto atualizado!"); }
       else { await createProduct(payload); flash("ok", "Produto criado!"); }
@@ -826,6 +830,12 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                   <div className="flex items-center gap-2">
                     <button type="button" onClick={() => setForm({ ...form, bestseller: true })} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${form.bestseller ? "bg-yellow-900/50 border-yellow-600 text-yellow-300" : "bg-[#120d06] border-[#2d1f10] text-[#5a4030]"}`} data-testid="button-bestseller-yes">⭐ Sim</button>
                     <button type="button" onClick={() => setForm({ ...form, bestseller: false })} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${!form.bestseller ? "bg-[#1a1208] border-[#3d2b18] text-[#c9a96e]" : "bg-[#120d06] border-[#2d1f10] text-[#5a4030]"}`} data-testid="button-bestseller-no">Não</button>
+                  </div>
+                </Field>
+                <Field label="Design Autoral (exibe selo exclusivo nos cards)">
+                  <div className="flex items-center gap-2">
+                    <button type="button" onClick={() => setForm({ ...form, designAutoral: true })} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${form.designAutoral ? "bg-white border-black text-black" : "bg-[#120d06] border-[#2d1f10] text-[#5a4030]"}`}>Sim</button>
+                    <button type="button" onClick={() => setForm({ ...form, designAutoral: false })} className={`flex-1 py-2 rounded-lg text-sm font-medium border ${!form.designAutoral ? "bg-[#1a1208] border-[#3d2b18] text-[#c9a96e]" : "bg-[#120d06] border-[#2d1f10] text-[#5a4030]"}`}>Não</button>
                   </div>
                 </Field>
               </div>
