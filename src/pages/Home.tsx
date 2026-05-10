@@ -255,8 +255,9 @@ export default function Home() {
                             </div>
                           )}
                           {(product as any).designAutoral && (
-                            <span className="absolute top-2 right-2 text-[10px] font-bold tracking-wider uppercase bg-white text-black border border-black px-2 py-0.5 rounded-full">
-                              Design Autoral
+                            <span className="absolute top-2 left-2 flex items-center gap-1.5 text-[8px] font-light tracking-[0.18em] uppercase bg-white text-[#8b7a6b] border border-[#8b7a6b] px-2.5 py-1 rounded-full">
+                              DESIGN AUTORAL
+                              <svg width="16" height="13" viewBox="0 0 20 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 15 L4 6 L9 11 L10 2 L11 11 L16 6 L19 15 Z"/></svg>
                             </span>
                           )}
                           <button
