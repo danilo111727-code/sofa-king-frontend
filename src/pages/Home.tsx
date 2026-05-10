@@ -254,11 +254,6 @@ export default function Home() {
                               Sem foto
                             </div>
                           )}
-                          {product.bestseller && (
-                            <span className="absolute top-2 left-2 text-[10px] font-bold tracking-wider uppercase bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
-                              ⭐ Bestseller
-                            </span>
-                          )}
                           {(product as any).designAutoral && (
                             <span className="absolute top-2 right-2 text-[10px] font-bold tracking-wider uppercase bg-white text-black border border-black px-2 py-0.5 rounded-full">
                               Design Autoral
