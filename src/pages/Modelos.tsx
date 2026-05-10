@@ -323,7 +323,7 @@ export default function Modelos() {
                       {(product as any).designAutoral && (
                         <span className="absolute top-3 left-3 flex items-center gap-1.5 text-[9px] font-bold tracking-[0.15em] uppercase bg-white text-black border border-black px-2.5 py-1 rounded-full">
                           DESIGN AUTORAL
-                          <img src="/assets/crown.png" alt="coroa" className="w-7 h-7 object-contain" />
+                          <img src="/assets/crown.png" alt="coroa" className="h-5 w-auto object-contain" />
                         </span>
                       )}
                       <button
