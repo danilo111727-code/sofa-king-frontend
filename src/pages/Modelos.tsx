@@ -178,7 +178,7 @@ export default function Modelos() {
                 href="/modelos?design=1"
                 className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
                   onlyDesignAutoral
-                    ? "bg-black text-white border-black"
+                    ? "bg-white text-black border-black"
                     : "bg-background text-muted-foreground border-border hover:border-black/30 hover:text-foreground"
                 }`}
                 data-testid="filter-design-autoral"
@@ -326,7 +326,7 @@ export default function Modelos() {
                         </span>
                       )}
                       {(product as any).designAutoral && (
-                        <span className="absolute top-3 left-3 text-[10px] font-bold tracking-wider uppercase bg-black text-white px-2.5 py-1 rounded-full">
+                        <span className="absolute top-3 left-3 text-[10px] font-bold tracking-wider uppercase bg-white text-black border border-black px-2.5 py-1 rounded-full">
                           Design Autoral
                         </span>
                       )}
