@@ -1,5 +1,5 @@
 {
-  "backup_date": "2026-07-26",
+  "backup_date": "2026-08-02",
   "total_products": 105,
   "products": [
     {
@@ -5421,11 +5421,11 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
       "displaySizeLabel": "2,20 m",
-      "priceAdjustmentPercent": 10,
-      "designAutoral": false
+      "priceAdjustmentPercent": 10
     },
     {
       "id": "chaise-lucerna",
@@ -7261,10 +7261,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 10,
-      "designAutoral": false
+      "priceAdjustmentPercent": 10
     },
     {
       "id": "jakarta",
@@ -7298,10 +7298,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 10,
-      "designAutoral": false
+      "priceAdjustmentPercent": 10
     },
     {
       "id": "puerto",
@@ -7497,10 +7497,10 @@
       "dimensions": "",
       "description": "Puff não incluso ",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio e almofadas em fibra siliconada.\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes, aliado a uma base giratória que proporciona mais funcionalidade e versatilidade ao uso.",
-      "priceAdjustmentPercent": 0,
-      "designAutoral": false
+      "priceAdjustmentPercent": 0
     },
     {
       "id": "oassis",
@@ -7832,10 +7832,10 @@
       "dimensions": "",
       "description": "Puff não incluso.",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio .\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes, aliado a uma base giratória que proporciona mais funcionalidade e versatilidade ao uso.",
-      "priceAdjustmentPercent": 0,
-      "designAutoral": false
+      "priceAdjustmentPercent": 0
     },
     {
       "id": "elegance-1777218069614",
@@ -9257,10 +9257,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": true,
       "disponibilidade": true,
       "longDescription": "Sofá Fluid 02, com design orgânico de curvas suaves e formas contínuas que trazem leveza e sofisticação ao ambiente. Produzido em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone, com base elevada e acabamento linear dourado que valoriza o conjunto.",
-      "priceAdjustmentPercent": 0,
-      "designAutoral": true
+      "priceAdjustmentPercent": 0
     },
     {
       "id": "fluid-03",
