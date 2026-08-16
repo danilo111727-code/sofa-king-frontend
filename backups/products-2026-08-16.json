@@ -1,6 +1,6 @@
 {
-  "backup_date": "2026-05-24",
-  "total_products": 91,
+  "backup_date": "2026-08-16",
+  "total_products": 105,
   "products": [
     {
       "id": "retratil-istambul",
@@ -221,7 +221,7 @@
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
       "displaySizeLabel": "2,20 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 15
     },
     {
       "id": "retratil-detroit",
@@ -3216,7 +3216,7 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/0180fd2f-c2d7-4b26-b13c-fc9a015d23e4.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": true,
       "dimensions": "",
       "description": "",
@@ -3437,11 +3437,12 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/9e5816f2-42e0-4be9-ab21-16eb3fa5b9e7.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": false,
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
       "displaySizeLabel": "2,40 m",
@@ -3449,7 +3450,7 @@
     },
     {
       "id": "living-brooklyn",
-      "name": "Brooklyn",
+      "name": "Brooklyn L01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d5889b41-06ca-44e4-83c1-c0ef8dcc0a02.jpg",
       "price": 4566.22,
       "sizes": [
@@ -3654,11 +3655,12 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d5889b41-06ca-44e4-83c1-c0ef8dcc0a02.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": false,
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "2,40 m",
@@ -3873,11 +3875,12 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/fe2d9e24-4b51-44cb-8a14-d946887dffa1.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": false,
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
       "displaySizeLabel": "2,40 m",
@@ -4095,7 +4098,7 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/cbaa61be-0a42-4343-826e-316f4b4f16e0.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": false,
       "dimensions": "",
       "description": "",
@@ -4315,11 +4318,12 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/048b0ac8-2b3b-42b6-aa35-8f395fefb2e1.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": false,
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
       "displaySizeLabel": "2,40 m",
@@ -4536,7 +4540,7 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/f3bb45d3-531a-4b1d-a16e-0c9e9b7ec983.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": true,
       "dimensions": "",
       "description": "",
@@ -5417,10 +5421,11 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
       "displaySizeLabel": "2,20 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 10
     },
     {
       "id": "chaise-lucerna",
@@ -6726,13 +6731,7 @@
       "images": [
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/dfecbc2b-3b47-4bef-81c9-157b44cfcfa1.jpg",
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/8725e21f-9d58-4f7d-8226-050827b8a757.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c00af75a-0175-40e5-8986-1cd7134ef20a.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/73efec5a-155e-46af-9fcc-a06c5787de41.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/e40d9cef-1d52-42b2-9519-951d35f92859.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/3de7a47e-00f6-41e8-93d9-a62b8cbc3b1b.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/51c2a524-76bd-4268-aae5-d47a533a1cea.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/cab2fb95-1646-4547-be38-6dcb316de781.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d2aa174b-8b21-48bd-8069-ca5dd8fc484d.jpg"
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c00af75a-0175-40e5-8986-1cd7134ef20a.jpg"
       ],
       "fabrics": [],
       "category": "ilha",
@@ -6740,6 +6739,7 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos em espuma D33 soft e encostos móveis com ajuste manual.\nDesign tipo ilha com acabamento em gomos, unindo conforto, versatilidade e identidade moderna.",
       "displaySizeLabel": "2,40 m x 1,70",
@@ -7261,9 +7261,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 10
     },
     {
       "id": "jakarta",
@@ -7297,9 +7298,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 10
     },
     {
       "id": "puerto",
@@ -7472,7 +7474,7 @@
       "price": 1500,
       "sizes": [
         {
-          "label": "90x80",
+          "label": "90x90",
           "basePrice": 1500,
           "albumSurcharges": {
             "album-1530178d": 250,
@@ -7495,6 +7497,7 @@
       "dimensions": "",
       "description": "Puff não incluso ",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio e almofadas em fibra siliconada.\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes, aliado a uma base giratória que proporciona mais funcionalidade e versatilidade ao uso.",
       "priceAdjustmentPercent": 0
@@ -7594,40 +7597,6 @@
       "priceAdjustmentPercent": 0
     },
     {
-      "id": "concept",
-      "name": "Frame 06",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/3c3466a2-5dda-47c1-a711-e6b00758ab29.jpg",
-      "price": 2269,
-      "sizes": [
-        {
-          "label": "75x70",
-          "basePrice": 2269,
-          "albumSurcharges": {
-            "album-1530178d": 250,
-            "album-2038d5a4": 350,
-            "album-f1a7ebc0": 350
-          },
-          "foamSurcharges": {
-            "esp-d45-selada": 100
-          }
-        }
-      ],
-      "colors": [],
-      "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/3c3466a2-5dda-47c1-a711-e6b00758ab29.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/56e4342e-507a-4970-88e8-70d6244c77fa.jpg"
-      ],
-      "fabrics": [],
-      "category": "poltronas",
-      "bestseller": false,
-      "dimensions": "",
-      "description": "",
-      "prazoEntrega": "",
-      "disponibilidade": true,
-      "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
-      "priceAdjustmentPercent": 0
-    },
-    {
       "id": "alaska",
       "name": "Alaska",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/712e07b6-6dc1-492e-be14-16d699776b4f.jpg",
@@ -7689,41 +7658,6 @@
       "fabrics": [],
       "category": "poltronas",
       "bestseller": true,
-      "dimensions": "",
-      "description": "",
-      "prazoEntrega": "",
-      "disponibilidade": true,
-      "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
-      "priceAdjustmentPercent": 0
-    },
-    {
-      "id": "bangkok",
-      "name": "Bangkok ",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/85f8ed6f-7f32-425c-bc0c-e33299a11faa.jpg",
-      "price": 900,
-      "sizes": [
-        {
-          "label": "70x70",
-          "basePrice": 900,
-          "albumSurcharges": {
-            "album-1530178d": 250,
-            "album-2038d5a4": 350,
-            "album-f1a7ebc0": 350
-          },
-          "foamSurcharges": {
-            "esp-d45-selada": 100
-          }
-        }
-      ],
-      "colors": [],
-      "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/85f8ed6f-7f32-425c-bc0c-e33299a11faa.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/a4ddd092-3ee8-4415-bb18-75bee3c20e2f.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/98523b3c-b862-448f-838f-3024ad8bf63e.jpg"
-      ],
-      "fabrics": [],
-      "category": "poltronas",
-      "bestseller": false,
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
@@ -7896,8 +7830,9 @@
       "category": "poltronas",
       "bestseller": true,
       "dimensions": "",
-      "description": "",
+      "description": "Puff não incluso.",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio .\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes, aliado a uma base giratória que proporciona mais funcionalidade e versatilidade ao uso.",
       "priceAdjustmentPercent": 0
@@ -7971,40 +7906,6 @@
       "priceAdjustmentPercent": 0
     },
     {
-      "id": "frame-1777218288782",
-      "name": "Frame 03",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/7d62b627-b8f3-4b69-9830-37c4ab702bf9.jpg",
-      "price": 1900,
-      "sizes": [
-        {
-          "label": "90x75",
-          "basePrice": 1900,
-          "albumSurcharges": {
-            "album-1530178d": 250,
-            "album-2038d5a4": 350,
-            "album-f1a7ebc0": 350
-          },
-          "foamSurcharges": {
-            "esp-d45-selada": 100
-          }
-        }
-      ],
-      "colors": [],
-      "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/7d62b627-b8f3-4b69-9830-37c4ab702bf9.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/313db8a2-88fd-45e0-bea4-fc2201a3480f.jpg"
-      ],
-      "fabrics": [],
-      "category": "poltronas",
-      "bestseller": false,
-      "dimensions": "",
-      "description": "",
-      "prazoEntrega": "",
-      "disponibilidade": true,
-      "longDescription": "",
-      "priceAdjustmentPercent": 0
-    },
-    {
       "id": "concept-1777218467920",
       "name": "Concept 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/51a4e16b-7d62-42a4-94a5-64751752b519.jpg",
@@ -8037,40 +7938,6 @@
       "prazoEntrega": "",
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio e almofadas em fibra siliconada.\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes.",
-      "priceAdjustmentPercent": 0
-    },
-    {
-      "id": "frame-1777218549100",
-      "name": "Frame 02",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/85dc4dfd-d978-46fe-b4f6-4eee57a1f83d.jpg",
-      "price": 1980,
-      "sizes": [
-        {
-          "label": "90x80",
-          "basePrice": 1980,
-          "albumSurcharges": {
-            "album-1530178d": 250,
-            "album-2038d5a4": 350,
-            "album-f1a7ebc0": 350
-          },
-          "foamSurcharges": {
-            "esp-d45-selada": 100
-          }
-        }
-      ],
-      "colors": [],
-      "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/85dc4dfd-d978-46fe-b4f6-4eee57a1f83d.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6301112f-c89c-4b68-bd84-c78f8c874908.jpg"
-      ],
-      "fabrics": [],
-      "category": "poltronas",
-      "bestseller": false,
-      "dimensions": "",
-      "description": "",
-      "prazoEntrega": "",
-      "disponibilidade": true,
-      "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
       "priceAdjustmentPercent": 0
     },
     {
@@ -8506,7 +8373,7 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/47078dab-017b-4b36-ac56-2b0a1784a7b9.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": false,
       "dimensions": "90 cm de profundidade ",
       "description": "",
@@ -8728,7 +8595,7 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/1a7567a5-9abd-40f9-992f-8547b42d5869.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": false,
       "dimensions": "",
       "description": "",
@@ -9180,11 +9047,11 @@
       "id": "fluid-02",
       "name": "Fluid 02",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/efa62875-b244-468e-92ef-a9780b6046e3.jpg",
-      "price": 3046.22,
+      "price": 3474.67,
       "sizes": [
         {
           "label": "1,60 m",
-          "basePrice": 3046.22,
+          "basePrice": 3474.67,
           "albumSurcharges": {
             "album-1530178d": 300,
             "album-2038d5a4": 420,
@@ -9199,7 +9066,7 @@
         },
         {
           "label": "1,80 m",
-          "basePrice": 3426.22,
+          "basePrice": 3906.67,
           "albumSurcharges": {
             "album-1530178d": 450,
             "album-2038d5a4": 630,
@@ -9214,7 +9081,7 @@
         },
         {
           "label": "2,00 m",
-          "basePrice": 3806.22,
+          "basePrice": 4338.67,
           "albumSurcharges": {
             "album-1530178d": 450,
             "album-2038d5a4": 630,
@@ -9229,7 +9096,7 @@
         },
         {
           "label": "2,20 m",
-          "basePrice": 4186.22,
+          "basePrice": 4770.67,
           "albumSurcharges": {
             "album-1530178d": 500,
             "album-2038d5a4": 700,
@@ -9244,7 +9111,7 @@
         },
         {
           "label": "2,40 m",
-          "basePrice": 4566.22,
+          "basePrice": 5202.67,
           "albumSurcharges": {
             "album-1530178d": 600,
             "album-2038d5a4": 840,
@@ -9259,7 +9126,7 @@
         },
         {
           "label": "2,60 m",
-          "basePrice": 4946.22,
+          "basePrice": 5634.67,
           "albumSurcharges": {
             "album-1530178d": 650,
             "album-2038d5a4": 910,
@@ -9274,7 +9141,7 @@
         },
         {
           "label": "2,80 m",
-          "basePrice": 5326.22,
+          "basePrice": 6066.67,
           "albumSurcharges": {
             "album-1530178d": 750,
             "album-2038d5a4": 1050,
@@ -9289,7 +9156,7 @@
         },
         {
           "label": "3,00 m",
-          "basePrice": 5706.22,
+          "basePrice": 6498.67,
           "albumSurcharges": {
             "album-1530178d": 800,
             "album-2038d5a4": 1120,
@@ -9304,7 +9171,7 @@
         },
         {
           "label": "3,20 m",
-          "basePrice": 6086.22,
+          "basePrice": 6930.67,
           "albumSurcharges": {
             "album-1530178d": 950,
             "album-2038d5a4": 1330,
@@ -9319,7 +9186,7 @@
         },
         {
           "label": "3,40 m",
-          "basePrice": 6466.22,
+          "basePrice": 7362.67,
           "albumSurcharges": {
             "album-1530178d": 1050,
             "album-2038d5a4": 1470,
@@ -9334,7 +9201,7 @@
         },
         {
           "label": "3,60 m",
-          "basePrice": 6846.22,
+          "basePrice": 7794.67,
           "albumSurcharges": {
             "album-1530178d": 1100,
             "album-2038d5a4": 1540,
@@ -9349,7 +9216,7 @@
         },
         {
           "label": "3,80 m",
-          "basePrice": 7226.22,
+          "basePrice": 8226.67,
           "albumSurcharges": {
             "album-1530178d": 1200,
             "album-2038d5a4": 1680,
@@ -9364,7 +9231,7 @@
         },
         {
           "label": "4,00 m",
-          "basePrice": 7606.22,
+          "basePrice": 8658.67,
           "albumSurcharges": {
             "album-1530178d": 1250,
             "album-2038d5a4": 1750,
@@ -9390,6 +9257,7 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": true,
       "disponibilidade": true,
       "longDescription": "Sofá Fluid 02, com design orgânico de curvas suaves e formas contínuas que trazem leveza e sofisticação ao ambiente. Produzido em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone, com base elevada e acabamento linear dourado que valoriza o conjunto.",
       "priceAdjustmentPercent": 0
@@ -10687,11 +10555,12 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/e2601cc2-8171-48a8-bc63-aedd493da0c9.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": false,
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Sofá Urban 03,com visual moderno e funcional, perfeito para quem busca praticidade sem abrir mão do design. Conta com bandeja lateral integrada e pés elevados que trazem leveza ao ambiente. Estrutura em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone para máximo conforto e resistência.",
       "displaySizeLabel": "2,20 m",
@@ -10918,7 +10787,7 @@
     },
     {
       "id": "lounge",
-      "name": "Lounge",
+      "name": "Urban U02",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/79773734-88e5-4b2a-95a4-a50c1c2fce99.jpg",
       "price": 5634.67,
       "sizes": [
@@ -11123,11 +10992,12 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/79773734-88e5-4b2a-95a4-a50c1c2fce99.jpg"
       ],
       "fabrics": [],
-      "category": "living",
+      "category": "fixo",
       "bestseller": false,
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Sofá Lounge 01, ideal para quem busca conforto e estilo em um só produto. Com assento amplo e macio, encosto com detalhes em botões e design acolhedor, é perfeito para momentos de descanso. Estrutura em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone para máximo conforto e resistência.",
       "displaySizeLabel": "2,60 m",
@@ -11780,11 +11650,12 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/56267b61-59c5-483e-8719-f546e1faa69a.jpg"
       ],
       "fabrics": [],
-      "category": "modulos",
+      "category": "fixo",
       "bestseller": false,
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Sofá Lounge 04, moderno e versátil, com assento amplo e encosto móvel que se adapta ao seu uso. A base com acabamento linear amadeirado adiciona sofisticação e personalidade ao ambiente, tornando o modelo ainda mais exclusivo.",
       "displaySizeLabel": "1,80 m",
@@ -12486,6 +12357,3622 @@
       "disponibilidade": true,
       "longDescription": "Sofá Elegance 12,com visual leve e sofisticado, ideal para ambientes elegantes e aconchegantes. Destaca-se pela base em madeira angelim aparente, assento em espuma D33 selada que oferece conforto firme e durável, além de almofadas em fibra de silicone que garantem maciez no uso diário.",
       "displaySizeLabel": "1,80 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "orla-02",
+      "name": "Orla 02",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/2003e0b6-ea1b-435e-b649-7e8f724d42dd.jpg",
+      "price": 7980,
+      "sizes": [
+        {
+          "label": "1,60 m x 1,70",
+          "basePrice": 5000,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "1,80 m x 1,70",
+          "basePrice": 5880,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,00 m x 1,70",
+          "basePrice": 6380,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,20 m x 1,70",
+          "basePrice": 7180,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,40 m x 1,70",
+          "basePrice": 7980,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,60 m x 1,70",
+          "basePrice": 8618,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "2,80 m x 1,70",
+          "basePrice": 9256,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,00 m x 1,70",
+          "basePrice": 9580,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,20 m x 1,70",
+          "basePrice": 10218,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,40 m x 1,70",
+          "basePrice": 10818,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,60 m x 1,70",
+          "basePrice": 11418,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,80 m x 1,70",
+          "basePrice": 12018,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        },
+        {
+          "label": "4,00 m x 1,70",
+          "basePrice": 12618,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/2003e0b6-ea1b-435e-b649-7e8f724d42dd.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/274b7ceb-ff2e-469c-b633-b3ec943b975f.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/588d4cf0-aa3f-4f55-aad9-aa3de4375e83.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/345fe165-c4ec-43c3-823e-68cbe991d0f7.jpg"
+      ],
+      "fabrics": [],
+      "category": "ilha",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "Estrutura em eucalipto tratado, assentos em espuma D33 soft e encostos móveis com ajuste manual.\nDesign tipo ilha com acabamento em gomos, unindo conforto, versatilidade e identidade moderna.",
+      "displaySizeLabel": "2,40 m x 1,70",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "elegance-03",
+      "name": "Elegance 03",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c0ad7599-047f-4b88-bbc9-420a7d840f48.jpg",
+      "price": 2804.2,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 2494.2,
+          "albumSurcharges": {
+            "album-1530178d": 300,
+            "album-2038d5a4": 420,
+            "album-f1a7ebc0": 420
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 225,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 2804.2,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 3114.2,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 3424.2,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 3734.2,
+          "albumSurcharges": {
+            "album-1530178d": 600,
+            "album-2038d5a4": 840,
+            "album-f1a7ebc0": 840
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 4044.2,
+          "albumSurcharges": {
+            "album-1530178d": 650,
+            "album-2038d5a4": 910,
+            "album-f1a7ebc0": 910
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 375,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 4354.2,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 450,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 4664.2,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 450,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 4974.2,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 5284.2,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 5594.2,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 5904.2,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 600,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 6214.2,
+          "albumSurcharges": {
+            "album-1530178d": 1250,
+            "album-2038d5a4": 1750,
+            "album-f1a7ebc0": 1750
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 600,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c0ad7599-047f-4b88-bbc9-420a7d840f48.jpg"
+      ],
+      "fabrics": [],
+      "category": "fixo",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "displaySizeLabel": "1,80 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "lounge-05",
+      "name": "Módulos M01",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c7d72b61-cb57-46da-9ccd-da3df9f7144b.jpg",
+      "price": 3433.77,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3433.77,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 225,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 3862.87,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4291.97,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4721.07,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 5150.17,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 5579.27,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 375,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 6008.37,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 450,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 6437.47,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 450,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 6866.57,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 7295.67,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 7724.77,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 8153.87,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 600,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 8582.97,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 600,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c7d72b61-cb57-46da-9ccd-da3df9f7144b.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/5dc029ef-e855-4d53-92ee-2bdd5bee8545.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/624f6a69-4239-43fa-bf13-e32359dda28c.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/5cff1d96-0e71-4910-b498-397ab52c5dbc.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/264cccfd-210d-41ce-b86f-20ab45201df7.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/66953204-2527-4030-9da3-4ae4df9efa48.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/746dc702-37d9-41a2-ba6e-463b8e515310.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d99fb434-5f8b-4a1a-af5e-c2258c81462a.jpg"
+      ],
+      "fabrics": [],
+      "category": "fixo",
+      "bestseller": false,
+      "dimensions": "Profundidade 1.10",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "urban-02-1779629626784",
+      "name": "Urban 02",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/8eeb3336-ede5-47ba-b675-7d031adb1500.jpg",
+      "price": 6235.69,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3563.29,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 4008.69,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4454.09,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4899.49,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 5344.89,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 5790.29,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 6235.69,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 6681.09,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 7126.49,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 7571.89,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 8017.29,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 8462.69,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 8908.09,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/8eeb3336-ede5-47ba-b675-7d031adb1500.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/2c5062f7-0c83-41de-90fe-bc70dc90e0df.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/e3fa5d8a-df53-4eb7-a07b-ed958742296a.jpg"
+      ],
+      "fabrics": [],
+      "category": "chaise",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "displaySizeLabel": "2,80 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "fluid-07",
+      "name": "Fluid 07",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/4f8bea36-f1a2-432a-8992-59e9a2518673.jpg",
+      "price": 3046.22,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3046.22,
+          "albumSurcharges": {
+            "album-1530178d": 300,
+            "album-2038d5a4": 420,
+            "album-f1a7ebc0": 420
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 3426.22,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 3806.22,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4186.22,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 4566.22,
+          "albumSurcharges": {
+            "album-1530178d": 600,
+            "album-2038d5a4": 840,
+            "album-f1a7ebc0": 840
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 4946.22,
+          "albumSurcharges": {
+            "album-1530178d": 650,
+            "album-2038d5a4": 910,
+            "album-f1a7ebc0": 910
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 5326.22,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 5706.22,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 6086.22,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 6466.22,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 6846.22,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 7226.22,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 7606.22,
+          "albumSurcharges": {
+            "album-1530178d": 1250,
+            "album-2038d5a4": 1750,
+            "album-f1a7ebc0": 1750
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/4f8bea36-f1a2-432a-8992-59e9a2518673.jpg"
+      ],
+      "fabrics": [],
+      "category": "organicos",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "loft-02",
+      "name": "Loft 02",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b9a81b66-46eb-475b-a99a-d84699d59d72.jpg",
+      "price": 4566.22,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3046.22,
+          "albumSurcharges": {
+            "album-1530178d": 300,
+            "album-2038d5a4": 420,
+            "album-f1a7ebc0": 420
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 3426.22,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 3806.22,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4186.22,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 4566.22,
+          "albumSurcharges": {
+            "album-1530178d": 600,
+            "album-2038d5a4": 840,
+            "album-f1a7ebc0": 840
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 4946.22,
+          "albumSurcharges": {
+            "album-1530178d": 650,
+            "album-2038d5a4": 910,
+            "album-f1a7ebc0": 910
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 5326.22,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 5706.22,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 6086.22,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 6466.22,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 6846.22,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 7226.22,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 7606.22,
+          "albumSurcharges": {
+            "album-1530178d": 1250,
+            "album-2038d5a4": 1750,
+            "album-f1a7ebc0": 1750
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b9a81b66-46eb-475b-a99a-d84699d59d72.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/332b7bdc-469c-4354-940a-8cf88e0bf205.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b8a8d148-4d1e-481e-b5e0-8fbb033dbcdd.jpg"
+      ],
+      "fabrics": [],
+      "category": "fixo",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "displaySizeLabel": "2,40 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "urban-02-1779648095008",
+      "name": "Urban 02",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/da80ccb2-5722-4b04-91a0-9eb0933c4c00.jpg",
+      "price": 6235.69,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3563.29,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 4008.69,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4454.09,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4899.49,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 5344.89,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 5790.29,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 6235.69,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 6681.09,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 7126.49,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 7571.89,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 8017.29,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 8462.69,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 8908.09,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/da80ccb2-5722-4b04-91a0-9eb0933c4c00.jpg"
+      ],
+      "fabrics": [],
+      "category": "chaise",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "displaySizeLabel": "2,80 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "urban-03-1779648241344",
+      "name": "Urban 03",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/7e8c782d-f005-47da-b08b-cc7af9c0ffe0.jpg",
+      "price": 6235.69,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3563.29,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 4008.69,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4454.09,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4899.49,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 5344.89,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 5790.29,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 6235.69,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 6681.09,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 7126.49,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 7571.89,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 8017.29,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 8462.69,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 8908.09,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/7e8c782d-f005-47da-b08b-cc7af9c0ffe0.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/00e52662-5f03-4bd5-b47c-de40cf126597.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/711c3fa2-925f-4994-acf6-92c843a58922.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/cd86dbe5-d690-4759-bfce-38c0ac06f5bb.jpg"
+      ],
+      "fabrics": [],
+      "category": "chaise",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "displaySizeLabel": "2,80 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "lounge-05-1779648560474",
+      "name": "Lounge 05",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/616c0cf6-99f6-4872-b98a-59d26f2683a6.jpg",
+      "price": 6681.09,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3563.29,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 4008.69,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4454.09,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4899.49,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 5344.89,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 5790.29,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 6235.69,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 6681.09,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 7126.49,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 7571.89,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 8017.29,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 8462.69,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 8908.09,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/616c0cf6-99f6-4872-b98a-59d26f2683a6.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ff17cbce-c89a-43cc-a1be-29a7c2ea4336.jpg"
+      ],
+      "fabrics": [],
+      "category": "organicos",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": true,
+      "disponibilidade": true,
+      "longDescription": "Modelo orgânico de linhas suaves e formato escultural, ideal para composições modernas e elegantes.",
+      "displaySizeLabel": "3,00 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "urban-03-1779648881903",
+      "name": "Urban 03",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/f58f21d2-8eda-4a85-8cd0-f95feefcb588.jpg",
+      "price": 6235.69,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3563.29,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 4008.69,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4454.09,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4899.49,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 5344.89,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 5790.29,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 6235.69,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 6681.09,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 7126.49,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 7571.89,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 8017.29,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 8462.69,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 8908.09,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/f58f21d2-8eda-4a85-8cd0-f95feefcb588.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/cf431802-40d9-43d7-8ef3-357746690857.jpg"
+      ],
+      "fabrics": [],
+      "category": "chaise",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "Sofá modular com estrutura reforçada em eucalipto, almofadas em fibra siliconada e assentos de 70 cm de profundidade livre.",
+      "displaySizeLabel": "2,80 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "elegance-03-1779649158587",
+      "name": "Elegance 03",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/505a5ffa-844e-4d96-bd22-049e56331fc6.jpg",
+      "price": 6235.69,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3563.29,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 4008.69,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4454.09,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4899.49,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 5344.89,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 5790.29,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 6235.69,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 6681.09,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 7126.49,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 7571.89,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 8017.29,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 8462.69,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 8908.09,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/505a5ffa-844e-4d96-bd22-049e56331fc6.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/580321d9-042b-4ad4-8773-b0b18afa4539.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/9b5a2c25-caa3-4efb-a3ce-66b4a0f1c9d3.jpg"
+      ],
+      "fabrics": [],
+      "category": "chaise",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "Sofá chaise contemporâneo com estrutura em eucalipto, braço orgânico, almofadas em fibra siliconada e pés em aço carbono.",
+      "displaySizeLabel": "2,80 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "brooklyn",
+      "name": "Brooklyn ",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/8c59e444-eb45-4a4e-9078-ac7a332b47a6.jpg",
+      "price": 5344.89,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3563.29,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 4008.69,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4454.09,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4899.49,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 5344.89,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 5790.29,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 6235.69,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 6681.09,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 7126.49,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 7571.89,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 8017.29,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 900,
+            "esp-soft-molas": 900,
+            "esp-d33-soft-molas": 1350
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 8462.69,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 8908.09,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 1000,
+            "esp-soft-molas": 1000,
+            "esp-d33-soft-molas": 1500
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/8c59e444-eb45-4a4e-9078-ac7a332b47a6.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/0e87c535-6123-4dcf-8851-556ba6efebf2.jpg"
+      ],
+      "fabrics": [],
+      "category": "chaise",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "Modelo modular de estética minimalista, com estrutura em eucalipto, almofadas em fibra siliconada e conforto amplo para diferentes composições.",
+      "displaySizeLabel": "2,40 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "oasis",
+      "name": "Oásis",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/56029e06-aeff-46d8-8ed6-7aa716930dd9.jpg",
+      "price": 580,
+      "sizes": [
+        {
+          "label": "80/60",
+          "basePrice": 580,
+          "albumSurcharges": {
+            "album-1530178d": 100,
+            "album-f1a7ebc0": 140
+          },
+          "foamSurcharges": {
+            "esp-d45-selada": 100
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/56029e06-aeff-46d8-8ed6-7aa716930dd9.jpg"
+      ],
+      "fabrics": [],
+      "category": "puffs",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "fluid-10",
+      "name": "Fluid 10",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6736b88c-73be-4591-b855-6f51cd36b852.jpg",
+      "price": 3046.22,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3046.22,
+          "albumSurcharges": {
+            "album-1530178d": 300,
+            "album-2038d5a4": 420,
+            "album-f1a7ebc0": 420
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 3426.22,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 3806.22,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4186.22,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 4566.22,
+          "albumSurcharges": {
+            "album-1530178d": 600,
+            "album-2038d5a4": 840,
+            "album-f1a7ebc0": 840
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 4946.22,
+          "albumSurcharges": {
+            "album-1530178d": 650,
+            "album-2038d5a4": 910,
+            "album-f1a7ebc0": 910
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 5326.22,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 5706.22,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 6086.22,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 6466.22,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 6846.22,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 7226.22,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 7606.22,
+          "albumSurcharges": {
+            "album-1530178d": 1250,
+            "album-2038d5a4": 1750,
+            "album-f1a7ebc0": 1750
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6736b88c-73be-4591-b855-6f51cd36b852.jpg"
+      ],
+      "fabrics": [],
+      "category": "organicos",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "brooklyn-linear",
+      "name": "Brooklyn L02",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/9e0fb1b9-3185-4dd3-9a2b-e4266a7e08fa.jpg",
+      "price": 7606.22,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3046.22,
+          "albumSurcharges": {
+            "album-1530178d": 300,
+            "album-2038d5a4": 420,
+            "album-f1a7ebc0": 420
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 3426.22,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 3806.22,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4186.22,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 4566.22,
+          "albumSurcharges": {
+            "album-1530178d": 600,
+            "album-2038d5a4": 840,
+            "album-f1a7ebc0": 840
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 4946.22,
+          "albumSurcharges": {
+            "album-1530178d": 650,
+            "album-2038d5a4": 910,
+            "album-f1a7ebc0": 910
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 5326.22,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 5706.22,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 6086.22,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 6466.22,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 6846.22,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 7226.22,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 7606.22,
+          "albumSurcharges": {
+            "album-1530178d": 1250,
+            "album-2038d5a4": 1750,
+            "album-f1a7ebc0": 1750
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/9e0fb1b9-3185-4dd3-9a2b-e4266a7e08fa.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b713b863-977e-4a7d-be64-7b34d8a62f65.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/4a864c2f-a1a1-425a-84de-7d7db95190f1.jpg"
+      ],
+      "fabrics": [],
+      "category": "fixo",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": true,
+      "disponibilidade": true,
+      "longDescription": "",
+      "displaySizeLabel": "4,00 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "sofa-cama-m01",
+      "name": "Sofá cama M01",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/68fd163a-bfc0-455b-8a45-8e7a3e083b21.jpg",
+      "price": 4291.97,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3433.77,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 225,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 3862.87,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4291.97,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4721.07,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 5150.17,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 5579.27,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 375,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 6008.37,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 450,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 6437.47,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 450,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 6866.57,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 7295.67,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 7724.77,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 8153.87,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 600,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 8582.97,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 600,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/68fd163a-bfc0-455b-8a45-8e7a3e083b21.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/5a506218-b891-4104-9c7c-0d0b33f81bf9.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/f902dba6-e1fa-4a17-905d-7a5d5ef8f9a2.jpg"
+      ],
+      "fabrics": [],
+      "category": "sofa-cama",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "displaySizeLabel": "2,00 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "sofa-cama-plataforma",
+      "name": "Sofá Cama Plataforma ",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b0fa9f28-19e8-4292-b656-b144e0740780.jpg",
+      "price": 4291.97,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3433.77,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 225,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 3862.87,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4291.97,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b0fa9f28-19e8-4292-b656-b144e0740780.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c77b4cf1-1cb2-4994-bfc7-f19253ea877d.jpg"
+      ],
+      "fabrics": [],
+      "category": "sofa-cama",
+      "bestseller": false,
+      "dimensions": "",
+      "description": "Sofá-cama modular multifuncional, moderno e minimalista, com mesa lateral integrada, e espaço para carregamento.",
+      "prazoEntrega": "",
+      "designAutoral": false,
+      "disponibilidade": true,
+      "longDescription": "",
+      "displaySizeLabel": "2,00 m",
+      "priceAdjustmentPercent": 0
+    },
+    {
+      "id": "elegance-076",
+      "name": "Elegance 076",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/17ce8196-a14e-40ec-9ac9-31c3ebb04435.jpg",
+      "price": 5150.17,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3433.77,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 225,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 3862.87,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 4291.97,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4721.07,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 5150.17,
+          "albumSurcharges": {
+            "album-1530178d": 900,
+            "album-2038d5a4": 1260,
+            "album-f1a7ebc0": 1260
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 5579.27,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 375,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 6008.37,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 450,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 6437.47,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 450,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 6866.57,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 7295.67,
+          "albumSurcharges": {
+            "album-1530178d": 1300,
+            "album-2038d5a4": 1820,
+            "album-f1a7ebc0": 1820
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 7724.77,
+          "albumSurcharges": {
+            "album-1530178d": 1350,
+            "album-2038d5a4": 1890,
+            "album-f1a7ebc0": 1890
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 8153.87,
+          "albumSurcharges": {
+            "album-1530178d": 1400,
+            "album-2038d5a4": 1960,
+            "album-f1a7ebc0": 1960
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 600,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 8582.97,
+          "albumSurcharges": {
+            "album-1530178d": 1500,
+            "album-2038d5a4": 2100,
+            "album-f1a7ebc0": 2100
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 600,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        }
+      ],
+      "colors": [],
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/17ce8196-a14e-40ec-9ac9-31c3ebb04435.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/01f68457-14cb-435f-bee6-38154b23d214.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/470b77e1-45d4-414b-87ff-d4767bd9fb84.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/377bad2b-a4c8-4cd8-9ba1-b7924a5a26e7.jpg"
+      ],
+      "fabrics": [],
+      "category": "retratil",
+      "bestseller": false,
+      "dimensions": "1 metro de profundidade fechado . Avança 30 cm ",
+      "description": "",
+      "prazoEntrega": "",
+      "designAutoral": true,
+      "disponibilidade": true,
+      "longDescription": "Estrutura reforçada em madeira de eucalipto tratado, assentos com espuma de alta densidade (D33) selada para maior durabilidade e almofadas com fibra siliconada que garantem conforto e excelente recuperação.",
+      "displaySizeLabel": "2,40 m",
       "priceAdjustmentPercent": 0
     }
   ]
