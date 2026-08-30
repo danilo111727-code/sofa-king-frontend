@@ -1,6 +1,6 @@
 {
-  "backup_date": "2026-08-23",
-  "total_products": 105,
+  "backup_date": "2026-08-30",
+  "total_products": 104,
   "products": [
     {
       "id": "retratil-istambul",
@@ -4774,7 +4774,7 @@
     {
       "id": "fixo-franca",
       "name": "França",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/f79c62e9-b13b-4fd7-ac43-7b50b9ab9c71.jpg",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6521aa22-8687-4c2e-8f8c-5ba4e1ad0d9d.jpg",
       "price": 3114.2,
       "sizes": [
         {
@@ -4975,7 +4975,6 @@
       ],
       "colors": [],
       "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/f79c62e9-b13b-4fd7-ac43-7b50b9ab9c71.jpg",
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6521aa22-8687-4c2e-8f8c-5ba4e1ad0d9d.jpg"
       ],
       "fabrics": [],
@@ -4987,7 +4986,8 @@
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
       "displaySizeLabel": "2,00 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "designAutoral": false
     },
     {
       "id": "fixo-loft",
@@ -7264,7 +7264,7 @@
       "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 10
+      "priceAdjustmentPercent": 20
     },
     {
       "id": "jakarta",
@@ -7301,7 +7301,7 @@
       "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 10
+      "priceAdjustmentPercent": 20
     },
     {
       "id": "puerto",
@@ -7369,9 +7369,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
-      "disponibilidade": true,
+      "disponibilidade": false,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "designAutoral": false
     },
     {
       "id": "corinto",
@@ -7465,7 +7466,8 @@
       "prazoEntrega": "",
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 20,
+      "designAutoral": false
     },
     {
       "id": "toronto",
@@ -7505,7 +7507,7 @@
     {
       "id": "oassis",
       "name": "Elegance 01",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/50cef85c-817c-4e55-a760-156981cb38ed.jpg",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ebd0f6a3-1514-4531-85d2-a651ffc37654.jpg",
       "price": 2180,
       "sizes": [
         {
@@ -7515,9 +7517,8 @@
       ],
       "colors": [],
       "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/50cef85c-817c-4e55-a760-156981cb38ed.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d616cac6-e9b5-4a11-b861-ed9e64caa1ce.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ebd0f6a3-1514-4531-85d2-a651ffc37654.jpg"
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ebd0f6a3-1514-4531-85d2-a651ffc37654.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d616cac6-e9b5-4a11-b861-ed9e64caa1ce.jpg"
       ],
       "fabrics": [],
       "category": "poltronas",
@@ -7527,7 +7528,8 @@
       "prazoEntrega": "",
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio e almofadas em fibra siliconada.\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes, aliado a uma base giratória que proporciona mais funcionalidade e versatilidade ao uso.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "designAutoral": false
     },
     {
       "id": "bloom",
@@ -7797,9 +7799,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
-      "disponibilidade": true,
+      "disponibilidade": false,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio e almofadas em fibra siliconada.\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "designAutoral": false
     },
     {
       "id": "concept-soft",
@@ -10345,7 +10348,8 @@
       "disponibilidade": true,
       "longDescription": "Sofá Elegance 02, com visual elegante e acabamento detalhado no encosto, que traz sofisticação e presença ao ambiente. Estrutura em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone, com pés elevados que garantem leveza e um toque moderno.",
       "displaySizeLabel": "2,60 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 20,
+      "designAutoral": false
     },
     {
       "id": "urban-03",
@@ -14116,7 +14120,7 @@
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "2,80 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 15
     },
     {
       "id": "lounge-05-1779648560474",
@@ -15678,75 +15682,6 @@
       "bestseller": false,
       "dimensions": "",
       "description": "",
-      "prazoEntrega": "",
-      "designAutoral": false,
-      "disponibilidade": true,
-      "longDescription": "",
-      "displaySizeLabel": "2,00 m",
-      "priceAdjustmentPercent": 0
-    },
-    {
-      "id": "sofa-cama-plataforma",
-      "name": "Sofá Cama Plataforma ",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b0fa9f28-19e8-4292-b656-b144e0740780.jpg",
-      "price": 4291.97,
-      "sizes": [
-        {
-          "label": "1,60 m",
-          "basePrice": 3433.77,
-          "albumSurcharges": {
-            "album-1530178d": 500,
-            "album-2038d5a4": 700,
-            "album-f1a7ebc0": 700
-          },
-          "foamSurcharges": {
-            "esp-d33-soft": 225,
-            "esp-d45-selada": 300,
-            "esp-soft-molas": 300,
-            "esp-d33-soft-molas": 450
-          }
-        },
-        {
-          "label": "1,80 m",
-          "basePrice": 3862.87,
-          "albumSurcharges": {
-            "album-1530178d": 750,
-            "album-2038d5a4": 1050,
-            "album-f1a7ebc0": 1050
-          },
-          "foamSurcharges": {
-            "esp-d33-soft": 300,
-            "esp-d45-selada": 400,
-            "esp-soft-molas": 400,
-            "esp-d33-soft-molas": 600
-          }
-        },
-        {
-          "label": "2,00 m",
-          "basePrice": 4291.97,
-          "albumSurcharges": {
-            "album-1530178d": 750,
-            "album-2038d5a4": 1050,
-            "album-f1a7ebc0": 1050
-          },
-          "foamSurcharges": {
-            "esp-d33-soft": 300,
-            "esp-d45-selada": 400,
-            "esp-soft-molas": 400,
-            "esp-d33-soft-molas": 600
-          }
-        }
-      ],
-      "colors": [],
-      "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b0fa9f28-19e8-4292-b656-b144e0740780.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c77b4cf1-1cb2-4994-bfc7-f19253ea877d.jpg"
-      ],
-      "fabrics": [],
-      "category": "sofa-cama",
-      "bestseller": false,
-      "dimensions": "",
-      "description": "Sofá-cama modular multifuncional, moderno e minimalista, com mesa lateral integrada, e espaço para carregamento.",
       "prazoEntrega": "",
       "designAutoral": false,
       "disponibilidade": true,
