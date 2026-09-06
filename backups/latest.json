@@ -1,5 +1,5 @@
 {
-  "backup_date": "2026-08-30",
+  "backup_date": "2026-09-06",
   "total_products": 104,
   "products": [
     {
@@ -4983,11 +4983,11 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
       "displaySizeLabel": "2,00 m",
-      "priceAdjustmentPercent": 0,
-      "designAutoral": false
+      "priceAdjustmentPercent": 0
     },
     {
       "id": "fixo-loft",
@@ -7369,10 +7369,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": false,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 0,
-      "designAutoral": false
+      "priceAdjustmentPercent": 0
     },
     {
       "id": "corinto",
@@ -7464,10 +7464,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 20,
-      "designAutoral": false
+      "priceAdjustmentPercent": 20
     },
     {
       "id": "toronto",
@@ -7526,10 +7526,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio e almofadas em fibra siliconada.\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes, aliado a uma base giratória que proporciona mais funcionalidade e versatilidade ao uso.",
-      "priceAdjustmentPercent": 0,
-      "designAutoral": false
+      "priceAdjustmentPercent": 0
     },
     {
       "id": "bloom",
@@ -7799,10 +7799,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": false,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio e almofadas em fibra siliconada.\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes.",
-      "priceAdjustmentPercent": 0,
-      "designAutoral": false
+      "priceAdjustmentPercent": 0
     },
     {
       "id": "concept-soft",
@@ -10345,11 +10345,11 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Sofá Elegance 02, com visual elegante e acabamento detalhado no encosto, que traz sofisticação e presença ao ambiente. Estrutura em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone, com pés elevados que garantem leveza e um toque moderno.",
       "displaySizeLabel": "2,60 m",
-      "priceAdjustmentPercent": 20,
-      "designAutoral": false
+      "priceAdjustmentPercent": 20
     },
     {
       "id": "urban-03",
