@@ -8,7 +8,7 @@ import { useCategories } from "@/hooks/useCategories";
 import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
 import { useFavorites } from "@/hooks/useFavorites";
 
-function useFilters(validCategoryIds: Set<string>): { category: string; bestseller: boolean; designAutoral: boolean } {
+function useFilters(validCategoryIds: Set<string>): { category: string; bestseller: boolean; designAutoral: boolean; prontaEntrega: boolean; searchTerm: string } {
   const search = useSearch();
   return useMemo(() => {
     const params = new URLSearchParams(search);
@@ -17,6 +17,8 @@ function useFilters(validCategoryIds: Set<string>): { category: string; bestsell
       category: validCategoryIds.has(raw) ? raw : "",
       bestseller: params.get("destaque") === "1",
       designAutoral: params.get("design") === "1",
+      prontaEntrega: params.get("prontaEntrega") === "1",
+      searchTerm: params.get("busca") ?? "",
     };
   }, [search, validCategoryIds]);
 }
@@ -35,7 +37,8 @@ export default function Modelos() {
   const [priceRange, setPriceRange] = useState<{ min: number; max: number } | null>(null);
   const { categories: CATEGORIES, displayName, getCategory } = useCategories();
   const validCategoryIds = useMemo(() => new Set(CATEGORIES.map((c) => c.id)), [CATEGORIES]);
-  const { category: activeCategory, bestseller: onlyBestsellers, designAutoral: onlyDesignAutoral } = useFilters(validCategoryIds);
+  const { category: activeCategory, bestseller: onlyBestsellers, designAutoral: onlyDesignAutoral, prontaEntrega: onlyProntaEntrega, searchTerm } = useFilters(validCategoryIds);
+  useEffect(() => { setQuery(searchTerm); }, [searchTerm]);
   const activeCatDef = getCategory(activeCategory);
   const { isFavorite, toggle: toggleFavorite } = useFavorites();
   const { pixDiscountPct, maxInstallments } = useSiteSettings();
@@ -60,7 +63,8 @@ export default function Modelos() {
   const filteredProducts = useMemo(() => {
     let avail = products.filter((p) => p.disponibilidade);
     if (onlyBestsellers) avail = avail.filter((p) => p.bestseller);
-    if (onlyDesignAutoral) avail = avail.filter((p) => (p as any).designAutoral);
+    if (onlyDesignAutoral) avail = avail.filter((p) => p.designAutoral);
+    if (onlyProntaEntrega) avail = avail.filter((p) => (p as Product & { prontaEntrega?: boolean }).prontaEntrega === true);
     if (activeCategory) avail = avail.filter((p) => p.category === activeCategory);
     if (priceRange) {
       avail = avail.filter((p) => {
@@ -79,7 +83,7 @@ export default function Modelos() {
       });
     }
     return [...avail].reverse();
-  }, [products, activeCategory, onlyBestsellers, query, priceRange]);
+  }, [products, activeCategory, onlyBestsellers, onlyDesignAutoral, onlyProntaEntrega, query, priceRange]);
 
   const [priceMinInput, setPriceMinInput] = useState<string>("");
   const [priceMaxInput, setPriceMaxInput] = useState<string>("");
@@ -104,6 +108,8 @@ export default function Modelos() {
     ? "⭐ Bestsellers"
     : onlyDesignAutoral
     ? "Design Autorais"
+    : onlyProntaEntrega
+    ? "Pronta Entrega"
     : activeCatDef
     ? activeCatDef.label
     : "Todos os modelos";
