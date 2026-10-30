@@ -26,7 +26,7 @@ function HorizontalScrollRow({ children }: { children: ReactNode }) {
       </button>
       <div
         ref={ref}
-        className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-3 sm:gap-6 overflow-x-auto scroll-smooth pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         data-testid="scroll-row-products"
       >
         {children}
@@ -187,25 +187,15 @@ export default function Home() {
 
             <BestsellerStrip />
 
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 flex justify-center sm:justify-start">
-              <Link href="/modelos" data-testid="button-hero-cta">
-                <Button
-                  size="default"
-                  variant="default"
-                  className="bg-black hover:bg-neutral-800 text-white border-black font-medium h-12 px-10 rounded-full text-sm tracking-widest uppercase"
-                >
-                  Personalize e veja o preço agora <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
-            </div>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6"><div className="flex items-center gap-3 rounded-xl border border-[#eae5de] bg-[#f5f2ee] px-4 py-4 sm:px-6 sm:py-5" data-testid="home-measurement-info"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#8d775c] text-xl" aria-hidden="true">↔</span><div><h2 className="text-[15px] sm:text-lg font-semibold tracking-tight text-[#242424]">Seu sofá, na medida ideal</h2><p className="text-[13px] sm:text-sm text-[#5c554e] mt-0.5">Valores disponíveis por metragem</p><p className="text-xs sm:text-sm text-[#77716a] mt-1 leading-relaxed">Consulte o preço conforme o tamanho escolhido em cada modelo do catálogo.</p></div></div></div>
           </section>
 
         {/* Horizontal scroll row of models */}
-        <section className="py-14 md:py-20 bg-background">
+        <section className="py-7 md:py-12 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-7 md:mb-10">
+            <div className="mb-6 md:mb-8">
               <p className="text-[11px] tracking-[0.22em] uppercase text-muted-foreground mb-2">Coleções Sofa King</p>
-              <p className="text-xs md:text-sm text-muted-foreground mb-5">Encontre o estofado ideal para seu ambiente</p>
+              <p className="text-lg md:text-2xl font-semibold tracking-tight text-foreground mb-5">Encontre o estofado ideal para seu ambiente</p>
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-5 md:gap-5" data-testid="home-category-grid">
                 {categoryTiles.map((category) => (
                   <Link key={category.id} href={`/modelos?categoria=${encodeURIComponent(category.id)}`} className="group min-w-0" data-testid={`home-category-${category.id}`}>
@@ -241,7 +231,7 @@ export default function Home() {
                   .map((product) => (
                     <div
                       key={product.id}
-                      className="group shrink-0 w-[220px] sm:w-[260px] md:w-[300px] snap-start cursor-pointer"
+                      className="group shrink-0 w-[calc((100vw-44px)/2)] max-w-[240px] sm:w-[260px] md:w-[300px] snap-start cursor-pointer"
                       onClick={() => navigate(`/produto/${product.id}`)}
                       data-testid={`scroll-card-${product.id}`}
                     >
@@ -288,8 +278,8 @@ export default function Home() {
                             <Heart className={`w-3.5 h-3.5 transition-colors ${isFavorite(product.id) ? "fill-red-500 text-red-500" : "text-foreground/60"}`} />
                           </button>
                         </div>
-                        <div className="p-4">
-                          <h3 className="text-base font-serif font-bold text-foreground group-hover:text-primary transition-colors leading-tight mb-1 line-clamp-2 min-h-[2.6rem]">
+                        <div className="p-3 sm:p-4">
+                          <h3 className="text-sm font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors leading-snug mb-1 line-clamp-2 min-h-[2.3rem]">
                             {displayName(product.name, product.category)}
                           </h3>
                           {(() => {
