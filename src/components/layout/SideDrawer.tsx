@@ -1,4 +1,4 @@
-import { X, Search, ChevronDown, ChevronRight, User, LogOut, UserPlus, Settings, Heart, Home, Star, Gem, LayoutGrid, Sofa, Armchair, BedDouble, Truck, ShieldCheck, CreditCard, PackageCheck } from "lucide-react";
+import { X, ChevronDown, ChevronRight, User, LogOut, UserPlus, Settings, Heart, Home, Star, Gem, LayoutGrid, Sofa, Armchair, BedDouble, Truck, ShieldCheck, CreditCard, PackageCheck } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { Show, useUser, useClerk } from "@clerk/react";
@@ -64,7 +64,6 @@ interface SideDrawerProps {
 
 export function SideDrawer({ open, onClose }: SideDrawerProps) {
   const [expanded, setExpanded] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const { user } = useUser();
   const { signOut } = useClerk();
@@ -145,17 +144,6 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
             </Show>
           </div>
 
-          <form className="relative mb-6" onSubmit={e => { e.preventDefault(); if (searchTerm.trim()) { onClose(); window.location.href = `/modelos?busca=${encodeURIComponent(searchTerm.trim())}`; } }}>
-            <input
-              type="search"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              placeholder="Buscar produtos..."
-              className="w-full bg-white border border-[#e5ded4] rounded-full py-3.5 pl-5 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-[#b69a67]/50"
-              data-testid="input-drawer-search"
-            />
-            <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-          </form>
           <Link href="/" onClick={onClose} className="mb-3 flex items-center gap-4 rounded-2xl bg-[#f0e9dc] px-4 py-3.5 text-[#997a40] font-semibold"><Home className="h-5 w-5" />Início</Link>
 
           <nav className="flex flex-col">
