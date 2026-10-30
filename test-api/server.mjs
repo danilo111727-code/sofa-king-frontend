@@ -51,6 +51,11 @@ const server=createServer(async(req,res)=>{
  if(req.method==='OPTIONS'){res.writeHead(204);return res.end();}
  try{
  const url=new URL(req.url,'http://localhost');let path=decodeURIComponent(url.pathname);const method=req.method;
+ if(method==='GET'&&!path.startsWith('/api/')){
+  const asset=/^\/(assets|images|foams)\//.test(path)||path==='/favicon.svg';
+  const r=await fetch('https://sofa-king-configurador-preview.onrender.com'+(asset?url.pathname:'/'),{signal:AbortSignal.timeout(20000)});
+  res.writeHead(r.status,{'content-type':r.headers.get('content-type')||'text/html'});return res.end(Buffer.from(await r.arrayBuffer()));
+ }
  if(path==='/api/healthz')return send({status:'ok',environment:'test',supabaseProject:PROJECT});
  if(path==='/api/readyz'){await all('settings');return send({status:'ok',environment:'test',supabaseProject:PROJECT,persistence:'supabase'});}
  const adminPath=path.startsWith('/api/admin/');
