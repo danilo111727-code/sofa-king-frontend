@@ -171,7 +171,7 @@ export interface WhatsappEvent {
     return h;
   }
 
-  export const BASE = "/api";
+  export const BASE = "https://sofa-king-configurador-test.onrender.com/api";
 const jsonHeaders: HeadersInit = { "Content-Type": "application/json" };
 
 /** Acorda o servidor (Render free dorme após 15min). Chame ao abrir formulários. */
