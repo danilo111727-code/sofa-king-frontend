@@ -1,3 +1,6 @@
+import {VariationAlbumsSection} from '@/components/VariationAlbumsSection';
+import type {VariationAlbum} from '@/lib/catalogVariations';
+import {fetchAdminVariationAlbums} from '@/lib/api';
 import type { ProductConfiguration } from "@/lib/productConfigurator";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation } from "wouter";
@@ -267,7 +270,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<ProdutoForm>(EMPTY_PRODUTO);
   const [configuration, setConfiguration] = useState<ProductConfiguration>({});
-  const [variationUploading, setVariationUploading] = useState(false);
+  const [variationAlbums,setVariationAlbums] = useState<VariationAlbum[]>([]);
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -278,7 +281,8 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   async function load() {
     setLoading(true);
     try {
-      const [prods, als, fos] = await Promise.all([fetchProducts({ fresh: true }), fetchAdminAlbums(), fetchAdminMaterials()]);
+      const [prods, als, fos, vars] = await Promise.all([fetchProducts({ fresh: true }), fetchAdminAlbums(), fetchAdminMaterials(),fetchAdminVariationAlbums()]);
+      setVariationAlbums(vars);
       setProducts(prods.map((p) => ({ ...p, price: (p.price == null || !isFinite(p.price)) ? 0 : p.price })));
       setAlbums(als.filter((a) => a.active));
       setFoams(fos.filter((m) => m.active));
@@ -314,9 +318,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     });
   }
 
-  function openNew() { setConfiguration({}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
+  function openNew() { setConfiguration({catalogVariations:{}}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
   function openEdit(p: Product) {
-    setConfiguration(p.configuration ?? {});
+    setConfiguration({...p.configuration,catalogVariations:p.configuration?.catalogVariations??{}});
     pingApi();
     setEditId(p.id);
     const validCats: ProductCategory[] = CATEGORIES.map((c) => c.id);
@@ -342,7 +346,6 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
-    if (variationUploading) { flash("err", "Aguarde o envio da foto da variação."); return; }
     if (form.sizes.length === 0) {
       flash("err", "Adicione pelo menos uma metragem.");
       return;
@@ -551,7 +554,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               <button onClick={closeForm} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
-              <ConfiguradorPreview key={editId ?? "novo"} config={configuration} setConfig={setConfiguration} albums={albums} foams={foams} onUploadingChange={setVariationUploading} />
+              <ConfiguradorPreview key={editId ?? "novo"} config={configuration} setConfig={setConfiguration} albums={albums} foams={foams} variationAlbums={variationAlbums} />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Nome do Modelo *">
                   <input
@@ -893,7 +896,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
 
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={closeForm} className="flex-1 py-2.5 border border-[#3d2e1e] rounded-lg text-[#a08060] hover:text-white text-sm">Cancelar</button>
-                <button type="submit" disabled={saving || variationUploading} className="flex-1 py-2.5 bg-[#c9a96e] hover:bg-[#b8954f] disabled:opacity-50 text-[#1a1208] font-semibold rounded-lg text-sm">
+                <button type="submit" disabled={saving} className="flex-1 py-2.5 bg-[#c9a96e] hover:bg-[#b8954f] disabled:opacity-50 text-[#1a1208] font-semibold rounded-lg text-sm">
                   {saving ? "Salvando..." : editId ? "Salvar" : "Criar"}
                 </button>
               </div>
@@ -925,18 +928,18 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
 // ======================================================================
 
 function MateriaisTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
-  const [sub, setSub] = useState<"albuns" | "espumas">("albuns");
+  const [sub, setSub] = useState<"albuns" | "espumas" | "variacoes">("albuns");
   return (
     <>
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
         <div>
           <h1 className="text-xl font-semibold">Materiais</h1>
           <p className="text-[#a08060] text-sm mt-0.5">
-            Organize os tecidos em álbuns (mesmo preço dentro do álbum) e cadastre as espumas.
+            Cadastre tecidos, espumas e variações para associar aos seus modelos.
           </p>
         </div>
       </div>
-      <div className="flex gap-1 mb-6 border-b border-[#2d1f10]">
+      <div className="flex gap-1 mb-6 border-b border-[#2d1f10] overflow-x-auto">
         <button
           onClick={() => setSub("albuns")}
           className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${sub === "albuns" ? "border-[#c9a96e] text-[#c9a96e]" : "border-transparent text-[#a08060] hover:text-white"}`}
@@ -947,8 +950,9 @@ function MateriaisTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }
           className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${sub === "espumas" ? "border-[#c9a96e] text-[#c9a96e]" : "border-transparent text-[#a08060] hover:text-white"}`}
           data-testid="subtab-espumas"
         >Espumas</button>
+        <button onClick={()=>setSub("variacoes")} className={`px-4 py-2 text-sm font-medium border-b-2 whitespace-nowrap ${sub === "variacoes" ? "border-[#c9a96e] text-[#c9a96e]" : "border-transparent text-[#a08060] hover:text-white"}`} data-testid="subtab-variacoes">Variações</button>
       </div>
-      {sub === "albuns" ? <AlbunsSection flash={flash} /> : <EspumasSection flash={flash} />}
+      {sub === "albuns" ? <AlbunsSection flash={flash} /> : sub === "espumas" ? <EspumasSection flash={flash} /> : <VariationAlbumsSection flash={flash}/>}
     </>
   );
 }

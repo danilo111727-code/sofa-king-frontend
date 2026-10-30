@@ -1,3 +1,5 @@
+import {resolveCatalogVariations,type VariationAlbum} from '@/lib/catalogVariations';
+import {fetchVariationAlbums} from '@/lib/api';
 import { calculateVariationTotal, deliveryLabel, isAllowed, type VariationSelection } from "@/lib/productConfigurator";
 import { fetchQuote } from "@/lib/api";
 import { VariationPicker } from "@/components/VariationPicker";
@@ -34,6 +36,7 @@ export default function Produto() {
   const [product, setProduct] = useState<Product | null>(null);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [foams, setFoams] = useState<Material[]>([]);
+  const [variationAlbums,setVariationAlbums] = useState<VariationAlbum[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -58,13 +61,14 @@ export default function Produto() {
     if (!id) return;
     setLoading(true);
     setNotFound(false); setSizeIdx(0); setAlbumIdx(-1); setFoamIdx(-1); setFabric(null); setSelectedFabricKey(null); setChosenAlbumId(null);
-    Promise.all([fetchProduct(id), fetchAlbums(), fetchMaterials()])
-      .then(([p, al, fo]) => {
+    Promise.all([fetchProduct(id), fetchAlbums(), fetchMaterials(),fetchVariationAlbums()])
+      .then(([p, al, fo, vars]) => {
+        setVariationAlbums(vars);
         setProduct(p);
         const c=p.configuration;
         setAlbums(al.filter(a=>a.active&&isAllowed(a.id,c?.allowedAlbumIds)).map(a=>({...a,fabrics:a.fabrics.filter(f=>isAllowed(f.id,c?.allowedFabricIds))})));
         setFoams(fo.filter(f=>f.active&&isAllowed(f.id,c?.allowedFoamIds)));
-        setSelections((c?.variationGroups??[]).flatMap(g=>g.mode==="quantity"?g.options.filter(o=>(o.minQuantity??0)>0).map(o=>({groupId:g.id,optionId:o.id,quantity:o.minQuantity!})):[]));
+        setSelections(resolveCatalogVariations(c,vars).flatMap(g=>g.mode==="quantity"?g.options.filter(o=>(o.minQuantity??0)>0).map(o=>({groupId:g.id,optionId:o.id,quantity:o.minQuantity!})):[]));
         trackView({ productId: p.id, productName: p.name, path: `/produto/${p.id}` });
       })
       .catch(() => setNotFound(true))
@@ -96,7 +100,8 @@ export default function Produto() {
     if (!pct || !Number.isFinite(pct)) return base;
     return Math.round(base * (1 + pct / 100) * 100) / 100;
   }, [selectedSize, product?.priceAdjustmentPercent]);
-  const variationTotal = calculateVariationTotal(product?.configuration?.variationGroups??[],selections);
+  const variationGroups=useMemo(()=>resolveCatalogVariations(product?.configuration,variationAlbums),[product?.configuration,variationAlbums]);
+  const variationTotal = calculateVariationTotal(variationGroups,selections);
   const prazo = deliveryLabel(product?.configuration?.delivery,settings.prazoEntregaDias);
   const finalPrice = Math.round((adjustedBasePrice + albumSurcharge + foamAdjustment + variationTotal)*100)/100;
 
@@ -188,7 +193,7 @@ export default function Produto() {
       foam: selectedFoam
         ? { id: selectedFoam.id, name: selectedFoam.name, priceAdjustment: foamAdjustment }
         : null,
-      variations: selections.filter(s=>s.quantity>0).map(s=>{const g=product.configuration!.variationGroups!.find(g=>g.id===s.groupId)!;const o=g.options.find(o=>o.id===s.optionId)!;return {groupName:g.name,optionName:o.name,quantity:s.quantity,priceAdjustment:o.priceAdjustment};}),
+      variations: selections.filter(s=>s.quantity>0).map(s=>{const g=variationGroups.find(g=>g.id===s.groupId)!;const o=g.options.find(o=>o.id===s.optionId)!;return {groupName:g.name,optionName:o.name,quantity:s.quantity,priceAdjustment:o.priceAdjustment};}),
       delivery:prazo,
       unitPrice: verified.total,
     });
@@ -604,7 +609,7 @@ export default function Produto() {
                 </div>
               )}
 
-              <VariationPicker groups={product.configuration?.variationGroups??[]} selections={selections} onChange={setSelections}/>
+              <VariationPicker groups={variationGroups} selections={selections} onChange={setSelections}/>
               {variationTotal!==0 && <p className="text-sm text-muted-foreground mb-4">Personalização incluída: {brl(variationTotal)}</p>}
               {settings.vagas === 0 ? (
                 <a

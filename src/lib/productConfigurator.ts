@@ -8,6 +8,7 @@ export interface DeliveryRule {
   customText?: string;
 }
 export interface ProductVariationOption {
+  active?: boolean;
   id: string;
   name: string;
   imageUrl?: string;
@@ -25,6 +26,7 @@ export interface ProductVariationGroup {
   options: ProductVariationOption[];
 }
 export interface ProductConfiguration {
+  catalogVariations?: Record<string, { enabled: boolean; optionIds: string[]; required?: boolean }>;
   /** undefined = manter todas as opções existentes; [] = nenhuma opção. */
   allowedFoamIds?: string[];
   allowedAlbumIds?: string[];

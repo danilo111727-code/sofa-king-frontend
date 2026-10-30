@@ -427,3 +427,26 @@ export async function fetchQuote(id: string, input: { sizeLabel: string; albumId
   if(!res.ok) throw new Error(await readError(res,"Não foi possível calcular o preço"));
   return res.json();
 }
+
+
+// Shared variation albums: registered once, associated with individual models.
+import type { VariationAlbum } from './catalogVariations';
+export async function fetchVariationAlbums(): Promise<VariationAlbum[]> {
+ const res=await fetch(`${BASE}/variation_albums`,{cache:'no-store'});
+ if(!res.ok)throw new Error(await readError(res,'Erro ao carregar variações'));
+ return res.json();
+}
+export async function fetchAdminVariationAlbums(): Promise<VariationAlbum[]> {
+ const res=await fetch(`${BASE}/admin/variation_albums`,{headers:await adminHeaders(),cache:'no-store'});
+ if(!res.ok)throw new Error(await readError(res,'Erro ao carregar variações'));
+ return res.json();
+}
+export async function saveVariationAlbum(id: string | null,data: Omit<VariationAlbum,'id'>): Promise<VariationAlbum> {
+ const res=await fetch(`${BASE}/admin/variation_albums${id?'/'+encodeURIComponent(id):''}`,{method:id?'PUT':'POST',headers:await adminHeaders(),body:JSON.stringify(data)});
+ if(!res.ok)throw new Error(await readError(res,'Erro ao salvar variação'));
+ return res.json();
+}
+export async function deleteVariationAlbum(id: string): Promise<void> {
+ const res=await fetch(`${BASE}/admin/variation_albums/${encodeURIComponent(id)}`,{method:'DELETE',headers:await adminHeaders()});
+ if(!res.ok)throw new Error(await readError(res,'Erro ao excluir variação'));
+}
