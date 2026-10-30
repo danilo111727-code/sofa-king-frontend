@@ -2,7 +2,7 @@ import { Link, useSearch, useLocation } from "wouter";
 import { ArrowRight, Search, X, Heart, ShoppingCart, SlidersHorizontal, Star } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useLayoutEffect } from "react";
 import { fetchProducts, trackView, type Product } from "@/lib/api";
 import { useCategories } from "@/hooks/useCategories";
 import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
@@ -44,6 +44,13 @@ export default function Modelos() {
   const { isFavorite, toggle: toggleFavorite } = useFavorites();
   const { pixDiscountPct, maxInstallments } = useSiteSettings();
   const [, navigate] = useLocation();
+  const catalogSearch = useSearch();
+
+  // Each catalog/category navigation starts at the page header, not at the
+  // scroll position left by the previous category or homepage.
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [catalogSearch]);
 
   useEffect(() => {
     const path = onlyBestsellers
