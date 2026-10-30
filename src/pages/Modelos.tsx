@@ -243,17 +243,6 @@ export default function Modelos() {
                           Sem foto
                         </div>
                       )}
-                      {product.category && (
-                        <span className="absolute top-2 left-2 max-w-[calc(100%-16px)] truncate text-[8px] sm:text-[9px] font-medium tracking-[0.04em] uppercase bg-white/90 backdrop-blur-sm text-foreground/80 px-2 py-0.5 rounded-md border border-border/40">
-                          {getCategory(product.category)?.label}
-                        </span>
-                      )}
-                      {(product as any).designAutoral && (
-                        <span className="absolute top-2 left-2 flex items-center gap-1 text-[8px] sm:text-[9px] font-semibold tracking-[0.06em] uppercase bg-white/95 text-foreground border border-border/60 px-2 py-0.5 rounded-md">
-                          DESIGN AUTORAL
-                          <img src="/assets/crown.png" alt="coroa" className="h-3.5 w-auto object-contain" />
-                        </span>
-                      )}
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); toggleFavorite(product.id); }}
