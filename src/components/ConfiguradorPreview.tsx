@@ -1,11 +1,13 @@
 import { useState } from "react";
 import type { Album, Material } from "@/lib/api";
 import type { ProductConfiguration, ProductVariationGroup } from "@/lib/productConfigurator";
+import { readPreviewConfig, writePreviewConfig, clearPreviewConfig } from "@/lib/previewConfigStorage";
 
 /** Homologação: editor local, sem POST/PUT e sem persistência no backend compartilhado. */
-export function ConfiguradorPreview({ albums, foams }: { albums: Album[]; foams: Material[] }) {
-  const [config, setConfig] = useState<ProductConfiguration>({ allowedAlbumIds: albums.map(a => a.id), allowedFoamIds: foams.map(f => f.id), variationGroups: [], delivery: { mode: "consult" } });
+export function ConfiguradorPreview({ albums, foams, productId }: { albums: Album[]; foams: Material[]; productId: string | null }) {
+  const [config, setConfig] = useState<ProductConfiguration>(() => readPreviewConfig(productId ?? "") ?? { allowedAlbumIds: albums.map(a => a.id), allowedFoamIds: foams.map(f => f.id), variationGroups: [], delivery: { mode: "consult" } });
   const [expanded, setExpanded] = useState(false);
+  const [notice, setNotice] = useState("");
   const groups = config.variationGroups ?? [];
   function toggle(key: "allowedAlbumIds" | "allowedFoamIds", id: string, all: string[]) {
     const current = config[key] ?? all;
@@ -24,7 +26,7 @@ export function ConfiguradorPreview({ albums, foams }: { albums: Album[]; foams:
       <span>Personalização do modelo — prévia experimental</span><span>{expanded ? "−" : "+"}</span>
     </button>
     {expanded && <>
-      <p className="text-xs text-amber-300">Modo demonstração: alterações abaixo não são salvas nem enviadas à API. O armazenamento separado ainda será preparado.</p>
+      <p className="text-xs text-amber-300">Teste local: use o botão abaixo para salvar somente neste navegador, sem alterar a API de produção.</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div><h4 className="text-sm text-white mb-2">Álbuns de tecidos permitidos</h4>
           {albums.map(a => <label key={a.id} className="flex gap-2 items-center py-1 text-sm text-[#d9c9a0]"><input type="checkbox" checked={(config.allowedAlbumIds ?? albums.map(x => x.id)).includes(a.id)} onChange={() => toggle("allowedAlbumIds", a.id, albums.map(x => x.id))}/>{a.name}</label>)}
@@ -53,6 +55,8 @@ export function ConfiguradorPreview({ albums, foams }: { albums: Album[]; foams:
         </div>)}
       </div>
       <p className="text-xs text-[#a08060]">Essas opções são apenas para visualizar a interface nesta etapa. O botão Salvar produto continua usando o cadastro atual e não salva esta demonstração.</p>
+      <div className="flex flex-wrap gap-2"><button type="button" className="rounded-lg bg-[#c9a96e] px-4 py-2 text-sm text-[#1a1208]" onClick={() => setNotice(productId && writePreviewConfig(productId, config) ? "Salvo neste navegador." : "Não foi possível salvar. Abra um produto existente.")}>Salvar configuração de teste</button><button type="button" className="rounded-lg border border-[#3d2e1e] px-3 py-2 text-sm text-[#d9c9a0]" onClick={() => { if (productId) clearPreviewConfig(productId); setConfig({allowedAlbumIds:albums.map(a=>a.id),allowedFoamIds:foams.map(f=>f.id),variationGroups:[],delivery:{mode:"consult"}}); setNotice("Configuração local restaurada."); }}>Restaurar padrão local</button></div>
+      {notice && <p role="status" className="text-sm text-[#c9a96e]">{notice}</p>}
     </>}
   </section>;
 }
