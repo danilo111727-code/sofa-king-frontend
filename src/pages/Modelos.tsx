@@ -244,12 +244,12 @@ export default function Modelos() {
                         </div>
                       )}
                       {product.category && (
-                        <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-wider uppercase bg-white/90 backdrop-blur-sm text-foreground px-2.5 py-1 rounded-full border border-border/50">
+                        <span className="absolute top-2 left-2 max-w-[calc(100%-16px)] truncate text-[8px] sm:text-[9px] font-medium tracking-[0.04em] uppercase bg-white/90 backdrop-blur-sm text-foreground/80 px-2 py-0.5 rounded-md border border-border/40">
                           {getCategory(product.category)?.label}
                         </span>
                       )}
                       {(product as any).designAutoral && (
-                        <span className="absolute top-3 left-3 flex items-center gap-1.5 text-[9px] font-bold tracking-[0.15em] uppercase bg-white text-black border border-black px-2.5 py-1 rounded-full">
+                        <span className="absolute top-2 left-2 flex items-center gap-1 text-[8px] sm:text-[9px] font-semibold tracking-[0.06em] uppercase bg-white/95 text-foreground border border-border/60 px-2 py-0.5 rounded-md">
                           DESIGN AUTORAL
                           <img src="/assets/crown.png" alt="coroa" className="h-3.5 w-auto object-contain" />
                         </span>
