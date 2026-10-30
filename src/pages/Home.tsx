@@ -204,25 +204,17 @@ export default function Home() {
         <section className="py-14 md:py-20 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-7 md:mb-10">
-              <p className="text-[11px] tracking-[0.22em] uppercase text-muted-foreground mb-2">Coleções Sofa King</p>
-              <div className="flex items-end justify-between gap-3 mb-5">
-                <div>
-                  <h2 className="text-2xl md:text-4xl font-serif font-semibold text-foreground">Todos os Modelos</h2>
-                  <p className="text-xs md:text-sm text-muted-foreground mt-1">Encontre o estofado ideal para seu ambiente</p>
-                </div>
-                <Link href="/modelos" className="hidden sm:inline-flex items-center gap-1 text-sm font-medium hover:underline">Ver todos <ArrowRight className="w-4 h-4" /></Link>
-              </div>
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-5 md:gap-5" data-testid="home-category-grid">
                 {categoryTiles.map((category) => (
                   <Link key={category.id} href={`/modelos?categoria=${encodeURIComponent(category.id)}`} className="group min-w-0" data-testid={`home-category-${category.id}`}>
-                    <div className="aspect-square rounded-xl bg-[#f4f1ec] overflow-hidden border border-[#ece7df] flex items-center justify-center transition-all group-hover:border-[#bba886] group-hover:shadow-md">
+                    <div className="aspect-[4/3] rounded-xl bg-[#f4f1ec] overflow-hidden border border-[#ece7df] flex items-center justify-center transition-all group-hover:border-[#bba886] group-hover:shadow-md">
                       {category.photo ? <img src={category.photo} alt={category.label} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" /> : <span className="text-[#968b7c] text-3xl font-serif" aria-hidden="true">{category.label.charAt(0)}</span>}
                     </div>
                     <p className="text-center text-[12px] md:text-sm font-medium mt-2 leading-snug text-foreground group-hover:underline">{category.label}</p>
                   </Link>
                 ))}
                 <Link href="/modelos?prontaEntrega=1" className="group min-w-0" data-testid="home-category-pronta-entrega">
-                  <div className="aspect-square rounded-xl bg-[#f4f1ec] border border-[#ece7df] flex flex-col items-center justify-center gap-2 group-hover:border-[#bba886] group-hover:shadow-md transition-all"><span className="text-3xl text-[#a58c65]">✓</span><span className="text-[10px] uppercase tracking-wide text-[#8c795b]">Disponíveis</span></div>
+                  <div className="aspect-[4/3] rounded-xl bg-[#f4f1ec] border border-[#ece7df] flex flex-col items-center justify-center gap-2 group-hover:border-[#bba886] group-hover:shadow-md transition-all"><span className="text-3xl text-[#a58c65]">✓</span><span className="text-[10px] uppercase tracking-wide text-[#8c795b]">Disponíveis</span></div>
                   <p className="text-center text-[12px] md:text-sm font-medium mt-2 leading-snug group-hover:underline">Pronta Entrega</p>
                 </Link>
               </div>
