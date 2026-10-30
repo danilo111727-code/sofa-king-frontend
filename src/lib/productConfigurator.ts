@@ -47,11 +47,14 @@ export function deliveryLabel(rule: DeliveryRule | undefined, fallbackDays?: num
   return rule.days && rule.days > 0 ? `Prazo: ${rule.days} dias úteis` : null;
 }
 export function calculateVariationTotal(groups: ProductVariationGroup[], selections: VariationSelection[]): number {
-  return selections.reduce((sum, selection) => {
+  const seen = new Set<string>();
+  return Math.round(selections.reduce((sum, selection) => {
     const group = groups.find(g => g.id === selection.groupId);
     const option = group?.options.find(o => o.id === selection.optionId);
-    if (!group || !option) return sum;
+    const key=group?.mode === "single" ? selection.groupId : selection.groupId+":"+selection.optionId;
+    if (!group || !option || seen.has(key) || !Number.isFinite(selection.quantity)) return sum;
+    seen.add(key);
     const quantity = group.mode === "single" ? 1 : Math.max(option.minQuantity ?? 0, Math.min(option.maxQuantity ?? 99, Math.max(0, Math.floor(selection.quantity))));
     return sum + option.priceAdjustment * quantity;
-  }, 0);
+  }, 0)*100)/100;
 }

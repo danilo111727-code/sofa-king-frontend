@@ -9,6 +9,8 @@ export interface CartItem {
   album: { id: string; name: string; surcharge: number } | null;
   fabric: { id: string; name: string; imageUrl: string } | null;
   foam: { id: string; name: string; priceAdjustment: number } | null;
+  variations?: {groupName:string;optionName:string;quantity:number;priceAdjustment:number}[];
+  delivery?: string | null;
   unitPrice: number;
   qty: number;
 }
@@ -24,7 +26,7 @@ interface CartContextValue {
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "sk_cart_v1";
+const STORAGE_KEY = "sk_preview_cart_v2";
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(() => {

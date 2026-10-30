@@ -70,6 +70,8 @@ import { Link } from "wouter";
         fabricName: it.fabric?.name ?? null,
         foamName: it.foam?.name ?? null,
         qty: it.qty,
+        variations: it.variations,
+        delivery: it.delivery,
         unitPrice: it.unitPrice,
       }));
 
@@ -102,6 +104,8 @@ import { Link } from "wouter";
               (it.foam.priceAdjustment !== 0 ? ` (${it.foam.priceAdjustment > 0 ? "+" : ""}${brl(it.foam.priceAdjustment)})` : ""),
           );
         }
+        it.variations?.forEach(v=>lines.push(`• ${v.groupName}: ${v.optionName} × ${v.quantity}`));
+        if(it.delivery) lines.push(`• ${it.delivery}`);
         lines.push(`• Quantidade: ${it.qty}`);
         lines.push(`• Subtotal: ${brl(it.unitPrice * it.qty)}`);
         lines.push("");
@@ -169,6 +173,8 @@ import { Link } from "wouter";
                                 Álbum: <strong>{it.album.name}</strong>{it.fabric ? ` — ${it.fabric.name}` : ""}
                               </p>
                             )}
+                            {it.variations?.map((v,i)=><p key={i} className="text-xs text-muted-foreground">{v.groupName}: <strong>{v.optionName} × {v.quantity}</strong></p>)}
+                            {it.delivery&&<p className="text-xs text-muted-foreground">{it.delivery}</p>}
                             {it.foam && (
                               <p className="text-xs text-muted-foreground">Espuma: <strong>{it.foam.name}</strong></p>
                             )}

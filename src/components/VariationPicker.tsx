@@ -1,0 +1,12 @@
+import type { ProductVariationGroup, VariationSelection } from "@/lib/productConfigurator";
+export function VariationPicker({groups,selections,onChange}:{groups:ProductVariationGroup[];selections:VariationSelection[];onChange:(s:VariationSelection[])=>void}){
+ const select=(g:ProductVariationGroup,id:string,quantity:number)=>{
+  const rest=selections.filter(s=>s.groupId!==g.id||(g.mode==='quantity'&&s.optionId!==id));
+  onChange(id&&quantity>0?[...rest,{groupId:g.id,optionId:id,quantity}]:rest);
+ };
+ return <div className="space-y-5 mb-6">{groups.map(g=><fieldset key={g.id} className="space-y-2 min-w-0"><legend className="font-semibold text-foreground mb-2">{g.name}{g.required&&<span className="text-xs text-muted-foreground ml-2">Obrigatório</span>}</legend>
+ {g.mode==='single'?<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">{!g.required&&<button type="button" onClick={()=>select(g,'',0)} className="text-sm border rounded-lg p-3 text-left">Sem adicional</button>}{g.options.map(o=><button aria-pressed={selections.some(s=>s.groupId===g.id&&s.optionId===o.id)} type="button" key={o.id} onClick={()=>select(g,o.id,1)} className={`flex items-center gap-3 rounded-lg border p-3 text-left text-sm ${selections.some(s=>s.groupId===g.id&&s.optionId===o.id)?'border-primary bg-primary/10':'border-border'}`}>
+ {o.imageUrl&&<img src={o.imageUrl} alt="" className="w-12 h-12 object-cover rounded-md"/>}<span className="min-w-0 break-words">{o.name}<span className="block text-xs text-muted-foreground">{o.priceAdjustment===0?'Incluso':o.priceAdjustment.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span></span></button>)}</div>:
+ <div className="space-y-2">{g.options.map(o=><label key={o.id} className="flex items-center justify-between gap-3 rounded-lg border p-3"><span className="text-sm min-w-0 break-words">{o.name}<span className="block text-xs text-muted-foreground">{o.priceAdjustment.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} / un.</span></span><input aria-label={`Quantidade ${o.name}`} className="w-20 shrink-0 border rounded-md bg-background p-2 text-foreground" type="number" min={o.minQuantity??0} max={o.maxQuantity??99} step="1" value={selections.find(s=>s.groupId===g.id&&s.optionId===o.id)?.quantity??0} onChange={e=>select(g,o.id,Math.max(o.minQuantity??0,Math.min(o.maxQuantity??99,Math.floor(Number(e.target.value)||0))))}/></label>)}</div>}
+ </fieldset>)}</div>;
+}

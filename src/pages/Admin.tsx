@@ -1,3 +1,4 @@
+import type { ProductConfiguration } from "@/lib/productConfigurator";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation } from "wouter";
 import { useUser, useClerk } from "@clerk/react";
@@ -265,6 +266,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<ProdutoForm>(EMPTY_PRODUTO);
+  const [configuration, setConfiguration] = useState<ProductConfiguration>({});
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -311,8 +313,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     });
   }
 
-  function openNew() { pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
+  function openNew() { setConfiguration({}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
   function openEdit(p: Product) {
+    setConfiguration(p.configuration ?? {});
     pingApi();
     setEditId(p.id);
     const validCats: ProductCategory[] = CATEGORIES.map((c) => c.id);
@@ -349,6 +352,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     try {
       const prazoStr = form.prazoEntrega || "";
       const payload: Omit<Product, "id"> = {
+        configuration,
         name: form.name,
         category: form.category,
         description: form.description,
@@ -545,7 +549,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               <button onClick={closeForm} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
-              <ConfiguradorPreview key={editId ?? "novo"} productId={editId} albums={albums} foams={foams} />
+              <ConfiguradorPreview key={editId ?? "novo"} config={configuration} setConfig={setConfiguration} albums={albums} foams={foams} />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Nome do Modelo *">
                   <input

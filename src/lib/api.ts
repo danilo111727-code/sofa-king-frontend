@@ -1,3 +1,4 @@
+import type { ProductConfiguration, VariationSelection } from "./productConfigurator";
 export interface SizeOption {
   label: string;
   basePrice: number;
@@ -17,6 +18,7 @@ export interface DiagramaAnotacao {
 
 export interface Product {
   id: string;
+  configuration?: ProductConfiguration;
   name: string;
   price: number;
   description: string;
@@ -127,6 +129,8 @@ export interface OrderItemSnapshot {
   fabricName?: string | null;
   foamName?: string | null;
   qty: number;
+  variations?: {groupName:string;optionName:string;quantity:number;priceAdjustment:number}[];
+  delivery?: string | null;
   unitPrice: number;
 }
 
@@ -167,7 +171,7 @@ export interface WhatsappEvent {
     return h;
   }
 
-  const BASE = "/api";
+  export const BASE = "/api";
 const jsonHeaders: HeadersInit = { "Content-Type": "application/json" };
 
 /** Acorda o servidor (Render free dorme após 15min). Chame ao abrir formulários. */
@@ -189,7 +193,7 @@ async function readError(res: Response, fallback: string): Promise<string> {
   return `${fallback} (HTTP ${res.status})`;
 }
 
-const PRODUCTS_CACHE_KEY = "sfk_products_v1";
+const PRODUCTS_CACHE_KEY = "sfk_preview_products_v2";
 const PRODUCTS_CACHE_TTL = 5 * 60 * 1000;
 
 function getCachedProducts(): { data: Product[]; timestamp: number } | null {
@@ -409,5 +413,11 @@ export async function uploadImage(file: File): Promise<{ url: string; objectPath
   fd.append("file", file);
   const res = await fetch(`${BASE}/admin/upload-image`, { method: "POST", headers: await (async () => { const h = await adminHeaders(); delete h["Content-Type"]; return h; })(), body: fd });
   if (!res.ok) throw new Error("Erro no upload da imagem");
+  return res.json();
+}
+
+export async function fetchQuote(id: string, input: { sizeLabel: string; albumId?: string; fabricId?: string; foamId?: string; selections: VariationSelection[] }): Promise<{total:number; variationTotal:number}> {
+  const res = await fetch(`${BASE}/products/${id}/quote`, {method:"POST",headers:jsonHeaders,body:JSON.stringify(input)});
+  if(!res.ok) throw new Error(await readError(res,"Não foi possível calcular o preço"));
   return res.json();
 }
