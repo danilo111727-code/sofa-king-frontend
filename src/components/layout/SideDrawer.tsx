@@ -1,4 +1,4 @@
-import { X, Search, ChevronDown, ChevronRight, User, LogOut, UserPlus, Settings, Heart } from "lucide-react";
+import { X, ChevronDown, ChevronRight, User, LogOut, UserPlus, Settings, Heart, Home, Star, Gem, LayoutGrid, Sofa, Armchair, BedDouble, Truck, ShieldCheck, CreditCard, PackageCheck } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { Show, useUser, useClerk } from "@clerk/react";
@@ -46,9 +46,10 @@ function buildMenu(categories: CategoryDef[]): MenuItem[] {
   }
 
   return [
-    { label: "⭐ BESTSELLERS", href: "/modelos?destaque=1" },
+    { label: "BESTSELLERS", href: "/modelos?destaque=1" },
     { label: "DESIGN AUTORAIS", href: "/modelos?design=1" },
     { label: "TODOS OS MODELOS", href: "/modelos" },
+    { label: "PRONTA ENTREGA", href: "/modelos?prontaEntrega=1" },
     ...groups,
     { label: "PRAZO DE ENTREGA", href: "/#prazo-entrega" },
     { label: "GARANTIA", href: "/#garantia" },
@@ -85,6 +86,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
     }
   }, [user, open]);
 
+  const iconByLabel: Record<string, typeof Star> = { "BESTSELLERS": Star, "DESIGN AUTORAIS": Gem, "TODOS OS MODELOS": LayoutGrid, "PRONTA ENTREGA": PackageCheck, "SOFÁS": Sofa, "POLTRONAS E PUFFS": Armchair, "CAMA": BedDouble, "PRAZO DE ENTREGA": Truck, "GARANTIA": ShieldCheck, "FORMA DE PAGAMENTO": CreditCard };
   return (
     <>
       <div
@@ -92,16 +94,17 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
         onClick={onClose}
       />
       <aside
-        className={`fixed top-0 left-0 h-full w-[85%] max-w-sm bg-background z-[70] shadow-2xl transition-transform duration-300 overflow-y-auto ${open ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 h-full w-[88%] max-w-[390px] bg-[#fcfaf7] text-[#29251f] z-[70] shadow-2xl transition-transform duration-300 overflow-y-auto ${open ? "translate-x-0" : "-translate-x-full"}`}
         data-testid="side-drawer"
       >
-        <div className="flex items-center justify-between p-5 border-b border-border">
-          <button onClick={onClose} className="p-1" aria-label="Fechar menu" data-testid="button-drawer-close">
+        <div className="relative flex items-center justify-center px-6 pt-12 pb-7">
+          <button onClick={onClose} className="absolute left-6 top-8 p-2 rounded-full hover:bg-[#eee8de]" aria-label="Fechar menu" data-testid="button-drawer-close">
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        <div className="p-5 pb-24">
+        <div className="px-5 pb-12">
+          <Link href="/" onClick={onClose} className="mb-6 flex justify-center"><img src="/assets/sofa-king-logo.png" alt="Sofá King" className="h-20 w-auto object-contain" /></Link>
           <div className="mb-6">
             <Show when="signed-out">
               <div className="grid grid-cols-2 gap-2">
@@ -118,7 +121,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
               </div>
             </Show>
             <Show when="signed-in">
-              <div className="rounded-md border border-border bg-muted/30 px-4 py-3 flex items-center justify-between gap-2">
+              <div className="rounded-2xl border border-[#e7dfd3] bg-white px-4 py-4 flex items-center justify-between gap-2">
                 <div className="min-w-0">
                   <p className="text-xs text-muted-foreground">Olá,</p>
                   <p className="text-sm font-semibold text-foreground truncate">{firstName}</p>
@@ -141,18 +144,11 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
             </Show>
           </div>
 
-          <div className="relative mb-6">
-            <input
-              type="text"
-              placeholder="Buscar produtos"
-              className="w-full bg-muted/50 border border-border rounded-md py-3 pl-4 pr-12 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-              data-testid="input-drawer-search"
-            />
-            <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-          </div>
+          <Link href="/" onClick={onClose} className="mb-3 flex items-center gap-4 rounded-2xl bg-[#f0e9dc] px-4 py-3.5 text-[#997a40] font-semibold"><Home className="h-5 w-5" />Início</Link>
 
           <nav className="flex flex-col">
             {menu.map((item) => {
+              const ItemIcon = iconByLabel[item.label] ?? LayoutGrid;
               const hasChildren = "children" in item;
               const isOpen = expanded === item.label;
               const testId = `link-drawer-${item.label.toLowerCase().replace(/\s+/g, "-")}`;
@@ -162,10 +158,10 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
                   <div key={item.label} className="border-b border-border/50">
                     <button
                       onClick={() => setExpanded(isOpen ? null : item.label)}
-                      className="w-full flex items-center justify-between py-4 text-sm font-semibold tracking-wider text-foreground hover:text-primary transition-colors"
+                      className="w-full flex items-center justify-between px-3 py-3.5 rounded-xl text-[15px] font-medium text-[#29251f] hover:bg-[#f1ece4] transition-colors"
                       data-testid={testId}
                     >
-                      <span>{item.label}</span>
+                      <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#73685b]" strokeWidth={1.7} />{item.label.replace("⭐ ", "").replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers").replace("SOFÁS", "Sofás").replace("POLTRONAS E PUFFS", "Poltronas e Puffs").replace("CAMA", "Cama").replace("PRONTA ENTREGA", "Pronta Entrega")}</span>
                       {isOpen ? (
                         <ChevronDown className="w-4 h-4 text-muted-foreground" />
                       ) : (
@@ -196,10 +192,10 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
                   key={item.label}
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-center justify-between py-4 border-b border-border/50 text-sm font-semibold tracking-wider text-foreground hover:text-primary transition-colors"
+                  className="flex items-center justify-between px-3 py-3.5 rounded-xl text-[15px] font-medium text-[#29251f] hover:bg-[#f1ece4] transition-colors"
                   data-testid={testId}
                 >
-                  <span>{item.label}</span>
+                  <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#73685b]" strokeWidth={1.7} />{item.label.replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRONTA ENTREGA", "Pronta Entrega").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers")}</span>
                 </a>
               );
             })}
@@ -207,7 +203,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
 
           <div className="mt-6 pt-6 border-t border-border">
             <Link href="/favoritos" onClick={onClose} data-testid="link-drawer-favoritos">
-              <button className="w-full flex items-center justify-center gap-2 py-3.5 rounded-md border border-red-200 bg-red-50 text-red-600 font-semibold text-sm hover:bg-red-100 transition-colors">
+              <button className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl bg-[#fff0ee] text-[#d63d42] font-semibold text-sm hover:bg-[#ffe5e2] transition-colors">
                 <Heart className="w-4 h-4 fill-red-500 text-red-500" />
                 Seus Favoritos
               </button>
