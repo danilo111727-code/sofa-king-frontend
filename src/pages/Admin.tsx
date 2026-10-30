@@ -267,6 +267,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<ProdutoForm>(EMPTY_PRODUTO);
   const [configuration, setConfiguration] = useState<ProductConfiguration>({});
+  const [variationUploading, setVariationUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -277,7 +278,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   async function load() {
     setLoading(true);
     try {
-      const [prods, als, fos] = await Promise.all([fetchProducts(), fetchAdminAlbums(), fetchAdminMaterials()]);
+      const [prods, als, fos] = await Promise.all([fetchProducts({ fresh: true }), fetchAdminAlbums(), fetchAdminMaterials()]);
       setProducts(prods.map((p) => ({ ...p, price: (p.price == null || !isFinite(p.price)) ? 0 : p.price })));
       setAlbums(als.filter((a) => a.active));
       setFoams(fos.filter((m) => m.active));
@@ -341,6 +342,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
+    if (variationUploading) { flash("err", "Aguarde o envio da foto da variação."); return; }
     if (form.sizes.length === 0) {
       flash("err", "Adicione pelo menos uma metragem.");
       return;
@@ -549,7 +551,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               <button onClick={closeForm} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
-              <ConfiguradorPreview key={editId ?? "novo"} config={configuration} setConfig={setConfiguration} albums={albums} foams={foams} />
+              <ConfiguradorPreview key={editId ?? "novo"} config={configuration} setConfig={setConfiguration} albums={albums} foams={foams} onUploadingChange={setVariationUploading} />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Nome do Modelo *">
                   <input
@@ -891,7 +893,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
 
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={closeForm} className="flex-1 py-2.5 border border-[#3d2e1e] rounded-lg text-[#a08060] hover:text-white text-sm">Cancelar</button>
-                <button type="submit" disabled={saving} className="flex-1 py-2.5 bg-[#c9a96e] hover:bg-[#b8954f] disabled:opacity-50 text-[#1a1208] font-semibold rounded-lg text-sm">
+                <button type="submit" disabled={saving || variationUploading} className="flex-1 py-2.5 bg-[#c9a96e] hover:bg-[#b8954f] disabled:opacity-50 text-[#1a1208] font-semibold rounded-lg text-sm">
                   {saving ? "Salvando..." : editId ? "Salvar" : "Criar"}
                 </button>
               </div>

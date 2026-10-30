@@ -195,6 +195,7 @@ async function readError(res: Response, fallback: string): Promise<string> {
 
 const PRODUCTS_CACHE_KEY = "sfk_preview_products_v2";
 const PRODUCTS_CACHE_TTL = 5 * 60 * 1000;
+let productsCacheGeneration = 0;
 
 function getCachedProducts(): { data: Product[]; timestamp: number } | null {
   try {
@@ -213,26 +214,28 @@ function saveCachedProducts(data: Product[]) {
 }
 
 function clearProductsCache() {
+  productsCacheGeneration++;
   try { localStorage.removeItem(PRODUCTS_CACHE_KEY); } catch {}
 }
 
-export async function fetchProducts(): Promise<Product[]> {
-  const cached = getCachedProducts();
+export async function fetchProducts({ fresh = false }: { fresh?: boolean } = {}): Promise<Product[]> {
+  const generation = productsCacheGeneration;
+  const cached = fresh ? null : getCachedProducts();
 
   if (cached && Date.now() - cached.timestamp < PRODUCTS_CACHE_TTL) {
     // Cache fresco: retorna imediatamente e atualiza em background
-    fetch(`${BASE}/products`)
+    fetch(`${BASE}/products`, { cache: "no-store" })
       .then(r => r.ok ? r.json() : null)
-      .then(fresh => { if (fresh) saveCachedProducts(fresh); })
+      .then(fresh => { if (fresh && generation === productsCacheGeneration) saveCachedProducts(fresh); })
       .catch(() => {});
     return cached.data;
   }
 
   // Cache expirado ou inexistente: busca normalmente
-  const res = await fetch(`${BASE}/products`);
+  const res = await fetch(`${BASE}/products`, { cache: "no-store" });
   if (!res.ok) throw new Error("Erro ao carregar produtos");
   const data: Product[] = await res.json();
-  saveCachedProducts(data);
+  if (generation === productsCacheGeneration) saveCachedProducts(data);
   return data;
 }
 
@@ -262,6 +265,7 @@ export async function createProduct(data: Omit<Product, "id">): Promise<Product>
     method: "POST", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error(await readError(res, "Erro ao criar produto"));
+  clearProductsCache();
   return res.json();
 }
 
@@ -271,6 +275,7 @@ export async function updateProduct(id: string, data: Partial<Omit<Product, "id"
     method: "PUT", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error(await readError(res, "Erro ao atualizar produto"));
+  clearProductsCache();
   return res.json();
 }
 
@@ -278,6 +283,7 @@ export async function deleteProduct(id: string): Promise<void> {
   clearProductsCache();
   const res = await fetch(`${BASE}/products/${id}`, { method: "DELETE", headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao excluir produto");
+  clearProductsCache();
 }
 
 // --- Tracking ---
