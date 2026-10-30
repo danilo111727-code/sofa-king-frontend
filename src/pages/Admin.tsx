@@ -545,7 +545,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               <button onClick={closeForm} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
-              <ConfiguradorPreview key={editId ?? "novo"} albums={albums} foams={foams} />
+              <ConfiguradorPreview key={editId ?? "novo"} productId={editId} albums={albums} foams={foams} />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Nome do Modelo *">
                   <input
