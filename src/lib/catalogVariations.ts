@@ -10,7 +10,7 @@ export function resolveCatalogVariations(configuration: ProductConfiguration = {
   const associations=configuration.catalogVariations;
   const legacy=configuration.variationGroups??[];
   if(associations===undefined)return legacy;
-  const groups=legacy.filter(g=>g.mode==='quantity');
+  const groups: ProductVariationGroup[]=[];
   for(const album of albums){
     const association=associations[album.id];
     if(!album.active||!association?.enabled)continue;
