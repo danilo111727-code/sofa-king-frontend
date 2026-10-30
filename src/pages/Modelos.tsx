@@ -1,5 +1,5 @@
 import { Link, useSearch, useLocation } from "wouter";
-import { ArrowRight, Search, X, Heart, ShoppingCart } from "lucide-react";
+import { ArrowRight, Search, X, Heart, ShoppingCart, SlidersHorizontal, Star } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { useEffect, useState, useMemo } from "react";
@@ -34,6 +34,7 @@ export default function Modelos() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [showPriceFilter, setShowPriceFilter] = useState(false);
   const [priceRange, setPriceRange] = useState<{ min: number; max: number } | null>(null);
   const { categories: CATEGORIES, displayName, getCategory } = useCategories();
   const validCategoryIds = useMemo(() => new Set(CATEGORIES.map((c) => c.id)), [CATEGORIES]);
@@ -119,21 +120,20 @@ export default function Modelos() {
       <Navbar />
 
       <main className="flex-grow pb-20 sm:pb-8">
-        <section className="py-12 md:py-16 bg-background">
+        <section className="py-5 md:py-10 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8 md:mb-10">
-              <p className="text-xs tracking-[0.4em] uppercase text-accent mb-3 font-semibold">Catálogo</p>
-              <h1 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-4" data-testid="text-catalog-title">
+            <div className="text-left mb-4 md:mb-6">
+              <p className="text-[10px] tracking-[0.2em] uppercase text-accent mb-1 font-semibold">Catálogo</p>
+              <h1 className="text-2xl md:text-4xl font-serif font-bold text-foreground mb-1" data-testid="text-catalog-title">
                 {heading}
               </h1>
-              <div className="w-12 h-[2px] bg-accent mx-auto mb-5" />
-              <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+              <p className="text-muted-foreground text-xs md:text-sm leading-snug">
                 Personalize cada peça em <strong className="text-foreground">metragem, tecido e espuma</strong>.
               </p>
             </div>
 
             {/* Search */}
-            <div className="max-w-xl mx-auto mb-6 relative">
+            <div className="max-w-xl mb-3 relative">
               <Search className="w-5 h-5 text-muted-foreground absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
@@ -156,112 +156,27 @@ export default function Modelos() {
               )}
             </div>
 
-            {/* Filter pills */}
-            <div className="flex flex-wrap gap-2 justify-center mb-10" data-testid="category-filter">
-              <Link
-                href="/modelos"
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                  !activeCategory && !onlyBestsellers
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-background text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
-                }`}
-                data-testid="filter-category-todos"
-              >
-                Todos
-              </Link>
-              <Link
-                href="/modelos?destaque=1"
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                  onlyBestsellers
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-background text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
-                }`}
-                data-testid="filter-bestseller"
-              >
-                ⭐ Bestsellers
-              </Link>
-              <Link
-                href="/modelos?design=1"
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                  onlyDesignAutoral
-                    ? "bg-white text-black border-black"
-                    : "bg-background text-muted-foreground border-border hover:border-black/30 hover:text-foreground"
-                }`}
-                data-testid="filter-design-autoral"
-              >
-                Design Autorais
-              </Link>
-              {CATEGORIES.map((c) => (
-                <Link
-                  key={c.id}
-                  href={`/modelos?categoria=${c.id}`}
-                  className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                    activeCategory === c.id
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-background text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
-                  }`}
-                  data-testid={`filter-category-${c.id}`}
-                >
-                  {c.label}
-                </Link>
-              ))}
+            <div className="flex gap-2 overflow-x-auto whitespace-nowrap pb-2 mb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-testid="category-filter">
+              <Link href="/modelos" className={`shrink-0 px-4 py-2 rounded-full text-xs font-medium border ${!activeCategory && !onlyBestsellers && !onlyDesignAutoral && !onlyProntaEntrega ? "bg-primary text-primary-foreground border-primary" : "border-border"}`}>Todos</Link>
+              <Link href="/modelos?destaque=1" className={`shrink-0 inline-flex items-center gap-1 px-4 py-2 rounded-full text-xs font-medium border ${onlyBestsellers ? "bg-primary text-primary-foreground border-primary" : "border-border"}`}><Star className="w-3.5 h-3.5" /> Bestsellers</Link>
+              <Link href="/modelos?design=1" className={`shrink-0 px-4 py-2 rounded-full text-xs font-medium border ${onlyDesignAutoral ? "bg-primary text-primary-foreground border-primary" : "border-border"}`}>Design Autorais</Link>
+              <Link href="/modelos?prontaEntrega=1" className={`shrink-0 px-4 py-2 rounded-full text-xs font-medium border ${onlyProntaEntrega ? "bg-primary text-primary-foreground border-primary" : "border-border"}`}>Pronta Entrega</Link>
             </div>
-
-            {/* Price range filter — manual inputs */}
-            <div className="flex flex-wrap gap-2 justify-center items-end mb-10" data-testid="price-filter">
-              <span className="text-xs uppercase tracking-wider text-muted-foreground mr-1 mb-2">Faixa de preço:</span>
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs text-muted-foreground">De R$</span>
-                <input
-                  type="number"
-                  inputMode="numeric"
-                  min={0}
-                  step={100}
-                  value={priceMinInput}
-                  onChange={(e) => setPriceMinInput(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === "Enter") applyPriceFilter(); }}
-                  placeholder="0"
-                  className="w-24 bg-background border border-border rounded-md px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
-                  data-testid="input-price-min"
-                />
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs text-muted-foreground">Até R$</span>
-                <input
-                  type="number"
-                  inputMode="numeric"
-                  min={0}
-                  step={100}
-                  value={priceMaxInput}
-                  onChange={(e) => setPriceMaxInput(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === "Enter") applyPriceFilter(); }}
-                  placeholder="∞"
-                  className="w-24 bg-background border border-border rounded-md px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
-                  data-testid="input-price-max"
-                />
-              </div>
-              <button
-                type="button"
-                onClick={applyPriceFilter}
-                className="px-3.5 py-1.5 rounded-md text-xs font-medium border bg-accent text-accent-foreground border-accent hover:opacity-90 transition-opacity"
-                data-testid="button-apply-price"
-              >
-                Filtrar
-              </button>
-              {(priceRange || priceMinInput || priceMaxInput) && (
-                <button
-                  type="button"
-                  onClick={clearPriceFilter}
-                  className="text-xs text-muted-foreground hover:text-foreground underline ml-1 mb-2"
-                  data-testid="button-clear-price"
-                >
-                  Limpar
-                </button>
-              )}
+            <div className="flex gap-2 overflow-x-auto whitespace-nowrap pb-3 mb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-testid="category-scroll">
+              {CATEGORIES.map((c) => <Link key={c.id} href={`/modelos?categoria=${c.id}`} className={`shrink-0 px-3 py-1.5 rounded-full text-xs border ${activeCategory === c.id ? "bg-primary text-primary-foreground border-primary" : "border-border text-muted-foreground"}`}>{c.label}</Link>)}
+            </div>
+            <div className="mb-5 border-b border-border/60 pb-3" data-testid="price-filter">
+              <button type="button" onClick={() => setShowPriceFilter((value) => !value)} aria-expanded={showPriceFilter} className="inline-flex items-center gap-2 text-xs font-medium text-foreground"><SlidersHorizontal className="w-4 h-4" /> Filtrar por preço {priceRange ? "• Ativo" : ""}</button>
+              {showPriceFilter && <div className="flex flex-wrap items-center gap-2 mt-3">
+                <span className="text-xs text-muted-foreground">De R$</span><input type="number" min={0} value={priceMinInput} onChange={(e) => setPriceMinInput(e.target.value)} placeholder="0" className="w-24 border border-border rounded-md p-2 text-xs" data-testid="input-price-min" />
+                <span className="text-xs text-muted-foreground">Até R$</span><input type="number" min={0} value={priceMaxInput} onChange={(e) => setPriceMaxInput(e.target.value)} placeholder="Sem limite" className="w-28 border border-border rounded-md p-2 text-xs" data-testid="input-price-max" />
+                <button type="button" onClick={applyPriceFilter} className="bg-primary text-primary-foreground rounded-md px-3 py-2 text-xs" data-testid="button-apply-price">Aplicar</button>
+                {(priceRange || priceMinInput || priceMaxInput) && <button type="button" onClick={clearPriceFilter} className="text-xs underline">Limpar</button>}
+              </div>}
             </div>
 
             {loading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
                   <div key={i} className="bg-muted/30 rounded-lg h-72 animate-pulse" />
                 ))}
@@ -286,7 +201,7 @@ export default function Modelos() {
                 )}
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
                 {filteredProducts.map((product) => (
                   <div
                     key={product.id}
@@ -342,9 +257,9 @@ export default function Modelos() {
                         <Heart className={`w-4 h-4 transition-colors ${isFavorite(product.id) ? "fill-red-500 text-red-500" : "text-foreground/60"}`} />
                       </button>
                     </div>
-                    <div className="p-5 flex flex-col flex-grow">
+                    <div className="p-3 md:p-5 flex flex-col flex-grow">
                       <h3
-                        className="text-lg font-serif font-bold text-foreground group-hover/card:text-primary transition-colors leading-tight mb-2"
+                        className="text-sm md:text-lg font-serif font-bold text-foreground group-hover/card:text-primary transition-colors leading-tight mb-2"
                         data-testid={`text-product-name-${product.id}`}
                       >
                         {displayName(product.name, product.category)}
@@ -379,13 +294,13 @@ export default function Modelos() {
                         </p>
                       )}
                       <div className="mt-4 pt-3 border-t border-border flex items-center justify-between gap-2">
-                        <span className="text-xs font-medium text-primary flex items-center gap-1">
+                        <span className="hidden sm:flex text-xs font-medium text-primary items-center gap-1">
                           Ver detalhes <ArrowRight className="w-3 h-3 transform group-hover/card:translate-x-1 transition-transform" />
                         </span>
                         <button
                           type="button"
                           onClick={(e) => { e.stopPropagation(); navigate(`/produto/${product.id}`); }}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+                          className="flex items-center gap-1.5 px-2 md:px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
                           aria-label="Adicionar ao carrinho"
                           data-testid={`button-cart-${product.id}`}
                         >
