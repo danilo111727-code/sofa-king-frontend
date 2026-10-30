@@ -86,7 +86,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
     }
   }, [user, open]);
 
-  const icons = [Star, Gem, LayoutGrid, PackageCheck, Sofa, Armchair, BedDouble, Truck, ShieldCheck, CreditCard, CreditCard];
+  const iconByLabel: Record<string, typeof Star> = { "BESTSELLERS": Star, "DESIGN AUTORAIS": Gem, "TODOS OS MODELOS": LayoutGrid, "PRONTA ENTREGA": PackageCheck, "SOFÁS": Sofa, "POLTRONAS E PUFFS": Armchair, "CAMA": BedDouble, "PRAZO DE ENTREGA": Truck, "GARANTIA": ShieldCheck, "FORMA DE PAGAMENTO": CreditCard };
   return (
     <>
       <div
@@ -147,8 +147,8 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
           <Link href="/" onClick={onClose} className="mb-3 flex items-center gap-4 rounded-2xl bg-[#f0e9dc] px-4 py-3.5 text-[#997a40] font-semibold"><Home className="h-5 w-5" />Início</Link>
 
           <nav className="flex flex-col">
-            {menu.map((item, index) => {
-              const ItemIcon = icons[Math.min(index, icons.length - 1)];
+            {menu.map((item) => {
+              const ItemIcon = iconByLabel[item.label] ?? LayoutGrid;
               const hasChildren = "children" in item;
               const isOpen = expanded === item.label;
               const testId = `link-drawer-${item.label.toLowerCase().replace(/\s+/g, "-")}`;
@@ -195,7 +195,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
                   className="flex items-center justify-between px-3 py-3.5 rounded-xl text-[15px] font-medium text-[#29251f] hover:bg-[#f1ece4] transition-colors"
                   data-testid={testId}
                 >
-                  <span>{item.label}</span>
+                  <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#73685b]" strokeWidth={1.7} />{item.label.replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRONTA ENTREGA", "Pronta Entrega").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers")}</span>
                 </a>
               );
             })}
