@@ -8,7 +8,7 @@ import { Link } from "wouter";
   import { Separator } from "@/components/ui/separator";
   import { useCart } from "@/contexts/CartContext";
   import { trackWhatsapp, type OrderSnapshot, type OrderItemSnapshot } from "@/lib/api";
-  import { MAX_INSTALLMENTS } from "@/lib/categories";
+  import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
 
   const WHATSAPP = "5575991495793";
 
@@ -34,7 +34,7 @@ import { Link } from "wouter";
     },
     {
       id: "cartao",
-      label: `Cartão de crédito em até ${MAX_INSTALLMENTS}x`,
+      label: "Cartão de crédito",
       description: "Parcelado no cartão, combinado diretamente pelo WhatsApp.",
       icon: "💳",
     },
@@ -43,13 +43,14 @@ import { Link } from "wouter";
   export default function Carrinho() {
     const { items, subtotal, setQty, remove, clear } = useCart();
     const { user } = useUser();
+    const { pixDiscountPct, maxInstallments } = useSiteSettings();
     const [payment, setPayment] = useState<Payment>("pix");
     const [notes, setNotes] = useState("");
 
     const empty = items.length === 0;
     const pixTotal = subtotal;
-    const cardTotal = useMemo(() => subtotal / 0.9, [subtotal]);
-    const installment = useMemo(() => cardTotal / MAX_INSTALLMENTS, [cardTotal]);
+    const cardTotal = useMemo(() => applyCardMarkup(subtotal,pixDiscountPct), [subtotal,pixDiscountPct]);
+    const installment = useMemo(() => cardTotal / maxInstallments, [cardTotal]);
     const finalTotal = payment === "pix" ? pixTotal : cardTotal;
 
     function handleSend() {
@@ -80,7 +81,7 @@ import { Link } from "wouter";
         subtotal,
         payment,
         paymentTotal: finalTotal,
-        installments: payment === "cartao" ? MAX_INSTALLMENTS : undefined,
+        installments: payment === "cartao" ? maxInstallments : undefined,
         notes: notes.trim() || undefined,
         customerName: customerName || undefined,
         customerEmail: customerEmail || undefined,
@@ -117,7 +118,7 @@ import { Link } from "wouter";
       if (payment === "pix") {
         lines.push(`  *Total PIX: ${brl(pixTotal)}*`);
       } else {
-        lines.push(`  Em ${MAX_INSTALLMENTS}x de aprox. ${brl(installment)} (a combinar)`);
+        lines.push(`  Em ${maxInstallments}x de aprox. ${brl(installment)} (a combinar)`);
         lines.push(`  *Total no cartão: ${brl(cardTotal)}*`);
       }
       if (notes.trim()) {
@@ -268,7 +269,7 @@ import { Link } from "wouter";
                               </div>
                               {opt.id === "cartao" && subtotal > 0 && (
                                 <p className="text-xs text-muted-foreground mt-0.5">
-                                  {MAX_INSTALLMENTS}x de ~{brl(installment)}
+                                  {maxInstallments}x de ~{brl(installment)}
                                 </p>
                               )}
                               <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{opt.description}</p>
@@ -299,7 +300,7 @@ import { Link } from "wouter";
                       </div>
                       {payment === "cartao" && subtotal > 0 && (
                         <p className="text-xs text-muted-foreground text-right mt-1">
-                          ou {MAX_INSTALLMENTS}x de {brl(installment)}
+                          ou {maxInstallments}x de {brl(installment)}
                         </p>
                       )}
                     </div>

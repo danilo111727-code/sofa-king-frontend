@@ -59,7 +59,7 @@ export function ConfiguradorPreview({ albums, foams, config, setConfig }: { albu
           <button type="button" className="text-sm text-[#c9a96e]" onClick={() => changeGroup(g.id,{options:[...g.options,{id:crypto.randomUUID(),name:"",priceAdjustment:0}]})}>+ Adicionar opção</button>
         </div>)}
       </div>
-      <p className="text-xs text-[#a08060]">Use Salvar produto no final do formulário para gravar as opções e os preços.</p>
+      <p className="text-xs text-[#a08060]">Use Salvar ou Criar no final do formulário para gravar as opções e os preços.</p>
     </>}
   </section>;
 }

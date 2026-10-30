@@ -545,7 +545,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         <div className="fixed inset-0 bg-black/70 z-50 flex items-start justify-center p-4 overflow-y-auto">
           <div className="bg-[#1a1208] border border-[#3d2e1e] rounded-2xl w-full max-w-2xl my-8 shadow-2xl">
             <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#2d1f10] sticky top-0 bg-[#1a1208] z-10">
-              <h2 className="font-semibold text-lg">{editId ? "Editar Produto" : "Novo Produto"}</h2>
+              <h2 className="font-semibold text-lg text-white">{editId ? "Editar Produto" : "Novo Produto"}</h2>
               <button onClick={closeForm} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
@@ -1082,7 +1082,7 @@ function AlbunsSection({ flash }: { flash: (t: "ok" | "err", s: string) => void 
         <div className="fixed inset-0 bg-black/70 z-50 flex items-start justify-center p-4 overflow-y-auto">
           <div className="bg-[#1a1208] border border-[#3d2e1e] rounded-2xl w-full max-w-2xl my-8 shadow-2xl">
             <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#2d1f10] sticky top-0 bg-[#1a1208] z-10">
-              <h2 className="font-semibold text-lg">{editId ? "Editar Álbum" : "Novo Álbum"}</h2>
+              <h2 className="font-semibold text-lg text-white">{editId ? "Editar Álbum" : "Novo Álbum"}</h2>
               <button onClick={() => setShowForm(false)} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
@@ -1254,7 +1254,7 @@ function EspumasSection({ flash }: { flash: (t: "ok" | "err", s: string) => void
         <div className="fixed inset-0 bg-black/70 z-50 flex items-start justify-center p-4 overflow-y-auto">
           <div className="bg-[#1a1208] border border-[#3d2e1e] rounded-2xl w-full max-w-lg my-8 shadow-2xl">
             <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#2d1f10]">
-              <h2 className="font-semibold text-lg">{editId ? "Editar Espuma" : "Nova Espuma"}</h2>
+              <h2 className="font-semibold text-lg text-white">{editId ? "Editar Espuma" : "Nova Espuma"}</h2>
               <button onClick={() => setShowForm(false)} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
