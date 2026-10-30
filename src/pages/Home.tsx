@@ -204,6 +204,8 @@ export default function Home() {
         <section className="py-14 md:py-20 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-7 md:mb-10">
+              <p className="text-[11px] tracking-[0.22em] uppercase text-muted-foreground mb-2">Coleções Sofa King</p>
+              <p className="text-xs md:text-sm text-muted-foreground mb-5">Encontre o estofado ideal para seu ambiente</p>
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-5 md:gap-5" data-testid="home-category-grid">
                 {categoryTiles.map((category) => (
                   <Link key={category.id} href={`/modelos?categoria=${encodeURIComponent(category.id)}`} className="group min-w-0" data-testid={`home-category-${category.id}`}>
