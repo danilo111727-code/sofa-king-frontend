@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://sofa-king-configurador-test.onrender.com/api/:path*"
+      "destination": "https://sofa-king-api-preview.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",

@@ -1,8 +1,8 @@
 # Sofa King — ambiente exclusivo de homologação
 
-Frontend e API executam a branch `preview`. Nenhum merge em `main` é necessário.
+Frontend: branch `preview` em `sofa-king-frontend`. API: branch `preview-configurador` em `Sofa-king`. Nenhum merge em `main` é necessário.
 
-- API e acesso com recarga de rotas: https://sofa-king-configurador-test.onrender.com
+- API e acesso com recarga de rotas: https://sofa-king-api-preview.onrender.com
 - Assets do frontend: https://sofa-king-configurador-preview.onrender.com
 - Supabase permitido: `lcmtaxesbctibpyggbuj`, esquema privado `preview_private`.
 - Persistência: `documents`, `product_drafts` e `product_configurations`; produto e configuração são gravados na mesma transação.
@@ -14,16 +14,18 @@ A autenticação normal verifica a assinatura, expiração e emissor do JWT Cler
 
 `PREVIEW_AUTOMATION_TOKEN` serve somente aos testes automatizados temporários e deve permanecer vazio fora dessas execuções. Ele nunca é incluído no código do navegador.
 
-O GitHub recusou escrita no repositório `danilo111727-code/Sofa-king` com HTTP 403. Por isso, esta API está versionada temporariamente no frontend, exclusivamente na branch `preview`. A transferência para uma branch de testes do backend permanece pendente de acesso.
+O código canônico desta API está em `danilo111727-code/Sofa-king`, branch `preview-configurador`, diretório `preview-api`. O serviço usa somente essa branch de testes.
 
 ## Verificação
 
 ```sh
-node --test test-api/validation.test.mjs
-npm run typecheck
-npm run build
+node --check preview-api/server.mjs
+node --test preview-api/validation.test.mjs
 ```
 
 `GET /api/readyz` confirma leitura no Supabase de testes. O gateway de frontend suporta abertura e recarga de `/produto/:id`, `/admin` e `/carrinho`.
 
 O produto `[TESTE] Configurador Sofa King` usa valores fictícios e permite validar braços, pés, quantidades, tecido, espuma e prazo sem editar os produtos de referência.
+
+
+A pasta `test-api` do frontend é uma cópia histórica. O serviço ativo usa a implementação do repositório do backend.
