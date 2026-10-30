@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingCart } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingCart, Ruler } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -187,7 +187,21 @@ export default function Home() {
 
             <BestsellerStrip />
 
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6"><div className="flex items-center gap-3 rounded-xl border border-[#eae5de] bg-[#f5f2ee] px-4 py-4 sm:px-6 sm:py-5" data-testid="home-measurement-info"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#8d775c] text-xl" aria-hidden="true">↔</span><div><h2 className="text-[15px] sm:text-lg font-semibold tracking-tight text-[#242424]">Seu sofá, na medida ideal</h2><p className="text-[13px] sm:text-sm text-[#5c554e] mt-0.5">Valores disponíveis por metragem</p><p className="text-xs sm:text-sm text-[#77716a] mt-1 leading-relaxed">Consulte o preço conforme o tamanho escolhido em cada modelo do catálogo.</p></div></div></div>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+              <div className="relative isolate overflow-hidden rounded-xl border border-[#e8e0d6] bg-gradient-to-r from-[#f5f0e9] via-[#f6f2ed] to-[#ede5da] px-4 py-5 sm:px-7 sm:py-6" data-testid="home-measurement-info">
+                <div aria-hidden="true" className="pointer-events-none absolute right-[-28px] top-[-40px] h-44 w-44 rounded-full border-[22px] border-white/25 rotate-[-22deg] sm:right-8" />
+                <div aria-hidden="true" className="pointer-events-none absolute right-4 bottom-2 opacity-30 hidden sm:block">
+                  <svg width="142" height="66" viewBox="0 0 142 66" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 35V19Q12 12 20 12H122Q130 12 130 19V35M12 35H130V51H12V35ZM24 35V24H118V35M24 51V59M118 51V59" stroke="#a28d74" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M71 24V35" stroke="#a28d74" strokeWidth="2"/></svg>
+                </div>
+                <div className="relative flex items-center gap-3 sm:gap-5">
+                  <span className="flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl bg-white/70 text-[#9a805f]"><Ruler className="h-6 w-6" strokeWidth={1.6} /></span>
+                  <div className="min-w-0 max-w-[530px]">
+                    <h2 className="text-[16px] sm:text-xl font-semibold tracking-tight leading-snug text-[#242424]">Valores por metragem disponíveis</h2>
+                    <p className="text-[13px] sm:text-sm leading-relaxed text-[#645a50] mt-1">Consulte o preço conforme o tamanho escolhido em cada modelo do catálogo.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </section>
 
         {/* Horizontal scroll row of models */}
