@@ -34,6 +34,7 @@ import {
 import { slugifyCategoryId, type CategoryDef, type ProductCategory } from "@/lib/categories";
 import { useCategories } from "@/hooks/useCategories";
 import { DiagramaEditor } from "@/components/DiagramaEditor";
+import { ConfiguradorPreview } from "@/components/ConfiguradorPreview";
 
 const inputCls = "w-full bg-[#1a1208] border border-[#3d2e1e] rounded-lg px-3 py-2.5 text-white text-sm placeholder-[#5a4030] focus:outline-none focus:border-[#c9a96e] transition-colors";
 const cardCls = "bg-[#1a1208] border border-[#2d1f10] rounded-xl p-4";
@@ -544,6 +545,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               <button onClick={closeForm} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
+              <ConfiguradorPreview key={editId ?? "novo"} albums={albums} foams={foams} />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Nome do Modelo *">
                   <input
