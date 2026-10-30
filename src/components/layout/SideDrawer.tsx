@@ -1,4 +1,4 @@
-import { X, Search, ChevronDown, ChevronRight, User, LogOut, UserPlus, Settings, Heart, Home, Star, Gem, LayoutGrid, Sofa, Armchair, BedDouble, Truck, ShieldCheck, CreditCard } from "lucide-react";
+import { X, Search, ChevronDown, ChevronRight, User, LogOut, UserPlus, Settings, Heart, Home, Star, Gem, LayoutGrid, Sofa, Armchair, BedDouble, Truck, ShieldCheck, CreditCard, PackageCheck } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { Show, useUser, useClerk } from "@clerk/react";
@@ -49,6 +49,7 @@ function buildMenu(categories: CategoryDef[]): MenuItem[] {
     { label: "⭐ BESTSELLERS", href: "/modelos?destaque=1" },
     { label: "DESIGN AUTORAIS", href: "/modelos?design=1" },
     { label: "TODOS OS MODELOS", href: "/modelos" },
+    { label: "PRONTA ENTREGA", href: "/modelos?prontaEntrega=1" },
     ...groups,
     { label: "PRAZO DE ENTREGA", href: "/#prazo-entrega" },
     { label: "GARANTIA", href: "/#garantia" },
@@ -86,7 +87,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
     }
   }, [user, open]);
 
-  const icons = [Star, Gem, LayoutGrid, Sofa, Armchair, BedDouble, Truck, ShieldCheck, CreditCard];
+  const icons = [Star, Gem, LayoutGrid, PackageCheck, Sofa, Armchair, BedDouble, Truck, ShieldCheck, CreditCard, CreditCard];
   return (
     <>
       <div
@@ -172,7 +173,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
                       className="w-full flex items-center justify-between px-3 py-3.5 rounded-xl text-[15px] font-medium text-[#29251f] hover:bg-[#f1ece4] transition-colors"
                       data-testid={testId}
                     >
-                      <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#73685b]" strokeWidth={1.7} />{item.label.replace("⭐ ", "").replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers").replace("SOFÁS", "Sofás").replace("POLTRONAS E PUFFS", "Poltronas e Puffs").replace("CAMA", "Cama")}</span>
+                      <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#73685b]" strokeWidth={1.7} />{item.label.replace("⭐ ", "").replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers").replace("SOFÁS", "Sofás").replace("POLTRONAS E PUFFS", "Poltronas e Puffs").replace("CAMA", "Cama").replace("PRONTA ENTREGA", "Pronta Entrega")}</span>
                       {isOpen ? (
                         <ChevronDown className="w-4 h-4 text-muted-foreground" />
                       ) : (
