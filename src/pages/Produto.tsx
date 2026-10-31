@@ -1,5 +1,5 @@
 import { useParams, Link, useLocation } from "wouter";
-import { ChevronRight, ArrowLeft, ChevronLeft, Ruler, Info, Check, ShieldCheck, ShoppingCart, ChevronDown, ChevronUp, X, Heart, ZoomIn } from "lucide-react";
+import { ChevronRight, ArrowLeft, ChevronLeft, Ruler, Info, Check, ShieldCheck, WalletCards, ShoppingCart, ChevronDown, ChevronUp, X, Heart, ZoomIn } from "lucide-react";
 import { useState, useEffect, useMemo, useCallback, useRef, type TouchEvent as ReactTouchEvent } from "react";
 import { ImageLightbox } from "@/components/ImageLightbox";
 import { Navbar } from "@/components/layout/Navbar";
@@ -645,27 +645,41 @@ export default function Produto() {
 
               <Separator className="my-3" />
 
-              {/* Parcelamento info block */}
-              <div className="rounded-xl border border-border bg-card p-5 mb-4">
-                <h4 className="font-bold text-base text-foreground mb-3 flex items-center gap-2">
-                  <span className="block w-1 h-5 rounded-full bg-accent shrink-0" />
-                  Como funciona o parcelamento do projeto:
-                </h4>
-                <ol className="space-y-3">
-                  <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="font-bold text-accent shrink-0">1.</span>
-                    <span><strong className="text-foreground">50% de entrada</strong> para iniciar a produção da sua peça no ateliê.</span>
+              {/* Condições de pagamento — resumo compacto, sempre visível. */}
+              <section className="rounded-xl border border-border bg-card p-3.5 sm:p-4 mb-4" aria-label="Como funciona o pagamento">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-secondary text-primary">
+                    <WalletCards className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h4 className="text-sm sm:text-base font-semibold text-foreground leading-tight">Como funciona o pagamento</h4>
+                    <p className="text-xs text-muted-foreground mt-0.5">Simples e seguro, em 3 etapas</p>
+                  </div>
+                </div>
+                <ol className="mt-3 pt-3 border-t border-border/70 space-y-3">
+                  <li className="flex items-start gap-2.5">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-primary text-xs font-semibold">1</span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-foreground">50% de entrada</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Para iniciar a produção da sua peça.</p>
+                    </div>
                   </li>
-                  <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="font-bold text-accent shrink-0">2.</span>
-                    <span>Quando a peça está pronta, fazemos um <strong className="text-foreground">vídeo ao vivo</strong> com você — ou você pode <strong className="text-foreground">conferir pessoalmente no ateliê</strong>.</span>
+                  <li className="flex items-start gap-2.5">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-primary text-xs font-semibold">2</span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-foreground">Confira sua peça</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Por vídeo ao vivo ou pessoalmente no ateliê.</p>
+                    </div>
                   </li>
-                  <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="font-bold text-accent shrink-0">3.</span>
-                    <span>Aprovado, você paga os <strong className="text-foreground">50% restantes antes da entrega</strong>.</span>
+                  <li className="flex items-start gap-2.5">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-primary text-xs font-semibold">3</span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-foreground">50% restantes</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Após sua aprovação, antes da entrega.</p>
+                    </div>
                   </li>
                 </ol>
-              </div>
+              </section>
 
               {/* Price + CTA */}
               {!noSizes && (
