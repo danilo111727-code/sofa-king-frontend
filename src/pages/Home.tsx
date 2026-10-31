@@ -188,16 +188,16 @@ export default function Home() {
             <BestsellerStrip />
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-              <div className="relative isolate overflow-hidden rounded-xl border border-[#e8e0d6] bg-gradient-to-r from-[#f5f0e9] via-[#f6f2ed] to-[#ede5da] px-4 py-5 sm:px-7 sm:py-6" data-testid="home-measurement-info">
+              <div className="relative isolate overflow-hidden rounded-xl border border-[#dce3dc] bg-gradient-to-r from-[#f6f8f5] via-[#f5f7f4] to-[#e8eee7] px-4 py-5 sm:px-7 sm:py-6" data-testid="home-measurement-info">
                 <div aria-hidden="true" className="pointer-events-none absolute right-[-28px] top-[-40px] h-44 w-44 rounded-full border-[22px] border-white/25 rotate-[-22deg] sm:right-8" />
                 <div aria-hidden="true" className="pointer-events-none absolute right-4 bottom-2 opacity-30 hidden sm:block">
-                  <svg width="142" height="66" viewBox="0 0 142 66" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 35V19Q12 12 20 12H122Q130 12 130 19V35M12 35H130V51H12V35ZM24 35V24H118V35M24 51V59M118 51V59" stroke="#a28d74" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M71 24V35" stroke="#a28d74" strokeWidth="2"/></svg>
+                  <svg width="142" height="66" viewBox="0 0 142 66" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 35V19Q12 12 20 12H122Q130 12 130 19V35M12 35H130V51H12V35ZM24 35V24H118V35M24 51V59M118 51V59" stroke="#637565" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M71 24V35" stroke="#637565" strokeWidth="2"/></svg>
                 </div>
                 <div className="relative flex items-center gap-3 sm:gap-5">
-                  <span className="flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl bg-white/70 text-[#9a805f]"><Ruler className="h-6 w-6" strokeWidth={1.6} /></span>
+                  <span className="flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl bg-white/70 text-[#536c58]"><Ruler className="h-6 w-6" strokeWidth={1.6} /></span>
                   <div className="min-w-0 max-w-[530px]">
-                    <h2 className="text-[16px] sm:text-xl font-semibold tracking-tight leading-snug text-[#242424]">Valores por metragem disponíveis</h2>
-                    <p className="text-[13px] sm:text-sm leading-relaxed text-[#645a50] mt-1">Consulte o preço conforme o tamanho escolhido em cada modelo do catálogo.</p>
+                    <h2 className="text-[16px] sm:text-xl font-semibold tracking-tight leading-snug text-[#243128]">Valores por metragem disponíveis</h2>
+                    <p className="text-[13px] sm:text-sm leading-relaxed text-[#627067] mt-1">Consulte o preço conforme o tamanho escolhido em cada modelo do catálogo.</p>
                   </div>
                 </div>
               </div>
@@ -213,14 +213,14 @@ export default function Home() {
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-5 md:gap-5" data-testid="home-category-grid">
                 {categoryTiles.map((category) => (
                   <Link key={category.id} href={`/modelos?categoria=${encodeURIComponent(category.id)}`} className="group min-w-0" data-testid={`home-category-${category.id}`}>
-                    <div className="aspect-[4/3] rounded-xl bg-[#f4f1ec] overflow-hidden border border-[#ece7df] flex items-center justify-center transition-all group-hover:border-[#bba886] group-hover:shadow-md">
-                      {category.photo ? <img src={category.photo} alt={category.label} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" /> : <span className="text-[#968b7c] text-3xl font-serif" aria-hidden="true">{category.label.charAt(0)}</span>}
+                    <div className="aspect-[4/3] rounded-xl bg-[#f4f7f3] overflow-hidden border border-[#e2e9e1] flex items-center justify-center transition-all group-hover:border-[#a2b5a3] group-hover:shadow-md">
+                      {category.photo ? <img src={category.photo} alt={category.label} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" /> : <span className="text-[#65776a] text-3xl font-serif" aria-hidden="true">{category.label.charAt(0)}</span>}
                     </div>
                     <p className="text-center text-[12px] md:text-sm font-medium mt-2 leading-snug text-foreground group-hover:underline">{category.label}</p>
                   </Link>
                 ))}
                 <Link href="/modelos?prontaEntrega=1" className="group min-w-0" data-testid="home-category-pronta-entrega">
-                  <div className="aspect-[4/3] rounded-xl bg-[#f4f1ec] border border-[#ece7df] flex flex-col items-center justify-center gap-2 group-hover:border-[#bba886] group-hover:shadow-md transition-all"><span className="text-3xl text-[#a58c65]">✓</span><span className="text-[10px] uppercase tracking-wide text-[#8c795b]">Disponíveis</span></div>
+                  <div className="aspect-[4/3] rounded-xl bg-[#f4f7f3] border border-[#e2e9e1] flex flex-col items-center justify-center gap-2 group-hover:border-[#a2b5a3] group-hover:shadow-md transition-all"><span className="text-3xl text-[#526d57]">✓</span><span className="text-[10px] uppercase tracking-wide text-[#536a58]">Disponíveis</span></div>
                   <p className="text-center text-[12px] md:text-sm font-medium mt-2 leading-snug group-hover:underline">Pronta Entrega</p>
                 </Link>
               </div>
