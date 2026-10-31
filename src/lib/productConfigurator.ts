@@ -25,7 +25,16 @@ export interface ProductVariationGroup {
   required?: boolean;
   options: ProductVariationOption[];
 }
+export interface ProductMeasurements {
+  totalDepth?: number;
+  seatHeight?: number;
+  backHeight?: number;
+  seatDepth?: number;
+  armWidth?: number;
+}
 export interface ProductConfiguration {
+  /** Medidas informativas em centímetros, opcionais por modelo. */
+  measurements?: ProductMeasurements;
   catalogVariations?: Record<string, { enabled: boolean; optionIds: string[]; required?: boolean }>;
   /** undefined = manter todas as opções existentes; [] = nenhuma opção. */
   allowedFoamIds?: string[];
