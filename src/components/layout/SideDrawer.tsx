@@ -50,6 +50,8 @@ function buildMenu(categories: CategoryDef[]): MenuItem[] {
     { label: "DESIGN AUTORAIS", href: "/modelos?design=1" },
     { label: "TODOS OS MODELOS", href: "/modelos" },
     { label: "PRONTA ENTREGA", href: "/modelos?prontaEntrega=1" },
+    { label: "CATÁLOGO DE TECIDOS", href: "/catalogo-tecidos" },
+    { label: "CATÁLOGO DE ESPUMAS", href: "/catalogo-espumas" },
     ...groups,
     { label: "PRAZO DE ENTREGA", href: "/#prazo-entrega" },
     { label: "GARANTIA", href: "/#garantia" },
@@ -86,7 +88,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
     }
   }, [user, open]);
 
-  const iconByLabel: Record<string, typeof Star> = { "BESTSELLERS": Star, "DESIGN AUTORAIS": Gem, "TODOS OS MODELOS": LayoutGrid, "PRONTA ENTREGA": PackageCheck, "SOFÁS": Sofa, "POLTRONAS E PUFFS": Armchair, "CAMA": BedDouble, "PRAZO DE ENTREGA": Truck, "GARANTIA": ShieldCheck, "FORMA DE PAGAMENTO": CreditCard };
+  const iconByLabel: Record<string, typeof Star> = { "BESTSELLERS": Star, "DESIGN AUTORAIS": Gem, "TODOS OS MODELOS": LayoutGrid, "PRONTA ENTREGA": PackageCheck, "CATÁLOGO DE TECIDOS": LayoutGrid, "CATÁLOGO DE ESPUMAS": LayoutGrid, "SOFÁS": Sofa, "POLTRONAS E PUFFS": Armchair, "CAMA": BedDouble, "PRAZO DE ENTREGA": Truck, "GARANTIA": ShieldCheck, "FORMA DE PAGAMENTO": CreditCard };
   return (
     <>
       <div
@@ -195,7 +197,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
                   className="flex items-center justify-between px-3 py-3.5 rounded-xl text-[15px] font-medium text-[#243128] hover:bg-[#f2f6f1] transition-colors"
                   data-testid={testId}
                 >
-                  <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#627568]" strokeWidth={1.7} />{item.label.replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRONTA ENTREGA", "Pronta Entrega").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers")}</span>
+                  <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#627568]" strokeWidth={1.7} />{item.label.replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRONTA ENTREGA", "Pronta Entrega").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers").replace("CATÁLOGO DE TECIDOS", "Catálogo de Tecidos").replace("CATÁLOGO DE ESPUMAS", "Catálogo de Espumas")}</span>
                 </a>
               );
             })}
