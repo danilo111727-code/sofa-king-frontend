@@ -118,8 +118,8 @@ export default function Produto() {
   const fullName = product ? displayName(product.name, product.category) : "";
   // Rótulo do preço acompanha a categoria real (inclusive categorias personalizadas).
   const categoryLabel = settings.categories?.find(c => c.id === product?.category)?.label ?? "";
-  const categoryKey = `${product?.category ?? ""} ${categoryLabel}`.normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
-  const priceItemLabel = /poltron/.test(categoryKey) ? "Poltrona" : /puff|puf/.test(categoryKey) ? "Puff" : /almofad/.test(categoryKey) ? "Almofada" : /cabeceir/.test(categoryKey) ? "Cabeceira" : /\\bbox\\b/.test(categoryKey) ? "Box" : /\\bcama\\b/.test(categoryKey) && !/sofa/.test(categoryKey) ? "Cama" : /modul/.test(categoryKey) ? "Módulo" : /sofa|retratil|chaise|living|organico|canto|ilha|fixo/.test(categoryKey) ? "Sofá" : categoryLabel.replace(/s$/i, "") || "Produto";
+  const categoryKey = `${product?.category ?? ""} ${categoryLabel}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const priceItemLabel = /poltron/.test(categoryKey) ? "Poltrona" : /puff|puf/.test(categoryKey) ? "Puff" : /almofad/.test(categoryKey) ? "Almofada" : /cabeceir/.test(categoryKey) ? "Cabeceira" : /\bbox\b/.test(categoryKey) ? "Box" : /\bcama\b/.test(categoryKey) && !/sofa/.test(categoryKey) ? "Cama" : /modul/.test(categoryKey) ? "Módulo" : /sofa|retratil|chaise|living|organico|canto|ilha|fixo/.test(categoryKey) ? "Sofá" : categoryLabel.replace(/s$/i, "") || "Produto";
   const DIAGRAMA_SENTINEL = "__diagrama__";
   const galleryImages = useMemo(() => {
     if (!product) return [];
