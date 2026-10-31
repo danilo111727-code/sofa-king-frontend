@@ -94,11 +94,11 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
         onClick={onClose}
       />
       <aside
-        className={`fixed top-0 left-0 h-full w-[88%] max-w-[390px] bg-[#fcfaf7] text-[#29251f] z-[70] shadow-2xl transition-transform duration-300 overflow-y-auto ${open ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 h-full w-[88%] max-w-[390px] bg-[#ffffff] text-[#243128] z-[70] shadow-2xl transition-transform duration-300 overflow-y-auto ${open ? "translate-x-0" : "-translate-x-full"}`}
         data-testid="side-drawer"
       >
         <div className="relative flex items-center justify-center px-6 pt-12 pb-7">
-          <button onClick={onClose} className="absolute left-6 top-8 p-2 rounded-full hover:bg-[#eee8de]" aria-label="Fechar menu" data-testid="button-drawer-close">
+          <button onClick={onClose} className="absolute left-6 top-8 p-2 rounded-full hover:bg-[#edf2ec]" aria-label="Fechar menu" data-testid="button-drawer-close">
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -121,7 +121,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
               </div>
             </Show>
             <Show when="signed-in">
-              <div className="rounded-2xl border border-[#e7dfd3] bg-white px-4 py-4 flex items-center justify-between gap-2">
+              <div className="rounded-2xl border border-[#dce5db] bg-white px-4 py-4 flex items-center justify-between gap-2">
                 <div className="min-w-0">
                   <p className="text-xs text-muted-foreground">Olá,</p>
                   <p className="text-sm font-semibold text-foreground truncate">{firstName}</p>
@@ -136,7 +136,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
               </div>
               {isAdmin && (
                 <Link href="/admin" onClick={onClose} data-testid="link-drawer-admin">
-                  <button className="mt-2 w-full flex items-center justify-center gap-2 py-3 bg-[#c9a96e] hover:bg-[#b8954f] text-[#1a1208] rounded-md text-sm font-semibold transition-colors">
+                  <button className="mt-2 w-full flex items-center justify-center gap-2 py-3 bg-[#38533f] hover:bg-[#2d4534] text-[#ffffff] rounded-md text-sm font-semibold transition-colors">
                     <Settings className="w-4 h-4" /> Painel Admin
                   </button>
                 </Link>
@@ -144,7 +144,7 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
             </Show>
           </div>
 
-          <Link href="/" onClick={onClose} className="mb-3 flex items-center gap-4 rounded-2xl bg-[#f0e9dc] px-4 py-3.5 text-[#997a40] font-semibold"><Home className="h-5 w-5" />Início</Link>
+          <Link href="/" onClick={onClose} className="mb-3 flex items-center gap-4 rounded-2xl bg-[#edf3ec] px-4 py-3.5 text-[#38533f] font-semibold"><Home className="h-5 w-5" />Início</Link>
 
           <nav className="flex flex-col">
             {menu.map((item) => {
@@ -158,10 +158,10 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
                   <div key={item.label} className="border-b border-border/50">
                     <button
                       onClick={() => setExpanded(isOpen ? null : item.label)}
-                      className="w-full flex items-center justify-between px-3 py-3.5 rounded-xl text-[15px] font-medium text-[#29251f] hover:bg-[#f1ece4] transition-colors"
+                      className="w-full flex items-center justify-between px-3 py-3.5 rounded-xl text-[15px] font-medium text-[#243128] hover:bg-[#f2f6f1] transition-colors"
                       data-testid={testId}
                     >
-                      <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#73685b]" strokeWidth={1.7} />{item.label.replace("⭐ ", "").replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers").replace("SOFÁS", "Sofás").replace("POLTRONAS E PUFFS", "Poltronas e Puffs").replace("CAMA", "Cama").replace("PRONTA ENTREGA", "Pronta Entrega")}</span>
+                      <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#627568]" strokeWidth={1.7} />{item.label.replace("⭐ ", "").replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers").replace("SOFÁS", "Sofás").replace("POLTRONAS E PUFFS", "Poltronas e Puffs").replace("CAMA", "Cama").replace("PRONTA ENTREGA", "Pronta Entrega")}</span>
                       {isOpen ? (
                         <ChevronDown className="w-4 h-4 text-muted-foreground" />
                       ) : (
@@ -192,10 +192,10 @@ export function SideDrawer({ open, onClose }: SideDrawerProps) {
                   key={item.label}
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-center justify-between px-3 py-3.5 rounded-xl text-[15px] font-medium text-[#29251f] hover:bg-[#f1ece4] transition-colors"
+                  className="flex items-center justify-between px-3 py-3.5 rounded-xl text-[15px] font-medium text-[#243128] hover:bg-[#f2f6f1] transition-colors"
                   data-testid={testId}
                 >
-                  <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#73685b]" strokeWidth={1.7} />{item.label.replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRONTA ENTREGA", "Pronta Entrega").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers")}</span>
+                  <span className="flex items-center gap-4 text-left"><ItemIcon className="h-5 w-5 shrink-0 text-[#627568]" strokeWidth={1.7} />{item.label.replace("DESIGN AUTORAIS", "Design Autorais").replace("TODOS OS MODELOS", "Todos os Modelos").replace("PRONTA ENTREGA", "Pronta Entrega").replace("PRAZO DE ENTREGA", "Prazo de Entrega").replace("FORMA DE PAGAMENTO", "Forma de Pagamento").replace("GARANTIA", "Garantia").replace("BESTSELLERS", "Bestsellers")}</span>
                 </a>
               );
             })}
