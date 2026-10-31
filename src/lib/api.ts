@@ -1,3 +1,4 @@
+import type { ProductConfiguration } from "./productConfigurator";
 export interface SizeOption {
   label: string;
   basePrice: number;
@@ -16,6 +17,7 @@ export interface DiagramaAnotacao {
 }
 
 export interface Product {
+  configuration?: ProductConfiguration;
   id: string;
   name: string;
   price: number;

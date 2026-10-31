@@ -17,6 +17,16 @@ import { useFavorites } from "@/hooks/useFavorites";
 import { displayName } from "@/lib/categories";
 import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
 import { DiagramaViewer } from "@/components/DiagramaViewer";
+import { supportsExtendedDepth } from "@/lib/productConfigurator";
+
+// Vector contours traced from the approved artwork: crisp at every zoom level.
+function MeasurementDrawing({kind,label,large=false}:{kind:string;label:string;large?:boolean}) {
+  return (
+    <img src={`/images/medidas/${kind}.svg`} alt={`Desenho técnico: ${label}`}
+      width="178" height="108"
+      className={large ? "measurement-artwork measurement-artwork-large" : "measurement-artwork"} />
+  );
+}
 
 function brl(v: number | null | undefined): string {
   const n = (v == null || !isFinite(v as number)) ? 0 : (v as number);
@@ -43,6 +53,7 @@ export default function Produto() {
   const [sizeSheetOpen, setSizeSheetOpen] = useState(false);
   const [mainImageIdx, setMainImageIdx] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeMeasurement, setActiveMeasurement] = useState<{label:string;kind:string;value:string} | null>(null);
   const [lightboxIdx, setLightboxIdx] = useState(0);
   const [previewFabric, setPreviewFabric] = useState<{ albumId: string; index: number } | null>(null);
   const { isFavorite: isFabricFavorite, toggle: toggleFabricFavorite } = useFavorites();
@@ -267,18 +278,52 @@ export default function Produto() {
 
             {/* Info */}
             <div className="flex flex-col w-full max-w-3xl mx-auto">
-              <div className="flex flex-wrap items-center gap-3 mb-2">
-                <h1 className="text-3xl sm:text-4xl font-sans font-semibold tracking-tight text-foreground" data-testid="text-product-detail-name">
-                  {fullName}
-                </h1>
-                {!product.disponibilidade && (
-                  <span className="px-3 py-1 bg-red-100 text-red-700 text-sm rounded-full font-medium">Indisponível</span>
-                )}
-              </div>
+              {!product.disponibilidade && (
+                <span className="self-start mb-3 px-3 py-1 bg-red-100 text-red-700 text-sm rounded-full font-medium">Indisponível</span>
+              )}
 
-              <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed" data-testid="text-product-detail-desc">
-                {product.longDescription || product.description}
-              </p>
+              {/* Pacote 2: desenhos técnicos informativos, sem interferir na precificação. */}
+              {(() => {
+                const measurements = product.configuration?.measurements;
+                const items = [
+                  { label: "Largura total", value: selectedSize?.label, kind: "width" },
+                  { label: "Profundidade total", value: measurements?.totalDepth, kind: "depth" },
+                  { label: "Altura do assento", value: measurements?.seatHeight, kind: "seatHeight" },
+                  { label: "Altura do encosto", value: measurements?.backHeight, kind: "backHeight" },
+                  { label: "Profundidade do assento", value: measurements?.seatDepth, kind: "seatDepth" },
+                ];
+                const extended = supportsExtendedDepth(product.category, settings.categories?.find(c => c.id === product.category)?.label);
+                if (extended) items.push({ label: "Profundidade estendida", value: measurements?.extendedDepth, kind: "extendedDepth" });
+                return (
+                  <section className="sofa-measurements mb-5" aria-label="Medidas do sofá">
+                    <h2 className="measurement-toggle">
+                      <Ruler className="measurement-ruler" /> Medidas do sofá
+                    </h2>
+                    <div id="sofa-measurement-cards" className={`measurement-cards${extended ? " measurement-cards-extended" : ""}`}>
+                      {items.map(({ label, value, kind }) => {
+                        return (
+                          <button type="button" key={kind} onClick={() => setActiveMeasurement({label,kind,value:typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")})} aria-label={`Ampliar ${label}`} className="measurement-card">
+                            <MeasurementDrawing kind={kind} label={label} />
+                            <span className="measurement-label">{label}</span>
+                            <strong className="measurement-value">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </section>
+                );
+              })()}
+
+              {activeMeasurement && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/65 p-5" role="presentation" onClick={() => setActiveMeasurement(null)}>
+                  <div role="dialog" aria-modal="true" aria-label={activeMeasurement.label} className="relative w-full max-w-sm rounded-2xl bg-background p-6 text-center shadow-xl" onClick={e => e.stopPropagation()}>
+                    <button type="button" onClick={() => setActiveMeasurement(null)} aria-label="Fechar medida" className="absolute right-3 top-3 rounded-full p-2 hover:bg-secondary"><X className="h-5 w-5" /></button>
+                    <h3 className="mb-4 text-lg font-semibold">{activeMeasurement.label}</h3>
+                    <MeasurementDrawing kind={activeMeasurement.kind} label={activeMeasurement.label} large />
+                    {activeMeasurement.value && <p className="mt-4 text-xl font-semibold text-primary">{activeMeasurement.value}</p>}
+                  </div>
+                </div>
+              )}
 
               {/* Vagas e prazo — configuração global do site */}
               <div className="flex flex-wrap gap-2 mb-3">

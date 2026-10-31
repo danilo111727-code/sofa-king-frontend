@@ -1,3 +1,4 @@
+import { supportsExtendedDepth, type ProductConfiguration } from "@/lib/productConfigurator";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation } from "wouter";
 import { useUser, useClerk } from "@clerk/react";
@@ -264,6 +265,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<ProdutoForm>(EMPTY_PRODUTO);
+  const [configuration, setConfiguration] = useState<ProductConfiguration>({});
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -310,8 +312,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     });
   }
 
-  function openNew() { pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
+  function openNew() { setConfiguration({}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
   function openEdit(p: Product) {
+    setConfiguration(p.configuration ?? {});
     pingApi();
     setEditId(p.id);
     const validCats: ProductCategory[] = CATEGORIES.map((c) => c.id);
@@ -348,6 +351,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     try {
       const prazoStr = form.prazoEntrega || "";
       const payload: Omit<Product, "id"> = {
+        configuration,
         name: form.name,
         category: form.category,
         description: form.description,
@@ -878,6 +882,32 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               </Field>
               <Field label="Descrição Completa">
                 <textarea className={`${inputCls} resize-none`} rows={3} value={form.longDescription} onChange={(e) => setForm({ ...form, longDescription: e.target.value })} />
+              </Field>
+              <Field label="Medidas técnicas do sofá (cm) — opcionais">
+                <p className="text-xs text-[#a08060] mb-3">A largura total é definida pelas metragens cadastradas. As medidas abaixo são apenas informativas e não alteram o preço.</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {([
+                    ["totalDepth", "Profundidade total"],
+                    ["extendedDepth", "Profundidade estendida"],
+                    ["seatHeight", "Altura do assento"],
+                    ["backHeight", "Altura do encosto"],
+                    ["seatDepth", "Profundidade do assento"],
+                    ["armWidth", "Largura do braço"],
+                  ] as const).filter(([key]) => key !== "extendedDepth" || supportsExtendedDepth(form.category, CATEGORIES.find(c => c.id === form.category)?.label)).map(([key, label]) => (
+                    <label key={key} className="block text-xs text-[#cbbba5]">
+                      <span className="block mb-1">{label}</span>
+                      <input type="number" min="0" step="0.5" inputMode="decimal" className={inputCls}
+                        value={configuration.measurements?.[key] ?? ""}
+                        onChange={(e) => setConfiguration((prev) => {
+                          const measurements = { ...(prev.measurements ?? {}) };
+                          if (e.target.value === "") delete measurements[key];
+                          else measurements[key] = Math.max(0, Number(e.target.value));
+                          return { ...prev, measurements };
+                        })}
+                        placeholder="cm" />
+                    </label>
+                  ))}
+                </div>
               </Field>
               <Field label="Dimensões (informativo)">
                 <input className={inputCls} value={form.dimensions} onChange={(e) => setForm({ ...form, dimensions: e.target.value })} placeholder="Ex: 2,30 x 0,95 x 0,90 m" />

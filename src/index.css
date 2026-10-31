@@ -303,3 +303,45 @@
   animation: marquee 30s linear infinite;
   display: inline-flex;
 }
+
+/* Pacote 2: approved 983px-wide measurement strip, scaled as one five-card row. */
+.sofa-measurements {
+  container-type: inline-size;
+  border: 1px solid #e5e5e5;
+  border-radius: clamp(6px, 1.6vw, 16px);
+  padding: 2.2% 2.35% 2.1%;
+  background: #fff;
+  color: #102f25;
+}
+.measurement-toggle {
+  display: flex; align-items: center; gap: 2.1cqw;
+  width: 100%; padding: .5cqw .8cqw 2.4cqw;
+  text-align: left; font-size: 2.95cqw; font-weight: 600;
+}
+.measurement-ruler { transform: scaleX(-1); width: 4.2cqw; height: 4.2cqw; flex-shrink: 0; }
+.measurement-cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.55%; width: 100%; }
+.measurement-card {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 0; width: 100%; aspect-ratio: 178 / 223;
+  overflow: hidden; border-radius: 1.5cqw; background: #f7f7f5;
+  cursor: pointer; padding: 1.25cqw 0 1.7cqw; text-align: center;
+}
+.measurement-artwork { display: block; width: 100%; height: auto; flex: none; }
+.measurement-artwork-large { max-width: 320px; margin: 0 auto; border-radius: 12px; }
+.measurement-label {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; min-height: 4.75cqw; padding: 0 .25cqw;
+  margin-top: .65cqw; font-size: 1.89cqw; line-height: 1.22;
+  color: #10251e;
+}
+.measurement-value { margin-top: .5cqw; min-height: 3.8cqw; font-size: 3.05cqw; line-height: 1.2; font-weight: 700; white-space: nowrap; }
+.measurement-card:focus-visible { outline: 2px solid #15372c; outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .product-photo-hint { opacity: 1; }
+}
+
+/* Sixth measurement for reclining/chaise models; keep one uninterrupted row. */
+.measurement-cards-extended { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1.3%; }
+.measurement-cards-extended .measurement-card { padding: 1.025cqw 0 1.4cqw; }
+.measurement-cards-extended .measurement-label { min-height: 3.9cqw; margin-top: .53cqw; font-size: 1.55cqw; }
+.measurement-cards-extended .measurement-value { margin-top: .41cqw; min-height: 3.12cqw; font-size: 2.5cqw; }
