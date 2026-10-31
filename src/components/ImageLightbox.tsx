@@ -28,6 +28,8 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
     dragStartX: 0,
     dragStartY: 0,
     lastTap: 0,
+    swipeX: 0,
+    swipeY: 0,
   });
 
   const resetZoom = useCallback(() => {
@@ -58,7 +60,7 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
     };
   }, [handleKey]);
 
-  const getDist = (touches: TouchList) => {
+  const getDist = (touches: React.TouchList) => {
     const dx = touches[0].clientX - touches[1].clientX;
     const dy = touches[0].clientY - touches[1].clientY;
     return Math.sqrt(dx * dx + dy * dy);
@@ -78,6 +80,7 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
     } else if (e.touches.length === 1) {
       s.pinching = false;
       const touch = e.touches[0];
+      s.swipeX=touch.clientX; s.swipeY=touch.clientY;
 
       // double-tap
       const now = Date.now();
@@ -118,7 +121,11 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
     }
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (e.changedTouches.length && scale <= 1.05 && !state.current.pinching) {
+      const t=e.changedTouches[0],dx=t.clientX-state.current.swipeX,dy=t.clientY-state.current.swipeY;
+      if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.25){if(dx<0 && hasNext)onNext();else if(dx>0 && hasPrev)onPrev();}
+    }
     const s = state.current;
     s.pinching = false;
     s.dragging = false;
@@ -159,7 +166,7 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
       {/* Prev */}
       {hasPrev && !isZoomed && (
         <button
-          className="absolute left-3 sm:left-6 z-10 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-2 transition-colors"
+          className="hidden sm:block absolute left-3 sm:left-6 z-10 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-2 transition-colors"
           onClick={(e) => { e.stopPropagation(); onPrev(); }}
           aria-label="Foto anterior"
         >
@@ -197,7 +204,7 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
       {/* Next */}
       {hasNext && !isZoomed && (
         <button
-          className="absolute right-3 sm:right-6 z-10 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-2 transition-colors"
+          className="hidden sm:block absolute right-3 sm:right-6 z-10 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-2 transition-colors"
           onClick={(e) => { e.stopPropagation(); onNext(); }}
           aria-label="Próxima foto"
         >
