@@ -50,6 +50,8 @@ export default function Produto() {
   const [selectedFabricKey, setSelectedFabricKey] = useState<string | null>(null);
   const [foamIdx, setFoamIdx] = useState(-1);
   const [foamSheetOpen, setFoamSheetOpen] = useState(false);
+  const [fabricOptionsOpen, setFabricOptionsOpen] = useState(false);
+  const [foamOptionsOpen, setFoamOptionsOpen] = useState(false);
   const [sizeSheetOpen, setSizeSheetOpen] = useState(false);
   const [mainImageIdx, setMainImageIdx] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -415,12 +417,19 @@ export default function Produto() {
                     2. Escolha o álbum de tecido
                   </h3>
                   {fabric && (
-                    <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/15">
+                    <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
                       <Check className="w-4 h-4" />
                       Tecido selecionado: <strong>{fabric.name}</strong>
                     </div>
                   )}
-                  <div className="space-y-2">
+                  <button type="button" onClick={() => setFabricOptionsOpen(v => !v)} aria-expanded={fabricOptionsOpen} className="w-full rounded-xl border border-border bg-background px-3 py-3 mb-2 flex items-center gap-3 text-left hover:border-primary/50" data-testid="toggle-fabric-options">
+                    <div className="flex -space-x-2 shrink-0">
+                      {(selectedAlbum?.fabrics?.length ? selectedAlbum.fabrics : albums.flatMap(a => a.fabrics)).slice(0,3).map((f,i) => <div key={i} className="h-11 w-11 rounded-lg overflow-hidden border-2 border-background bg-secondary">{f.imageUrl && <img src={f.imageUrl} alt={f.name} className="w-full h-full object-cover" loading="lazy" />}</div>)}
+                    </div>
+                    <div className="flex-1 min-w-0"><div className="text-sm font-semibold truncate">{fabric ? fabric.name : selectedAlbum ? selectedAlbum.name : "Escolha seu tecido"}</div><div className="text-xs text-muted-foreground">{albums.reduce((n,a) => n+a.fabrics.length,0)} tecidos · {albums.length} álbuns</div></div>
+                    <span className="text-xs font-semibold text-primary whitespace-nowrap">{fabricOptionsOpen ? "Fechar" : fabric ? "Alterar escolha" : "Ver tecidos"}</span>
+                  </button>
+                  {fabricOptionsOpen && <div className="space-y-2">
                     {albums.map((a, i) => {
                       // Mesma prioridade usada no calculo do preco final:
                       // 1) acrescimo por produto+tamanho (selectedSize.albumSurcharges)
@@ -430,7 +439,7 @@ export default function Produto() {
                         : a.surcharge;
                       const isOpen = albumIdx === i;
                       return (
-                        <div key={a.id} className="rounded-md border border-border overflow-hidden">
+                        <div key={a.id} className="rounded-xl border border-border/80 overflow-hidden">
                           <button
                             type="button"
                             onClick={() => setAlbumIdx(isOpen ? -1 : i)}
@@ -517,7 +526,7 @@ export default function Produto() {
                         </div>
                       );
                     })}
-                  </div>
+                  </div>}
                 </div>
               )}
 
@@ -528,12 +537,17 @@ export default function Produto() {
                     3. Escolha a espuma
                   </h3>
                   {selectedFoam && (
-                    <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/15">
+                    <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
                       <Check className="w-4 h-4" />
                       Espuma selecionada: <strong>{selectedFoam.name}</strong>
                     </div>
                   )}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <button type="button" onClick={() => setFoamOptionsOpen(v => !v)} aria-expanded={foamOptionsOpen} className="w-full rounded-xl border border-border bg-background px-3 py-3 mb-2 flex items-center gap-3 text-left hover:border-primary/50" data-testid="toggle-foam-options">
+                    <div className="flex -space-x-2 shrink-0">{foams.slice(0,3).map(f => <div key={f.id} className="h-11 w-11 rounded-lg overflow-hidden border-2 border-background bg-secondary">{f.imageUrl && <img src={f.imageUrl} alt={f.name} className="w-full h-full object-contain" loading="lazy" />}</div>)}</div>
+                    <div className="flex-1 min-w-0"><div className="text-sm font-semibold truncate">{selectedFoam ? selectedFoam.name : "Escolha sua espuma"}</div><div className="text-xs text-muted-foreground">{foams.length} opções de espuma</div></div>
+                    <span className="text-xs font-semibold text-primary whitespace-nowrap">{foamOptionsOpen ? "Fechar" : selectedFoam ? "Alterar escolha" : "Ver espumas"}</span>
+                  </button>
+                  {foamOptionsOpen && <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {foams.map((f, i) => {
                       // Mesma prioridade usada no calculo do preco final:
                       // 1) acrescimo por produto+tamanho (selectedSize.foamSurcharges)
@@ -545,7 +559,7 @@ export default function Produto() {
                       return (
                       <button
                         key={f.id}
-                        onClick={() => { setFoamIdx(i); setFoamSheetOpen(true); }}
+                        onClick={() => { setFoamIdx(i); setFoamOptionsOpen(false); setFoamSheetOpen(true); }}
                         className={`relative p-2 rounded-md text-sm font-medium border transition-all text-left flex flex-col ${
                           isSelected
                             ? "bg-primary text-primary-foreground border-primary ring-2 ring-green-500/40"
@@ -570,7 +584,7 @@ export default function Produto() {
                       </button>
                       );
                     })}
-                  </div>
+                  </div>}
                   {selectedFoam && (selectedFoam.weightSupport || selectedFoam.comfortLevel || selectedFoam.useIndication || selectedFoam.longTermBehavior) && (
                     <button
                       type="button"
@@ -856,7 +870,8 @@ export default function Produto() {
             onToggleFavorite={() => toggleFabricFavorite(currentKey)}
             onSelect={() => {
               const idx = albums.findIndex((a) => a.id === previewAlbum.id);
-              if (idx >= 0 && idx !== albumIdx) setAlbumIdx(idx);
+              if (idx >= 0) setAlbumIdx(-1);
+              setFabricOptionsOpen(false);
               setFabric(currentFabric);
               setSelectedFabricKey(currentKey);
               setPreviewFabric(null);
