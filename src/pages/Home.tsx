@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingCart, Ruler, Scissors, ShieldCheck } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingCart, Ruler, Scissors, ShieldCheck, Truck, CreditCard, CheckCircle2, XCircle } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -365,12 +365,12 @@ export default function Home() {
           </div>
         </section>
         {/* Info sections: Prazo, Garantia, Pagamento */}
-        <section className="py-20 bg-background border-t border-border/50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-16">
+        <section className="py-10 sm:py-14 bg-background border-t border-border/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-10 sm:space-y-12">
             <div id="prazo-entrega" className="scroll-mt-24" data-testid="section-prazo-entrega">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">🚚</span>
-                <h3 className="text-2xl md:text-3xl font-serif font-bold">Prazo de Entrega</h3>
+                <Truck className="w-5 h-5 text-primary" />
+                <h3 className="text-xl md:text-2xl font-sans font-semibold">Prazo de Entrega</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed">
                 Nossos estofados são planejados sob medida e produzidos artesanalmente,
@@ -383,15 +383,15 @@ export default function Home() {
 
             <div id="garantia" className="scroll-mt-24" data-testid="section-garantia">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">🛡️</span>
+                <ShieldCheck className="w-5 h-5 text-primary" />
                 <h3 className="text-2xl md:text-3xl font-serif font-bold">Garantia</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed mb-6">
                 A Sofá King concede garantia para os produtos a partir da data de entrega, conforme abaixo:
               </p>
               <div className="grid sm:grid-cols-3 gap-4 mb-8">
-                <div className="bg-muted/40 rounded-lg p-5 border border-border/50">
-                  <p className="text-2xl font-serif font-bold text-foreground">01 ano</p>
+                <div className="bg-card rounded-xl p-4 sm:p-5 border border-border/60">
+                  <p className="text-xl sm:text-2xl font-sans font-semibold text-foreground">01 ano</p>
                   <p className="text-sm text-muted-foreground mt-1">Estrutura de madeira</p>
                 </div>
                 <div className="bg-muted/40 rounded-lg p-5 border border-border/50">
@@ -407,7 +407,7 @@ export default function Home() {
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <span className="text-green-600">✓</span> A garantia cobre defeitos de fabricação relacionados a:
+                    <CheckCircle2 className="w-4 h-4 shrink-0 text-primary" /> A garantia cobre defeitos de fabricação relacionados a:
                   </h4>
                   <ul className="space-y-2 text-muted-foreground text-sm">
                     <li className="flex gap-2"><span className="text-accent">●</span> Estrutura de madeira</li>
@@ -419,7 +419,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <span className="text-red-500">✕</span> A garantia não cobre:
+                    <XCircle className="w-4 h-4 shrink-0 text-muted-foreground" /> A garantia não cobre:
                   </h4>
                   <ul className="space-y-2 text-muted-foreground text-sm">
                     <li className="flex gap-2"><span className="text-muted-foreground">●</span> Desgaste natural do tecido</li>
@@ -434,7 +434,7 @@ export default function Home() {
 
             <div id="pagamento" className="scroll-mt-24" data-testid="section-pagamento">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">💳</span>
+                <CreditCard className="w-5 h-5 text-primary" />
                 <h3 className="text-2xl md:text-3xl font-serif font-bold">Forma de Pagamento</h3>
               </div>
               <div className="grid sm:grid-cols-2 gap-4 mb-6">
