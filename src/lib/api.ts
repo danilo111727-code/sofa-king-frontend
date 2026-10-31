@@ -131,8 +131,6 @@ export interface OrderItemSnapshot {
   qty: number;
   variations?: {groupName:string;optionName:string;quantity:number;priceAdjustment:number}[];
   delivery?: string | null;
-  side?: "left" | "right" | null;
-  armSide?: "left" | "right" | null;
   unitPrice: number;
 }
 
