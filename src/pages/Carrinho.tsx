@@ -73,6 +73,7 @@ import { Link } from "wouter";
         qty: it.qty,
         variations: it.variations,
         delivery: it.delivery,
+        side: it.side,
         unitPrice: it.unitPrice,
       }));
 
@@ -93,6 +94,7 @@ import { Link } from "wouter";
       items.forEach((it, idx) => {
         lines.push(`*Item ${idx + 1}* — ${it.productName}`);
         lines.push(`• Metragem: ${it.size.label} (${brl(it.size.basePrice)})`);
+        if (it.side) lines.push(`• Lado (visto de frente): ${it.side === "left" ? "Esquerdo" : "Direito"}`);
         if (it.album) {
           lines.push(
             `• Álbum: ${it.album.name}${it.fabric ? ` — ${it.fabric.name}` : ""}` +
@@ -169,6 +171,7 @@ import { Link } from "wouter";
                           <div className="min-w-0">
                             <h3 className="font-semibold text-foreground truncate">{it.productName}</h3>
                             <p className="text-xs text-muted-foreground mt-1">Metragem: <strong>{it.size.label}</strong></p>
+                            {it.side && <p className="text-xs text-muted-foreground">Lado (visto de frente): <strong>{it.side === "left" ? "Esquerdo" : "Direito"}</strong></p>}
                             {it.album && (
                               <p className="text-xs text-muted-foreground">
                                 Álbum: <strong>{it.album.name}</strong>{it.fabric ? ` — ${it.fabric.name}` : ""}
