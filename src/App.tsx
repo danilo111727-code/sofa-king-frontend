@@ -6,7 +6,8 @@ import { useEffect, useRef } from "react";
   import { TooltipProvider } from "@/components/ui/tooltip";
   import NotFound from "@/pages/not-found";
   import Home from "@/pages/Home";
-  import Modelos from "@/pages/Modelos";
+  import CatalogoMateriais from "@/pages/CatalogoMateriais";
+import Modelos from "@/pages/Modelos";
   import Produto from "@/pages/Produto";
   import Carrinho from "@/pages/Carrinho";
   import Admin from "@/pages/Admin";
@@ -85,6 +86,8 @@ import { useEffect, useRef } from "react";
     return (
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/catalogo-tecidos">{() => <CatalogoMateriais kind="tecidos" />}</Route>
+        <Route path="/catalogo-espumas">{() => <CatalogoMateriais kind="espumas" />}</Route>
         <Route path="/modelos" component={Modelos} />
         <Route path="/produto/:id" component={Produto} />
         <Route path="/carrinho" component={Carrinho} />
