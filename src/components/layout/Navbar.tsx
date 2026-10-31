@@ -115,16 +115,6 @@ export function Navbar() {
             <CartIcon />
           </div>
         </div>
-        <div className="bg-primary text-primary-foreground text-sm sm:text-base py-2 overflow-hidden font-medium tracking-wide">
-          <div className="flex items-center gap-12 whitespace-nowrap animate-marquee">
-            <span className="px-4">✓ Personalize tecido, medidas e acabamento</span>
-            <span className="px-4">✓ Acabamento artesanal premium</span>
-            <span className="px-4">✓ 10 anos de inovação e comprometimento</span>
-            <span className="px-4">✓ Personalize tecido, medidas e acabamento</span>
-            <span className="px-4">✓ Acabamento artesanal premium</span>
-            <span className="px-4">✓ 10 anos de inovação e comprometimento</span>
-          </div>
-        </div>
       </header>
     </>
   );
