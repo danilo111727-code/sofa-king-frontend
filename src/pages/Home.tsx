@@ -3,6 +3,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingCart, Ruler } fro
 import { useFavorites } from "@/hooks/useFavorites";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { BestsellerStrip } from "@/components/layout/BestsellerStrip";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useMemo, useRef, type ReactNode } from "react";
 
@@ -184,6 +185,7 @@ export default function Home() {
                 )}
               </div>
 
+            <BestsellerStrip />
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
               <div className="relative isolate overflow-hidden rounded-xl border border-[#e8e0d6] bg-gradient-to-r from-[#f5f0e9] via-[#f6f2ed] to-[#ede5da] px-4 py-5 sm:px-7 sm:py-6" data-testid="home-measurement-info">
