@@ -360,9 +360,9 @@ export default function Produto() {
               {/* Price highlight — mostra o preço total e condições de pagamento antes das seleções */}
               {!noSizes && (
                 <div className="rounded-2xl border border-primary/15 bg-primary/[0.035] p-4 sm:p-6 mb-5" data-testid="price-highlight">
-                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                  <div className="flex items-center justify-between gap-2 mb-1">
                     <p className="text-xs text-muted-foreground uppercase tracking-wider">PIX / À vista</p>
-                    {selectedSize && <span className="rounded-full border border-primary/20 bg-background px-3 py-1 text-sm font-semibold text-primary" data-testid="price-highlight-size">{priceItemLabel} — {selectedSize.label}</span>}
+                    {selectedSize && <span className="shrink-0 rounded-full border border-primary/20 bg-background px-2 py-0.5 text-[11px] sm:text-xs font-semibold text-primary" data-testid="price-highlight-size">{priceItemLabel} — {selectedSize.label}</span>}
                   </div>
                   <p className="text-2xl sm:text-3xl font-bold text-primary leading-tight" data-testid="text-price-highlight">
                     {brl(pixPrice)}
@@ -374,7 +374,7 @@ export default function Produto() {
                     </p>
                   </div>
                   <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border/60">
-                    Valor referente à metragem selecionada. Personalize abaixo para atualizar o preço.
+                    Personalize as opções abaixo para atualizar o valor.
                   </p>
                 </div>
               )}
