@@ -235,11 +235,11 @@ export default function Produto() {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
-            {/* Image Gallery */}
-            <div className="space-y-2.5">
+          <div className="flex flex-col gap-5 sm:gap-7 max-w-5xl mx-auto">
+            {/* Image Gallery — visual editorial com foto principal em destaque */}
+            <section aria-label="Galeria de fotos do sofá" className="space-y-3">
               <div
-                className={`aspect-[4/3] rounded-2xl overflow-hidden bg-white border border-border/70 relative group ${
+                className={`aspect-[5/4] sm:aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-border/70 relative group shadow-sm ${
                   galleryImages[mainImageIdx] !== DIAGRAMA_SENTINEL ? "cursor-zoom-in" : ""
                 }`}
                 data-testid="img-product-main"
@@ -252,7 +252,7 @@ export default function Produto() {
                     <img
                       src={galleryImages[mainImageIdx] || product.image}
                       alt={fullName}
-                      className="w-full h-full object-contain object-center transition-transform duration-200 group-hover:scale-[1.02]"
+                      className="w-full h-full object-contain object-center transition-transform duration-300 group-hover:scale-[1.015]"
                     />
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                       <div className="bg-black/40 text-white text-xs font-medium px-3 py-1.5 rounded-full backdrop-blur-sm">
@@ -263,12 +263,12 @@ export default function Produto() {
                 )}
               </div>
               {galleryImages.length > 1 && (
-                <div className="grid grid-cols-5 gap-2 sm:gap-2.5" data-testid="product-thumbnails">
+                <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-1" data-testid="product-thumbnails">
                   {galleryImages.map((url, i) => (
                     <button
                       key={`${url}-${i}`}
                       onClick={() => setMainImageIdx(i)}
-                      className={`aspect-square rounded-xl overflow-hidden border transition-all ${
+                      className={`w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-xl overflow-hidden border transition-all ${
                         mainImageIdx === i ? "border-primary ring-2 ring-primary/20" : "border-border/70 hover:border-primary/50 opacity-85 hover:opacity-100"
                       }`}
                       data-testid={`thumbnail-${i}`}
@@ -285,12 +285,12 @@ export default function Produto() {
                   ))}
                 </div>
               )}
-            </div>
+            </section>
 
             {/* Info */}
-            <div className="flex flex-col">
-              <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl sm:text-3xl font-sans font-semibold tracking-tight text-foreground" data-testid="text-product-detail-name">
+            <section className="flex flex-col w-full max-w-3xl mx-auto">
+              <div className="flex flex-wrap items-center gap-3 mb-2">
+                <h1 className="text-3xl sm:text-4xl font-sans font-semibold tracking-tight text-foreground" data-testid="text-product-detail-name">
                   {fullName}
                 </h1>
                 {!product.disponibilidade && (
@@ -305,12 +305,12 @@ export default function Produto() {
               {/* Vagas e prazo — configuração global do site */}
               <div className="flex flex-wrap gap-2 mb-3">
                 {settings.vagas > 0 ? (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
-                    ✅ Produção limitada disponível
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/15">
+                    <Check className="w-3.5 h-3.5" /> Produção disponível
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 text-orange-800 text-sm font-medium border border-orange-200">
-                    🔔 Consultar vaga
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-50 text-orange-800 text-xs font-medium border border-orange-200">
+                    <Info className="w-3.5 h-3.5" /> Consultar vaga
                   </span>
                 )}
                 {prazo && (
@@ -322,7 +322,7 @@ export default function Produto() {
 
               {/* Price highlight — mostra o preço total e condições de pagamento antes das seleções */}
               {!noSizes && (
-                <div className="rounded-2xl border border-border/70 bg-secondary/25 p-4 sm:p-5 mb-4" data-testid="price-highlight">
+                <div className="rounded-2xl border border-primary/15 bg-primary/[0.035] p-4 sm:p-6 mb-5" data-testid="price-highlight">
                   <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">PIX / À vista</p>
                   <p className="text-2xl sm:text-3xl font-bold text-primary leading-tight" data-testid="text-price-highlight">
                     {brl(pixPrice)}
@@ -333,8 +333,8 @@ export default function Produto() {
                       <span className="text-muted-foreground ml-1">({brl(cardPrice)} total)</span>
                     </p>
                   </div>
-                  <p className="text-[11px] text-muted-foreground mt-2">
-                    Valor atualiza conforme você escolhe metragem, álbum e espuma abaixo.
+                  <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border/60">
+                    Personalize as opções abaixo para atualizar o valor.
                   </p>
                 </div>
               )}
