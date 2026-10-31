@@ -103,7 +103,7 @@ import { useEffect, useRef } from "react";
   function WhatsAppOnPublic() {
     const [location] = useLocation();
     if (location.startsWith("/admin") || location.startsWith("/sign-")) return null;
-    return <WhatsAppButton />;
+    return <WhatsAppButton compact />;
   }
 
   function ClerkProviderWithRoutes() {
