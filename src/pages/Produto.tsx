@@ -25,27 +25,33 @@ import { DiagramaViewer } from "@/components/DiagramaViewer";
 
 
 function MeasurementDrawing({kind,label,large=false}:{kind:string;label:string;large?:boolean}) {
- const front=kind==="width";
- return (<svg viewBox="0 0 100 72" role="img" aria-label={`Desenho técnico: ${label}`} className={large ? "w-full h-48 text-foreground" : "w-full h-[34px] sm:h-[60px] max-w-[72px] sm:max-w-[96px] text-foreground"} fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round">
-                              {front ? (
-                                <>
-                                  <rect x="17" y="31" width="66" height="25" rx="3" />
-                                  <path d="M25 31V20Q25 16 29 16H71Q75 16 75 20V31M25 41H75M21 56V60M79 56V60" />
-                                  <rect x="12" y="36" width="12" height="21" rx="4" />
-                                  <rect x="76" y="36" width="12" height="21" rx="4" />
-                                </>
-                              ) : (
-                                <>
-                                  <path d="M28 56V22Q28 16 33 16H37Q40 16 40 22L43 39H76Q82 39 82 45V56Z" />
-                                  <path d="M28 56H84M32 56V60M78 56V60M43 42H82" />
-                                </>
-                              )}
-                              {kind === "width" && <path d="M12 65H88M12 61V69M88 61V69M12 65L17 62M12 65L17 68M88 65L83 62M88 65L83 68" />}
-                              {kind === "depth" && <path d="M28 65H84M28 61V69M84 61V69M28 65L33 62M28 65L33 68M84 65L79 62M84 65L79 68" />}
-                              {kind === "seatHeight" && <path d="M91 42V60M87 42H95M87 60H95M91 42L88 47M91 42L94 47M91 60L88 55M91 60L94 55" />}
-                              {kind === "backHeight" && <path d="M17 16V60M13 16H21M13 60H21M17 16L14 21M17 16L20 21M17 60L14 55M17 60L20 55" />}
-                              {kind === "seatDepth" && <path d="M43 33H82M43 29V37M82 29V37M43 33L48 30M43 33L48 36M82 33L77 30M82 33L77 36" />}
-                            </svg>);
+  const isFront = kind === "width";
+  return (
+    <svg viewBox="0 0 100 82" role="img" aria-label={`Desenho técnico: ${label}`}
+      className={large ? "mx-auto h-52 w-full max-w-[320px] text-[#18382d]" : "h-[45px] w-full max-w-[85px] sm:h-[72px] sm:max-w-[115px] text-[#18382d]"}
+      fill="none" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" strokeLinejoin="round">
+      {isFront ? (
+        <>
+          <rect x="20" y="24" width="60" height="40" rx="4"/>
+          <path d="M20 40H80M25 40V30Q25 26 29 26H71Q75 26 75 30V40M20 56H80"/>
+          <rect x="13" y="37" width="12" height="29" rx="4"/>
+          <rect x="75" y="37" width="12" height="29" rx="4"/>
+          <path d="M19 66V70M81 66V70"/>
+        </>
+      ) : (
+        <>
+          <path d="M24 64V28Q24 18 31 18H34Q39 18 40 25L43 43H77Q83 43 83 49V64Z"/>
+          <path d="M25 62H83M29 64V70M77 64V70M43 46H82"/>
+          <path d="M24 44H43"/>
+        </>
+      )}
+      {kind === "width" && <path d="M13 75H87M13 72V78M87 72V78M13 75L19 72M13 75L19 78M87 75L81 72M87 75L81 78"/>}
+      {kind === "depth" && <path d="M24 75H83M24 72V78M83 72V78M24 75L30 72M24 75L30 78M83 75L77 72M83 75L77 78"/>}
+      {kind === "seatHeight" && <path d="M91 43V70M88 43H94M88 70H94M91 43L88 49M91 43L94 49M91 70L88 64M91 70L94 64"/>}
+      {kind === "backHeight" && <path d="M14 18V70M11 18H17M11 70H17M14 18L11 24M14 18L17 24M14 70L11 64M14 70L17 64"/>}
+      {kind === "seatDepth" && <path d="M43 35H83M43 32V38M83 32V38M43 35L49 32M43 35L49 38M83 35L77 32M83 35L77 38"/>}
+    </svg>
+  );
 }
 
 function brl(v: number | null | undefined): string {
@@ -337,10 +343,10 @@ export default function Produto() {
                     <div className="grid grid-cols-5 gap-[3px] sm:gap-2 w-full min-w-0">
                       {items.map(({ label, value, kind }) => {
                         return (
-                          <button type="button" key={kind} onClick={() => setActiveMeasurement({label,kind,value:typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")})} aria-label={`Ampliar ${label}`} className="min-w-0 w-full flex flex-col items-center rounded-md bg-secondary/25 px-[2px] py-1.5 sm:px-2 sm:py-3 text-center overflow-hidden cursor-pointer focus-visible:outline-2 focus-visible:outline-primary hover:bg-secondary/50 transition-colors">
+                          <button type="button" key={kind} onClick={() => setActiveMeasurement({label,kind,value:typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")})} aria-label={`Ampliar ${label}`} className="min-w-0 w-full flex flex-col items-center rounded-xl bg-[#f7f7f5] px-[2px] py-2 sm:px-2 sm:py-4 text-center overflow-hidden cursor-pointer focus-visible:outline-2 focus-visible:outline-primary hover:bg-[#efefeb] transition-colors">
                             <MeasurementDrawing kind={kind} label={label} />
-                            <span className="mt-1 text-[8px] sm:text-xs leading-[1.15] text-foreground min-h-[30px] flex items-center justify-center break-words w-full">{label}</span>
-                            <strong className="mt-1 min-h-[17px] text-[10px] sm:text-base font-semibold text-primary whitespace-nowrap">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
+                            <span className="mt-1.5 text-[8px] sm:text-sm leading-[1.2] text-[#18382d] min-h-[32px] flex items-center justify-center break-words w-full">{label}</span>
+                            <strong className="mt-1 min-h-[18px] text-[11px] sm:text-xl font-bold text-[#18382d] whitespace-nowrap">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
                           </button>
                         );
                       })}
