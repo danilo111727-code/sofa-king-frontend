@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingCart, Ruler } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingCart, Ruler, Scissors, ShieldCheck, Truck, CreditCard, CheckCircle2, XCircle } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -188,16 +188,16 @@ export default function Home() {
             <BestsellerStrip />
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-              <div className="relative isolate overflow-hidden rounded-xl border border-[#e8e0d6] bg-gradient-to-r from-[#f5f0e9] via-[#f6f2ed] to-[#ede5da] px-4 py-5 sm:px-7 sm:py-6" data-testid="home-measurement-info">
+              <div className="relative isolate overflow-hidden rounded-xl border border-[#dce3dc] bg-gradient-to-r from-[#f6f8f5] via-[#f5f7f4] to-[#e8eee7] px-4 py-5 sm:px-7 sm:py-6" data-testid="home-measurement-info">
                 <div aria-hidden="true" className="pointer-events-none absolute right-[-28px] top-[-40px] h-44 w-44 rounded-full border-[22px] border-white/25 rotate-[-22deg] sm:right-8" />
                 <div aria-hidden="true" className="pointer-events-none absolute right-4 bottom-2 opacity-30 hidden sm:block">
-                  <svg width="142" height="66" viewBox="0 0 142 66" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 35V19Q12 12 20 12H122Q130 12 130 19V35M12 35H130V51H12V35ZM24 35V24H118V35M24 51V59M118 51V59" stroke="#a28d74" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M71 24V35" stroke="#a28d74" strokeWidth="2"/></svg>
+                  <svg width="142" height="66" viewBox="0 0 142 66" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 35V19Q12 12 20 12H122Q130 12 130 19V35M12 35H130V51H12V35ZM24 35V24H118V35M24 51V59M118 51V59" stroke="#637565" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M71 24V35" stroke="#637565" strokeWidth="2"/></svg>
                 </div>
                 <div className="relative flex items-center gap-3 sm:gap-5">
-                  <span className="flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl bg-white/70 text-[#9a805f]"><Ruler className="h-6 w-6" strokeWidth={1.6} /></span>
+                  <span className="flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl bg-white/70 text-[#536c58]"><Ruler className="h-6 w-6" strokeWidth={1.6} /></span>
                   <div className="min-w-0 max-w-[530px]">
-                    <h2 className="text-[16px] sm:text-xl font-semibold tracking-tight leading-snug text-[#242424]">Valores por metragem disponíveis</h2>
-                    <p className="text-[13px] sm:text-sm leading-relaxed text-[#645a50] mt-1">Consulte o preço conforme o tamanho escolhido em cada modelo do catálogo.</p>
+                    <h2 className="text-[16px] sm:text-xl font-semibold tracking-tight leading-snug text-[#243128]">Valores por metragem disponíveis</h2>
+                    <p className="text-[13px] sm:text-sm leading-relaxed text-[#627067] mt-1">Consulte o preço conforme o tamanho escolhido em cada modelo do catálogo.</p>
                   </div>
                 </div>
               </div>
@@ -213,14 +213,14 @@ export default function Home() {
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-5 md:gap-5" data-testid="home-category-grid">
                 {categoryTiles.map((category) => (
                   <Link key={category.id} href={`/modelos?categoria=${encodeURIComponent(category.id)}`} className="group min-w-0" data-testid={`home-category-${category.id}`}>
-                    <div className="aspect-[4/3] rounded-xl bg-[#f4f1ec] overflow-hidden border border-[#ece7df] flex items-center justify-center transition-all group-hover:border-[#bba886] group-hover:shadow-md">
-                      {category.photo ? <img src={category.photo} alt={category.label} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" /> : <span className="text-[#968b7c] text-3xl font-serif" aria-hidden="true">{category.label.charAt(0)}</span>}
+                    <div className="aspect-[4/3] rounded-xl bg-[#f4f7f3] overflow-hidden border border-[#e2e9e1] flex items-center justify-center transition-all group-hover:border-[#a2b5a3] group-hover:shadow-md">
+                      {category.photo ? <img src={category.photo} alt={category.label} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" /> : <span className="text-[#65776a] text-3xl font-serif" aria-hidden="true">{category.label.charAt(0)}</span>}
                     </div>
                     <p className="text-center text-[12px] md:text-sm font-medium mt-2 leading-snug text-foreground group-hover:underline">{category.label}</p>
                   </Link>
                 ))}
                 <Link href="/modelos?prontaEntrega=1" className="group min-w-0" data-testid="home-category-pronta-entrega">
-                  <div className="aspect-[4/3] rounded-xl bg-[#f4f1ec] border border-[#ece7df] flex flex-col items-center justify-center gap-2 group-hover:border-[#bba886] group-hover:shadow-md transition-all"><span className="text-3xl text-[#a58c65]">✓</span><span className="text-[10px] uppercase tracking-wide text-[#8c795b]">Disponíveis</span></div>
+                  <div className="aspect-[4/3] rounded-xl bg-[#f4f7f3] border border-[#e2e9e1] flex flex-col items-center justify-center gap-2 group-hover:border-[#a2b5a3] group-hover:shadow-md transition-all"><span className="text-3xl text-[#526d57]">✓</span><span className="text-[10px] uppercase tracking-wide text-[#536a58]">Disponíveis</span></div>
                   <p className="text-center text-[12px] md:text-sm font-medium mt-2 leading-snug group-hover:underline">Pronta Entrega</p>
                 </Link>
               </div>
@@ -337,67 +337,40 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Manifesto / Sobre o Ateliê */}
-        <section className="relative py-28 bg-gradient-to-b from-secondary/40 via-background to-background overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" aria-hidden="true">
-            <div className="absolute top-10 left-10 font-serif text-[20rem] leading-none text-foreground select-none">"</div>
-          </div>
-
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="max-w-3xl mx-auto text-center mb-20">
-              <p className="text-xs tracking-[0.4em] uppercase text-accent mb-5 font-semibold">Nosso ateliê</p>
-              <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground leading-[1.1] mb-8" data-testid="text-hero-title">
-                  Não fazemos em série.{" "}
-                  <em className="italic font-normal text-accent">Fazemos o seu sofá.</em>
-                </h2>
-              <div className="w-16 h-[2px] bg-accent mx-auto mb-8" />
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                Somos um ateliê — não uma fábrica. Aqui o estofado começa quando você nos diz como quer viver na sua sala. A partir daí, escolhemos juntos o desenho, o tecido, as medidas e os acabamentos. Cada vaga aberta na nossa agenda é uma nova história sendo construída à mão.
-              </p>
+        {/* Nosso Ateliê — apresentação compacta */}
+        <section className="py-10 sm:py-14 bg-background border-t border-border/50" data-testid="section-nosso-atelie">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mb-6 sm:mb-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground mb-2">Nosso ateliê</p>
+              <h2 className="text-2xl sm:text-3xl font-sans font-semibold tracking-tight text-foreground leading-tight mb-2">Feitos para a sua história.</h2>
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">Sofás sob medida, com design autoral e acabamento premium. Cada detalhe pensado para o seu ambiente.</p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border/60 rounded-2xl overflow-hidden border border-border/60 shadow-sm">
-              <div className="bg-background p-10 md:p-12 hover:bg-secondary/30 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="font-serif italic text-4xl text-accent">i.</span>
-                  <h3 className="text-xl font-serif font-bold text-foreground">Você personaliza</h3>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  As vendas pelo site são dos nossos modelos padronizados — você escolhe a <strong className="text-foreground">metragem</strong>, o <strong className="text-foreground">tecido</strong> e a <strong className="text-foreground">espuma</strong> ideais para sua peça.
-                </p>
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
+              <div className="min-w-0 rounded-xl border border-border/70 bg-card p-3 sm:p-5">
+                <div className="w-9 h-9 rounded-full bg-secondary/70 flex items-center justify-center mb-3"><Ruler className="w-4 h-4 text-foreground" /></div>
+                <h3 className="font-sans text-xs sm:text-base font-semibold leading-snug text-foreground">Você personaliza</h3>
+                <p className="text-[11px] sm:text-sm text-muted-foreground leading-snug mt-1.5">Medidas, tecidos e espuma.</p>
               </div>
-              <div className="bg-background p-10 md:p-12 hover:bg-secondary/30 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="font-serif italic text-4xl text-accent">ii.</span>
-                  <h3 className="text-xl font-serif font-bold text-foreground">Feito à mão</h3>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Estrutura cortada, montada, estofada e costurada peça por peça dentro do nosso ateliê em Feira de Santana. O tempo de cada projeto é o tempo do bem-feito.
-                </p>
+              <div className="min-w-0 rounded-xl border border-border/70 bg-card p-3 sm:p-5">
+                <div className="w-9 h-9 rounded-full bg-secondary/70 flex items-center justify-center mb-3"><Scissors className="w-4 h-4 text-foreground" /></div>
+                <h3 className="font-sans text-xs sm:text-base font-semibold leading-snug text-foreground">Produção artesanal</h3>
+                <p className="text-[11px] sm:text-sm text-muted-foreground leading-snug mt-1.5">Atenção a cada detalhe.</p>
               </div>
-              <div className="bg-background p-10 md:p-12 hover:bg-secondary/30 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="font-serif italic text-4xl text-accent">iii.</span>
-                  <h3 className="text-xl font-serif font-bold text-foreground">Produção limitada</h3>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Trabalhamos com agenda. Os modelos que aparecem disponíveis no site são as peças que conseguimos produzir agora. Quando enche, abrimos a próxima janela.
-                </p>
+              <div className="min-w-0 rounded-xl border border-border/70 bg-card p-3 sm:p-5">
+                <div className="w-9 h-9 rounded-full bg-secondary/70 flex items-center justify-center mb-3"><ShieldCheck className="w-4 h-4 text-foreground" /></div>
+                <h3 className="font-sans text-xs sm:text-base font-semibold leading-snug text-foreground">Acabamento premium</h3>
+                <p className="text-[11px] sm:text-sm text-muted-foreground leading-snug mt-1.5">Materiais selecionados.</p>
               </div>
-            </div>
-
-            <div className="mt-20 max-w-3xl mx-auto text-center">
-              <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground">— Sofá King · Estofados planejados</p>
             </div>
           </div>
         </section>
         {/* Info sections: Prazo, Garantia, Pagamento */}
-        <section className="py-20 bg-background border-t border-border/50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-16">
+        <section className="py-10 sm:py-14 bg-background border-t border-border/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-10 sm:space-y-12">
             <div id="prazo-entrega" className="scroll-mt-24" data-testid="section-prazo-entrega">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">🚚</span>
-                <h3 className="text-2xl md:text-3xl font-serif font-bold">Prazo de Entrega</h3>
+                <Truck className="w-5 h-5 text-primary" />
+                <h3 className="text-xl md:text-2xl font-sans font-semibold">Prazo de Entrega</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed">
                 Nossos estofados são planejados sob medida e produzidos artesanalmente,
@@ -410,15 +383,15 @@ export default function Home() {
 
             <div id="garantia" className="scroll-mt-24" data-testid="section-garantia">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">🛡️</span>
+                <ShieldCheck className="w-5 h-5 text-primary" />
                 <h3 className="text-2xl md:text-3xl font-serif font-bold">Garantia</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed mb-6">
                 A Sofá King concede garantia para os produtos a partir da data de entrega, conforme abaixo:
               </p>
               <div className="grid sm:grid-cols-3 gap-4 mb-8">
-                <div className="bg-muted/40 rounded-lg p-5 border border-border/50">
-                  <p className="text-2xl font-serif font-bold text-foreground">01 ano</p>
+                <div className="bg-card rounded-xl p-4 sm:p-5 border border-border/60">
+                  <p className="text-xl sm:text-2xl font-sans font-semibold text-foreground">01 ano</p>
                   <p className="text-sm text-muted-foreground mt-1">Estrutura de madeira</p>
                 </div>
                 <div className="bg-muted/40 rounded-lg p-5 border border-border/50">
@@ -434,7 +407,7 @@ export default function Home() {
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <span className="text-green-600">✓</span> A garantia cobre defeitos de fabricação relacionados a:
+                    <CheckCircle2 className="w-4 h-4 shrink-0 text-primary" /> A garantia cobre defeitos de fabricação relacionados a:
                   </h4>
                   <ul className="space-y-2 text-muted-foreground text-sm">
                     <li className="flex gap-2"><span className="text-accent">●</span> Estrutura de madeira</li>
@@ -446,7 +419,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <span className="text-red-500">✕</span> A garantia não cobre:
+                    <XCircle className="w-4 h-4 shrink-0 text-muted-foreground" /> A garantia não cobre:
                   </h4>
                   <ul className="space-y-2 text-muted-foreground text-sm">
                     <li className="flex gap-2"><span className="text-muted-foreground">●</span> Desgaste natural do tecido</li>
@@ -461,7 +434,7 @@ export default function Home() {
 
             <div id="pagamento" className="scroll-mt-24" data-testid="section-pagamento">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">💳</span>
+                <CreditCard className="w-5 h-5 text-primary" />
                 <h3 className="text-2xl md:text-3xl font-serif font-bold">Forma de Pagamento</h3>
               </div>
               <div className="grid sm:grid-cols-2 gap-4 mb-6">
