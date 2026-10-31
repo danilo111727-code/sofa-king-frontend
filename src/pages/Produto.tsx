@@ -60,6 +60,7 @@ export default function Produto() {
   const [foamIdx, setFoamIdx] = useState(-1);
   const [foamSheetOpen, setFoamSheetOpen] = useState(false);
   const [selectedSide, setSelectedSide] = useState<"left" | "right" | null>(null);
+  const [selectedArmSide, setSelectedArmSide] = useState<"left" | "right" | null>(null);
   const [fabricOptionsOpen, setFabricOptionsOpen] = useState(false);
   const [foamOptionsOpen, setFoamOptionsOpen] = useState(false);
   const [sizeSheetOpen, setSizeSheetOpen] = useState(false);
@@ -74,7 +75,7 @@ export default function Produto() {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
-    setNotFound(false); setSizeIdx(0); setAlbumIdx(-1); setFoamIdx(-1); setFabric(null); setSelectedFabricKey(null); setChosenAlbumId(null); setSelectedSide(null);
+    setNotFound(false); setSizeIdx(0); setAlbumIdx(-1); setFoamIdx(-1); setFabric(null); setSelectedFabricKey(null); setChosenAlbumId(null); setSelectedSide(null); setSelectedArmSide(null);
     Promise.all([fetchProduct(id), fetchAlbums(), fetchMaterials(),fetchVariationAlbums()])
       .then(([p, al, fo, vars]) => {
         setVariationAlbums(vars);
@@ -94,7 +95,8 @@ export default function Produto() {
   const selectedSize = product?.sizes[sizeIdx];
   const selectedAlbum = albums.find(a=>a.id===chosenAlbumId);
   const selectedFoam = foams[foamIdx];
-  const availableSides = product?.configuration?.availableSides ?? [];
+  const chooseChaiseSide = product?.configuration?.sideChoice?.chaiseOrCorner ?? ((product?.configuration?.availableSides?.length ?? 0)>0);
+  const chooseArmSide = product?.configuration?.sideChoice?.arm ?? false;
 
   const albumSurcharge = useMemo(() => {
     if (!selectedSize || !selectedAlbum) return 0;
@@ -192,7 +194,7 @@ export default function Produto() {
 
   const handleAddToCart = async (goToCart: boolean) => {
     if (!selectedSize || adding) return;
-    if (availableSides.length > 0 && (!selectedSide || !availableSides.includes(selectedSide))) { toast({title:"Selecione o lado do sofá",description:"Escolha esquerda ou direita antes de continuar.",variant:"destructive"}); return; }
+    if ((chooseChaiseSide && !selectedSide) || (chooseArmSide && !selectedArmSide)) { toast({title:"Selecione o lado do sofá",description:"Escolha o lado esquerdo ou direito.",variant:"destructive"}); return; }
     setAdding(true);
     try {
     const verified=await fetchQuote(product.id,{sizeLabel:selectedSize.label,albumId:selectedAlbum?.id,fabricId:fabric?.id,foamId:selectedFoam?.id,selections});
@@ -211,7 +213,8 @@ export default function Produto() {
         : null,
       variations: selections.filter(s=>s.quantity>0).map(s=>{const g=variationGroups.find(g=>g.id===s.groupId)!;const o=g.options.find(o=>o.id===s.optionId)!;return {groupName:g.name,optionName:o.name,quantity:s.quantity,priceAdjustment:o.priceAdjustment};}),
       delivery:prazo,
-      side: availableSides.length ? selectedSide : null,
+      side: chooseChaiseSide ? selectedSide : null,
+      armSide: chooseArmSide ? selectedArmSide : null,
       unitPrice: verified.total,
     });
     if (goToCart) {
@@ -436,21 +439,33 @@ export default function Produto() {
                 </div>
               )}
 
-              {availableSides.length > 0 && (
-                <section className="mb-5" aria-label="Escolha o lado do sofá">
-                  <h3 className="text-sm font-semibold mb-1">Escolha o lado do chaise ou canto</h3>
-                  <p className="text-xs text-muted-foreground mb-3">Esquerda e direita considerando o sofá visto de frente.</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    {availableSides.map(side => <button key={side} type="button" aria-pressed={selectedSide === side} onClick={() => setSelectedSide(side)} data-testid={`button-side-${side}`} className={`rounded-xl border-2 p-3 text-center transition-colors ${selectedSide === side ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}>
-                      <svg viewBox="0 0 160 92" className="w-full h-20" role="img" aria-label={side === "left" ? "Chaise ou canto à esquerda" : "Chaise ou canto à direita"}>
-                        <rect x={side === "left" ? 10 : 46} y="15" width="104" height="31" rx="8" fill="#a6a99a" stroke="#66715a" strokeWidth="2"/>
-                        <rect x={side === "left" ? 10 : 113} y="15" width="37" height="67" rx="8" fill="#d0d2c7" stroke="#66715a" strokeWidth="2"/>
-                        <path d={side === "left" ? "M47 18 V44" : "M113 18 V44"} stroke="#66715a" strokeWidth="2"/>
-                      </svg>
-                      <div className="text-sm font-semibold">{side === "left" ? "Esquerdo" : "Direito"} {selectedSide === side ? "✓" : ""}</div>
-                    </button>)}
-                  </div>
-                </section>
+              {(chooseChaiseSide || chooseArmSide) && (
+                <div className="space-y-4 mb-5">
+                  {([{enabled:chooseChaiseSide,kind:"chaise",title:"Escolha o lado do chaise ou canto",value:selectedSide,setValue:setSelectedSide},{enabled:chooseArmSide,kind:"arm",title:"Escolha o lado do braço",value:selectedArmSide,setValue:setSelectedArmSide}] as const).filter(g=>g.enabled).map(group=>(
+                    <section key={group.kind} className="rounded-xl border border-border p-3" aria-label={group.title}>
+                      <h3 className="text-sm font-semibold mb-1">{group.title}</h3>
+                      <p className="text-xs text-muted-foreground mb-3">Lado definido olhando o sofá de frente.</p>
+                      <div className="grid grid-cols-2 gap-3">
+                        {(["left","right"] as const).map(side=>(
+                          <button type="button" key={side} aria-pressed={group.value===side} onClick={()=>group.setValue(side)}
+                            data-testid={`button-${group.kind}-${side}`}
+                            className={`rounded-xl border-2 bg-white p-2 text-center ${group.value===side?"border-primary":"border-gray-200"}`}>
+                            <svg viewBox="0 0 180 112" className="w-full h-20" role="img" aria-label={group.title+" "+side}>
+                              {group.kind==="arm" ? <g fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round">
+                                <rect x="29" y="25" width="122" height="67" rx="7"/><rect x="34" y="27" width="56" height="35" rx="6"/><rect x="90" y="27" width="56" height="35" rx="6"/>
+                                <path d="M29 63 Q90 57 151 63 L151 88 L29 88 Z"/><rect x={side==="left"?17:151} y="46" width="13" height="48" rx="3"/>
+                              </g> : <g fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round">
+                                <rect x="20" y="16" width="140" height="22" rx="5"/><rect x="20" y="38" width="140" height="39" rx="4"/>
+                                <path d="M67 38 V77 M113 38 V77"/><rect x={side==="left"?20:113} y="38" width="47" height="63" rx="5"/>
+                              </g>}
+                            </svg>
+                            <span className="text-xs sm:text-sm font-semibold text-black">{group.kind==="arm"?"Braço ":"Lado "}{side==="left"?"esquerdo":"direito"}{group.value===side?" ✓":""}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </div>
               )}
 
               {/* Step 2: album */}
