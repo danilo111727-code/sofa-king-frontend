@@ -37,7 +37,8 @@ export interface ProductConfiguration {
   /** Medidas informativas em centímetros, opcionais por modelo. */
   measurements?: ProductMeasurements;
   /** Lados disponíveis, definidos olhando o sofá de frente. */
-  availableSides?: ("left" | "right")[];
+  availableSides?: ("left" | "right")[]; // legado
+  sideChoice?: { chaiseOrCorner?: boolean; arm?: boolean };
   catalogVariations?: Record<string, { enabled: boolean; optionIds: string[]; required?: boolean }>;
   /** undefined = manter todas as opções existentes; [] = nenhuma opção. */
   allowedFoamIds?: string[];
