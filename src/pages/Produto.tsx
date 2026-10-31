@@ -317,12 +317,12 @@ export default function Produto() {
                     <h2 className="text-sm sm:text-base font-semibold text-foreground mb-2 flex items-center gap-2">
                       <Ruler className="w-5 h-5 text-primary" /> Medidas do sofá
                     </h2>
-                    <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+                    <div className="grid grid-cols-5 gap-[3px] sm:gap-2 w-full min-w-0">
                       {items.map(({ label, value, kind }) => {
                         const front = kind === "width";
                         return (
-                          <div key={kind} className="min-w-0 flex flex-col items-center rounded-lg bg-secondary/25 px-1 py-2 sm:px-2 sm:py-3 text-center">
-                            <svg viewBox="0 0 100 72" role="img" aria-label={`Desenho técnico: ${label}`} className="w-full h-[42px] sm:h-[60px] max-w-[96px] text-foreground" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round">
+                          <div key={kind} className="min-w-0 w-full flex flex-col items-center rounded-md bg-secondary/25 px-[2px] py-1.5 sm:px-2 sm:py-3 text-center overflow-hidden">
+                            <svg viewBox="0 0 100 72" role="img" aria-label={`Desenho técnico: ${label}`} className="w-full h-[34px] sm:h-[60px] max-w-[72px] sm:max-w-[96px] text-foreground" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round">
                               {front ? (
                                 <>
                                   <rect x="17" y="31" width="66" height="25" rx="3" />
@@ -342,8 +342,8 @@ export default function Produto() {
                               {kind === "backHeight" && <path d="M17 16V60M13 16H21M13 60H21M17 16L14 21M17 16L20 21M17 60L14 55M17 60L20 55" />}
                               {kind === "seatDepth" && <path d="M43 33H82M43 29V37M82 29V37M43 33L48 30M43 33L48 36M82 33L77 30M82 33L77 36" />}
                             </svg>
-                            <span className="mt-1 text-[9px] sm:text-xs leading-tight text-foreground min-h-[30px] flex items-center justify-center break-words">{label}</span>
-                            <strong className="mt-1 min-h-[18px] text-[11px] sm:text-base font-semibold text-primary">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
+                            <span className="mt-1 text-[8px] sm:text-xs leading-[1.15] text-foreground min-h-[30px] flex items-center justify-center break-words w-full">{label}</span>
+                            <strong className="mt-1 min-h-[17px] text-[10px] sm:text-base font-semibold text-primary whitespace-nowrap">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
                           </div>
                         );
                       })}
