@@ -504,6 +504,9 @@ export default function Produto() {
                       const s = selectedSize
                         ? (selectedSize.albumSurcharges?.[a.id] ?? resolveAlbumSurcharge(a, selectedSize.label))
                         : a.surcharge;
+                      const albumNameMatch = a.name.trim().match(/^(.*?)\s*\(([^()]*)\)\s*$/);
+                      const albumTitle = albumNameMatch ? albumNameMatch[1].trim() : a.name;
+                      const albumSubtitle = albumNameMatch ? albumNameMatch[2].trim() : "";
                       const isOpen = albumIdx === i;
                       return (
                         <div key={a.id} className="rounded-xl border border-border/80 overflow-hidden">
@@ -520,15 +523,15 @@ export default function Produto() {
                           >
                             <div className="min-w-0 flex-1 space-y-0.5">
                               <div className="text-[15px] leading-5 font-semibold flex items-center gap-2">
-                                <span className="min-w-0">{a.name}</span>
+                                <span className="min-w-0">{albumTitle}</span>
                                 {selectedFabricKey && selectedFabricKey.startsWith(`fab_${a.id}_`) && (
                                   <span className="inline-flex shrink-0 items-center gap-1 text-[11px] bg-green-500/90 text-white px-1.5 py-0.5 rounded">
                                     <Check className="w-3 h-3" /> selecionado
                                   </span>
                                 )}
                               </div>
-                              {a.description?.trim() && (
-                                <p className="text-[13px] leading-4 opacity-80 line-clamp-1">{a.description.trim()}</p>
+                              {albumSubtitle && (
+                                <p className="text-[13px] leading-4 opacity-80">{albumSubtitle}</p>
                               )}
                               <div className="flex flex-wrap items-center gap-x-1.5 text-xs leading-4 opacity-85">
                                 <span>{a.fabrics.length} {a.fabrics.length === 1 ? "opção de tecido" : "opções de tecido"}</span>
