@@ -90,6 +90,7 @@ export default function Produto() {
       .finally(() => setLoading(false));
   }, [id]);
 
+  const gallerySwipeStart = useRef<{ x: number; y: number } | null>(null);
   const settings = useSiteSettings();
   const { pixDiscountPct, maxInstallments } = settings;
   const selectedSize = product?.sizes[sizeIdx];
@@ -240,12 +241,7 @@ export default function Produto() {
         <div className="bg-secondary/20 py-2.5 sm:py-3 border-b border-border/60">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center text-sm text-muted-foreground">
-              <button
-                onClick={() => window.history.length > 1 ? window.history.back() : (window.location.href = "/")}
-                className="hover:text-primary transition-colors flex items-center gap-1"
-              >
-                <ArrowLeft className="w-3 h-3" /> Voltar
-              </button>
+              <Link href="/" className="hover:text-primary transition-colors">Início</Link>
               <ChevronRight className="w-4 h-4 mx-2 text-border" />
               <span>Sofás</span>
               <ChevronRight className="w-4 h-4 mx-2 text-border" />
@@ -263,7 +259,9 @@ export default function Produto() {
                   galleryImages[mainImageIdx] !== DIAGRAMA_SENTINEL ? "cursor-zoom-in" : ""
                 }`}
                 data-testid="img-product-main"
-                onClick={() => openLightbox(mainImageIdx)}
+                onTouchStart={(e) => { const t=e.touches[0]; gallerySwipeStart.current={x:t.clientX,y:t.clientY}; }}
+                onTouchEnd={(e) => { const start=gallerySwipeStart.current; gallerySwipeStart.current=null; if(!start || galleryImages.length<2)return; const t=e.changedTouches[0]; const dx=t.clientX-start.x,dy=t.clientY-start.y; if(Math.abs(dx)>45 && Math.abs(dx)>Math.abs(dy)*1.25){setMainImageIdx(i=>(i+(dx<0?1:-1)+galleryImages.length)%galleryImages.length);gallerySwipeStart.current={x:NaN,y:NaN};} }}
+                onClick={() => {if(Number.isNaN(gallerySwipeStart.current?.x)){gallerySwipeStart.current=null;return;} openLightbox(mainImageIdx);}}
               >
                 {galleryImages[mainImageIdx] === DIAGRAMA_SENTINEL && product.diagramaUrl && product.diagramaAnotacoes ? (
                   <DiagramaViewer imageUrl={product.diagramaUrl} anotacoes={product.diagramaAnotacoes} />
