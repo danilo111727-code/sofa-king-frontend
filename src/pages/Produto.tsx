@@ -80,6 +80,10 @@ export default function Produto() {
       .then(([p, al, fo, vars]) => {
         setVariationAlbums(vars);
         setProduct(p);
+        // A metragem da foto de referência no catálogo também define o preço inicial.
+        const referenceLabel = p.displaySizeLabel?.trim();
+        const referenceIndex = referenceLabel ? p.sizes.findIndex(size => size.label.trim() === referenceLabel) : -1;
+        setSizeIdx(referenceIndex >= 0 ? referenceIndex : 0);
         const c=p.configuration;
         setAlbums(al.filter(a=>a.active&&isAllowed(a.id,c?.allowedAlbumIds)).map(a=>({...a,fabrics:a.fabrics.filter(f=>isAllowed(f.id,c?.allowedFabricIds))})));
         setFoams(fo.filter(f=>f.active&&isAllowed(f.id,c?.allowedFoamIds)));
@@ -375,7 +379,10 @@ export default function Produto() {
               {/* Price highlight — mostra o preço total e condições de pagamento antes das seleções */}
               {!noSizes && (
                 <div className="rounded-2xl border border-primary/15 bg-primary/[0.035] p-4 sm:p-6 mb-5" data-testid="price-highlight">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">PIX / À vista</p>
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">PIX / À vista</p>
+                    {selectedSize && <span className="rounded-full border border-primary/20 bg-background px-3 py-1 text-sm font-semibold text-primary" data-testid="price-highlight-size">Sofá de {selectedSize.label}</span>}
+                  </div>
                   <p className="text-2xl sm:text-3xl font-bold text-primary leading-tight" data-testid="text-price-highlight">
                     {brl(pixPrice)}
                   </p>
@@ -386,7 +393,7 @@ export default function Produto() {
                     </p>
                   </div>
                   <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border/60">
-                    Personalize as opções abaixo para atualizar o valor.
+                    Valor referente à metragem selecionada. Personalize abaixo para atualizar o preço.
                   </p>
                 </div>
               )}
