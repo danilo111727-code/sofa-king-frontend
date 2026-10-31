@@ -78,25 +78,25 @@
 
   /* Backgrounds & Foregrounds */
   --background: 0 0% 100%; /* Branco */
-  --foreground: 33 22% 10%; /* Carvão #1F1A14 */
+  --foreground: 150 12% 14%; /* Grafite oliva */
   
-  --border: 38 25% 82%; /* Bege border */
+  --border: 95 10% 85%; /* Cinza oliva suave */
   
-  --card: 38 30% 96%; /* Warm white card */
+  --card: 0 0% 100%; /* Branco */
   --card-foreground: 33 22% 10%;
-  --card-border: 38 25% 82%;
+  --card-border: 95 10% 85%;
 
   /* Brand Colors */
-  --primary: 129 15% 28%; /* Verde musgo #3D5240 */
-  --primary-foreground: 38 33% 95%; /* Areia clara */
+  --primary: 135 21% 27%; /* Verde oliva profundo */
+  --primary-foreground: 0 0% 100%;
 
-  --secondary: 39 38% 84%; /* Bege quente #E5DCC9 */
+  --secondary: 85 18% 94%; /* Oliva muito claro */
   --secondary-foreground: 33 22% 10%;
 
-  --muted: 38 28% 90%;
-  --muted-foreground: 33 12% 38%;
+  --muted: 90 12% 94%;
+  --muted-foreground: 120 6% 40%;
 
-  --accent: 38 39% 54%; /* Dourado fosco #B8965A */
+  --accent: 135 21% 27%; /* Oliva */
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 70% 50%;
@@ -127,8 +127,8 @@
   --chart-5: 38 33% 88%;
 
   /* Typography */
-  --app-font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --app-font-serif: 'Playfair Display', Georgia, serif;
+  --app-font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --app-font-serif: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
   --app-font-mono: Menlo, monospace;
   
   --radius: 0.25rem; /* Slightly sharp corners for premium feel */
@@ -221,7 +221,7 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif tracking-tight text-foreground;
+    @apply font-sans tracking-tight text-foreground;
   }
 }
 
