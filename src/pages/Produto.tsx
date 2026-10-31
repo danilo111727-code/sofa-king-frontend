@@ -813,7 +813,7 @@ export default function Produto() {
               className="mt-5 w-full bg-primary text-primary-foreground py-2.5 rounded-md text-sm font-semibold hover:bg-primary/90"
               data-testid="button-confirm-foam-specs"
             >
-              Entendi, continuar
+              Selecionar esta espuma
             </button>
           </div>
         </div>
