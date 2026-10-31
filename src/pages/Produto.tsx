@@ -302,24 +302,54 @@ export default function Produto() {
                 {product.longDescription || product.description}
               </p>
 
-              {/* Pacote 2: medidas informativas, sem interferir na precificação. */}
+              {/* Pacote 2: desenhos técnicos informativos, sem interferir na precificação. */}
               {(() => {
                 const measurements = product.configuration?.measurements;
-                const entries = [
-                  ["Profundidade total", measurements?.totalDepth],
-                  ["Altura do assento", measurements?.seatHeight],
-                  ["Altura do encosto", measurements?.backHeight],
-                  ["Profundidade do assento", measurements?.seatDepth],
-                  ["Largura do braço", measurements?.armWidth],
-                ] as const;
-                const available = entries.filter(([, value]) => typeof value === "number" && value > 0);
-                if (!available.length && !selectedSize) return null;
+                const items = [
+                  { label: "Largura total", value: selectedSize?.label, kind: "width" },
+                  { label: "Profundidade total", value: measurements?.totalDepth, kind: "depth" },
+                  { label: "Altura do assento", value: measurements?.seatHeight, kind: "seatHeight" },
+                  { label: "Altura do encosto", value: measurements?.backHeight, kind: "backHeight" },
+                  { label: "Profundidade do assento", value: measurements?.seatDepth, kind: "seatDepth" },
+                  { label: "Largura do braço", value: measurements?.armWidth, kind: "armWidth" },
+                ].filter((item) => item.value !== undefined && item.value !== null && item.value !== "" && (typeof item.value !== "number" || item.value > 0));
+                if (!items.length) return null;
                 return (
-                  <section className="mb-5 rounded-2xl border border-border/70 bg-secondary/20 p-4" aria-label="Medidas do sofá">
-                    <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2"><Ruler className="w-4 h-4 text-primary" /> Medidas do sofá</h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      {selectedSize && <div className="rounded-xl bg-background border border-border/60 p-3"><span className="block text-xs text-muted-foreground">Largura total</span><strong className="text-sm text-foreground">{selectedSize.label}</strong></div>}
-                      {available.map(([label, value]) => <div key={label} className="rounded-xl bg-background border border-border/60 p-3"><span className="block text-xs text-muted-foreground">{label}</span><strong className="text-sm text-foreground">{value} cm</strong></div>)}
+                  <section className="mb-6 rounded-2xl border border-border/70 bg-background p-3 sm:p-5" aria-label="Medidas do sofá">
+                    <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <Ruler className="w-5 h-5 text-primary" /> Medidas do sofá
+                    </h2>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                      {items.map(({ label, value, kind }) => {
+                        const front = kind === "width" || kind === "armWidth";
+                        return (
+                          <div key={kind} className="flex flex-col items-center justify-between min-w-0 rounded-xl bg-secondary/30 px-2 py-3 text-center">
+                            <svg viewBox="0 0 120 86" role="img" aria-label={`Desenho técnico: ${label}`} className="w-full max-w-[135px] h-[88px] text-primary" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                              {front ? (
+                                <>
+                                  <rect x="19" y="32" width="82" height="32" rx="4" />
+                                  <path d="M29 32V23Q29 18 35 18H85Q91 18 91 23V32M29 46H91M23 64V69M97 64V69" />
+                                  <rect x="14" y="39" width="12" height="26" rx="4" />
+                                  <rect x="94" y="39" width="12" height="26" rx="4" />
+                                </>
+                              ) : (
+                                <>
+                                  <path d="M31 64V28Q31 19 37 19H42Q46 19 46 25L49 43H91Q97 43 97 49V64Z" />
+                                  <path d="M30 64H99M35 64V70M92 64V70M49 47H96" />
+                                </>
+                              )}
+                              {kind === "width" && <><path d="M14 77H106M14 73V81M106 73V81M14 77L20 74M14 77L20 80M106 77L100 74M106 77L100 80" /></>}
+                              {kind === "depth" && <><path d="M28 77H99M28 73V81M99 73V81M28 77L34 74M28 77L34 80M99 77L93 74M99 77L93 80" /></>}
+                              {kind === "seatHeight" && <><path d="M108 46V70M104 46H112M104 70H112M108 46L105 52M108 46L111 52M108 70L105 64M108 70L111 64" /></>}
+                              {kind === "backHeight" && <><path d="M17 19V70M13 19H21M13 70H21M17 19L14 25M17 19L20 25M17 70L14 64M17 70L20 64" /></>}
+                              {kind === "seatDepth" && <><path d="M49 36H98M49 32V40M98 32V40M49 36L55 33M49 36L55 39M98 36L92 33M98 36L92 39" /></>}
+                              {kind === "armWidth" && <><path d="M14 77H26M14 73V81M26 73V81M14 77L18 74M14 77L18 80M26 77L22 74M26 77L22 80" /></>}
+                            </svg>
+                            <span className="mt-2 text-xs sm:text-[13px] leading-snug text-foreground min-h-[32px] flex items-center justify-center">{label}</span>
+                            <strong className="mt-1 text-base sm:text-lg font-semibold text-primary">{typeof value === "number" ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : value}</strong>
+                          </div>
+                        );
+                      })}
                     </div>
                   </section>
                 );
