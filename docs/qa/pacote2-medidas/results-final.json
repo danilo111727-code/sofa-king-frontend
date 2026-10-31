@@ -1,10 +1,31 @@
 [
   {
+    "width": 320,
+    "cards": 5,
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 375,
+    "cards": 5,
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
     "width": 390,
     "cards": 5,
     "singleRow": true,
     "allClicks": true,
-    "collapseExpand": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
     "horizontalOverflow": false,
     "errors": []
   },
@@ -13,7 +34,8 @@
     "cards": 5,
     "singleRow": true,
     "allClicks": true,
-    "collapseExpand": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
     "horizontalOverflow": false,
     "errors": []
   }

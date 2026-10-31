@@ -24,23 +24,12 @@ import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext
 import { DiagramaViewer } from "@/components/DiagramaViewer";
 
 
-// Exact artwork from the approved reference. Each viewport shows only its drawing;
-// labels and values remain accessible HTML and continue to use the selected model.
-const measurementArtwork: Record<string, number> = {
-  width: 45, depth: 238, seatHeight: 428, backHeight: 625, seatDepth: 816,
-};
+// Vector contours traced from the approved artwork: crisp at every zoom level.
 function MeasurementDrawing({kind,label,large=false}:{kind:string;label:string;large?:boolean}) {
   return (
-    <svg viewBox="0 0 178 108"
-      role="img" aria-label={`Desenho técnico: ${label}`}
-      className={large ? "measurement-artwork measurement-artwork-large" : "measurement-artwork"}>
-      <rect width="178" height="108" fill="#f7f7f5" />
-      <svg aria-hidden="true" x="0" y="0" width="178" height="100"
-        viewBox={`${measurementArtwork[kind] ?? 45} 895 ${kind === "seatDepth" ? 171 : 178} 100`}
-        preserveAspectRatio="xMidYMin meet" overflow="hidden">
-        <image href="/images/medidas-referencia-aprovada.jpg" width="1024" height="1536" />
-      </svg>
-    </svg>
+    <img src={`/images/medidas/${kind}.svg`} alt={`Desenho técnico: ${label}`}
+      width="178" height="108"
+      className={large ? "measurement-artwork measurement-artwork-large" : "measurement-artwork"} />
   );
 }
 
@@ -73,7 +62,6 @@ export default function Produto() {
   const [sizeSheetOpen, setSizeSheetOpen] = useState(false);
   const [mainImageIdx, setMainImageIdx] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [measurementsExpanded, setMeasurementsExpanded] = useState(true);
   const [activeMeasurement, setActiveMeasurement] = useState<{label:string;kind:string;value:string} | null>(null);
   const [lightboxIdx, setLightboxIdx] = useState(0);
   const [previewFabric, setPreviewFabric] = useState<{ albumId: string; index: number } | null>(null);
@@ -328,11 +316,10 @@ export default function Produto() {
                 ];
                 return (
                   <section className="sofa-measurements mb-5" aria-label="Medidas do sofá">
-                    <button type="button" aria-expanded={measurementsExpanded} onClick={() => setMeasurementsExpanded(v => !v)} className="measurement-toggle" aria-controls="sofa-measurement-cards">
+                    <h2 className="measurement-toggle">
                       <Ruler className="measurement-ruler" /> Medidas do sofá
-                      {measurementsExpanded ? <ChevronUp className="ml-auto h-5 w-5" /> : <ChevronDown className="ml-auto h-5 w-5" />}
-                    </button>
-                    {measurementsExpanded && <div id="sofa-measurement-cards" className="measurement-cards">
+                    </h2>
+                    <div id="sofa-measurement-cards" className="measurement-cards">
                       {items.map(({ label, value, kind }) => {
                         return (
                           <button type="button" key={kind} onClick={() => setActiveMeasurement({label,kind,value:typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")})} aria-label={`Ampliar ${label}`} className="measurement-card">
@@ -342,7 +329,7 @@ export default function Produto() {
                           </button>
                         );
                       })}
-                    </div>}
+                    </div>
                   </section>
                 );
               })()}

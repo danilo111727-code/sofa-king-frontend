@@ -319,7 +319,6 @@
   text-align: left; font-size: 2.95cqw; font-weight: 600;
 }
 .measurement-ruler { transform: scaleX(-1); width: 4.2cqw; height: 4.2cqw; flex-shrink: 0; }
-.measurement-toggle > svg:last-child { width: 2.5cqw; height: 2.5cqw; }
 .measurement-cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.55%; width: 100%; }
 .measurement-card {
   display: flex; flex-direction: column; align-items: center;
@@ -336,7 +335,7 @@
   color: #10251e;
 }
 .measurement-value { margin-top: .5cqw; min-height: 3.8cqw; font-size: 3.05cqw; line-height: 1.2; font-weight: 700; white-space: nowrap; }
-.measurement-card:focus-visible, .measurement-toggle:focus-visible { outline: 2px solid #15372c; outline-offset: 3px; }
+.measurement-card:focus-visible { outline: 2px solid #15372c; outline-offset: 3px; }
 @media (hover: hover) and (pointer: fine) {
   .group:hover .product-photo-hint { opacity: 1; }
 }
