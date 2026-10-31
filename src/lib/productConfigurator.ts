@@ -72,7 +72,7 @@ export function calculateVariationTotal(groups: ProductVariationGroup[], selecti
 }
 
 /** The extended depth card applies only to reclining and chaise categories. */
-export function supportsExtendedDepth(category: string | undefined): boolean {
-  const normalized = (category ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+export function supportsExtendedDepth(category: string | undefined, categoryLabel?: string): boolean {
+  const normalized = `${category ?? ""} ${categoryLabel ?? ""}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   return /(?:^|[\s-])(?:retratil|chaise)(?:$|[\s-])/.test(normalized);
 }

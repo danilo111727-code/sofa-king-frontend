@@ -314,7 +314,7 @@ export default function Produto() {
                   { label: "Altura do encosto", value: measurements?.backHeight, kind: "backHeight" },
                   { label: "Profundidade do assento", value: measurements?.seatDepth, kind: "seatDepth" },
                 ];
-                const extended = supportsExtendedDepth(product.category);
+                const extended = supportsExtendedDepth(product.category, settings.categories?.find(c => c.id === product.category)?.label);
                 if (extended) items.push({ label: "Profundidade estendida", value: measurements?.extendedDepth, kind: "extendedDepth" });
                 return (
                   <section className="sofa-measurements mb-5" aria-label="Medidas do sofá">

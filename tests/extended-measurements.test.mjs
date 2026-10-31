@@ -7,6 +7,9 @@ after(() => { globalThis.fetch = originalFetch; });
 
 test('extended depth applies to reclining and chaise categories only, including accented category labels', () => {
   for (const category of ['retratil', 'chaise', 'Sofá Retrátil', 'sofa-chaise']) assert.ok(supportsExtendedDepth(category), category);
+  assert.equal(supportsExtendedDepth('sofa-cama', 'Retratil sem caixa'), true);
+  assert.equal(supportsExtendedDepth('custom-category', 'Sofá Chaise'), true);
+  assert.equal(supportsExtendedDepth('sofa-cama', 'Sofá-cama'), false);
   for (const category of ['fixo', 'canto', 'living', 'sofa-cama', '', undefined]) assert.equal(supportsExtendedDepth(category), false, String(category));
 });
 

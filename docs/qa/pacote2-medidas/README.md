@@ -38,3 +38,5 @@ O modelo de teste Istambul possui largura determinada pela metragem selecionada;
 - Playwright: 12 cenários (retrátil, chaise e fixo em 320, 375, 390 e 1440 px), sem overflow, seis/cinco cartões na mesma linha, todos clicáveis, valores sem recorte e seção sempre aberta.
 - Sete testes automatizados aprovados, incluindo create/edit/read no cliente da API com persistência simulada, preservação de outras medidas e preços. Não foi feita escrita no banco nesse teste.
 - A API de Preview preserva a configuração recebida em JSON; não houve alteração de backend ou produção.
+
+Categorias personalizadas também são reconhecidas pelo nome atual, incluindo “Retratil sem caixa” com identificador legado `sofa-cama`.

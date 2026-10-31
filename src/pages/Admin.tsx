@@ -900,7 +900,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                     ["backHeight", "Altura do encosto"],
                     ["seatDepth", "Profundidade do assento"],
                     ["armWidth", "Largura do braço"],
-                  ] as const).filter(([key]) => key !== "extendedDepth" || supportsExtendedDepth(form.category)).map(([key, label]) => (
+                  ] as const).filter(([key]) => key !== "extendedDepth" || supportsExtendedDepth(form.category, CATEGORIES.find(c => c.id === form.category)?.label)).map(([key, label]) => (
                     <label key={key} className="block text-xs text-[#cbbba5]">
                       <span className="block mb-1">{label}</span>
                       <input type="number" min="0" step="0.5" inputMode="decimal" className={inputCls}
