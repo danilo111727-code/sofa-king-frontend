@@ -313,38 +313,37 @@ export default function Produto() {
                   { label: "Profundidade do assento", value: measurements?.seatDepth, kind: "seatDepth" },
                 ];
                 return (
-                  <section className="mb-6 rounded-2xl border border-border/70 bg-background p-3 sm:p-5" aria-label="Medidas do sofá">
-                    <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+                  <section className="mb-5 rounded-xl border border-border/70 bg-background p-2.5 sm:p-4" aria-label="Medidas do sofá">
+                    <h2 className="text-sm sm:text-base font-semibold text-foreground mb-2 flex items-center gap-2">
                       <Ruler className="w-5 h-5 text-primary" /> Medidas do sofá
                     </h2>
-                    <div className="grid grid-flow-col auto-cols-[minmax(116px,1fr)] sm:grid-flow-row sm:grid-cols-5 gap-2 overflow-x-auto pb-2 sm:pb-0">
+                    <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
                       {items.map(({ label, value, kind }) => {
-                        const front = kind === "width" || kind === "armWidth";
+                        const front = kind === "width";
                         return (
-                          <div key={kind} className="flex flex-col items-center justify-between min-w-0 rounded-xl bg-secondary/30 px-1.5 py-2 text-center">
-                            <svg viewBox="0 0 120 86" role="img" aria-label={`Desenho técnico: ${label}`} className="w-full max-w-[108px] h-[68px] text-primary" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                          <div key={kind} className="min-w-0 flex flex-col items-center rounded-lg bg-secondary/25 px-1 py-2 sm:px-2 sm:py-3 text-center">
+                            <svg viewBox="0 0 100 72" role="img" aria-label={`Desenho técnico: ${label}`} className="w-full h-[42px] sm:h-[60px] max-w-[96px] text-foreground" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round">
                               {front ? (
                                 <>
-                                  <rect x="19" y="32" width="82" height="32" rx="4" />
-                                  <path d="M29 32V23Q29 18 35 18H85Q91 18 91 23V32M29 46H91M23 64V69M97 64V69" />
-                                  <rect x="14" y="39" width="12" height="26" rx="4" />
-                                  <rect x="94" y="39" width="12" height="26" rx="4" />
+                                  <rect x="17" y="31" width="66" height="25" rx="3" />
+                                  <path d="M25 31V20Q25 16 29 16H71Q75 16 75 20V31M25 41H75M21 56V60M79 56V60" />
+                                  <rect x="12" y="36" width="12" height="21" rx="4" />
+                                  <rect x="76" y="36" width="12" height="21" rx="4" />
                                 </>
                               ) : (
                                 <>
-                                  <path d="M31 64V28Q31 19 37 19H42Q46 19 46 25L49 43H91Q97 43 97 49V64Z" />
-                                  <path d="M30 64H99M35 64V70M92 64V70M49 47H96" />
+                                  <path d="M28 56V22Q28 16 33 16H37Q40 16 40 22L43 39H76Q82 39 82 45V56Z" />
+                                  <path d="M28 56H84M32 56V60M78 56V60M43 42H82" />
                                 </>
                               )}
-                              {kind === "width" && <><path d="M14 77H106M14 73V81M106 73V81M14 77L20 74M14 77L20 80M106 77L100 74M106 77L100 80" /></>}
-                              {kind === "depth" && <><path d="M28 77H99M28 73V81M99 73V81M28 77L34 74M28 77L34 80M99 77L93 74M99 77L93 80" /></>}
-                              {kind === "seatHeight" && <><path d="M108 46V70M104 46H112M104 70H112M108 46L105 52M108 46L111 52M108 70L105 64M108 70L111 64" /></>}
-                              {kind === "backHeight" && <><path d="M17 19V70M13 19H21M13 70H21M17 19L14 25M17 19L20 25M17 70L14 64M17 70L20 64" /></>}
-                              {kind === "seatDepth" && <><path d="M49 36H98M49 32V40M98 32V40M49 36L55 33M49 36L55 39M98 36L92 33M98 36L92 39" /></>}
-                              {kind === "armWidth" && <><path d="M14 77H26M14 73V81M26 73V81M14 77L18 74M14 77L18 80M26 77L22 74M26 77L22 80" /></>}
+                              {kind === "width" && <path d="M12 65H88M12 61V69M88 61V69M12 65L17 62M12 65L17 68M88 65L83 62M88 65L83 68" />}
+                              {kind === "depth" && <path d="M28 65H84M28 61V69M84 61V69M28 65L33 62M28 65L33 68M84 65L79 62M84 65L79 68" />}
+                              {kind === "seatHeight" && <path d="M91 42V60M87 42H95M87 60H95M91 42L88 47M91 42L94 47M91 60L88 55M91 60L94 55" />}
+                              {kind === "backHeight" && <path d="M17 16V60M13 16H21M13 60H21M17 16L14 21M17 16L20 21M17 60L14 55M17 60L20 55" />}
+                              {kind === "seatDepth" && <path d="M43 33H82M43 29V37M82 29V37M43 33L48 30M43 33L48 36M82 33L77 30M82 33L77 36" />}
                             </svg>
-                            <span className="mt-1 text-[11px] sm:text-xs leading-snug text-foreground min-h-[32px] flex items-center justify-center">{label}</span>
-                            <strong className="mt-1 min-h-[24px] text-sm sm:text-base font-semibold text-primary">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
+                            <span className="mt-1 text-[9px] sm:text-xs leading-tight text-foreground min-h-[30px] flex items-center justify-center break-words">{label}</span>
+                            <strong className="mt-1 min-h-[18px] text-[11px] sm:text-base font-semibold text-primary">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
                           </div>
                         );
                       })}
