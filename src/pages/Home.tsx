@@ -226,8 +226,8 @@ export default function Home() {
               </div>
             </div>
             <div className="flex items-center justify-between gap-3 mb-5 border-t border-border/60 pt-7">
-              <h3 className="text-lg md:text-2xl font-semibold text-foreground">Confira nossos produtos</h3>
-              <Link href="/modelos" className="text-xs md:text-sm font-medium whitespace-nowrap inline-flex items-center gap-1">Ver todos <ArrowRight className="w-4 h-4" /></Link>
+              <h3 className="text-lg md:text-2xl font-semibold text-foreground">Modelos mais vendidos</h3>
+              <Link href="/modelos?destaque=1" className="text-xs md:text-sm font-medium whitespace-nowrap inline-flex items-center gap-1">Ver todos <ArrowRight className="w-4 h-4" /></Link>
             </div>
 
             {loading ? (
@@ -239,7 +239,7 @@ export default function Home() {
             ) : (
               <HorizontalScrollRow>
                 {products
-                  .filter((p) => p.disponibilidade)
+                  .filter((p) => p.disponibilidade && p.bestseller)
                   .slice()
                   .reverse()
                   .map((product) => (
@@ -276,12 +276,6 @@ export default function Home() {
                             <div className="w-full h-full flex items-center justify-center text-muted-foreground/50 text-xs">
                               Sem foto
                             </div>
-                          )}
-                          {(product as any).designAutoral && (
-                            <span className="absolute top-2 left-2 flex items-center gap-1 text-[8px] font-bold tracking-[0.15em] uppercase bg-white text-black border border-black px-2 py-1 rounded-full">
-                              DESIGN AUTORAL
-                              <img src="/assets/crown.png" alt="coroa" className="h-3.5 w-auto object-contain" />
-                            </span>
                           )}
                           <button
                             type="button"
