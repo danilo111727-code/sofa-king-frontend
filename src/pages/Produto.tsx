@@ -59,6 +59,7 @@ export default function Produto() {
   const [selectedFabricKey, setSelectedFabricKey] = useState<string | null>(null);
   const [foamIdx, setFoamIdx] = useState(-1);
   const [foamSheetOpen, setFoamSheetOpen] = useState(false);
+  const [selectedSide, setSelectedSide] = useState<"left" | "right" | null>(null);
   const [fabricOptionsOpen, setFabricOptionsOpen] = useState(false);
   const [foamOptionsOpen, setFoamOptionsOpen] = useState(false);
   const [sizeSheetOpen, setSizeSheetOpen] = useState(false);
@@ -73,7 +74,7 @@ export default function Produto() {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
-    setNotFound(false); setSizeIdx(0); setAlbumIdx(-1); setFoamIdx(-1); setFabric(null); setSelectedFabricKey(null); setChosenAlbumId(null);
+    setNotFound(false); setSizeIdx(0); setAlbumIdx(-1); setFoamIdx(-1); setFabric(null); setSelectedFabricKey(null); setChosenAlbumId(null); setSelectedSide(null);
     Promise.all([fetchProduct(id), fetchAlbums(), fetchMaterials(),fetchVariationAlbums()])
       .then(([p, al, fo, vars]) => {
         setVariationAlbums(vars);
@@ -93,6 +94,7 @@ export default function Produto() {
   const selectedSize = product?.sizes[sizeIdx];
   const selectedAlbum = albums.find(a=>a.id===chosenAlbumId);
   const selectedFoam = foams[foamIdx];
+  const availableSides = product?.configuration?.availableSides ?? [];
 
   const albumSurcharge = useMemo(() => {
     if (!selectedSize || !selectedAlbum) return 0;
@@ -190,6 +192,7 @@ export default function Produto() {
 
   const handleAddToCart = async (goToCart: boolean) => {
     if (!selectedSize || adding) return;
+    if (availableSides.length > 0 && (!selectedSide || !availableSides.includes(selectedSide))) { toast({title:"Selecione o lado do sofá",description:"Escolha esquerda ou direita antes de continuar.",variant:"destructive"}); return; }
     setAdding(true);
     try {
     const verified=await fetchQuote(product.id,{sizeLabel:selectedSize.label,albumId:selectedAlbum?.id,fabricId:fabric?.id,foamId:selectedFoam?.id,selections});
@@ -208,6 +211,7 @@ export default function Produto() {
         : null,
       variations: selections.filter(s=>s.quantity>0).map(s=>{const g=variationGroups.find(g=>g.id===s.groupId)!;const o=g.options.find(o=>o.id===s.optionId)!;return {groupName:g.name,optionName:o.name,quantity:s.quantity,priceAdjustment:o.priceAdjustment};}),
       delivery:prazo,
+      side: availableSides.length ? selectedSide : null,
       unitPrice: verified.total,
     });
     if (goToCart) {
@@ -430,6 +434,23 @@ export default function Produto() {
                     Precisa de outra medida? Solicitar orçamento no WhatsApp
                   </a>
                 </div>
+              )}
+
+              {availableSides.length > 0 && (
+                <section className="mb-5" aria-label="Escolha o lado do sofá">
+                  <h3 className="text-sm font-semibold mb-1">Escolha o lado do chaise ou canto</h3>
+                  <p className="text-xs text-muted-foreground mb-3">Esquerda e direita considerando o sofá visto de frente.</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {availableSides.map(side => <button key={side} type="button" aria-pressed={selectedSide === side} onClick={() => setSelectedSide(side)} data-testid={`button-side-${side}`} className={`rounded-xl border-2 p-3 text-center transition-colors ${selectedSide === side ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}>
+                      <svg viewBox="0 0 160 92" className="w-full h-20" role="img" aria-label={side === "left" ? "Chaise ou canto à esquerda" : "Chaise ou canto à direita"}>
+                        <rect x={side === "left" ? 10 : 46} y="15" width="104" height="31" rx="8" fill="#a6a99a" stroke="#66715a" strokeWidth="2"/>
+                        <rect x={side === "left" ? 10 : 113} y="15" width="37" height="67" rx="8" fill="#d0d2c7" stroke="#66715a" strokeWidth="2"/>
+                        <path d={side === "left" ? "M47 18 V44" : "M113 18 V44"} stroke="#66715a" strokeWidth="2"/>
+                      </svg>
+                      <div className="text-sm font-semibold">{side === "left" ? "Esquerdo" : "Direito"} {selectedSide === side ? "✓" : ""}</div>
+                    </button>)}
+                  </div>
+                </section>
               )}
 
               {/* Step 2: album */}
