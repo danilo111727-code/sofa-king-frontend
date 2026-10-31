@@ -36,6 +36,8 @@ export interface ProductMeasurements {
 export interface ProductConfiguration {
   /** Medidas informativas em centímetros, opcionais por modelo. */
   measurements?: ProductMeasurements;
+  /** Lados disponíveis, definidos olhando o sofá de frente. */
+  availableSides?: ("left" | "right")[];
   catalogVariations?: Record<string, { enabled: boolean; optionIds: string[]; required?: boolean }>;
   /** undefined = manter todas as opções existentes; [] = nenhuma opção. */
   allowedFoamIds?: string[];
