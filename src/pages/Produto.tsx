@@ -450,14 +450,28 @@ export default function Produto() {
                           <button type="button" key={side} aria-pressed={group.value===side} onClick={()=>group.setValue(side)}
                             data-testid={`button-${group.kind}-${side}`}
                             className={`rounded-xl border-2 bg-white p-2 text-center ${group.value===side?"border-primary":"border-gray-200"}`}>
-                            <svg viewBox="0 0 180 112" className="w-full h-20" role="img" aria-label={group.title+" "+side}>
-                              {group.kind==="arm" ? <g fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round">
-                                <rect x="29" y="25" width="122" height="67" rx="7"/><rect x="34" y="27" width="56" height="35" rx="6"/><rect x="90" y="27" width="56" height="35" rx="6"/>
-                                <path d="M29 63 Q90 57 151 63 L151 88 L29 88 Z"/><rect x={side==="left"?17:151} y="46" width="13" height="48" rx="3"/>
-                              </g> : <g fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round">
-                                <rect x="20" y="16" width="140" height="22" rx="5"/><rect x="20" y="38" width="140" height="39" rx="4"/>
-                                <path d="M67 38 V77 M113 38 V77"/><rect x={side==="left"?20:113} y="38" width="47" height="63" rx="5"/>
-                              </g>}
+                            <svg viewBox="0 0 200 120" className="w-full h-24 sm:h-28" role="img" aria-label={group.title+" "+side}>
+                              {group.kind==="arm" ? (
+                                <g fill="white" stroke="#111" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round">
+                                  <rect x="29" y="23" width="142" height="73" rx="8"/>
+                                  <path d="M36 38 Q36 27 47 27 H96 Q101 27 101 35 V66 H35 Z"/>
+                                  <path d="M101 35 Q101 27 110 27 H153 Q164 27 164 39 V66 H101 Z"/>
+                                  <path d="M35 66 Q68 60 101 65 Q136 60 165 66 V89 H35 Z"/>
+                                  <path d="M34 90 H166 M40 96 V103 H51 V96 M149 96 V103 H160 V96"/>
+                                  <path d={side==="left"?"M20 48 L29 40 V93 Q29 98 23 98 H14 Q10 98 10 93 V60 Q10 54 20 48 Z":"M180 48 L171 40 V93 Q171 98 177 98 H186 Q190 98 190 93 V60 Q190 54 180 48 Z"}/>
+                                  <path d={side==="left"?"M16 61 H27":"M173 61 H184"} strokeWidth="1.4"/>
+                                </g>
+                              ) : (
+                                <g fill="white" stroke="#111" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round">
+                                  <rect x="16" y="18" width="168" height="24" rx="6"/>
+                                  <rect x="21" y="39" width="158" height="45" rx="6"/>
+                                  <path d="M74 42 V81 M126 42 V81"/>
+                                  <rect x={side==="left"?21:126} y="41" width="53" height="69" rx="8"/>
+                                  <path d={side==="left"?"M26 82 H69 M74 45 V79 M126 45 V79":"M131 82 H174 M74 45 V79 M126 45 V79"} strokeWidth="1.5"/>
+                                  <path d="M16 22 V80 M184 22 V80"/>
+                                  <path d={side==="left"?"M25 47 Q45 40 69 47":"M131 47 Q153 40 175 47"} strokeWidth="1.4"/>
+                                </g>
+                              )}
                             </svg>
                             <span className="text-xs sm:text-sm font-semibold text-black">{group.kind==="arm"?"Braço ":"Lado "}{side==="left"?"esquerdo":"direito"}{group.value===side?" ✓":""}</span>
                           </button>
