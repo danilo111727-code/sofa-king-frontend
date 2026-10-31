@@ -27,6 +27,7 @@ export interface ProductVariationGroup {
 }
 export interface ProductMeasurements {
   totalDepth?: number;
+  extendedDepth?: number;
   seatHeight?: number;
   backHeight?: number;
   seatDepth?: number;
@@ -68,4 +69,10 @@ export function calculateVariationTotal(groups: ProductVariationGroup[], selecti
     const quantity = group.mode === "single" ? 1 : Math.max(option.minQuantity ?? 0, Math.min(option.maxQuantity ?? 99, Math.max(0, Math.floor(selection.quantity))));
     return sum + option.priceAdjustment * quantity;
   }, 0)*100)/100;
+}
+
+/** The extended depth card applies only to reclining and chaise categories. */
+export function supportsExtendedDepth(category: string | undefined): boolean {
+  const normalized = (category ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  return /(?:^|[\s-])(?:retratil|chaise)(?:$|[\s-])/.test(normalized);
 }

@@ -1,7 +1,7 @@
 import {VariationAlbumsSection} from '@/components/VariationAlbumsSection';
 import type {VariationAlbum} from '@/lib/catalogVariations';
 import {fetchAdminVariationAlbums} from '@/lib/api';
-import type { ProductConfiguration } from "@/lib/productConfigurator";
+import { supportsExtendedDepth, type ProductConfiguration } from "@/lib/productConfigurator";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation } from "wouter";
 import { useUser, useClerk } from "@clerk/react";
@@ -895,11 +895,12 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {([
                     ["totalDepth", "Profundidade total"],
+                    ["extendedDepth", "Profundidade estendida"],
                     ["seatHeight", "Altura do assento"],
                     ["backHeight", "Altura do encosto"],
                     ["seatDepth", "Profundidade do assento"],
                     ["armWidth", "Largura do braço"],
-                  ] as const).map(([key, label]) => (
+                  ] as const).filter(([key]) => key !== "extendedDepth" || supportsExtendedDepth(form.category)).map(([key, label]) => (
                     <label key={key} className="block text-xs text-[#cbbba5]">
                       <span className="block mb-1">{label}</span>
                       <input type="number" min="0" step="0.5" inputMode="decimal" className={inputCls}

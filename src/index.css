@@ -339,3 +339,9 @@
 @media (hover: hover) and (pointer: fine) {
   .group:hover .product-photo-hint { opacity: 1; }
 }
+
+/* Sixth measurement for reclining/chaise models; keep one uninterrupted row. */
+.measurement-cards-extended { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1.3%; }
+.measurement-cards-extended .measurement-card { padding: 1.025cqw 0 1.4cqw; }
+.measurement-cards-extended .measurement-label { min-height: 3.9cqw; margin-top: .53cqw; font-size: 1.55cqw; }
+.measurement-cards-extended .measurement-value { margin-top: .41cqw; min-height: 3.12cqw; font-size: 2.5cqw; }

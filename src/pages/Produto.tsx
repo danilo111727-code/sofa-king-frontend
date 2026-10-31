@@ -1,6 +1,6 @@
 import {resolveCatalogVariations,type VariationAlbum} from '@/lib/catalogVariations';
 import {fetchVariationAlbums} from '@/lib/api';
-import { calculateVariationTotal, deliveryLabel, isAllowed, type VariationSelection } from "@/lib/productConfigurator";
+import { calculateVariationTotal, deliveryLabel, isAllowed, supportsExtendedDepth, type VariationSelection } from "@/lib/productConfigurator";
 import { fetchQuote } from "@/lib/api";
 import { VariationPicker } from "@/components/VariationPicker";
 import { useParams, Link, useLocation } from "wouter";
@@ -314,12 +314,14 @@ export default function Produto() {
                   { label: "Altura do encosto", value: measurements?.backHeight, kind: "backHeight" },
                   { label: "Profundidade do assento", value: measurements?.seatDepth, kind: "seatDepth" },
                 ];
+                const extended = supportsExtendedDepth(product.category);
+                if (extended) items.push({ label: "Profundidade estendida", value: measurements?.extendedDepth, kind: "extendedDepth" });
                 return (
                   <section className="sofa-measurements mb-5" aria-label="Medidas do sofá">
                     <h2 className="measurement-toggle">
                       <Ruler className="measurement-ruler" /> Medidas do sofá
                     </h2>
-                    <div id="sofa-measurement-cards" className="measurement-cards">
+                    <div id="sofa-measurement-cards" className={`measurement-cards${extended ? " measurement-cards-extended" : ""}`}>
                       {items.map(({ label, value, kind }) => {
                         return (
                           <button type="button" key={kind} onClick={() => setActiveMeasurement({label,kind,value:typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")})} aria-label={`Ampliar ${label}`} className="measurement-card">

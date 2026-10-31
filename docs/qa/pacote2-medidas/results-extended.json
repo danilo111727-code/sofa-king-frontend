@@ -1,0 +1,134 @@
+[
+  {
+    "width": 320,
+    "cards": 6,
+    "category": "retratil",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 320,
+    "cards": 6,
+    "category": "chaise",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 320,
+    "cards": 5,
+    "category": "fixo",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 375,
+    "cards": 6,
+    "category": "retratil",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 375,
+    "cards": 6,
+    "category": "chaise",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 375,
+    "cards": 5,
+    "category": "fixo",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "cards": 6,
+    "category": "retratil",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "cards": 6,
+    "category": "chaise",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "cards": 5,
+    "category": "fixo",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "cards": 6,
+    "category": "retratil",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "cards": 6,
+    "category": "chaise",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "cards": 5,
+    "category": "fixo",
+    "singleRow": true,
+    "allClicks": true,
+    "alwaysOpen": true,
+    "vectorDrawing": true,
+    "horizontalOverflow": false,
+    "errors": []
+  }
+]
