@@ -555,11 +555,15 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
               <div className="rounded-xl border border-[#756044] bg-[#302315] p-4 space-y-3" data-testid="admin-side-options">
-                <p className="font-semibold text-sm text-white">Lado do chaise ou canto</p>
-                <p className="text-xs text-[#e1cdb4]">Ative os lados disponíveis, olhando o sofá de frente. A seleção aparecerá na página do produto após salvar.</p>
-                <div className="flex gap-5 text-white">
-                  {(["left","right"] as const).map(side => <label key={side} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={(configuration.availableSides ?? []).includes(side)} onChange={e => setConfiguration(prev => ({...prev,availableSides:e.target.checked ? [...(prev.availableSides ?? []),side] : (prev.availableSides ?? []).filter(v => v!==side)}))} />{side === "left" ? "Esquerdo" : "Direito"}</label>)}
-                </div>
+                <p className="font-semibold text-sm text-white">Escolha do lado do sofá</p>
+                <p className="text-xs text-[#e1cdb4]">Habilite as opções que o cliente poderá escolher neste modelo.</p>
+                {([{key:"chaiseOrCorner",label:"Permitir escolha do lado do chaise ou canto"},{key:"arm",label:"Permitir escolha do lado do braço"}] as const).map(option=>(
+                  <label key={option.key} className="flex items-center gap-3 text-sm text-white py-1">
+                    <input type="checkbox" checked={configuration.sideChoice?.[option.key] ?? (option.key==="chaiseOrCorner" && (configuration.availableSides?.length??0)>0)}
+                      onChange={e=>setConfiguration(prev=>({...prev,sideChoice:{chaiseOrCorner:prev.sideChoice?.chaiseOrCorner??((prev.availableSides?.length??0)>0),...prev.sideChoice,[option.key]:e.target.checked},availableSides:undefined}))}/>
+                    {option.label}
+                  </label>
+                ))}
               </div>
               <ConfiguradorPreview key={editId ?? "novo"} config={configuration} setConfig={setConfiguration} albums={albums} foams={foams} variationAlbums={variationAlbums} />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
