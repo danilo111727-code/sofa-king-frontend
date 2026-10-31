@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingCart, Ruler } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingCart, Ruler, Scissors, ShieldCheck } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -337,57 +337,30 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Manifesto / Sobre o Ateliê */}
-        <section className="relative py-28 bg-gradient-to-b from-secondary/40 via-background to-background overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" aria-hidden="true">
-            <div className="absolute top-10 left-10 font-serif text-[20rem] leading-none text-foreground select-none">"</div>
-          </div>
-
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="max-w-3xl mx-auto text-center mb-20">
-              <p className="text-xs tracking-[0.4em] uppercase text-accent mb-5 font-semibold">Nosso ateliê</p>
-              <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground leading-[1.1] mb-8" data-testid="text-hero-title">
-                  Não fazemos em série.{" "}
-                  <em className="italic font-normal text-accent">Fazemos o seu sofá.</em>
-                </h2>
-              <div className="w-16 h-[2px] bg-accent mx-auto mb-8" />
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                Somos um ateliê — não uma fábrica. Aqui o estofado começa quando você nos diz como quer viver na sua sala. A partir daí, escolhemos juntos o desenho, o tecido, as medidas e os acabamentos. Cada vaga aberta na nossa agenda é uma nova história sendo construída à mão.
-              </p>
+        {/* Nosso Ateliê — apresentação compacta */}
+        <section className="py-10 sm:py-14 bg-background border-t border-border/50" data-testid="section-nosso-atelie">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mb-6 sm:mb-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground mb-2">Nosso ateliê</p>
+              <h2 className="text-2xl sm:text-3xl font-sans font-semibold tracking-tight text-foreground leading-tight mb-2">Feitos para a sua história.</h2>
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">Sofás sob medida, com design autoral e acabamento premium. Cada detalhe pensado para o seu ambiente.</p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border/60 rounded-2xl overflow-hidden border border-border/60 shadow-sm">
-              <div className="bg-background p-10 md:p-12 hover:bg-secondary/30 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="font-serif italic text-4xl text-accent">i.</span>
-                  <h3 className="text-xl font-serif font-bold text-foreground">Você personaliza</h3>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  As vendas pelo site são dos nossos modelos padronizados — você escolhe a <strong className="text-foreground">metragem</strong>, o <strong className="text-foreground">tecido</strong> e a <strong className="text-foreground">espuma</strong> ideais para sua peça.
-                </p>
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
+              <div className="min-w-0 rounded-xl border border-border/70 bg-card p-3 sm:p-5">
+                <div className="w-9 h-9 rounded-full bg-secondary/70 flex items-center justify-center mb-3"><Ruler className="w-4 h-4 text-foreground" /></div>
+                <h3 className="font-sans text-xs sm:text-base font-semibold leading-snug text-foreground">Você personaliza</h3>
+                <p className="text-[11px] sm:text-sm text-muted-foreground leading-snug mt-1.5">Medidas, tecidos e espuma.</p>
               </div>
-              <div className="bg-background p-10 md:p-12 hover:bg-secondary/30 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="font-serif italic text-4xl text-accent">ii.</span>
-                  <h3 className="text-xl font-serif font-bold text-foreground">Feito à mão</h3>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Estrutura cortada, montada, estofada e costurada peça por peça dentro do nosso ateliê em Feira de Santana. O tempo de cada projeto é o tempo do bem-feito.
-                </p>
+              <div className="min-w-0 rounded-xl border border-border/70 bg-card p-3 sm:p-5">
+                <div className="w-9 h-9 rounded-full bg-secondary/70 flex items-center justify-center mb-3"><Scissors className="w-4 h-4 text-foreground" /></div>
+                <h3 className="font-sans text-xs sm:text-base font-semibold leading-snug text-foreground">Produção artesanal</h3>
+                <p className="text-[11px] sm:text-sm text-muted-foreground leading-snug mt-1.5">Atenção a cada detalhe.</p>
               </div>
-              <div className="bg-background p-10 md:p-12 hover:bg-secondary/30 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="font-serif italic text-4xl text-accent">iii.</span>
-                  <h3 className="text-xl font-serif font-bold text-foreground">Produção limitada</h3>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Trabalhamos com agenda. Os modelos que aparecem disponíveis no site são as peças que conseguimos produzir agora. Quando enche, abrimos a próxima janela.
-                </p>
+              <div className="min-w-0 rounded-xl border border-border/70 bg-card p-3 sm:p-5">
+                <div className="w-9 h-9 rounded-full bg-secondary/70 flex items-center justify-center mb-3"><ShieldCheck className="w-4 h-4 text-foreground" /></div>
+                <h3 className="font-sans text-xs sm:text-base font-semibold leading-snug text-foreground">Acabamento premium</h3>
+                <p className="text-[11px] sm:text-sm text-muted-foreground leading-snug mt-1.5">Materiais selecionados.</p>
               </div>
-            </div>
-
-            <div className="mt-20 max-w-3xl mx-auto text-center">
-              <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground">— Sofá King · Estofados planejados</p>
             </div>
           </div>
         </section>
