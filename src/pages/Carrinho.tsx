@@ -70,6 +70,8 @@ import { Link } from "wouter";
         fabricName: it.fabric?.name ?? null,
         foamName: it.foam?.name ?? null,
         qty: it.qty,
+        side: it.side,
+        armSide: it.armSide,
         unitPrice: it.unitPrice,
       }));
 
@@ -90,6 +92,8 @@ import { Link } from "wouter";
       items.forEach((it, idx) => {
         lines.push(`*Item ${idx + 1}* — ${it.productName}`);
         lines.push(`• Metragem: ${it.size.label} (${brl(it.size.basePrice)})`);
+        if (it.side) lines.push(`• Chaise/canto: ${it.side === "left" ? "Esquerdo" : "Direito"}`);
+        if (it.armSide) lines.push(`• Braço: ${it.armSide === "left" ? "Esquerdo" : "Direito"}`);
         if (it.album) {
           lines.push(
             `• Álbum: ${it.album.name}${it.fabric ? ` — ${it.fabric.name}` : ""}` +
@@ -164,6 +168,8 @@ import { Link } from "wouter";
                           <div className="min-w-0">
                             <h3 className="font-semibold text-foreground truncate">{it.productName}</h3>
                             <p className="text-xs text-muted-foreground mt-1">Metragem: <strong>{it.size.label}</strong></p>
+                            {it.side && <p className="text-xs text-muted-foreground">Chaise/canto: <strong>{it.side === "left" ? "Esquerdo" : "Direito"}</strong></p>}
+                            {it.armSide && <p className="text-xs text-muted-foreground">Braço: <strong>{it.armSide === "left" ? "Esquerdo" : "Direito"}</strong></p>}
                             {it.album && (
                               <p className="text-xs text-muted-foreground">
                                 Álbum: <strong>{it.album.name}</strong>{it.fabric ? ` — ${it.fabric.name}` : ""}
@@ -273,7 +279,7 @@ import { Link } from "wouter";
                     </div>
 
                     <h3 className="text-xs font-semibold uppercase tracking-wider mb-2 text-foreground">
-                      Observações (opcional)
+                      Observação para o pedido (opcional)
                     </h3>
                     <textarea
                       value={notes}

@@ -129,6 +129,8 @@ export interface OrderItemSnapshot {
   fabricName?: string | null;
   foamName?: string | null;
   qty: number;
+  side?: "left" | "right" | null;
+  armSide?: "left" | "right" | null;
   unitPrice: number;
 }
 

@@ -9,6 +9,8 @@ export interface CartItem {
   album: { id: string; name: string; surcharge: number } | null;
   fabric: { id: string; name: string; imageUrl: string } | null;
   foam: { id: string; name: string; priceAdjustment: number } | null;
+  side?: "left" | "right" | null;
+  armSide?: "left" | "right" | null;
   unitPrice: number;
   qty: number;
 }

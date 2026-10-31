@@ -41,6 +41,8 @@ export interface ProductConfiguration {
   allowedFoamIds?: string[];
   allowedAlbumIds?: string[];
   allowedFabricIds?: string[];
+  availableSides?: ("left" | "right")[];
+  sideChoice?: { chaiseOrCorner?: boolean; arm?: boolean };
   delivery?: DeliveryRule;
   variationGroups?: ProductVariationGroup[];
 }
