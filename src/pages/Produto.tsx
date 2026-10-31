@@ -217,7 +217,7 @@ export default function Produto() {
       <Navbar />
 
       <main className="flex-grow pb-24 sm:pb-12">
-        <div className="bg-secondary/30 py-4 border-b border-border">
+        <div className="bg-secondary/20 py-2.5 sm:py-3 border-b border-border/60">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center text-sm text-muted-foreground">
               <button
@@ -234,12 +234,12 @@ export default function Produto() {
           </div>
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
             {/* Image Gallery */}
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <div
-                className={`aspect-[4/3] rounded-xl overflow-hidden bg-white border border-border relative group ${
+                className={`aspect-[4/3] rounded-2xl overflow-hidden bg-white border border-border/70 relative group ${
                   galleryImages[mainImageIdx] !== DIAGRAMA_SENTINEL ? "cursor-zoom-in" : ""
                 }`}
                 data-testid="img-product-main"
@@ -263,13 +263,13 @@ export default function Produto() {
                 )}
               </div>
               {galleryImages.length > 1 && (
-                <div className="grid grid-cols-5 gap-2" data-testid="product-thumbnails">
+                <div className="grid grid-cols-5 gap-2 sm:gap-2.5" data-testid="product-thumbnails">
                   {galleryImages.map((url, i) => (
                     <button
                       key={`${url}-${i}`}
                       onClick={() => setMainImageIdx(i)}
-                      className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                        mainImageIdx === i ? "border-primary ring-2 ring-primary/30" : "border-border hover:border-primary/50 opacity-70 hover:opacity-100"
+                      className={`aspect-square rounded-xl overflow-hidden border transition-all ${
+                        mainImageIdx === i ? "border-primary ring-2 ring-primary/20" : "border-border/70 hover:border-primary/50 opacity-85 hover:opacity-100"
                       }`}
                       data-testid={`thumbnail-${i}`}
                       aria-label={`Ver foto ${i + 1}`}
@@ -290,7 +290,7 @@ export default function Produto() {
             {/* Info */}
             <div className="flex flex-col">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl md:text-4xl font-serif font-bold text-foreground" data-testid="text-product-detail-name">
+                <h1 className="text-2xl sm:text-3xl font-sans font-semibold tracking-tight text-foreground" data-testid="text-product-detail-name">
                   {fullName}
                 </h1>
                 {!product.disponibilidade && (
@@ -298,12 +298,12 @@ export default function Produto() {
                 )}
               </div>
 
-              <p className="text-muted-foreground mb-6 leading-relaxed" data-testid="text-product-detail-desc">
+              <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed" data-testid="text-product-detail-desc">
                 {product.longDescription || product.description}
               </p>
 
               {/* Vagas e prazo — configuração global do site */}
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-2 mb-3">
                 {settings.vagas > 0 ? (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
                     ✅ Produção limitada disponível
@@ -322,9 +322,9 @@ export default function Produto() {
 
               {/* Price highlight — mostra o preço total e condições de pagamento antes das seleções */}
               {!noSizes && (
-                <div className="rounded-xl border border-border bg-gradient-to-br from-secondary/40 to-secondary/10 p-4 sm:p-5 mb-5" data-testid="price-highlight">
+                <div className="rounded-2xl border border-border/70 bg-secondary/25 p-4 sm:p-5 mb-4" data-testid="price-highlight">
                   <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">PIX / À vista</p>
-                  <p className="text-3xl sm:text-4xl font-bold text-green-700 leading-none" data-testid="text-price-highlight">
+                  <p className="text-2xl sm:text-3xl font-bold text-primary leading-tight" data-testid="text-price-highlight">
                     {brl(pixPrice)}
                   </p>
                   <div className="mt-2 space-y-0.5">
@@ -339,7 +339,7 @@ export default function Produto() {
                 </div>
               )}
 
-              <Separator className="my-4" />
+              <Separator className="my-3" />
 
               {/* Step 1: size */}
               {noSizes ? (
@@ -347,14 +347,14 @@ export default function Produto() {
                   Este modelo ainda não tem metragens cadastradas. Entre em contato pelo WhatsApp para saber o preço.
                 </div>
               ) : (
-                <div className="mb-6">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider mb-3 text-foreground">
+                <div className="mb-5">
+                  <h3 className="text-sm font-semibold tracking-tight mb-2.5 text-foreground">
                     1. Escolha a metragem
                   </h3>
                   <button
                     type="button"
                     onClick={() => setSizeSheetOpen(true)}
-                    className="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-md border border-border bg-background hover:border-primary/60 transition-colors text-left"
+                    className="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl border border-border bg-background hover:border-primary/60 transition-colors text-left"
                     data-testid="button-open-size-selector"
                   >
                     <div className="flex items-center gap-2 min-w-0">
@@ -387,8 +387,8 @@ export default function Produto() {
 
               {/* Step 2: album */}
               {albums.length > 0 && (
-                <div className="mb-6">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider mb-3 text-foreground">
+                <div className="mb-5">
+                  <h3 className="text-sm font-semibold tracking-tight mb-2.5 text-foreground">
                     2. Escolha o álbum de tecido
                   </h3>
                   {fabric && (
@@ -407,7 +407,7 @@ export default function Produto() {
                         : a.surcharge;
                       const isOpen = albumIdx === i;
                       return (
-                        <div key={a.id} className="rounded-md border border-border overflow-hidden">
+                        <div key={a.id} className="rounded-xl border border-border/80 overflow-hidden">
                           <button
                             type="button"
                             onClick={() => setAlbumIdx(isOpen ? -1 : i)}
@@ -500,8 +500,8 @@ export default function Produto() {
 
               {/* Step 3: foam */}
               {foams.length > 0 && (
-                <div className="mb-6">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider mb-3 text-foreground">
+                <div className="mb-5">
+                  <h3 className="text-sm font-semibold tracking-tight mb-2.5 text-foreground">
                     3. Escolha a espuma
                   </h3>
                   {selectedFoam && (
@@ -562,7 +562,7 @@ export default function Produto() {
                 </div>
               )}
 
-              <Separator className="my-4" />
+              <Separator className="my-3" />
 
               {/* Parcelamento info block */}
               <div className="rounded-xl border border-border bg-card p-5 mb-4">
