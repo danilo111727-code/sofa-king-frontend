@@ -554,6 +554,13 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               <button onClick={closeForm} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
+              <div className="rounded-xl border p-4 space-y-2">
+                <p className="font-semibold text-sm">Lado do chaise ou canto</p>
+                <p className="text-xs text-muted-foreground">Defina os lados disponíveis olhando o sofá de frente. Nenhum marcado: não mostrar escolha de lado.</p>
+                <div className="flex gap-5">
+                  {(["left","right"] as const).map(side => <label key={side} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={(configuration.availableSides ?? []).includes(side)} onChange={e => setConfiguration(prev => ({...prev,availableSides:e.target.checked ? [...(prev.availableSides ?? []),side] : (prev.availableSides ?? []).filter(v => v!==side)}))} />{side === "left" ? "Esquerdo" : "Direito"}</label>)}
+                </div>
+              </div>
               <ConfiguradorPreview key={editId ?? "novo"} config={configuration} setConfig={setConfiguration} albums={albums} foams={foams} variationAlbums={variationAlbums} />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Nome do Modelo *">
