@@ -255,7 +255,7 @@ export default function Produto() {
             {/* Image Gallery — visual editorial com foto principal em destaque */}
             <div aria-label="Galeria de fotos do sofá" className="space-y-3">
               <div
-                className={`aspect-[5/4] sm:aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-border/70 relative group shadow-sm ${
+                className={`product-main-gallery aspect-[5/4] sm:aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-border/70 relative group shadow-sm ${
                   galleryImages[mainImageIdx] !== DIAGRAMA_SENTINEL ? "cursor-zoom-in" : ""
                 }`}
                 data-testid="img-product-main"
