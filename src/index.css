@@ -345,3 +345,17 @@
 .measurement-cards-extended .measurement-card { padding: 1.025cqw 0 1.4cqw; }
 .measurement-cards-extended .measurement-label { min-height: 3.9cqw; margin-top: .53cqw; font-size: 1.55cqw; }
 .measurement-cards-extended .measurement-value { margin-top: .41cqw; min-height: 3.12cqw; font-size: 2.5cqw; }
+
+/* Galeria do produto: no celular, navegação exclusivamente por gesto e miniaturas. */
+@media (max-width: 639px) {
+  .product-main-gallery button[aria-label*="anterior" i],
+  .product-main-gallery button[aria-label*="próxim" i],
+  .product-main-gallery button[aria-label*="previous" i],
+  .product-main-gallery button[aria-label*="next" i],
+  .product-main-gallery .swiper-button-prev,
+  .product-main-gallery .swiper-button-next,
+  .product-main-gallery .slick-prev,
+  .product-main-gallery .slick-next,
+  .product-main-gallery [data-testid*="gallery-prev"],
+  .product-main-gallery [data-testid*="gallery-next"] { display: none !important; }
+}
