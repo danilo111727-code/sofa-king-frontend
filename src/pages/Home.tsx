@@ -3,7 +3,6 @@ import { ArrowRight, ChevronLeft, ChevronRight, Heart, ShoppingCart, Ruler } fro
 import { useFavorites } from "@/hooks/useFavorites";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { BestsellerStrip } from "@/components/layout/BestsellerStrip";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useMemo, useRef, type ReactNode } from "react";
 
@@ -73,6 +72,18 @@ export default function Home() {
   const { isFavorite, toggle: toggleFavorite } = useFavorites();
   const { pixDiscountPct, maxInstallments } = useSiteSettings();
   const [, navigate] = useLocation();
+  const categoryRowRef = useRef<HTMLDivElement>(null);
+  const categoryPauseRef = useRef(0);
+  const pauseCategoryMotion = () => { categoryPauseRef.current = Date.now() + 7000; };
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      const el = categoryRowRef.current;
+      if (!el || Date.now() < categoryPauseRef.current || el.scrollWidth <= el.clientWidth || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 5;
+      el.scrollTo({ left: atEnd ? 0 : el.scrollLeft + 0.65, behavior: "auto" });
+    }, 35);
+    return () => window.clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const path = onlyBestsellers
@@ -185,7 +196,6 @@ export default function Home() {
                 )}
               </div>
 
-            <BestsellerStrip />
           </section>
 
         <section className="py-5 md:py-9 bg-background">
@@ -195,18 +205,18 @@ export default function Home() {
                 <h2 className="text-base sm:text-lg font-semibold tracking-tight text-foreground">Explore nossas coleções</h2>
                 <Link href="/modelos" className="text-xs font-medium whitespace-nowrap inline-flex items-center gap-1">Ver todas <ArrowRight className="w-3.5 h-3.5" /></Link>
               </div>
-              <div className="flex gap-2.5 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-testid="home-category-grid">
+              <div ref={categoryRowRef} onTouchStart={pauseCategoryMotion} onPointerDown={pauseCategoryMotion} onWheel={pauseCategoryMotion} onMouseEnter={pauseCategoryMotion} onFocusCapture={pauseCategoryMotion} className="flex gap-2.5 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-testid="home-category-grid">
                 {categoryTiles.map((category) => (
-                  <Link key={category.id} href={`/modelos?categoria=${encodeURIComponent(category.id)}`} className="group shrink-0 w-[calc((100vw-56px)/4.25)] min-w-[72px] max-w-[125px] snap-start" data-testid={`home-category-${category.id}`}>
+                  <Link key={category.id} href={`/modelos?categoria=${encodeURIComponent(category.id)}`} className="group shrink-0 w-[calc((100vw-48px)/2.4)] min-w-[135px] max-w-[210px]" data-testid={`home-category-${category.id}`}>
                     <div className="aspect-[4/3] rounded-lg bg-[#f4f1ec] overflow-hidden border border-[#ece7df] flex items-center justify-center transition-colors group-hover:border-[#bba886]">
                       {category.photo ? <img src={category.photo} alt={category.label} loading="lazy" className="w-full h-full object-contain" /> : <span className="text-[#968b7c] text-xl font-sans font-medium" aria-hidden="true">{category.label.charAt(0)}</span>}
                     </div>
-                    <p className="text-center text-[10px] sm:text-xs font-medium mt-1.5 leading-tight text-foreground line-clamp-2">{category.label}</p>
+                    <p className="text-[12px] sm:text-sm font-semibold mt-2 leading-tight text-foreground line-clamp-2">{category.label}</p><p className="text-[10px] sm:text-xs text-muted-foreground mt-1 leading-snug line-clamp-2">Conheça os modelos e escolha o seu estilo.</p>
                   </Link>
                 ))}
                 <Link href="/modelos?prontaEntrega=1" className="group shrink-0 w-[calc((100vw-56px)/4.25)] min-w-[72px] max-w-[125px] snap-start" data-testid="home-category-pronta-entrega">
                   <div className="aspect-[4/3] rounded-lg bg-[#f4f1ec] border border-[#ece7df] flex items-center justify-center"><span className="text-2xl text-[#a58c65]" aria-hidden="true">✓</span></div>
-                  <p className="text-center text-[10px] sm:text-xs font-medium mt-1.5 leading-tight">Pronta Entrega</p>
+                  <p className="text-[12px] sm:text-sm font-semibold mt-2 leading-tight">Pronta Entrega</p><p className="text-[10px] sm:text-xs text-muted-foreground mt-1 leading-snug">Modelos disponíveis para você.</p>
                 </Link>
               </div>
             </div>
@@ -235,7 +245,7 @@ export default function Home() {
             ) : (
               <HorizontalScrollRow>
                 {products
-                  .filter((p) => p.disponibilidade)
+                  .filter((p) => p.disponibilidade && p.bestseller)
                   .slice()
                   .reverse()
                   .map((product) => (
@@ -273,7 +283,7 @@ export default function Home() {
                               Sem foto
                             </div>
                           )}
-                          {(product as any).designAutoral && (
+                          {false && (product as any).designAutoral && (
                             <span className="absolute top-2 left-2 flex items-center gap-1 text-[8px] font-bold tracking-[0.15em] uppercase bg-white text-black border border-black px-2 py-1 rounded-full">
                               DESIGN AUTORAL
                               <img src="/assets/crown.png" alt="coroa" className="h-3.5 w-auto object-contain" />
@@ -289,7 +299,7 @@ export default function Home() {
                           </button>
                         </div>
                         <div className="p-3 sm:p-4">
-                          <h3 className="text-sm font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors leading-snug mb-1 line-clamp-2 min-h-[2.3rem]">
+                          <h3 className="text-sm font-sans font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors leading-snug mb-1 line-clamp-2 min-h-[2.3rem]">
                             {displayName(product.name, product.category)}
                           </h3>
                           {(() => {
