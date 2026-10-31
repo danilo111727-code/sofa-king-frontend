@@ -84,6 +84,7 @@ export default function Produto() {
   const [sizeSheetOpen, setSizeSheetOpen] = useState(false);
   const [mainImageIdx, setMainImageIdx] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [measurementsExpanded, setMeasurementsExpanded] = useState(true);
   const [activeMeasurement, setActiveMeasurement] = useState<{label:string;kind:string;value:string} | null>(null);
   const [lightboxIdx, setLightboxIdx] = useState(0);
   const [previewFabric, setPreviewFabric] = useState<{ albumId: string; index: number } | null>(null);
@@ -338,20 +339,21 @@ export default function Produto() {
                 ];
                 return (
                   <section className="mb-5 rounded-xl border border-border/70 bg-background p-2.5 sm:p-4" aria-label="Medidas do sofá">
-                    <h2 className="text-sm sm:text-base font-semibold text-foreground mb-2 flex items-center gap-2">
-                      <Ruler className="w-5 h-5 text-primary" /> Medidas do sofá
-                    </h2>
-                    <div className="grid grid-cols-5 gap-[3px] sm:gap-2 w-full min-w-0">
+                    <button type="button" aria-expanded={measurementsExpanded} onClick={() => setMeasurementsExpanded(v => !v)} className="w-full text-left text-base sm:text-lg font-semibold text-[#15372c] mb-2 flex items-center gap-2 py-1">
+                      <Ruler className="w-5 h-5 text-[#15372c]" /> Medidas do sofá
+                      {measurementsExpanded ? <ChevronUp className="ml-auto h-5 w-5" /> : <ChevronDown className="ml-auto h-5 w-5" />}
+                    </button>
+                    {measurementsExpanded && <div className="grid grid-cols-5 gap-[3px] sm:gap-3 w-full min-w-0">
                       {items.map(({ label, value, kind }) => {
                         return (
                           <button type="button" key={kind} onClick={() => setActiveMeasurement({label,kind,value:typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")})} aria-label={`Ampliar ${label}`} className="min-w-0 w-full flex flex-col items-center rounded-xl bg-[#f7f7f5] px-[2px] py-2 sm:px-2 sm:py-4 text-center overflow-hidden cursor-pointer focus-visible:outline-2 focus-visible:outline-primary hover:bg-[#efefeb] transition-colors">
                             <MeasurementDrawing kind={kind} label={label} />
-                            <span className="mt-1.5 text-[8px] sm:text-sm leading-[1.2] text-[#18382d] min-h-[32px] flex items-center justify-center break-words w-full">{label}</span>
-                            <strong className="mt-1 min-h-[18px] text-[11px] sm:text-xl font-bold text-[#18382d] whitespace-nowrap">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
+                            <span className="mt-1.5 text-[8px] sm:text-sm leading-[1.15] text-[#18382d] min-h-[40px] flex items-center justify-center break-words w-full [overflow-wrap:anywhere]">{label}</span>
+                            <strong className="mt-1 min-h-[22px] text-[12px] sm:text-xl font-bold text-[#18382d] whitespace-nowrap">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
                           </button>
                         );
                       })}
-                    </div>
+                    </div>}
                   </section>
                 );
               })()}
