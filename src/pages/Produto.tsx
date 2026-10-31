@@ -289,18 +289,9 @@ export default function Produto() {
 
             {/* Info */}
             <div className="flex flex-col w-full max-w-3xl mx-auto">
-              <div className="flex flex-wrap items-center gap-3 mb-2">
-                <h1 className="text-3xl sm:text-4xl font-sans font-semibold tracking-tight text-foreground" data-testid="text-product-detail-name">
-                  {fullName}
-                </h1>
-                {!product.disponibilidade && (
-                  <span className="px-3 py-1 bg-red-100 text-red-700 text-sm rounded-full font-medium">Indisponível</span>
-                )}
-              </div>
-
-              <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed" data-testid="text-product-detail-desc">
-                {product.longDescription || product.description}
-              </p>
+              {!product.disponibilidade && (
+                <span className="self-start mb-3 px-3 py-1 bg-red-100 text-red-700 text-sm rounded-full font-medium">Indisponível</span>
+              )}
 
               {/* Pacote 2: desenhos técnicos informativos, sem interferir na precificação. */}
               {(() => {
