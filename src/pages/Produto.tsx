@@ -311,20 +311,18 @@ export default function Produto() {
                   { label: "Altura do assento", value: measurements?.seatHeight, kind: "seatHeight" },
                   { label: "Altura do encosto", value: measurements?.backHeight, kind: "backHeight" },
                   { label: "Profundidade do assento", value: measurements?.seatDepth, kind: "seatDepth" },
-                  { label: "Largura do braço", value: measurements?.armWidth, kind: "armWidth" },
-                ].filter((item) => item.value !== undefined && item.value !== null && item.value !== "" && (typeof item.value !== "number" || item.value > 0));
-                if (!items.length) return null;
+                ];
                 return (
                   <section className="mb-6 rounded-2xl border border-border/70 bg-background p-3 sm:p-5" aria-label="Medidas do sofá">
                     <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
                       <Ruler className="w-5 h-5 text-primary" /> Medidas do sofá
                     </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                    <div className="grid grid-flow-col auto-cols-[minmax(116px,1fr)] sm:grid-flow-row sm:grid-cols-5 gap-2 overflow-x-auto pb-2 sm:pb-0">
                       {items.map(({ label, value, kind }) => {
                         const front = kind === "width" || kind === "armWidth";
                         return (
-                          <div key={kind} className="flex flex-col items-center justify-between min-w-0 rounded-xl bg-secondary/30 px-2 py-3 text-center">
-                            <svg viewBox="0 0 120 86" role="img" aria-label={`Desenho técnico: ${label}`} className="w-full max-w-[135px] h-[88px] text-primary" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                          <div key={kind} className="flex flex-col items-center justify-between min-w-0 rounded-xl bg-secondary/30 px-1.5 py-2 text-center">
+                            <svg viewBox="0 0 120 86" role="img" aria-label={`Desenho técnico: ${label}`} className="w-full max-w-[108px] h-[68px] text-primary" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                               {front ? (
                                 <>
                                   <rect x="19" y="32" width="82" height="32" rx="4" />
@@ -345,8 +343,8 @@ export default function Produto() {
                               {kind === "seatDepth" && <><path d="M49 36H98M49 32V40M98 32V40M49 36L55 33M49 36L55 39M98 36L92 33M98 36L92 39" /></>}
                               {kind === "armWidth" && <><path d="M14 77H26M14 73V81M26 73V81M14 77L18 74M14 77L18 80M26 77L22 74M26 77L22 80" /></>}
                             </svg>
-                            <span className="mt-2 text-xs sm:text-[13px] leading-snug text-foreground min-h-[32px] flex items-center justify-center">{label}</span>
-                            <strong className="mt-1 text-base sm:text-lg font-semibold text-primary">{typeof value === "number" ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : value}</strong>
+                            <span className="mt-1 text-[11px] sm:text-xs leading-snug text-foreground min-h-[32px] flex items-center justify-center">{label}</span>
+                            <strong className="mt-1 min-h-[24px] text-sm sm:text-base font-semibold text-primary">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
                           </div>
                         );
                       })}
