@@ -13,8 +13,6 @@ import { useEffect, useRef } from "react";
   import AdminLogin from "@/pages/AdminLogin";
   import Favoritos from "@/pages/Favoritos";
   import { WhatsAppButton } from "@/components/WhatsAppButton";
-  import { BackButton } from "@/components/BackButton";
-  import { ForwardButton } from "@/components/ForwardButton";
   import { CartProvider } from "@/contexts/CartContext";
   import { SiteSettingsProvider } from "@/contexts/SiteSettingsContext";
   import { setAuthTokenGetter } from "@/lib/api";
@@ -123,8 +121,6 @@ import { useEffect, useRef } from "react";
             <CartProvider>
               <TooltipProvider>
                 <Router />
-                <BackButton />
-                <ForwardButton />
                 <WhatsAppOnPublic />
                 <Toaster />
               </TooltipProvider>
