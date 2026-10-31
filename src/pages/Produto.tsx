@@ -302,6 +302,29 @@ export default function Produto() {
                 {product.longDescription || product.description}
               </p>
 
+              {/* Pacote 2: medidas informativas, sem interferir na precificação. */}
+              {(() => {
+                const measurements = product.configuration?.measurements;
+                const entries = [
+                  ["Profundidade total", measurements?.totalDepth],
+                  ["Altura do assento", measurements?.seatHeight],
+                  ["Altura do encosto", measurements?.backHeight],
+                  ["Profundidade do assento", measurements?.seatDepth],
+                  ["Largura do braço", measurements?.armWidth],
+                ] as const;
+                const available = entries.filter(([, value]) => typeof value === "number" && value > 0);
+                if (!available.length && !selectedSize) return null;
+                return (
+                  <section className="mb-5 rounded-2xl border border-border/70 bg-secondary/20 p-4" aria-label="Medidas do sofá">
+                    <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2"><Ruler className="w-4 h-4 text-primary" /> Medidas do sofá</h2>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {selectedSize && <div className="rounded-xl bg-background border border-border/60 p-3"><span className="block text-xs text-muted-foreground">Largura total</span><strong className="text-sm text-foreground">{selectedSize.label}</strong></div>}
+                      {available.map(([label, value]) => <div key={label} className="rounded-xl bg-background border border-border/60 p-3"><span className="block text-xs text-muted-foreground">{label}</span><strong className="text-sm text-foreground">{value} cm</strong></div>)}
+                    </div>
+                  </section>
+                );
+              })()}
+
               {/* Vagas e prazo — configuração global do site */}
               <div className="flex flex-wrap gap-2 mb-3">
                 {settings.vagas > 0 ? (
