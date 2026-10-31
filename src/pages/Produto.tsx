@@ -25,31 +25,32 @@ import { DiagramaViewer } from "@/components/DiagramaViewer";
 
 
 function MeasurementDrawing({kind,label,large=false}:{kind:string;label:string;large?:boolean}) {
-  const isFront = kind === "width";
+  const front = kind === "width";
   return (
-    <svg viewBox="0 0 100 82" role="img" aria-label={`Desenho técnico: ${label}`}
-      className={large ? "mx-auto h-52 w-full max-w-[320px] text-[#18382d]" : "h-[45px] w-full max-w-[85px] sm:h-[72px] sm:max-w-[115px] text-[#18382d]"}
-      fill="none" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" strokeLinejoin="round">
-      {isFront ? (
+    <svg viewBox="0 0 112 92" role="img" aria-label={`Desenho técnico: ${label}`}
+      className={large ? "mx-auto h-52 w-full max-w-[340px] text-[#15372c]" : "h-[48px] w-full max-w-[88px] sm:h-[78px] sm:max-w-[125px] text-[#15372c]"}
+      fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round">
+      {front ? (
         <>
-          <rect x="20" y="24" width="60" height="40" rx="4"/>
-          <path d="M20 40H80M25 40V30Q25 26 29 26H71Q75 26 75 30V40M20 56H80"/>
-          <rect x="13" y="37" width="12" height="29" rx="4"/>
-          <rect x="75" y="37" width="12" height="29" rx="4"/>
-          <path d="M19 66V70M81 66V70"/>
+          {/* Front elevation: back cushion, seat, arms and slim feet, matching approved reference. */}
+          <rect x="25" y="22" width="62" height="45" rx="5"/>
+          <path d="M25 41H87M30 41V28Q30 24 34 24H78Q82 24 82 28V41M25 58H87"/>
+          <rect x="16" y="39" width="13" height="29" rx="5"/>
+          <rect x="83" y="39" width="13" height="29" rx="5"/>
+          <path d="M23 68V73M89 68V73"/>
         </>
       ) : (
         <>
-          <path d="M24 64V28Q24 18 31 18H34Q39 18 40 25L43 43H77Q83 43 83 49V64Z"/>
-          <path d="M25 62H83M29 64V70M77 64V70M43 46H82"/>
-          <path d="M24 44H43"/>
+          {/* Side elevation: inclined, rounded back, seat, vertical apron and two slender legs. */}
+          <path d="M28 65L26 24Q26 17 32 17H35Q40 17 41 24L45 45H81Q86 45 86 50V65Z"/>
+          <path d="M29 45H44M45 48H85M29 65H86M33 65L32 74M80 65L81 74"/>
         </>
       )}
-      {kind === "width" && <path d="M13 75H87M13 72V78M87 72V78M13 75L19 72M13 75L19 78M87 75L81 72M87 75L81 78"/>}
-      {kind === "depth" && <path d="M24 75H83M24 72V78M83 72V78M24 75L30 72M24 75L30 78M83 75L77 72M83 75L77 78"/>}
-      {kind === "seatHeight" && <path d="M91 43V70M88 43H94M88 70H94M91 43L88 49M91 43L94 49M91 70L88 64M91 70L94 64"/>}
-      {kind === "backHeight" && <path d="M14 18V70M11 18H17M11 70H17M14 18L11 24M14 18L17 24M14 70L11 64M14 70L17 64"/>}
-      {kind === "seatDepth" && <path d="M43 35H83M43 32V38M83 32V38M43 35L49 32M43 35L49 38M83 35L77 32M83 35L77 38"/>}
+      {kind === "width" && <path d="M17 81H95M17 78V84M95 78V84M17 81L23 78M17 81L23 84M95 81L89 78M95 81L89 84"/>}
+      {kind === "depth" && <path d="M27 81H86M27 78V84M86 78V84M27 81L33 78M27 81L33 84M86 81L80 78M86 81L80 84"/>}
+      {kind === "seatHeight" && <path d="M99 46V74M96 46H102M96 74H102M99 46L96 52M99 46L102 52M99 74L96 68M99 74L102 68"/>}
+      {kind === "backHeight" && <path d="M17 17V74M14 17H20M14 74H20M17 17L14 23M17 17L20 23M17 74L14 68M17 74L20 68"/>}
+      {kind === "seatDepth" && <path d="M46 38H85M46 35V41M85 35V41M46 38L52 35M46 38L52 41M85 38L79 35M85 38L79 41"/>}
     </svg>
   );
 }
