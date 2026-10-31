@@ -267,7 +267,7 @@ export default function Produto() {
 
             {/* Info */}
             <div className="flex flex-col w-full max-w-3xl mx-auto">
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex flex-wrap items-center gap-3 mb-2">
                 <h1 className="text-3xl sm:text-4xl font-sans font-semibold tracking-tight text-foreground" data-testid="text-product-detail-name">
                   {fullName}
                 </h1>
@@ -283,17 +283,17 @@ export default function Produto() {
               {/* Vagas e prazo — configuração global do site */}
               <div className="flex flex-wrap gap-2 mb-3">
                 {settings.vagas > 0 ? (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
-                    ✅ Produção limitada disponível
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/15">
+                    <Check className="w-3.5 h-3.5" /> Produção disponível
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 text-orange-800 text-sm font-medium border border-orange-200">
-                    🔔 Consultar vaga
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-50 text-orange-800 text-xs font-medium border border-orange-200">
+                    <Info className="w-3.5 h-3.5" /> Consultar vaga
                   </span>
                 )}
                 {settings.prazoEntregaDias > 0 && (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm border border-border">
-                    🚚 Prazo: <strong className="text-foreground">{settings.prazoEntregaDias} dias úteis</strong>
+                    Prazo: <strong className="text-foreground">{settings.prazoEntregaDias} dias úteis</strong>
                   </span>
                 )}
               </div>
@@ -311,8 +311,8 @@ export default function Produto() {
                       <span className="text-muted-foreground ml-1">({brl(cardPrice)} total)</span>
                     </p>
                   </div>
-                  <p className="text-[11px] text-muted-foreground mt-2">
-                    Valor atualiza conforme você escolhe metragem, álbum e espuma abaixo.
+                  <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border/60">
+                    Personalize as opções abaixo para atualizar o valor.
                   </p>
                 </div>
               )}
@@ -325,14 +325,14 @@ export default function Produto() {
                   Este modelo ainda não tem metragens cadastradas. Entre em contato pelo WhatsApp para saber o preço.
                 </div>
               ) : (
-                <div className="mb-6">
+                <div className="mb-5">
                   <h3 className="text-sm font-semibold tracking-tight mb-2.5 text-foreground">
                     1. Escolha a metragem
                   </h3>
                   <button
                     type="button"
                     onClick={() => setSizeSheetOpen(true)}
-                    className="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-md border border-border bg-background hover:border-primary/60 transition-colors text-left"
+                    className="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl border border-border bg-background hover:border-primary/60 transition-colors text-left"
                     data-testid="button-open-size-selector"
                   >
                     <div className="flex items-center gap-2 min-w-0">
@@ -365,12 +365,12 @@ export default function Produto() {
 
               {/* Step 2: album */}
               {albums.length > 0 && (
-                <div className="mb-6">
+                <div className="mb-5">
                   <h3 className="text-sm font-semibold tracking-tight mb-2.5 text-foreground">
                     2. Escolha o álbum de tecido
                   </h3>
                   {fabric && (
-                    <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
+                    <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/15">
                       <Check className="w-4 h-4" />
                       Tecido selecionado: <strong>{fabric.name}</strong>
                     </div>
@@ -478,12 +478,12 @@ export default function Produto() {
 
               {/* Step 3: foam */}
               {foams.length > 0 && (
-                <div className="mb-6">
+                <div className="mb-5">
                   <h3 className="text-sm font-semibold tracking-tight mb-2.5 text-foreground">
                     3. Escolha a espuma
                   </h3>
                   {selectedFoam && (
-                    <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm font-medium border border-green-200">
+                    <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/15">
                       <Check className="w-4 h-4" />
                       Espuma selecionada: <strong>{selectedFoam.name}</strong>
                     </div>
@@ -594,7 +594,7 @@ export default function Produto() {
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-2 h-14 rounded-md bg-orange-500 hover:bg-orange-600 text-white text-base font-semibold transition-colors shadow-lg"
                 >
-                  🔔 Consultar vaga pelo WhatsApp
+                  <Info className="w-3.5 h-3.5" /> Consultar vaga pelo WhatsApp
                 </a>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -976,7 +976,7 @@ function FabricPreviewModal({
             )}
           </div>
           {isSelected ? (
-            <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-green-100 text-green-800 text-sm font-medium border border-green-200">
+            <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-primary/10 text-primary text-xs font-medium border border-primary/15">
               <Check className="w-4 h-4" /> Tecido selecionado
             </div>
           ) : (
