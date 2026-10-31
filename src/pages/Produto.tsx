@@ -518,20 +518,22 @@ export default function Produto() {
                             data-testid={`button-album-${a.id}`}
                             aria-expanded={isOpen}
                           >
-                            <div className="min-w-0">
-                              <div className="font-semibold flex items-center gap-2">
-                                {a.name}
+                            <div className="min-w-0 flex-1 space-y-0.5">
+                              <div className="text-[15px] leading-5 font-semibold flex items-center gap-2">
+                                <span className="min-w-0">{a.name}</span>
                                 {selectedFabricKey && selectedFabricKey.startsWith(`fab_${a.id}_`) && (
-                                  <span className="inline-flex items-center gap-1 text-xs bg-green-500/90 text-white px-1.5 py-0.5 rounded">
+                                  <span className="inline-flex shrink-0 items-center gap-1 text-[11px] bg-green-500/90 text-white px-1.5 py-0.5 rounded">
                                     <Check className="w-3 h-3" /> selecionado
                                   </span>
                                 )}
                               </div>
-                              <div className="text-xs opacity-80">
-                                {s > 0 ? `+${brl(s)}` : s < 0 ? brl(s) : "incluso"}
-                                {a.fabrics.length > 0 && (
-                                  <> · {a.fabrics.length} {a.fabrics.length === 1 ? "tecido" : "tecidos"}</>
-                                )}
+                              {a.description?.trim() && (
+                                <p className="text-[13px] leading-4 opacity-80 line-clamp-1">{a.description.trim()}</p>
+                              )}
+                              <div className="flex flex-wrap items-center gap-x-1.5 text-xs leading-4 opacity-85">
+                                <span>{a.fabrics.length} {a.fabrics.length === 1 ? "opção de tecido" : "opções de tecido"}</span>
+                                <span aria-hidden="true">·</span>
+                                <span className="font-medium">{s > 0 ? `Acréscimo de ${brl(s)}` : s < 0 ? `Desconto de ${brl(Math.abs(s))}` : "Sem acréscimo no valor"}</span>
                               </div>
                             </div>
                             {isOpen ? (
