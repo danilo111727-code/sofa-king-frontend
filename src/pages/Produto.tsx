@@ -131,6 +131,10 @@ export default function Produto() {
   const cardPrice = useMemo(() => applyCardMarkup(finalPrice, pixDiscountPct), [finalPrice, pixDiscountPct]);
   const installmentPrice = useMemo(() => cardPrice / maxInstallments, [cardPrice, maxInstallments]);
   const fullName = product ? displayName(product.name, product.category) : "";
+  // Rótulo do preço acompanha a categoria real (inclusive categorias personalizadas).
+  const categoryLabel = settings.categories?.find(c => c.id === product?.category)?.label ?? "";
+  const categoryKey = `${product?.category ?? ""} ${categoryLabel}`.normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
+  const priceItemLabel = /poltron/.test(categoryKey) ? "Poltrona" : /puff|puf/.test(categoryKey) ? "Puff" : /almofad/.test(categoryKey) ? "Almofada" : /cabeceir/.test(categoryKey) ? "Cabeceira" : /\\bbox\\b/.test(categoryKey) ? "Box" : /\\bcama\\b/.test(categoryKey) && !/sofa/.test(categoryKey) ? "Cama" : /modul/.test(categoryKey) ? "Módulo" : /sofa|retratil|chaise|living|organico|canto|ilha|fixo/.test(categoryKey) ? "Sofá" : categoryLabel.replace(/s$/i, "") || "Produto";
   const DIAGRAMA_SENTINEL = "__diagrama__";
   const galleryImages = useMemo(() => {
     if (!product) return [];
@@ -381,7 +385,7 @@ export default function Produto() {
                 <div className="rounded-2xl border border-primary/15 bg-primary/[0.035] p-4 sm:p-6 mb-5" data-testid="price-highlight">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                     <p className="text-xs text-muted-foreground uppercase tracking-wider">PIX / À vista</p>
-                    {selectedSize && <span className="rounded-full border border-primary/20 bg-background px-3 py-1 text-sm font-semibold text-primary" data-testid="price-highlight-size">Sofá de {selectedSize.label}</span>}
+                    {selectedSize && <span className="rounded-full border border-primary/20 bg-background px-3 py-1 text-sm font-semibold text-primary" data-testid="price-highlight-size">{priceItemLabel} — {selectedSize.label}</span>}
                   </div>
                   <p className="text-2xl sm:text-3xl font-bold text-primary leading-tight" data-testid="text-price-highlight">
                     {brl(pixPrice)}
