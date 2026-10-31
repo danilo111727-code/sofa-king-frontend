@@ -59,6 +59,8 @@ export default function Produto() {
   const [selectedFabricKey, setSelectedFabricKey] = useState<string | null>(null);
   const [foamIdx, setFoamIdx] = useState(-1);
   const [foamSheetOpen, setFoamSheetOpen] = useState(false);
+  const [selectedSide, setSelectedSide] = useState<"left" | "right" | null>(null);
+  const [selectedArmSide, setSelectedArmSide] = useState<"left" | "right" | null>(null);
   const [fabricOptionsOpen, setFabricOptionsOpen] = useState(false);
   const [foamOptionsOpen, setFoamOptionsOpen] = useState(false);
   const [sizeSheetOpen, setSizeSheetOpen] = useState(false);
@@ -73,7 +75,7 @@ export default function Produto() {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
-    setNotFound(false); setSizeIdx(0); setAlbumIdx(-1); setFoamIdx(-1); setFabric(null); setSelectedFabricKey(null); setChosenAlbumId(null);
+    setNotFound(false); setSizeIdx(0); setAlbumIdx(-1); setFoamIdx(-1); setFabric(null); setSelectedFabricKey(null); setChosenAlbumId(null); setSelectedSide(null); setSelectedArmSide(null);
     Promise.all([fetchProduct(id), fetchAlbums(), fetchMaterials(),fetchVariationAlbums()])
       .then(([p, al, fo, vars]) => {
         setVariationAlbums(vars);
@@ -93,6 +95,8 @@ export default function Produto() {
   const selectedSize = product?.sizes[sizeIdx];
   const selectedAlbum = albums.find(a=>a.id===chosenAlbumId);
   const selectedFoam = foams[foamIdx];
+  const chooseChaiseSide = product?.configuration?.sideChoice?.chaiseOrCorner ?? ((product?.configuration?.availableSides?.length ?? 0)>0);
+  const chooseArmSide = product?.configuration?.sideChoice?.arm ?? false;
 
   const albumSurcharge = useMemo(() => {
     if (!selectedSize || !selectedAlbum) return 0;
@@ -190,6 +194,7 @@ export default function Produto() {
 
   const handleAddToCart = async (goToCart: boolean) => {
     if (!selectedSize || adding) return;
+    if ((chooseChaiseSide && !selectedSide) || (chooseArmSide && !selectedArmSide)) { toast({title:"Selecione o lado do sofá",description:"Escolha o lado esquerdo ou direito.",variant:"destructive"}); return; }
     setAdding(true);
     try {
     const verified=await fetchQuote(product.id,{sizeLabel:selectedSize.label,albumId:selectedAlbum?.id,fabricId:fabric?.id,foamId:selectedFoam?.id,selections});
@@ -208,6 +213,8 @@ export default function Produto() {
         : null,
       variations: selections.filter(s=>s.quantity>0).map(s=>{const g=variationGroups.find(g=>g.id===s.groupId)!;const o=g.options.find(o=>o.id===s.optionId)!;return {groupName:g.name,optionName:o.name,quantity:s.quantity,priceAdjustment:o.priceAdjustment};}),
       delivery:prazo,
+      side: chooseChaiseSide ? selectedSide : null,
+      armSide: chooseArmSide ? selectedArmSide : null,
       unitPrice: verified.total,
     });
     if (goToCart) {
@@ -429,6 +436,35 @@ export default function Produto() {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/></svg>
                     Precisa de outra medida? Solicitar orçamento no WhatsApp
                   </a>
+                </div>
+              )}
+
+              {(chooseChaiseSide || chooseArmSide) && (
+                <div className="space-y-4 mb-5">
+                  {([{enabled:chooseChaiseSide,kind:"chaise",title:"Escolha o lado do chaise ou canto",value:selectedSide,setValue:setSelectedSide},{enabled:chooseArmSide,kind:"arm",title:"Escolha o lado do braço",value:selectedArmSide,setValue:setSelectedArmSide}] as const).filter(g=>g.enabled).map(group=>(
+                    <section key={group.kind} className="rounded-xl border border-border p-3" aria-label={group.title}>
+                      <h3 className="text-sm font-semibold mb-1">{group.title}</h3>
+                      <p className="text-xs text-muted-foreground mb-3">Lado definido olhando o sofá de frente.</p>
+                      <div className="grid grid-cols-2 gap-3">
+                        {(["left","right"] as const).map(side=>(
+                          <button type="button" key={side} aria-pressed={group.value===side} onClick={()=>group.setValue(side)}
+                            data-testid={`button-${group.kind}-${side}`}
+                            className={`rounded-xl border-2 bg-white p-2 text-center ${group.value===side?"border-primary":"border-gray-200"}`}>
+                            <svg viewBox="0 0 180 112" className="w-full h-20" role="img" aria-label={group.title+" "+side}>
+                              {group.kind==="arm" ? <g fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round">
+                                <rect x="29" y="25" width="122" height="67" rx="7"/><rect x="34" y="27" width="56" height="35" rx="6"/><rect x="90" y="27" width="56" height="35" rx="6"/>
+                                <path d="M29 63 Q90 57 151 63 L151 88 L29 88 Z"/><rect x={side==="left"?17:151} y="46" width="13" height="48" rx="3"/>
+                              </g> : <g fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round">
+                                <rect x="20" y="16" width="140" height="22" rx="5"/><rect x="20" y="38" width="140" height="39" rx="4"/>
+                                <path d="M67 38 V77 M113 38 V77"/><rect x={side==="left"?20:113} y="38" width="47" height="63" rx="5"/>
+                              </g>}
+                            </svg>
+                            <span className="text-xs sm:text-sm font-semibold text-black">{group.kind==="arm"?"Braço ":"Lado "}{side==="left"?"esquerdo":"direito"}{group.value===side?" ✓":""}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
                 </div>
               )}
 
