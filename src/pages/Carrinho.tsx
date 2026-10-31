@@ -1,14 +1,15 @@
+import {cartQuoteInput,cartNeedsReview} from "@/lib/cartValidation";
 import { Link } from "wouter";
   import { ArrowLeft, Trash2, Minus, Plus, ShoppingBag } from "lucide-react";
-  import { useState, useMemo } from "react";
+  import { useState, useMemo, useRef } from "react";
   import { useUser } from "@clerk/react";
   import { Navbar } from "@/components/layout/Navbar";
   import { Footer } from "@/components/layout/Footer";
   import { Button } from "@/components/ui/button";
   import { Separator } from "@/components/ui/separator";
   import { useCart } from "@/contexts/CartContext";
-  import { trackWhatsapp, type OrderSnapshot, type OrderItemSnapshot } from "@/lib/api";
-  import { MAX_INSTALLMENTS } from "@/lib/categories";
+  import { fetchCartQuote, trackWhatsapp, type OrderSnapshot, type OrderItemSnapshot } from "@/lib/api";
+  import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
 
   const WHATSAPP = "5575991495793";
 
@@ -34,25 +35,58 @@ import { Link } from "wouter";
     },
     {
       id: "cartao",
-      label: `Cartão de crédito em até ${MAX_INSTALLMENTS}x`,
+      label: "Cartão de crédito",
       description: "Parcelado no cartão, combinado diretamente pelo WhatsApp.",
       icon: "💳",
     },
   ];
 
   export default function Carrinho() {
-    const { items, subtotal, setQty, remove, clear } = useCart();
+    const { items, subtotal, setQty, remove, clear, replace } = useCart();
     const { user } = useUser();
+    const settings = useSiteSettings();
+    const [quotedConditions,setQuotedConditions] = useState<{pixDiscountPct:number;maxInstallments:number}|null>(null);
+    const {pixDiscountPct,maxInstallments} = quotedConditions ?? settings;
     const [payment, setPayment] = useState<Payment>("pix");
     const [notes, setNotes] = useState("");
 
+    const [sending,setSending] = useState(false);
+    const [notice,setNotice] = useState('');
+    const sendingRef = useRef(false);
+    const cartItems = items;
+    const latestRequest = useRef('');
+    latestRequest.current = JSON.stringify({items,payment,notes});
     const empty = items.length === 0;
     const pixTotal = subtotal;
-    const cardTotal = useMemo(() => subtotal / 0.9, [subtotal]);
-    const installment = useMemo(() => cardTotal / MAX_INSTALLMENTS, [cardTotal]);
+    const cardTotal = useMemo(() => applyCardMarkup(subtotal,pixDiscountPct), [subtotal,pixDiscountPct]);
+    const installment = useMemo(() => cardTotal / maxInstallments, [cardTotal]);
     const finalTotal = payment === "pix" ? pixTotal : cardTotal;
 
-    function handleSend() {
+    async function handleSend() {
+      if (sendingRef.current) return;
+      sendingRef.current = true;
+      setSending(true); setNotice('');
+      // Open during the tap so mobile browsers do not block the async result.
+      const popup = window.open('about:blank','_blank');
+      if (popup) popup.opener = null;
+      const submitted = JSON.stringify({items:cartItems,payment,notes});
+      try {
+      const verified = await fetchCartQuote(cartQuoteInput(cartItems));
+      if (latestRequest.current !== submitted) {
+        popup?.close(); setNotice('O carrinho foi alterado. Confira e tente novamente.'); return;
+      }
+      setQuotedConditions({pixDiscountPct:verified.pixDiscountPct,maxInstallments:verified.maxInstallments});
+      replace(verified.items);
+      if (cartNeedsReview(cartItems,verified.items) || verified.pixDiscountPct !== pixDiscountPct || verified.maxInstallments !== maxInstallments) {
+        popup?.close(); setNotice('Os valores ou as opções foram atualizados. Confira o carrinho e clique novamente para continuar.'); return;
+      }
+      const items = verified.items;
+      const subtotal = verified.subtotal;
+      const cardTotal = verified.cardTotal;
+      const confirmedInstallments = verified.maxInstallments;
+      const pixTotal = subtotal;
+      const installment = cardTotal / confirmedInstallments;
+      const finalTotal = payment === 'pix' ? subtotal : cardTotal;
       const customerName = (
         user?.fullName ||
         [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
@@ -70,6 +104,8 @@ import { Link } from "wouter";
         fabricName: it.fabric?.name ?? null,
         foamName: it.foam?.name ?? null,
         qty: it.qty,
+        variations: it.variations,
+        delivery: it.delivery,
         unitPrice: it.unitPrice,
       }));
 
@@ -78,7 +114,7 @@ import { Link } from "wouter";
         subtotal,
         payment,
         paymentTotal: finalTotal,
-        installments: payment === "cartao" ? MAX_INSTALLMENTS : undefined,
+        installments: payment === "cartao" ? confirmedInstallments : undefined,
         notes: notes.trim() || undefined,
         customerName: customerName || undefined,
         customerEmail: customerEmail || undefined,
@@ -102,6 +138,8 @@ import { Link } from "wouter";
               (it.foam.priceAdjustment !== 0 ? ` (${it.foam.priceAdjustment > 0 ? "+" : ""}${brl(it.foam.priceAdjustment)})` : ""),
           );
         }
+        it.variations?.forEach(v=>lines.push(`• ${v.groupName}: ${v.optionName} × ${v.quantity}`));
+        if(it.delivery) lines.push(`• ${it.delivery}`);
         lines.push(`• Quantidade: ${it.qty}`);
         lines.push(`• Subtotal: ${brl(it.unitPrice * it.qty)}`);
         lines.push("");
@@ -113,7 +151,7 @@ import { Link } from "wouter";
       if (payment === "pix") {
         lines.push(`  *Total PIX: ${brl(pixTotal)}*`);
       } else {
-        lines.push(`  Em ${MAX_INSTALLMENTS}x de aprox. ${brl(installment)} (a combinar)`);
+        lines.push(`  Em ${confirmedInstallments}x de aprox. ${brl(installment)} (a combinar)`);
         lines.push(`  *Total no cartão: ${brl(cardTotal)}*`);
       }
       if (notes.trim()) {
@@ -121,12 +159,18 @@ import { Link } from "wouter";
         lines.push(`*Observações:* ${notes.trim()}`);
       }
       const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`;
-      window.open(url, "_blank");
+      if (popup) popup.location.replace(url);
+      else window.location.assign(url);
+      } catch (error) {
+        popup?.close();
+        setNotice(error instanceof Error ? error.message : 'Não foi possível confirmar o carrinho. Tente novamente.');
+      } finally { sendingRef.current = false; setSending(false); }
     }
 
     return (
       <div className="min-h-screen flex flex-col w-full bg-background">
         <Navbar />
+        {notice && <div role="alert" aria-live="polite" className="mx-auto w-full max-w-6xl px-4 py-3 text-sm text-foreground bg-muted border-b">{notice}</div>}
 
         <main className="flex-grow pb-24 sm:pb-12">
           <div className="bg-secondary/30 py-4 border-b border-border">
@@ -169,6 +213,8 @@ import { Link } from "wouter";
                                 Álbum: <strong>{it.album.name}</strong>{it.fabric ? ` — ${it.fabric.name}` : ""}
                               </p>
                             )}
+                            {it.variations?.map((v,i)=><p key={i} className="text-xs text-muted-foreground">{v.groupName}: <strong>{v.optionName} × {v.quantity}</strong></p>)}
+                            {it.delivery&&<p className="text-xs text-muted-foreground">{it.delivery}</p>}
                             {it.foam && (
                               <p className="text-xs text-muted-foreground">Espuma: <strong>{it.foam.name}</strong></p>
                             )}
@@ -262,7 +308,7 @@ import { Link } from "wouter";
                               </div>
                               {opt.id === "cartao" && subtotal > 0 && (
                                 <p className="text-xs text-muted-foreground mt-0.5">
-                                  {MAX_INSTALLMENTS}x de ~{brl(installment)}
+                                  {maxInstallments}x de ~{brl(installment)}
                                 </p>
                               )}
                               <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{opt.description}</p>
@@ -293,7 +339,7 @@ import { Link } from "wouter";
                       </div>
                       {payment === "cartao" && subtotal > 0 && (
                         <p className="text-xs text-muted-foreground text-right mt-1">
-                          ou {MAX_INSTALLMENTS}x de {brl(installment)}
+                          ou {maxInstallments}x de {brl(installment)}
                         </p>
                       )}
                     </div>
@@ -301,10 +347,11 @@ import { Link } from "wouter";
                     <Button
                       size="lg"
                       className="w-full h-14 bg-green-600 hover:bg-green-700 text-white font-semibold shadow-lg"
-                      onClick={handleSend}
+                      onClick={()=>void handleSend()}
+                      disabled={sending}
                       data-testid="button-whatsapp-checkout"
                     >
-                      Solicitar contato no WhatsApp
+                      {sending ? 'Confirmando valores...' : 'Solicitar contato no WhatsApp'}
                     </Button>
                     <p className="text-[11px] text-muted-foreground text-center mt-2 leading-snug">
                       Você será direcionado para o WhatsApp com o resumo do seu pedido para fecharmos juntos.

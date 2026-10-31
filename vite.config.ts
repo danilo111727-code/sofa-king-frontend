@@ -1,9 +1,12 @@
-import { defineConfig } from "vite";
+import {resolveApiEnvironment} from "./src/lib/apiEnvironment.mjs";
+import { defineConfig, loadEnv } from "vite";
   import react from "@vitejs/plugin-react";
   import tailwindcss from "@tailwindcss/vite";
   import path from "path";
 
-  export default defineConfig({
+  export default defineConfig(({mode}) => {
+    resolveApiEnvironment({...loadEnv(mode,process.cwd(),""),...process.env});
+    return {
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
@@ -15,5 +18,6 @@ import { defineConfig } from "vite";
       outDir: "dist",
       emptyOutDir: true,
     },
+    };
   });
   

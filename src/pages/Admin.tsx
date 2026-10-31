@@ -1,3 +1,7 @@
+import {VariationAlbumsSection} from '@/components/VariationAlbumsSection';
+import type {VariationAlbum} from '@/lib/catalogVariations';
+import {fetchAdminVariationAlbums} from '@/lib/api';
+import type { ProductConfiguration } from "@/lib/productConfigurator";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation } from "wouter";
 import { useUser, useClerk } from "@clerk/react";
@@ -34,6 +38,7 @@ import {
 import { slugifyCategoryId, type CategoryDef, type ProductCategory } from "@/lib/categories";
 import { useCategories } from "@/hooks/useCategories";
 import { DiagramaEditor } from "@/components/DiagramaEditor";
+import { ConfiguradorPreview } from "@/components/ConfiguradorPreview";
 
 const inputCls = "w-full bg-[#1a1208] border border-[#3d2e1e] rounded-lg px-3 py-2.5 text-white text-sm placeholder-[#5a4030] focus:outline-none focus:border-[#c9a96e] transition-colors";
 const cardCls = "bg-[#1a1208] border border-[#2d1f10] rounded-xl p-4";
@@ -264,6 +269,8 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<ProdutoForm>(EMPTY_PRODUTO);
+  const [configuration, setConfiguration] = useState<ProductConfiguration>({});
+  const [variationAlbums,setVariationAlbums] = useState<VariationAlbum[]>([]);
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -274,11 +281,12 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   async function load() {
     setLoading(true);
     try {
-      const [prods, als, fos] = await Promise.all([fetchProducts(), fetchAdminAlbums(), fetchAdminMaterials()]);
+      const [prods, als, fos, vars] = await Promise.all([fetchProducts({ fresh: true }), fetchAdminAlbums(), fetchAdminMaterials(),fetchAdminVariationAlbums()]);
+      setVariationAlbums(vars);
       setProducts(prods.map((p) => ({ ...p, price: (p.price == null || !isFinite(p.price)) ? 0 : p.price })));
       setAlbums(als.filter((a) => a.active));
       setFoams(fos.filter((m) => m.active));
-    } catch { /* silently ignore load errors — form stays open */ }
+    } catch { flash("err", "Não foi possível atualizar os modelos. Tente novamente antes de editar."); }
     finally { setLoading(false); }
   }
 
@@ -310,8 +318,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     });
   }
 
-  function openNew() { pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
+  function openNew() { setConfiguration({catalogVariations:{}}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
   function openEdit(p: Product) {
+    setConfiguration({...p.configuration,catalogVariations:p.configuration?.catalogVariations??{}});
     pingApi();
     setEditId(p.id);
     const validCats: ProductCategory[] = CATEGORIES.map((c) => c.id);
@@ -348,6 +357,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     try {
       const prazoStr = form.prazoEntrega || "";
       const payload: Omit<Product, "id"> = {
+        configuration,
         name: form.name,
         category: form.category,
         description: form.description,
@@ -540,10 +550,11 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         <div className="fixed inset-0 bg-black/70 z-50 flex items-start justify-center p-4 overflow-y-auto">
           <div className="bg-[#1a1208] border border-[#3d2e1e] rounded-2xl w-full max-w-2xl my-8 shadow-2xl">
             <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#2d1f10] sticky top-0 bg-[#1a1208] z-10">
-              <h2 className="font-semibold text-lg">{editId ? "Editar Produto" : "Novo Produto"}</h2>
+              <h2 className="font-semibold text-lg text-white">{editId ? "Editar Produto" : "Novo Produto"}</h2>
               <button onClick={closeForm} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
+              <ConfiguradorPreview key={editId ?? "novo"} config={configuration} setConfig={setConfiguration} albums={albums} foams={foams} variationAlbums={variationAlbums} />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Nome do Modelo *">
                   <input
@@ -917,18 +928,18 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
 // ======================================================================
 
 function MateriaisTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
-  const [sub, setSub] = useState<"albuns" | "espumas">("albuns");
+  const [sub, setSub] = useState<"albuns" | "espumas" | "variacoes">("albuns");
   return (
     <>
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
         <div>
           <h1 className="text-xl font-semibold">Materiais</h1>
           <p className="text-[#a08060] text-sm mt-0.5">
-            Organize os tecidos em álbuns (mesmo preço dentro do álbum) e cadastre as espumas.
+            Cadastre tecidos, espumas e variações para associar aos seus modelos.
           </p>
         </div>
       </div>
-      <div className="flex gap-1 mb-6 border-b border-[#2d1f10]">
+      <div className="flex gap-1 mb-6 border-b border-[#2d1f10] overflow-x-auto">
         <button
           onClick={() => setSub("albuns")}
           className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${sub === "albuns" ? "border-[#c9a96e] text-[#c9a96e]" : "border-transparent text-[#a08060] hover:text-white"}`}
@@ -939,8 +950,9 @@ function MateriaisTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }
           className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${sub === "espumas" ? "border-[#c9a96e] text-[#c9a96e]" : "border-transparent text-[#a08060] hover:text-white"}`}
           data-testid="subtab-espumas"
         >Espumas</button>
+        <button onClick={()=>setSub("variacoes")} className={`px-4 py-2 text-sm font-medium border-b-2 whitespace-nowrap ${sub === "variacoes" ? "border-[#c9a96e] text-[#c9a96e]" : "border-transparent text-[#a08060] hover:text-white"}`} data-testid="subtab-variacoes">Variações</button>
       </div>
-      {sub === "albuns" ? <AlbunsSection flash={flash} /> : <EspumasSection flash={flash} />}
+      {sub === "albuns" ? <AlbunsSection flash={flash} /> : sub === "espumas" ? <EspumasSection flash={flash} /> : <VariationAlbumsSection flash={flash}/>}
     </>
   );
 }
@@ -1076,7 +1088,7 @@ function AlbunsSection({ flash }: { flash: (t: "ok" | "err", s: string) => void 
         <div className="fixed inset-0 bg-black/70 z-50 flex items-start justify-center p-4 overflow-y-auto">
           <div className="bg-[#1a1208] border border-[#3d2e1e] rounded-2xl w-full max-w-2xl my-8 shadow-2xl">
             <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#2d1f10] sticky top-0 bg-[#1a1208] z-10">
-              <h2 className="font-semibold text-lg">{editId ? "Editar Álbum" : "Novo Álbum"}</h2>
+              <h2 className="font-semibold text-lg text-white">{editId ? "Editar Álbum" : "Novo Álbum"}</h2>
               <button onClick={() => setShowForm(false)} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
@@ -1248,7 +1260,7 @@ function EspumasSection({ flash }: { flash: (t: "ok" | "err", s: string) => void
         <div className="fixed inset-0 bg-black/70 z-50 flex items-start justify-center p-4 overflow-y-auto">
           <div className="bg-[#1a1208] border border-[#3d2e1e] rounded-2xl w-full max-w-lg my-8 shadow-2xl">
             <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#2d1f10]">
-              <h2 className="font-semibold text-lg">{editId ? "Editar Espuma" : "Nova Espuma"}</h2>
+              <h2 className="font-semibold text-lg text-white">{editId ? "Editar Espuma" : "Nova Espuma"}</h2>
               <button onClick={() => setShowForm(false)} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
@@ -1489,6 +1501,8 @@ function PedidosTab() {
                           {it.albumName && <p>Álbum: {it.albumName}</p>}
                           {it.fabricName && <p>Tecido: {it.fabricName}</p>}
                           {it.foamName && <p>Espuma: {it.foamName}</p>}
+                          {it.variations?.map((v,index)=><p key={index}>{v.groupName}: {v.optionName} × {v.quantity}</p>)}
+                          {it.delivery && <p>{it.delivery}</p>}
                           <p>Unitário: {brlAdmin(it.unitPrice)}</p>
                         </div>
                       </div>

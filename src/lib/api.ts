@@ -1,3 +1,6 @@
+import {resolveApiEnvironment} from "./apiEnvironment.mjs";
+const apiEnvironment = resolveApiEnvironment(import.meta.env ?? {});
+import type { ProductConfiguration, VariationSelection } from "./productConfigurator";
 export interface SizeOption {
   label: string;
   basePrice: number;
@@ -17,6 +20,7 @@ export interface DiagramaAnotacao {
 
 export interface Product {
   id: string;
+  configuration?: ProductConfiguration;
   name: string;
   price: number;
   description: string;
@@ -127,6 +131,8 @@ export interface OrderItemSnapshot {
   fabricName?: string | null;
   foamName?: string | null;
   qty: number;
+  variations?: {groupName:string;optionName:string;quantity:number;priceAdjustment:number}[];
+  delivery?: string | null;
   unitPrice: number;
 }
 
@@ -167,7 +173,7 @@ export interface WhatsappEvent {
     return h;
   }
 
-  const BASE = "/api";
+  export const BASE = apiEnvironment.base;
 const jsonHeaders: HeadersInit = { "Content-Type": "application/json" };
 
 /** Acorda o servidor (Render free dorme após 15min). Chame ao abrir formulários. */
@@ -189,8 +195,9 @@ async function readError(res: Response, fallback: string): Promise<string> {
   return `${fallback} (HTTP ${res.status})`;
 }
 
-const PRODUCTS_CACHE_KEY = "sfk_products_v1";
+const PRODUCTS_CACHE_KEY = apiEnvironment.productsCacheKey;
 const PRODUCTS_CACHE_TTL = 5 * 60 * 1000;
+let productsCacheGeneration = 0;
 
 function getCachedProducts(): { data: Product[]; timestamp: number } | null {
   try {
@@ -209,31 +216,33 @@ function saveCachedProducts(data: Product[]) {
 }
 
 function clearProductsCache() {
+  productsCacheGeneration++;
   try { localStorage.removeItem(PRODUCTS_CACHE_KEY); } catch {}
 }
 
-export async function fetchProducts(): Promise<Product[]> {
-  const cached = getCachedProducts();
+export async function fetchProducts({ fresh = false }: { fresh?: boolean } = {}): Promise<Product[]> {
+  const generation = productsCacheGeneration;
+  const cached = fresh ? null : getCachedProducts();
 
   if (cached && Date.now() - cached.timestamp < PRODUCTS_CACHE_TTL) {
     // Cache fresco: retorna imediatamente e atualiza em background
-    fetch(`${BASE}/products`)
+    fetch(`${BASE}/products`, { cache: "no-store" })
       .then(r => r.ok ? r.json() : null)
-      .then(fresh => { if (fresh) saveCachedProducts(fresh); })
+      .then(fresh => { if (fresh && generation === productsCacheGeneration) saveCachedProducts(fresh); })
       .catch(() => {});
     return cached.data;
   }
 
   // Cache expirado ou inexistente: busca normalmente
-  const res = await fetch(`${BASE}/products`);
+  const res = await fetch(`${BASE}/products`, { cache: "no-store" });
   if (!res.ok) throw new Error("Erro ao carregar produtos");
   const data: Product[] = await res.json();
-  saveCachedProducts(data);
+  if (generation === productsCacheGeneration) saveCachedProducts(data);
   return data;
 }
 
 export async function fetchProduct(id: string): Promise<Product> {
-  const res = await fetch(`${BASE}/products/${id}`);
+  const res = await fetch(`${BASE}/products/${id}`, {cache:"no-store"});
   if (!res.ok) throw new Error("Produto não encontrado");
   return res.json();
 }
@@ -258,6 +267,7 @@ export async function createProduct(data: Omit<Product, "id">): Promise<Product>
     method: "POST", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error(await readError(res, "Erro ao criar produto"));
+  clearProductsCache();
   return res.json();
 }
 
@@ -267,6 +277,7 @@ export async function updateProduct(id: string, data: Partial<Omit<Product, "id"
     method: "PUT", headers: { ...await adminHeaders() }, body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error(await readError(res, "Erro ao atualizar produto"));
+  clearProductsCache();
   return res.json();
 }
 
@@ -274,6 +285,7 @@ export async function deleteProduct(id: string): Promise<void> {
   clearProductsCache();
   const res = await fetch(`${BASE}/products/${id}`, { method: "DELETE", headers: await adminHeaders() });
   if (!res.ok) throw new Error("Erro ao excluir produto");
+  clearProductsCache();
 }
 
 // --- Tracking ---
@@ -409,5 +421,47 @@ export async function uploadImage(file: File): Promise<{ url: string; objectPath
   fd.append("file", file);
   const res = await fetch(`${BASE}/admin/upload-image`, { method: "POST", headers: await (async () => { const h = await adminHeaders(); delete h["Content-Type"]; return h; })(), body: fd });
   if (!res.ok) throw new Error("Erro no upload da imagem");
+  return res.json();
+}
+
+export async function fetchQuote(id: string, input: { sizeLabel: string; albumId?: string; fabricId?: string; foamId?: string; selections: VariationSelection[] }): Promise<{total:number; variationTotal:number}> {
+  const res = await fetch(`${BASE}/products/${id}/quote`, {method:"POST",headers:jsonHeaders,body:JSON.stringify(input)});
+  if(!res.ok) throw new Error(await readError(res,"Não foi possível calcular o preço"));
+  return res.json();
+}
+
+
+// Shared variation albums: registered once, associated with individual models.
+import type { VariationAlbum } from './catalogVariations';
+export async function fetchVariationAlbums(): Promise<VariationAlbum[]> {
+ const res=await fetch(`${BASE}/variation_albums`,{cache:'no-store'});
+ if(!res.ok)throw new Error(await readError(res,'Erro ao carregar variações'));
+ return res.json();
+}
+export async function fetchAdminVariationAlbums(): Promise<VariationAlbum[]> {
+ const res=await fetch(`${BASE}/admin/variation_albums`,{headers:await adminHeaders(),cache:'no-store'});
+ if(!res.ok)throw new Error(await readError(res,'Erro ao carregar variações'));
+ return res.json();
+}
+export async function saveVariationAlbum(id: string | null,data: Omit<VariationAlbum,'id'>): Promise<VariationAlbum> {
+ const res=await fetch(`${BASE}/admin/variation_albums${id?'/'+encodeURIComponent(id):''}`,{method:id?'PUT':'POST',headers:await adminHeaders(),body:JSON.stringify(data)});
+ if(!res.ok)throw new Error(await readError(res,'Erro ao salvar variação'));
+ return res.json();
+}
+export async function deleteVariationAlbum(id: string): Promise<void> {
+ const res=await fetch(`${BASE}/admin/variation_albums/${encodeURIComponent(id)}`,{method:'DELETE',headers:await adminHeaders()});
+ if(!res.ok)throw new Error(await readError(res,'Erro ao excluir variação'));
+}
+
+export interface CartQuote {
+  items: import('../contexts/CartContext').CartItem[];
+  subtotal: number;
+  cardTotal: number;
+  pixDiscountPct: number;
+  maxInstallments: number;
+}
+export async function fetchCartQuote(input: unknown): Promise<CartQuote> {
+  const res = await fetch(`${BASE}/cart/quote`, {method:'POST',headers:jsonHeaders,cache:'no-store',body:JSON.stringify(input)});
+  if (!res.ok) throw new Error(await readError(res,'Não foi possível confirmar o carrinho'));
   return res.json();
 }

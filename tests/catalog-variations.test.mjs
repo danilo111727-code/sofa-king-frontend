@@ -1,0 +1,7 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {resolveCatalogVariations} from '../src/lib/catalogVariations.ts';
+import {calculateVariationTotal} from '../src/lib/productConfigurator.ts';
+const albums=[{id:'custom',name:'Acabamento escolhido pelo ateliê',active:true,mode:'single',options:[{id:'included',name:'Incluso',imageUrl:'https://example.test/a.png',priceAdjustment:0},{id:'premium',name:'Premium',imageUrl:'https://example.test/b.png',priceAdjustment:150}]}];
+test('customer sees only options associated with this model and their photo',()=>{const groups=resolveCatalogVariations({catalogVariations:{custom:{enabled:true,optionIds:['premium']}}},albums);assert.deepEqual(groups[0].options.map(o=>o.id),['premium']);assert.equal(groups[0].options[0].imageUrl,'https://example.test/b.png');assert.equal(calculateVariationTotal(groups,[{groupId:'catalog:custom',optionId:'premium',quantity:1}]),150);});
+test('global name and price changes are reflected in linked model choices',()=>{const groups=resolveCatalogVariations({catalogVariations:{custom:{enabled:true,optionIds:['premium']}}},[{...albums[0],name:'Novo acabamento',options:albums[0].options.map(o=>({...o,priceAdjustment:200}))}]);assert.equal(groups[0].name,'Novo acabamento');assert.equal(groups[0].options[0].priceAdjustment,200);});
+test('model without an association does not display a global variation',()=>assert.equal(resolveCatalogVariations({catalogVariations:{}},albums).length,0));

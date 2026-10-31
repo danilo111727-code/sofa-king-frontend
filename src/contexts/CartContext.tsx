@@ -1,3 +1,5 @@
+import {resolveApiEnvironment} from "../lib/apiEnvironment.mjs";
+import type {VariationSelection} from "../lib/productConfigurator";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 export interface CartItem {
@@ -9,6 +11,9 @@ export interface CartItem {
   album: { id: string; name: string; surcharge: number } | null;
   fabric: { id: string; name: string; imageUrl: string } | null;
   foam: { id: string; name: string; priceAdjustment: number } | null;
+  configurationSelections?: VariationSelection[];
+  variations?: {groupName:string;optionName:string;quantity:number;priceAdjustment:number}[];
+  delivery?: string | null;
   unitPrice: number;
   qty: number;
 }
@@ -21,10 +26,11 @@ interface CartContextValue {
   remove: (id: string) => void;
   setQty: (id: string, qty: number) => void;
   clear: () => void;
+  replace: (items: CartItem[]) => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "sk_cart_v1";
+const STORAGE_KEY = resolveApiEnvironment(import.meta.env ?? {}).cartKey;
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(() => {
@@ -64,7 +70,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   function clear() { setItems([]); }
 
   return (
-    <CartContext.Provider value={{ items, count, subtotal, add, remove, setQty, clear }}>
+    <CartContext.Provider value={{ items, count, subtotal, add, remove, setQty, clear, replace: setItems }}>
       {children}
     </CartContext.Provider>
   );

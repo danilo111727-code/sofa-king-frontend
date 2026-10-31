@@ -1,3 +1,8 @@
+import {resolveCatalogVariations,type VariationAlbum} from '@/lib/catalogVariations';
+import {fetchVariationAlbums} from '@/lib/api';
+import { calculateVariationTotal, deliveryLabel, isAllowed, type VariationSelection } from "@/lib/productConfigurator";
+import { fetchQuote } from "@/lib/api";
+import { VariationPicker } from "@/components/VariationPicker";
 import { useParams, Link, useLocation } from "wouter";
 import { ChevronRight, ArrowLeft, ChevronLeft, Ruler, Info, Check, ShieldCheck, ShoppingCart, ChevronDown, ChevronUp, X, Heart, ZoomIn } from "lucide-react";
 import { useState, useEffect, useMemo, useCallback, useRef, type TouchEvent as ReactTouchEvent } from "react";
@@ -31,10 +36,14 @@ export default function Produto() {
   const [product, setProduct] = useState<Product | null>(null);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [foams, setFoams] = useState<Material[]>([]);
+  const [variationAlbums,setVariationAlbums] = useState<VariationAlbum[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
   const [sizeIdx, setSizeIdx] = useState(0);
+  const [selections, setSelections] = useState<VariationSelection[]>([]);
+  const [adding, setAdding] = useState(false);
+  const [chosenAlbumId, setChosenAlbumId] = useState<string | null>(null);
   const [albumIdx, setAlbumIdx] = useState(-1);
   const [fabric, setFabric] = useState<FabricSample | null>(null);
   const [selectedFabricKey, setSelectedFabricKey] = useState<string | null>(null);
@@ -50,22 +59,29 @@ export default function Produto() {
 
   useEffect(() => {
     if (!id) return;
+    let active = true;
     setLoading(true);
-    Promise.all([fetchProduct(id), fetchAlbums(), fetchMaterials()])
-      .then(([p, al, fo]) => {
+    setNotFound(false); setSizeIdx(0); setAlbumIdx(-1); setFoamIdx(-1); setFabric(null); setSelectedFabricKey(null); setChosenAlbumId(null);
+    Promise.all([fetchProduct(id), fetchAlbums(), fetchMaterials(),fetchVariationAlbums()])
+      .then(([p, al, fo, vars]) => {
+        if (!active) return;
+        setVariationAlbums(vars);
         setProduct(p);
-        setAlbums(al);
-        setFoams(fo.filter((f) => f.active));
+        const c=p.configuration;
+        setAlbums(al.filter(a=>a.active&&isAllowed(a.id,c?.allowedAlbumIds)).map(a=>({...a,fabrics:a.fabrics.filter(f=>isAllowed(f.id,c?.allowedFabricIds))})));
+        setFoams(fo.filter(f=>f.active&&isAllowed(f.id,c?.allowedFoamIds)));
+        setSelections(resolveCatalogVariations(c,vars).flatMap(g=>g.mode==="quantity"?g.options.filter(o=>(o.minQuantity??0)>0).map(o=>({groupId:g.id,optionId:o.id,quantity:o.minQuantity!})):[]));
         trackView({ productId: p.id, productName: p.name, path: `/produto/${p.id}` });
       })
-      .catch(() => setNotFound(true))
-      .finally(() => setLoading(false));
+      .catch(() => { if (active) setNotFound(true); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, [id]);
 
   const settings = useSiteSettings();
   const { pixDiscountPct, maxInstallments } = settings;
   const selectedSize = product?.sizes[sizeIdx];
-  const selectedAlbum = albums[albumIdx];
+  const selectedAlbum = albums.find(a=>a.id===chosenAlbumId);
   const selectedFoam = foams[foamIdx];
 
   const albumSurcharge = useMemo(() => {
@@ -87,9 +103,10 @@ export default function Produto() {
     if (!pct || !Number.isFinite(pct)) return base;
     return Math.round(base * (1 + pct / 100) * 100) / 100;
   }, [selectedSize, product?.priceAdjustmentPercent]);
-  const finalPrice = useMemo(() => {
-    return adjustedBasePrice + albumSurcharge + foamAdjustment;
-  }, [adjustedBasePrice, albumSurcharge, foamAdjustment]);
+  const variationGroups=useMemo(()=>resolveCatalogVariations(product?.configuration,variationAlbums),[product?.configuration,variationAlbums]);
+  const variationTotal = calculateVariationTotal(variationGroups,selections);
+  const prazo = deliveryLabel(product?.configuration?.delivery,settings.prazoEntregaDias);
+  const finalPrice = Math.round((adjustedBasePrice + albumSurcharge + foamAdjustment + variationTotal)*100)/100;
 
   const pixPrice = finalPrice;
   const cardPrice = useMemo(() => applyCardMarkup(finalPrice, pixDiscountPct), [finalPrice, pixDiscountPct]);
@@ -161,8 +178,12 @@ export default function Produto() {
     );
   }
 
-  const handleAddToCart = (goToCart: boolean) => {
-    if (!selectedSize) return;
+  const handleAddToCart = async (goToCart: boolean) => {
+    if (!selectedSize || adding) return;
+    setAdding(true);
+    try {
+    const verified=await fetchQuote(product.id,{sizeLabel:selectedSize.label,albumId:selectedAlbum?.id,fabricId:fabric?.id,foamId:selectedFoam?.id,selections});
+    if(verified.total!==finalPrice) { toast({title:"As opções foram atualizadas",description:"Recarregue o modelo para conferir os preços atuais.",variant:"destructive"});return; }
     add({
       productId: product.id,
       productName: fullName,
@@ -175,7 +196,10 @@ export default function Produto() {
       foam: selectedFoam
         ? { id: selectedFoam.id, name: selectedFoam.name, priceAdjustment: foamAdjustment }
         : null,
-      unitPrice: finalPrice,
+      configurationSelections: selections.map(s=>({...s})),
+      variations: selections.filter(s=>s.quantity>0).map(s=>{const g=variationGroups.find(g=>g.id===s.groupId)!;const o=g.options.find(o=>o.id===s.optionId)!;return {groupName:g.name,optionName:o.name,quantity:s.quantity,priceAdjustment:o.priceAdjustment};}),
+      delivery:prazo,
+      unitPrice: verified.total,
     });
     if (goToCart) {
       navigate("/carrinho");
@@ -186,6 +210,8 @@ export default function Produto() {
         duration: 2500,
       });
     }
+    } catch(e) { toast({title:"Confira a configuração",description:e instanceof Error?e.message:"Não foi possível validar o preço.",variant:"destructive"}); }
+    finally { setAdding(false); }
   };
 
   const noSizes = product.sizes.length === 0;
@@ -291,9 +317,9 @@ export default function Produto() {
                     🔔 Consultar vaga
                   </span>
                 )}
-                {settings.prazoEntregaDias > 0 && (
+                {prazo && (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm border border-border">
-                    🚚 Prazo: <strong className="text-foreground">{settings.prazoEntregaDias} dias úteis</strong>
+                    <strong className="text-foreground">{prazo}</strong>
                   </span>
                 )}
               </div>
@@ -587,6 +613,8 @@ export default function Produto() {
                 </div>
               )}
 
+              <VariationPicker groups={variationGroups} selections={selections} onChange={setSelections}/>
+              {variationTotal!==0 && <p className="text-sm text-muted-foreground mb-4">Personalização incluída: {brl(variationTotal)}</p>}
               {settings.vagas === 0 ? (
                 <a
                   href="https://wa.me/5575991495793"
@@ -602,7 +630,7 @@ export default function Produto() {
                     size="lg"
                     variant="outline"
                     onClick={() => handleAddToCart(false)}
-                    disabled={!product.disponibilidade || noSizes}
+                    disabled={!product.disponibilidade || noSizes || adding}
                     className="h-14 text-base font-semibold"
                     data-testid="button-add-to-cart"
                   >
@@ -612,7 +640,7 @@ export default function Produto() {
                   <Button
                     size="lg"
                     onClick={() => handleAddToCart(true)}
-                    disabled={!product.disponibilidade || noSizes}
+                    disabled={!product.disponibilidade || noSizes || adding}
                     className="h-14 text-base font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg"
                     data-testid="button-buy-now"
                   >
@@ -812,6 +840,7 @@ export default function Produto() {
             onSelect={() => {
               const idx = albums.findIndex((a) => a.id === previewAlbum.id);
               if (idx >= 0 && idx !== albumIdx) setAlbumIdx(idx);
+              setChosenAlbumId(previewAlbum.id);
               setFabric(currentFabric);
               setSelectedFabricKey(currentKey);
               setPreviewFabric(null);
