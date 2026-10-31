@@ -1,0 +1,20 @@
+[
+  {
+    "width": 390,
+    "cards": 5,
+    "singleRow": true,
+    "allClicks": true,
+    "collapseExpand": true,
+    "horizontalOverflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "cards": 5,
+    "singleRow": true,
+    "allClicks": true,
+    "collapseExpand": true,
+    "horizontalOverflow": false,
+    "errors": []
+  }
+]

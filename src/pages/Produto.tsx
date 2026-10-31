@@ -24,31 +24,22 @@ import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext
 import { DiagramaViewer } from "@/components/DiagramaViewer";
 
 
+// Exact artwork from the approved reference. Each viewport shows only its drawing;
+// labels and values remain accessible HTML and continue to use the selected model.
+const measurementArtwork: Record<string, number> = {
+  width: 45, depth: 238, seatHeight: 428, backHeight: 625, seatDepth: 816,
+};
 function MeasurementDrawing({kind,label,large=false}:{kind:string;label:string;large?:boolean}) {
-  const front = kind === "width";
   return (
-    <svg viewBox="0 0 110 90" role="img" aria-label={`Desenho técnico: ${label}`}
-      className={large ? "mx-auto h-52 w-full max-w-[320px] text-[#12372c]" : "h-[48px] w-full max-w-[90px] sm:h-[78px] sm:max-w-[125px] text-[#12372c]"}
-      fill="none" stroke="currentColor" strokeWidth="1.55" strokeLinecap="round" strokeLinejoin="round">
-      {front ? (
-        <>
-          <rect x="25" y="18" width="60" height="48" rx="5"/>
-          <path d="M25 42H85M25 60H85"/>
-          <rect x="15" y="40" width="13" height="28" rx="5"/>
-          <rect x="82" y="40" width="13" height="28" rx="5"/>
-          <path d="M20 68V73M90 68V73"/>
-        </>
-      ) : (
-        <>
-          <path d="M28 64V25Q28 18 33 18H36Q41 18 42 25L46 46H84Q88 46 88 51V65H28Z"/>
-          <path d="M28 46H46M29 65L28 73M84 65L85 73"/>
-        </>
-      )}
-      {kind === "width" && <path d="M15 80H95M15 77V83M95 77V83M15 80L20 77M15 80L20 83M95 80L90 77M95 80L90 83"/>}
-      {kind === "depth" && <path d="M28 80H88M28 77V83M88 77V83M28 80L33 77M28 80L33 83M88 80L83 77M88 80L83 83"/>}
-      {kind === "seatHeight" && <path d="M98 46V73M95 46H101M95 73H101M98 46L95 51M98 46L101 51M98 73L95 68M98 73L101 68"/>}
-      {kind === "backHeight" && <path d="M17 18V73M14 18H20M14 73H20M17 18L14 23M17 18L20 23M17 73L14 68M17 73L20 68"/>}
-      {kind === "seatDepth" && <path d="M46 39H88M46 36V42M88 36V42M46 39L51 36M46 39L51 42M88 39L83 36M88 39L83 42"/>}
+    <svg viewBox="0 0 178 108"
+      role="img" aria-label={`Desenho técnico: ${label}`}
+      className={large ? "measurement-artwork measurement-artwork-large" : "measurement-artwork"}>
+      <rect width="178" height="108" fill="#f7f7f5" />
+      <svg aria-hidden="true" x="0" y="0" width="178" height="100"
+        viewBox={`${measurementArtwork[kind] ?? 45} 895 ${kind === "seatDepth" ? 171 : 178} 100`}
+        preserveAspectRatio="xMidYMin meet" overflow="hidden">
+        <image href="/images/medidas-referencia-aprovada.jpg" width="1024" height="1536" />
+      </svg>
     </svg>
   );
 }
@@ -286,7 +277,7 @@ export default function Produto() {
                       alt={fullName}
                       className="w-full h-full object-contain object-center transition-transform duration-300 group-hover:scale-[1.015]"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    <div className="product-photo-hint absolute inset-0 flex items-center justify-center opacity-0 transition-opacity pointer-events-none">
                       <div className="bg-black/40 text-white text-xs font-medium px-3 py-1.5 rounded-full backdrop-blur-sm">
                         Toque para ampliar
                       </div>
@@ -336,18 +327,18 @@ export default function Produto() {
                   { label: "Profundidade do assento", value: measurements?.seatDepth, kind: "seatDepth" },
                 ];
                 return (
-                  <section className="mb-5 rounded-xl border border-border/70 bg-background p-2.5 sm:p-4" aria-label="Medidas do sofá">
-                    <button type="button" aria-expanded={measurementsExpanded} onClick={() => setMeasurementsExpanded(v => !v)} className="w-full text-left text-base sm:text-lg font-semibold text-[#15372c] mb-2 flex items-center gap-2 py-1">
-                      <Ruler className="w-5 h-5 text-[#15372c]" /> Medidas do sofá
+                  <section className="sofa-measurements mb-5" aria-label="Medidas do sofá">
+                    <button type="button" aria-expanded={measurementsExpanded} onClick={() => setMeasurementsExpanded(v => !v)} className="measurement-toggle" aria-controls="sofa-measurement-cards">
+                      <Ruler className="measurement-ruler" /> Medidas do sofá
                       {measurementsExpanded ? <ChevronUp className="ml-auto h-5 w-5" /> : <ChevronDown className="ml-auto h-5 w-5" />}
                     </button>
-                    {measurementsExpanded && <div className="grid grid-cols-5 gap-[3px] sm:gap-3 w-full min-w-0">
+                    {measurementsExpanded && <div id="sofa-measurement-cards" className="measurement-cards">
                       {items.map(({ label, value, kind }) => {
                         return (
-                          <button type="button" key={kind} onClick={() => setActiveMeasurement({label,kind,value:typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")})} aria-label={`Ampliar ${label}`} className="min-w-0 w-full flex flex-col items-center rounded-xl bg-[#f7f7f5] px-[2px] py-2 sm:px-2 sm:py-4 text-center overflow-hidden cursor-pointer focus-visible:outline-2 focus-visible:outline-primary hover:bg-[#efefeb] transition-colors">
+                          <button type="button" key={kind} onClick={() => setActiveMeasurement({label,kind,value:typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")})} aria-label={`Ampliar ${label}`} className="measurement-card">
                             <MeasurementDrawing kind={kind} label={label} />
-                            <span className="mt-1.5 text-[8px] sm:text-sm leading-[1.15] text-[#18382d] min-h-[32px] flex items-center justify-center break-words w-full [overflow-wrap:anywhere]">{label}</span>
-                            <strong className="mt-1 min-h-[24px] text-[12px] sm:text-xl font-bold text-[#18382d] whitespace-nowrap">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
+                            <span className="measurement-label">{label}</span>
+                            <strong className="measurement-value">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
                           </button>
                         );
                       })}
