@@ -27,30 +27,28 @@ import { DiagramaViewer } from "@/components/DiagramaViewer";
 function MeasurementDrawing({kind,label,large=false}:{kind:string;label:string;large?:boolean}) {
   const front = kind === "width";
   return (
-    <svg viewBox="0 0 112 92" role="img" aria-label={`Desenho técnico: ${label}`}
-      className={large ? "mx-auto h-52 w-full max-w-[340px] text-[#15372c]" : "h-[48px] w-full max-w-[88px] sm:h-[78px] sm:max-w-[125px] text-[#15372c]"}
-      fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 110 90" role="img" aria-label={`Desenho técnico: ${label}`}
+      className={large ? "mx-auto h-52 w-full max-w-[320px] text-[#12372c]" : "h-[48px] w-full max-w-[90px] sm:h-[78px] sm:max-w-[125px] text-[#12372c]"}
+      fill="none" stroke="currentColor" strokeWidth="1.55" strokeLinecap="round" strokeLinejoin="round">
       {front ? (
         <>
-          {/* Front elevation: back cushion, seat, arms and slim feet, matching approved reference. */}
-          <rect x="25" y="22" width="62" height="45" rx="5"/>
-          <path d="M25 41H87M30 41V28Q30 24 34 24H78Q82 24 82 28V41M25 58H87"/>
-          <rect x="16" y="39" width="13" height="29" rx="5"/>
-          <rect x="83" y="39" width="13" height="29" rx="5"/>
-          <path d="M23 68V73M89 68V73"/>
+          <rect x="25" y="18" width="60" height="48" rx="5"/>
+          <path d="M25 42H85M25 60H85"/>
+          <rect x="15" y="40" width="13" height="28" rx="5"/>
+          <rect x="82" y="40" width="13" height="28" rx="5"/>
+          <path d="M20 68V73M90 68V73"/>
         </>
       ) : (
         <>
-          {/* Side elevation: inclined, rounded back, seat, vertical apron and two slender legs. */}
-          <path d="M28 65L26 24Q26 17 32 17H35Q40 17 41 24L45 45H81Q86 45 86 50V65Z"/>
-          <path d="M29 45H44M45 48H85M29 65H86M33 65L32 74M80 65L81 74"/>
+          <path d="M28 64V25Q28 18 33 18H36Q41 18 42 25L46 46H84Q88 46 88 51V65H28Z"/>
+          <path d="M28 46H46M29 65L28 73M84 65L85 73"/>
         </>
       )}
-      {kind === "width" && <path d="M17 81H95M17 78V84M95 78V84M17 81L23 78M17 81L23 84M95 81L89 78M95 81L89 84"/>}
-      {kind === "depth" && <path d="M27 81H86M27 78V84M86 78V84M27 81L33 78M27 81L33 84M86 81L80 78M86 81L80 84"/>}
-      {kind === "seatHeight" && <path d="M99 46V74M96 46H102M96 74H102M99 46L96 52M99 46L102 52M99 74L96 68M99 74L102 68"/>}
-      {kind === "backHeight" && <path d="M17 17V74M14 17H20M14 74H20M17 17L14 23M17 17L20 23M17 74L14 68M17 74L20 68"/>}
-      {kind === "seatDepth" && <path d="M46 38H85M46 35V41M85 35V41M46 38L52 35M46 38L52 41M85 38L79 35M85 38L79 41"/>}
+      {kind === "width" && <path d="M15 80H95M15 77V83M95 77V83M15 80L20 77M15 80L20 83M95 80L90 77M95 80L90 83"/>}
+      {kind === "depth" && <path d="M28 80H88M28 77V83M88 77V83M28 80L33 77M28 80L33 83M88 80L83 77M88 80L83 83"/>}
+      {kind === "seatHeight" && <path d="M98 46V73M95 46H101M95 73H101M98 46L95 51M98 46L101 51M98 73L95 68M98 73L101 68"/>}
+      {kind === "backHeight" && <path d="M17 18V73M14 18H20M14 73H20M17 18L14 23M17 18L20 23M17 73L14 68M17 73L20 68"/>}
+      {kind === "seatDepth" && <path d="M46 39H88M46 36V42M88 36V42M46 39L51 36M46 39L51 42M88 39L83 36M88 39L83 42"/>}
     </svg>
   );
 }
@@ -348,8 +346,8 @@ export default function Produto() {
                         return (
                           <button type="button" key={kind} onClick={() => setActiveMeasurement({label,kind,value:typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")})} aria-label={`Ampliar ${label}`} className="min-w-0 w-full flex flex-col items-center rounded-xl bg-[#f7f7f5] px-[2px] py-2 sm:px-2 sm:py-4 text-center overflow-hidden cursor-pointer focus-visible:outline-2 focus-visible:outline-primary hover:bg-[#efefeb] transition-colors">
                             <MeasurementDrawing kind={kind} label={label} />
-                            <span className="mt-1.5 text-[8px] sm:text-sm leading-[1.15] text-[#18382d] min-h-[40px] flex items-center justify-center break-words w-full [overflow-wrap:anywhere]">{label}</span>
-                            <strong className="mt-1 min-h-[22px] text-[12px] sm:text-xl font-bold text-[#18382d] whitespace-nowrap">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
+                            <span className="mt-1.5 text-[8px] sm:text-sm leading-[1.15] text-[#18382d] min-h-[32px] flex items-center justify-center break-words w-full [overflow-wrap:anywhere]">{label}</span>
+                            <strong className="mt-1 min-h-[24px] text-[12px] sm:text-xl font-bold text-[#18382d] whitespace-nowrap">{typeof value === "number" ? (value > 0 ? `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value / 100)} m` : "") : (value || "")}</strong>
                           </button>
                         );
                       })}
