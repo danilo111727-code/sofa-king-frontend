@@ -237,7 +237,7 @@ export default function Produto() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10">
           <div className="flex flex-col gap-5 sm:gap-7 max-w-5xl mx-auto">
             {/* Image Gallery — visual editorial com foto principal em destaque */}
-            <section aria-label="Galeria de fotos do sofá" className="space-y-3">
+            <div aria-label="Galeria de fotos do sofá" className="space-y-3">
               <div
                 className={`aspect-[5/4] sm:aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-border/70 relative group shadow-sm ${
                   galleryImages[mainImageIdx] !== DIAGRAMA_SENTINEL ? "cursor-zoom-in" : ""
@@ -285,10 +285,10 @@ export default function Produto() {
                   ))}
                 </div>
               )}
-            </section>
+            </div>
 
             {/* Info */}
-            <section className="flex flex-col w-full max-w-3xl mx-auto">
+            <div className="flex flex-col w-full max-w-3xl mx-auto">
               <div className="flex flex-wrap items-center gap-3 mb-2">
                 <h1 className="text-3xl sm:text-4xl font-sans font-semibold tracking-tight text-foreground" data-testid="text-product-detail-name">
                   {fullName}
