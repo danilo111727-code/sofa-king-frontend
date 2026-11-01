@@ -1,5 +1,5 @@
 {
-  "backup_date": "2026-10-25",
+  "backup_date": "2026-11-01",
   "total_products": 104,
   "products": [
     {
@@ -5642,6 +5642,12 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": true
+        }
+      },
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
       "displaySizeLabel": "3,20 m",
@@ -6080,6 +6086,12 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": true
+        }
+      },
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "2,60 m",
@@ -8045,7 +8057,7 @@
     {
       "id": "elegance-1777219989255",
       "name": "Elegance",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6efebe6c-33a6-4480-b536-ab8e829d4751.jpg",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/fe65a35e-f05d-4e9a-b533-a16e744a356c.jpg",
       "price": 3950,
       "sizes": [
         {
@@ -8091,8 +8103,10 @@
       ],
       "colors": [],
       "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6efebe6c-33a6-4480-b536-ab8e829d4751.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6c59d117-42c8-407d-a79c-c30e5d832618.jpg"
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/fe65a35e-f05d-4e9a-b533-a16e744a356c.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/a48e9ce6-cd17-433a-a7a8-e8d8b32e8fc5.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/571a06b1-6b8d-45d0-9410-e7a7a35193b4.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/7739f3ec-b1c2-4d8f-945b-55ca96b35128.jpg"
       ],
       "fabrics": [],
       "category": "cama",
@@ -8100,6 +8114,7 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "Casal padrão",
