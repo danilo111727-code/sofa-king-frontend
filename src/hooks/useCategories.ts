@@ -21,10 +21,14 @@ export interface UseCategoriesResult {
 export function useCategories(): UseCategoriesResult {
   const settings = useSiteSettings();
   return useMemo(() => {
-    const categories =
-      Array.isArray(settings.categories) && settings.categories.length > 0
-        ? settings.categories
-        : DEFAULT_CATEGORIES;
+    const configured = Array.isArray(settings.categories) && settings.categories.length > 0
+      ? settings.categories : DEFAULT_CATEGORIES;
+    // Existing accounts may have saved categories before these two defaults existed.
+    const newDefaults = DEFAULT_CATEGORIES.filter(c =>
+      ["retratil-sem-caixa", "area-externa"].includes(c.id) &&
+      !configured.some(saved => saved.id === c.id)
+    );
+    const categories = [...configured, ...newDefaults];
     return {
       categories,
       getCategory: (id) => getCategoryFrom(categories, id),
