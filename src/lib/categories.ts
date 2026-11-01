@@ -20,6 +20,8 @@ export interface CategoryDef {
 
 export const CATEGORIES: CategoryDef[] = [
   { id: "retratil",  label: "Sofá Retrátil",  suffix: "Retrátil" },
+  { id: "retratil-sem-caixa", label: "Sofá Retrátil sem Caixa", suffix: "" },
+  { id: "area-externa", label: "Sofá Área Externa", suffix: "" },
   { id: "sofa-cama", label: "Sofá-cama",       suffix: "Cama" },
   { id: "canto",     label: "Sofá de Canto",   suffix: "de Canto" },
   { id: "organicos", label: "Sofá Orgânico",   suffix: "Orgânico" },
