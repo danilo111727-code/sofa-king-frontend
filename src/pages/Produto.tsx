@@ -586,7 +586,7 @@ export default function Produto() {
                                       <span className="text-[11px] font-medium text-center line-clamp-1 w-full">
                                         {f.name}
                                       </span>
-                                      {!!f.tags?.length && <div className="flex flex-wrap justify-center gap-1 w-full">{f.tags.slice(0,3).map(tag => <span key={tag} className="text-[9px] leading-tight px-1.5 py-0.5 rounded bg-secondary text-secondary-foreground border border-border">{tag}</span>)}{f.tags.length > 3 && <span className="text-[9px] text-muted-foreground">+{f.tags.length-3}</span>}</div>}
+                                      {f.tags?.some(tag => ["Linho", "Bouclé", "Veludo", "Chenille", "Suede", "Sarja", "Jacquard", "Couro natural", "Couro sintético", "Tecido tramado"].includes(tag)) && <div className="flex flex-wrap justify-center gap-1 w-full">{f.tags.filter(tag => ["Linho", "Bouclé", "Veludo", "Chenille", "Suede", "Sarja", "Jacquard", "Couro natural", "Couro sintético", "Tecido tramado"].includes(tag)).map(tag => <span key={tag} className="text-[9px] leading-tight px-1.5 py-0.5 rounded bg-secondary text-secondary-foreground border border-border">{tag}</span>)}</div>}
                                     </button>
                                   );
                                 })}
