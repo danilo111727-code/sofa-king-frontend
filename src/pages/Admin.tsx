@@ -263,6 +263,8 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const { categories: CATEGORIES, displayName } = useCategories();
   const [products, setProducts] = useState<Product[]>([]);
   const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState("");
+  const [selectedNumber, setSelectedNumber] = useState("01");
   const [collectionNames, setCollectionNames] = useState<string[]>(getCollectionNames);
   useEffect(() => { const sync = () => setCollectionNames(getCollectionNames()); window.addEventListener("sofa-collections-updated", sync); return () => window.removeEventListener("sofa-collections-updated", sync); }, []);
   const aliases: Record<string,string> = {"Jakarta":"Bali","Jacartá":"Bali","Lounge":"Living","Elegance":"Monaco","Concept":"Atelier","Oásis":"Duna","Texas":"Austin","Aura":"Lume","França":"Provence"};
@@ -273,6 +275,11 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<ProdutoForm>(EMPTY_PRODUTO);
+  const suffixFor=(id:string)=>CATEGORIES.find(c=>c.id===id)?.suffix||"";
+  const generatedName=[selectedCollection,suffixFor(form.category),selectedNumber].filter(Boolean).join(" ");
+  const numberUsed=(c:string,cat:string,n:string)=>products.some(item=>item.id!==editId&&item.name.toLocaleLowerCase("pt-BR")===[c,suffixFor(cat),n].filter(Boolean).join(" ").toLocaleLowerCase("pt-BR"));
+  const availableNumbers=(c:string,cat:string)=>Array.from({length:99},(_,i)=>String(i+1).padStart(2,"0")).filter(n=>!numberUsed(c,cat,n));
+  const suggestNumber=(c:string,cat:string)=>availableNumbers(c,cat)[0]||"";
   const [configuration, setConfiguration] = useState<ProductConfiguration>({});
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -320,8 +327,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     });
   }
 
-  function openNew() { setConfiguration({}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
+  function openNew() { setSelectedCollection(""); setSelectedNumber("01"); setConfiguration({}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
   function openEdit(p: Product) {
+    const group=getGroup(p); setSelectedCollection(group==="Sem coleção"?"":group); setSelectedNumber(p.name.match(/(\d+)$/)?.[1]?.padStart(2,"0")||"01");
     setConfiguration(p.configuration ?? {});
     pingApi();
     setEditId(p.id);
@@ -348,6 +356,8 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
+    if(!selectedCollection||!form.category||!selectedNumber){flash("err","Selecione coleção, variação e numeração.");return;}
+    if(numberUsed(selectedCollection,form.category,selectedNumber)){flash("err","Essa numeração já está em uso.");return;}
     if (form.sizes.length === 0) {
       flash("err", "Adicione pelo menos uma metragem.");
       return;
@@ -360,7 +370,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       const prazoStr = form.prazoEntrega || "";
       const payload: Omit<Product, "id"> = {
         configuration,
-        name: form.name,
+        name: generatedName,
         category: form.category,
         description: form.description,
         longDescription: form.longDescription,
@@ -567,37 +577,12 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                   </label>
                 ))}
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Field label="Nome do Modelo *">
-                  <input
-                    className={inputCls}
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder="Ex: Istambul"
-                    required
-                  />
-                </Field>
-                <Field label="Categoria">
-                  <select
-                    className={inputCls}
-                    value={form.category}
-                    onChange={(e) => setForm({ ...form, category: e.target.value as ProductCategory })}
-                    data-testid="select-category"
-                  >
-                    <option value="">— Sem categoria —</option>
-                    {CATEGORIES.map((c) => (
-                      <option key={c.id} value={c.id}>{c.label}</option>
-                    ))}
-                  </select>
-                </Field>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 rounded-xl border border-[#3d2e1e] p-3">
+                <Field label="Coleção"><select className={inputCls} value={selectedCollection} onChange={e=>{const c=e.target.value;setSelectedCollection(c);setSelectedNumber(suggestNumber(c,form.category));}} required><option value="">Selecionar</option>{collectionNames.map(c=><option key={c} value={c}>{c}</option>)}</select></Field>
+                <Field label="Variação"><select className={inputCls} value={form.category} onChange={e=>{const cat=e.target.value as ProductCategory;setForm(prev=>({...prev,category:cat}));setSelectedNumber(suggestNumber(selectedCollection,cat));}} required data-testid="select-category"><option value="">Selecionar</option>{CATEGORIES.map(c=><option key={c.id} value={c.id}>{c.label}</option>)}</select></Field>
+                <Field label="Numeração"><select className={inputCls} value={selectedNumber} onChange={e=>setSelectedNumber(e.target.value)} disabled={!selectedCollection||!form.category} required><option value="">Selecionar</option>{availableNumbers(selectedCollection,form.category).map(n=><option key={n} value={n}>{n}</option>)}</select></Field>
+                {selectedCollection&&form.category&&selectedNumber&&<p className="sm:col-span-3 text-sm text-[#c9a96e]">Nome gerado: {generatedName}</p>}
               </div>
-
-              {form.name && (
-                <div className="text-xs text-[#a08060] -mt-2">
-                  Nome no site: <strong className="text-[#c9a96e]">{displayName(form.name, form.category)}</strong>
-                </div>
-              )}
-
               <Field label="Galeria de Fotos">
                 <div className="space-y-2">
                   <input
