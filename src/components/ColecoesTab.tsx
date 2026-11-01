@@ -5,12 +5,15 @@ import { proposedCollections } from "@/data/proposedCollections";
 type Collection = { id: string; name: string; productIds: string[]; active: boolean };
 const KEY = "sofa-king-preview-collections-v1";
 const defaults: Collection[] = proposedCollections.map((c, i) => ({
-  id: "suggested-" + i, name: c.name, productIds: [], active: true
+  id: "suggested-" + i, name: c.name, productIds: c.candidateProductIds, active: true
 }));
 const variationTypes = ["Lounge","Retrátil","Fixo","Chaise","Sofá-cama","Modular","Ilha","Orgânico","Poltrona","Puff","Canto","Deck"];
 export function ColecoesTab() {
   const [collections, setCollections] = useState<Collection[]>(() => {
-    try { const saved = localStorage.getItem(KEY); return saved ? JSON.parse(saved) : defaults; } catch { return defaults; }
+    try { const saved = localStorage.getItem(KEY); if (!saved) return defaults;
+      const previous: Collection[] = JSON.parse(saved);
+      const oldNames = ["Brooklyn","Elegance","Urban","Fluid","Bloom","Frame","Concept","Lounge","Orla","Cannes","Loft","Oásis","Texas","Aura","Gomos","Detroit","Londres","França","Istambul","Jakarta","Nexo"];
+      return [...defaults.map((c,i) => { const p = previous.find(x => x.id === c.id || x.name === oldNames[i]); return {...c,productIds: Array.from(new Set([...c.productIds,...(p?.productIds||[])]))}; }),...previous.filter(x=>x.id.startsWith("custom-"))]; } catch { return defaults; }
   });
   const [products, setProducts] = useState<Product[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
@@ -20,7 +23,7 @@ export function ColecoesTab() {
   const [environment, setEnvironment] = useState("Interna");
   const [customVariation, setCustomVariation] = useState("");
   const [numbered, setNumbered] = useState(true);
-  useEffect(() => { fetchProducts({ fresh: true }).then(setProducts).catch(() => {}); }, []);
+  useEffect(() => { fetchProducts({ fresh: true }).then(items => { setProducts(items); setCollections(prev => prev.map(c => { const legacy: Record<string,string> = {Monaco:"Elegance",Atelier:"Concept",Living:"Lounge",Duna:"Oásis",Austin:"Texas",Lume:"Aura",Provence:"França",Bali:"Jakarta",Atlas:"Módulos"}; const stems = [c.name,legacy[c.name]].filter(Boolean).map(x=>x.toLocaleLowerCase("pt-BR")); const matches = items.filter(p=>stems.some(stem=>p.name.toLocaleLowerCase("pt-BR").startsWith(stem))).map(p=>p.id); return {...c,productIds:Array.from(new Set([...c.productIds,...matches]))}; })); }).catch(() => {}); }, []);
   useEffect(() => { localStorage.setItem(KEY, JSON.stringify(collections)); }, [collections]);
   const current = collections.find(c => c.id === selected);
   const patch = (id: string, update: Partial<Collection>) => setCollections(prev => prev.map(c => c.id === id ? {...c, ...update} : c));
