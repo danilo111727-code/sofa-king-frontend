@@ -1,3 +1,4 @@
+import { ColecoesTab, getCollectionNames } from "@/components/ColecoesTab";
 import { supportsExtendedDepth, type ProductConfiguration } from "@/lib/productConfigurator";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation } from "wouter";
@@ -42,7 +43,7 @@ const goldBtn = "bg-[#c9a96e] hover:bg-[#b8954f] text-[#1a1208] font-semibold px
 const ghostBtn = "px-3 py-1.5 bg-[#261a0e] hover:bg-[#3d2e1e] border border-[#3d2e1e] rounded-lg text-sm text-[#c9a96e]";
 const dangerBtn = "px-3 py-1.5 bg-red-950/50 hover:bg-red-900/50 border border-red-900/50 rounded-lg text-sm text-red-400";
 
-type Tab = "produtos" | "materiais" | "clientes" | "estatisticas" | "pedidos" | "whatsapp" | "configuracoes";
+type Tab = "colecoes" | "produtos" | "materiais" | "clientes" | "estatisticas" | "pedidos" | "whatsapp" | "configuracoes";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -162,6 +163,7 @@ export default function Admin() {
 
   const tabs: { key: Tab; label: string }[] = [
     { key: "produtos", label: "Produtos" },
+    { key: "colecoes", label: "Coleções" },
     { key: "materiais", label: "Materiais" },
     { key: "clientes", label: "Clientes" },
     { key: "estatisticas", label: "Estatísticas" },
@@ -213,6 +215,7 @@ export default function Admin() {
         )}
 
         {tab === "produtos" && <ProdutosTab flash={flash} />}
+        {tab === "colecoes" && <ColecoesTab />}
         {tab === "materiais" && <MateriaisTab flash={flash} />}
         {tab === "clientes" && <ClientesTab />}
         {tab === "estatisticas" && <EstatisticasTab />}
@@ -259,6 +262,11 @@ const EMPTY_PRODUTO: ProdutoForm = {
 function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
   const { categories: CATEGORIES, displayName } = useCategories();
   const [products, setProducts] = useState<Product[]>([]);
+  const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
+  const [collectionNames, setCollectionNames] = useState<string[]>(getCollectionNames);
+  useEffect(() => { const sync = () => setCollectionNames(getCollectionNames()); window.addEventListener("sofa-collections-updated", sync); return () => window.removeEventListener("sofa-collections-updated", sync); }, []);
+  const aliases: Record<string,string> = {"Jakarta":"Bali","Jacartá":"Bali","Lounge":"Living","Elegance":"Monaco","Concept":"Atelier","Oásis":"Duna","Texas":"Austin","Aura":"Lume","França":"Provence"};
+  const getGroup = (p: Product) => { const n=p.name.toLocaleLowerCase("pt-BR"); const found=collectionNames.find(c=>n===c.toLocaleLowerCase("pt-BR")||n.startsWith(c.toLocaleLowerCase("pt-BR")+" ")); if(found)return found; const legacy=Object.keys(aliases).find(k=>n===k.toLocaleLowerCase("pt-BR")||n.startsWith(k.toLocaleLowerCase("pt-BR")+" ")); return legacy?aliases[legacy]:"Sem coleção"; };
   const [albums, setAlbums] = useState<Album[]>([]);
   const [foams, setFoams] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
@@ -494,7 +502,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         <div className="text-center text-[#a08060] py-16">Carregando...</div>
       ) : (
         <div className="space-y-3">
-          {products.map((p) => (
+          {[...collectionNames,"Sem coleção"].map(group => { const matching=products.filter(p=>getGroup(p)===group); if(!matching.length && group==="Sem coleção")return null; const isOpen=expandedCollection===group; return <div key={group} className="rounded-xl border border-[#3d2e1e] bg-[#1a1208] overflow-hidden"><button type="button" onClick={()=>setExpandedCollection(isOpen?null:group)} className="w-full px-4 py-3 flex justify-between text-left text-white"><span>{group} <span className="text-xs text-[#a08060]">({matching.length})</span></span><span className="text-[#c9a96e]">{isOpen?"−":"+"}</span></button>{isOpen&&<div className="p-3 space-y-2 border-t border-[#3d2e1e]">{matching.map((p) => (
             <div key={p.id} className={`${cardCls} flex items-center gap-4`}>
               <img src={p.image} alt={p.name} className="w-16 h-16 object-cover rounded-lg bg-[#261a0e] flex-shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
               <div className="flex-1 min-w-0">
@@ -531,7 +539,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                 <button onClick={() => setDeleteId(p.id)} className={dangerBtn}>Excluir</button>
               </div>
             </div>
-          ))}
+          ))}</div>}</div>})}
           {products.length === 0 && (
             <div className="text-center text-[#a08060] py-16 border border-dashed border-[#2d1f10] rounded-xl">
               Nenhum produto cadastrado. Clique em "Adicionar Modelo" para começar.
