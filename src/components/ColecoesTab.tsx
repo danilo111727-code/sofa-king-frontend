@@ -53,7 +53,7 @@ export function ColecoesTab() {
           <div className="max-h-52 overflow-auto space-y-1">
             {products.filter(p=>p.name.toLowerCase().includes(query.toLowerCase())).map(p=><label key={p.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#302315] cursor-pointer"><input type="checkbox" checked={current.productIds.includes(p.id)} onChange={e=>patch(current.id,{productIds:e.target.checked?[...current.productIds,p.id]:current.productIds.filter(id=>id!==p.id)})}/><span className="text-sm">{p.name}</span><span className="text-xs text-[#a08060]">{p.category}</span></label>)}
           </div>
-          <h2 className="font-semibold pt-2 border-t border-[#3d2e1e]">Simular nova variação</h2>
+          <h2 className="font-semibold pt-2 border-t border-[#3d2e1e]">Variação de teste</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <select value={variation} onChange={e=>setVariation(e.target.value)} className="bg-[#120d06] border border-[#3d2e1e] rounded-lg px-3 py-2">{variationTypes.map(t=><option key={t}>{t}</option>)}</select>
             <select value={environment} onChange={e=>setEnvironment(e.target.value)} className="bg-[#120d06] border border-[#3d2e1e] rounded-lg px-3 py-2"><option value="Interna">Área interna</option><option value="Externa">Área externa</option></select>
