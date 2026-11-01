@@ -269,10 +269,12 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const [productSearch, setProductSearch] = useState("");
   const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
   const [selectedCollection, setSelectedCollection] = useState("");
-  const [selectedVariation, setSelectedVariation] = useState("");
   const [selectedNumber, setSelectedNumber] = useState("01");
-  const variations = ["Lounge","Fixo","Retrátil","Chaise","Modular","Sofá-cama","Poltrona","Puff","Ilha","Orgânico","Canto"];
-  const suggestNumber=(c:string,v:string)=>{const used=new Set(products.filter(p=>p.id!==editId&&p.name.toLocaleLowerCase("pt-BR").startsWith((c+" "+v+" ").toLocaleLowerCase("pt-BR"))).map(p=>Number(p.name.match(/(\\d+)$/)?.[1]||0)));let i=1;while(used.has(i))i++;return String(i).padStart(2,"0");};
+  const suffixFor=(id:string)=>CATEGORIES.find(c=>c.id===id)?.suffix||"";
+  const generatedName=[selectedCollection,suffixFor(form.category),selectedNumber].filter(Boolean).join(" ");
+  const numberUsed=(c:string,category:string,n:string)=>products.some(p=>p.id!==editId&&p.name.toLocaleLowerCase("pt-BR")===[c,suffixFor(category),n].filter(Boolean).join(" ").toLocaleLowerCase("pt-BR"));
+  const availableNumbers=(c:string,category:string)=>Array.from({length:99},(_,i)=>String(i+1).padStart(2,"0")).filter(n=>!numberUsed(c,category,n));
+  const suggestNumber=(c:string,category:string)=>availableNumbers(c,category)[0]||"";
   const [collectionNames] = useState(getCollectionNames);
   const aliases: Record<string,string> = {"Jakarta":"Bali","Jacartá":"Bali","Lounge":"Living","Elegance":"Monaco","Concept":"Atelier","Oásis":"Duna","Texas":"Austin","Aura":"Lume","França":"Provence"};
   const getGroup = (p: Product) => {
@@ -338,8 +340,8 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     });
   }
 
-  function openNew() { setSelectedCollection("");setSelectedVariation("");setSelectedNumber("01");setConfiguration({catalogVariations:{}}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
-  function openEdit(p: Product) {const group=getGroup(p);setSelectedCollection(group==="Sem coleção"?"":group);const variation=variations.find(v=>p.name.toLocaleLowerCase("pt-BR").includes(v.toLocaleLowerCase("pt-BR")));setSelectedVariation(variation||"");setSelectedNumber(p.name.match(/(\\d+)$/)?.[1]?.padStart(2,"0")||"01");
+  function openNew() { setSelectedCollection("");setSelectedNumber("01");setConfiguration({catalogVariations:{}}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
+  function openEdit(p: Product) {const group=getGroup(p);setSelectedCollection(group==="Sem coleção"?"":group);setSelectedNumber(p.name.match(/(\\d+)$/)?.[1]?.padStart(2,"0")||"01");
     setConfiguration({...p.configuration,catalogVariations:p.configuration?.catalogVariations??{}});
     pingApi();
     setEditId(p.id);
@@ -366,7 +368,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
-    if (form.sizes.length === 0) {
+    if(!selectedCollection||!form.category||!selectedNumber){flash("err","Selecione coleção, variação e numeração.");return;}\n    if(numberUsed(selectedCollection,form.category,selectedNumber)){flash("err","Essa numeração já está em uso.");return;}\n    if (form.sizes.length === 0) {
       flash("err", "Adicione pelo menos uma metragem.");
       return;
     }
@@ -378,7 +380,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       const prazoStr = form.prazoEntrega || "";
       const payload: Omit<Product, "id"> = {
         configuration,
-        name: selectedCollection&&selectedVariation ? selectedCollection+" "+selectedVariation+" "+selectedNumber : form.name,
+        name: generatedName,
         category: form.category,
         description: form.description,
         longDescription: form.longDescription,
@@ -579,10 +581,10 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 rounded-xl border border-[#3d2e1e] p-3">
-                <Field label="Coleção"><select className={inputCls} value={selectedCollection} onChange={e=>{setSelectedCollection(e.target.value);if(selectedVariation)setSelectedNumber(suggestNumber(e.target.value,selectedVariation));}}><option value="">Selecionar</option>{collectionNames.map(c=><option key={c} value={c}>{c}</option>)}</select></Field>
-                <Field label="Variação"><select className={inputCls} value={selectedVariation} onChange={e=>{setSelectedVariation(e.target.value);if(selectedCollection)setSelectedNumber(suggestNumber(selectedCollection,e.target.value));}}><option value="">Selecionar</option>{variations.map(v=><option key={v} value={v}>{v}</option>)}</select></Field>
-                <Field label="Numeração"><select className={inputCls} value={selectedNumber} onChange={e=>setSelectedNumber(e.target.value)}>{Array.from({length:99},(_,i)=>String(i+1).padStart(2,"0")).map(n=><option key={n} value={n}>{n}</option>)}</select></Field>
-                {selectedCollection&&selectedVariation&&<p className="sm:col-span-3 text-sm text-[#c9a96e]">Nome gerado: {selectedCollection} {selectedVariation} {selectedNumber}</p>}
+                <Field label="Coleção"><select className={inputCls} value={selectedCollection} onChange={e=>{setSelectedCollection(e.target.value);if(form.category)setSelectedNumber(suggestNumber(e.target.value,form.category));}}><option value="">Selecionar</option>{collectionNames.map(c=><option key={c} value={c}>{c}</option>)}</select></Field>
+                <Field label="Variação"><select className={inputCls} value={form.category} onChange={e=>{const category=e.target.value as ProductCategory;setForm(prev=>({...prev,category}));if(selectedCollection)setSelectedNumber(suggestNumber(selectedCollection,category));}} data-testid="select-category"><option value="">Selecionar</option>{CATEGORIES.map(c=><option key={c.id} value={c.id}>{c.label}</option>)}</select></Field>
+                <Field label="Numeração"><select className={inputCls} value={availableNumbers(selectedCollection,form.category).includes(selectedNumber)?selectedNumber:(availableNumbers(selectedCollection,form.category)[0]||"")} onChange={e=>setSelectedNumber(e.target.value)} disabled={!selectedCollection||!form.category}><option value="" disabled>Selecionar</option>{availableNumbers(selectedCollection,form.category).map(n=><option key={n} value={n}>{n}</option>)}</select></Field>
+                {selectedCollection&&form.category&&<p className="sm:col-span-3 text-sm text-[#c9a96e]">Nome gerado: {generatedName}</p>}
               </div>
               <div className="rounded-xl border border-[#756044] bg-[#302315] p-4 space-y-3" data-testid="admin-side-options">
                 <p className="font-semibold text-sm text-white">Escolha do lado do sofá</p>
@@ -596,37 +598,6 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                 ))}
               </div>
               <ConfiguradorPreview key={editId ?? "novo"} config={configuration} setConfig={setConfiguration} albums={albums} foams={foams} variationAlbums={variationAlbums} />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Field label="Nome do Modelo *">
-                  <input
-                    className={inputCls}
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder="Ex: Istambul"
-                    required
-                  />
-                </Field>
-                <Field label="Categoria">
-                  <select
-                    className={inputCls}
-                    value={form.category}
-                    onChange={(e) => setForm({ ...form, category: e.target.value as ProductCategory })}
-                    data-testid="select-category"
-                  >
-                    <option value="">— Sem categoria —</option>
-                    {CATEGORIES.map((c) => (
-                      <option key={c.id} value={c.id}>{c.label}</option>
-                    ))}
-                  </select>
-                </Field>
-              </div>
-
-              {form.name && (
-                <div className="text-xs text-[#a08060] -mt-2">
-                  Nome no site: <strong className="text-[#c9a96e]">{displayName(form.name, form.category)}</strong>
-                </div>
-              )}
-
               <Field label="Galeria de Fotos">
                 <div className="space-y-2">
                   <input
