@@ -1,3 +1,4 @@
+import { ColecoesTab } from "@/components/ColecoesTab";
 import {VariationAlbumsSection} from '@/components/VariationAlbumsSection';
 import type {VariationAlbum} from '@/lib/catalogVariations';
 import {fetchAdminVariationAlbums} from '@/lib/api';
@@ -46,7 +47,7 @@ const goldBtn = "bg-[#c9a96e] hover:bg-[#b8954f] text-[#1a1208] font-semibold px
 const ghostBtn = "px-3 py-1.5 bg-[#261a0e] hover:bg-[#3d2e1e] border border-[#3d2e1e] rounded-lg text-sm text-[#c9a96e]";
 const dangerBtn = "px-3 py-1.5 bg-red-950/50 hover:bg-red-900/50 border border-red-900/50 rounded-lg text-sm text-red-400";
 
-type Tab = "produtos" | "materiais" | "clientes" | "estatisticas" | "pedidos" | "whatsapp" | "configuracoes";
+type Tab = "colecoes" | "produtos" | "materiais" | "clientes" | "estatisticas" | "pedidos" | "whatsapp" | "configuracoes";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -166,6 +167,7 @@ export default function Admin() {
 
   const tabs: { key: Tab; label: string }[] = [
     { key: "produtos", label: "Produtos" },
+    { key: "colecoes", label: "Coleções" },
     { key: "materiais", label: "Materiais" },
     { key: "clientes", label: "Clientes" },
     { key: "estatisticas", label: "Estatísticas" },
@@ -217,6 +219,7 @@ export default function Admin() {
         )}
 
         {tab === "produtos" && <ProdutosTab flash={flash} />}
+        {tab === "colecoes" && <ColecoesTab />}
         {tab === "materiais" && <MateriaisTab flash={flash} />}
         {tab === "clientes" && <ClientesTab />}
         {tab === "estatisticas" && <EstatisticasTab />}
