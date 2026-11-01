@@ -504,6 +504,9 @@ export default function Produto() {
                                   </span>
                                 )}
                               </div>
+                              {a.description?.trim() && (
+                                <p className="text-[13px] leading-4 text-muted-foreground mt-1">{a.description.trim()}</p>
+                              )}
                               <div className="text-xs opacity-80">
                                 {s > 0 ? `+${brl(s)}` : s < 0 ? brl(s) : "incluso"}
                                 {a.fabrics.length > 0 && (
