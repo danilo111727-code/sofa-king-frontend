@@ -266,7 +266,6 @@ const EMPTY_PRODUTO: ProdutoForm = {
 function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
   const { categories: CATEGORIES, displayName } = useCategories();
   const [products, setProducts] = useState<Product[]>([]);
-  const [productSearch, setProductSearch] = useState("");
   const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
   const [selectedCollection, setSelectedCollection] = useState("");
   const [selectedNumber, setSelectedNumber] = useState("01");
@@ -283,7 +282,6 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     const legacy=Object.keys(aliases).find(k=>n===k.toLocaleLowerCase("pt-BR")||n.startsWith(k.toLocaleLowerCase("pt-BR")+" "));
     return legacy?aliases[legacy]:"Sem coleção";
   };
-  const [productCategoryFilter, setProductCategoryFilter] = useState("");
   const [albums, setAlbums] = useState<Album[]>([]);
   const [foams, setFoams] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
@@ -520,15 +518,11 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         <button onClick={openNew} className={goldBtn} data-testid="button-new-product">+ Adicionar Modelo</button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
-        <input aria-label="Buscar modelos" className={inputCls} placeholder="Buscar modelo pelo nome..." value={productSearch} onChange={e => setProductSearch(e.target.value)} />
-        <select aria-label="Filtrar categoria" className={inputCls} value={productCategoryFilter} onChange={e => setProductCategoryFilter(e.target.value)}><option value="">Todas as categorias</option>{CATEGORIES.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}</select>
-      </div>
       {loading ? (
         <div className="text-center text-[#a08060] py-16">Carregando...</div>
       ) : (
         <div className="space-y-3">
-          {[...collectionNames,"Sem coleção"].map(group=>{const matching=products.filter(p => (!productCategoryFilter || p.category === productCategoryFilter) && displayName(p.name, p.category).toLocaleLowerCase("pt-BR").includes(productSearch.toLocaleLowerCase("pt-BR"))).filter(p=>getGroup(p)===group);if(!matching.length&&group==="Sem coleção")return null;const isOpen=expandedCollection===group||!!productSearch.trim();return <div key={group} className="rounded-xl border border-[#3d2e1e] bg-[#1a1208] overflow-hidden"><button type="button" onClick={()=>setExpandedCollection(isOpen?null:group)} className="w-full px-4 py-3 flex justify-between text-left text-white"><span>{group} <span className="text-xs text-[#a08060]">({matching.length})</span></span><span className="text-[#c9a96e]">{isOpen?"−":"+"}</span></button>{isOpen&&<div className="p-3 space-y-2 border-t border-[#3d2e1e]">{matching.map((p) => (
+          {[...collectionNames,"Sem coleção"].map(group=>{const matching=products.filter(p=>getGroup(p)===group);if(!matching.length&&group==="Sem coleção")return null;const isOpen=expandedCollection===group;return <div key={group} className="rounded-xl border border-[#3d2e1e] bg-[#1a1208] overflow-hidden"><button type="button" onClick={()=>setExpandedCollection(isOpen?null:group)} className="w-full px-4 py-3 flex justify-between text-left text-white"><span>{group} <span className="text-xs text-[#a08060]">({matching.length})</span></span><span className="text-[#c9a96e]">{isOpen?"−":"+"}</span></button>{isOpen&&<div className="p-3 space-y-2 border-t border-[#3d2e1e]">{matching.map((p) => (
             <div key={p.id} className="bg-[#1a1208] border border-[#2d1f10] rounded-xl p-3 flex items-center gap-3 min-w-0">
               <img src={p.image} alt={p.name} className="w-20 h-20 object-cover rounded-lg bg-[#261a0e] flex-shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
               <div className="flex-1 min-w-0">
