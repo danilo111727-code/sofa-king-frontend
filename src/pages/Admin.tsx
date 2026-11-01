@@ -263,6 +263,8 @@ const EMPTY_PRODUTO: ProdutoForm = {
 function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
   const { categories: CATEGORIES, displayName } = useCategories();
   const [products, setProducts] = useState<Product[]>([]);
+  const [productSearch, setProductSearch] = useState("");
+  const [productCategoryFilter, setProductCategoryFilter] = useState("");
   const [albums, setAlbums] = useState<Album[]>([]);
   const [foams, setFoams] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
@@ -496,13 +498,17 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         <button onClick={openNew} className={goldBtn} data-testid="button-new-product">+ Adicionar Modelo</button>
       </div>
 
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+        <input aria-label="Buscar modelos" className={inputCls} placeholder="Buscar modelo pelo nome..." value={productSearch} onChange={e => setProductSearch(e.target.value)} />
+        <select aria-label="Filtrar categoria" className={inputCls} value={productCategoryFilter} onChange={e => setProductCategoryFilter(e.target.value)}><option value="">Todas as categorias</option>{CATEGORIES.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}</select>
+      </div>
       {loading ? (
         <div className="text-center text-[#a08060] py-16">Carregando...</div>
       ) : (
         <div className="space-y-3">
-          {products.map((p) => (
-            <div key={p.id} className={`${cardCls} flex items-center gap-4`}>
-              <img src={p.image} alt={p.name} className="w-16 h-16 object-cover rounded-lg bg-[#261a0e] flex-shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+          {products.filter(p => (!productCategoryFilter || p.category === productCategoryFilter) && displayName(p.name, p.category).toLocaleLowerCase("pt-BR").includes(productSearch.toLocaleLowerCase("pt-BR"))).map((p) => (
+            <div key={p.id} className="bg-[#1a1208] border border-[#2d1f10] rounded-xl p-3 flex items-center gap-3 min-w-0">
+              <img src={p.image} alt={p.name} className="w-20 h-20 object-cover rounded-lg bg-[#261a0e] flex-shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <h3 className="font-medium text-white">{displayName(p.name, p.category)}</h3>
@@ -532,9 +538,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                   {p.prazoEntrega && <span>🚚 {p.prazoEntrega}</span>}
                 </div>
               </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <button onClick={() => openEdit(p)} className={ghostBtn}>Editar</button>
-                <button onClick={() => setDeleteId(p.id)} className={dangerBtn}>Excluir</button>
+              <div className="flex flex-col gap-1 flex-shrink-0">
+                <button onClick={() => openEdit(p)} className={ghostBtn} aria-label={`Editar ${p.name}`}>Editar</button>
+                <button onClick={() => setDeleteId(p.id)} className="text-xs text-red-400/80 hover:text-red-300 py-1" aria-label={`Excluir ${p.name}`}>Excluir</button>
               </div>
             </div>
           ))}
