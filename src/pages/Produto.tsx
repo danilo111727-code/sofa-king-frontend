@@ -1118,8 +1118,12 @@ function FabricPreviewModal({
             {album && (
               <p className="text-xs text-muted-foreground">Álbum: {album.name}</p>
             )}
-            {album?.description && (
-              <p className="text-sm text-muted-foreground mt-2 leading-snug whitespace-pre-line">{album.description}</p>
+            {!!fabric.tags?.length && (
+              <div className="flex flex-wrap gap-1.5 mt-2" aria-label="Características do tecido">
+                {fabric.tags.map((tag) => (
+                  <span key={tag} className="text-xs leading-snug px-2 py-1 rounded-md bg-secondary text-secondary-foreground border border-border">{tag}</span>
+                ))}
+              </div>
             )}
           </div>
           {isSelected ? (
