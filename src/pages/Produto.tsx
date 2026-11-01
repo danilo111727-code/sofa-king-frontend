@@ -564,6 +564,7 @@ export default function Produto() {
                                       <span className="text-[11px] font-medium text-center line-clamp-1 w-full">
                                         {f.name}
                                       </span>
+                                      {!!f.tags?.length && <div className="flex flex-wrap justify-center gap-1 w-full">{f.tags.filter(tag => ["Linho", "Bouclé", "Veludo", "Chenille", "Suede", "Sarja", "Jacquard", "Couro natural", "Couro sintético", "Tecido tramado"].includes(tag)).map(tag => <span key={tag} className="text-[9px] leading-tight px-1.5 py-0.5 rounded bg-secondary text-secondary-foreground border border-border">{tag}</span>)}</div>}
                                     </button>
                                   );
                                 })}
@@ -1092,8 +1093,10 @@ function FabricPreviewModal({
             {album && (
               <p className="text-xs text-muted-foreground">Álbum: {album.name}</p>
             )}
-            {album?.description && (
-              <p className="text-sm text-muted-foreground mt-2 leading-snug whitespace-pre-line">{album.description}</p>
+            {!!fabric.tags?.length && (
+              <div className="flex flex-wrap gap-1.5 mt-2" aria-label="Características do tecido">
+                {fabric.tags.map(tag => <span key={tag} className="text-xs leading-snug px-2 py-1 rounded-md bg-secondary text-secondary-foreground border border-border">{tag}</span>)}
+              </div>
             )}
           </div>
           {isSelected ? (
