@@ -54,7 +54,10 @@ export function displayNameFrom(
   const c = getCategoryFrom(list, category ?? "");
   if (!c || !c.suffix) return name;
   const trimmed = name.trim();
-  if (trimmed.toLowerCase().endsWith(c.suffix.toLowerCase())) return trimmed;
+  const normalized = trimmed.toLocaleLowerCase("pt-BR");
+  const suffix = c.suffix.toLocaleLowerCase("pt-BR");
+  const numbered = normalized.match(/^(.*)\s+(\d+)$/);
+  if (normalized.endsWith(suffix) || (numbered && numbered[1].endsWith(suffix))) return trimmed;
   return `${trimmed} ${c.suffix}`;
 }
 
