@@ -271,7 +271,6 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const [selectedCollection, setSelectedCollection] = useState("");
   const [selectedNumber, setSelectedNumber] = useState("01");
   const suffixFor=(id:string)=>CATEGORIES.find(c=>c.id===id)?.suffix||"";
-  const generatedName=[selectedCollection,suffixFor(form.category),selectedNumber].filter(Boolean).join(" ");
   const numberUsed=(c:string,category:string,n:string)=>products.some(p=>p.id!==editId&&p.name.toLocaleLowerCase("pt-BR")===[c,suffixFor(category),n].filter(Boolean).join(" ").toLocaleLowerCase("pt-BR"));
   const availableNumbers=(c:string,category:string)=>Array.from({length:99},(_,i)=>String(i+1).padStart(2,"0")).filter(n=>!numberUsed(c,category,n));
   const suggestNumber=(c:string,category:string)=>availableNumbers(c,category)[0]||"";
@@ -291,6 +290,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<ProdutoForm>(EMPTY_PRODUTO);
+  const generatedName=[selectedCollection,suffixFor(form.category),selectedNumber].filter(Boolean).join(" ");
   const [configuration, setConfiguration] = useState<ProductConfiguration>({});
   const [variationAlbums,setVariationAlbums] = useState<VariationAlbum[]>([]);
   const [saving, setSaving] = useState(false);
