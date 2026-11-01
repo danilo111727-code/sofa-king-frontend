@@ -1,4 +1,4 @@
-import { ColecoesTab } from "@/components/ColecoesTab";
+import { ColecoesTab, getCollectionNames } from "@/components/ColecoesTab";
 import {VariationAlbumsSection} from '@/components/VariationAlbumsSection';
 import type {VariationAlbum} from '@/lib/catalogVariations';
 import {fetchAdminVariationAlbums} from '@/lib/api';
@@ -267,6 +267,16 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const { categories: CATEGORIES, displayName } = useCategories();
   const [products, setProducts] = useState<Product[]>([]);
   const [productSearch, setProductSearch] = useState("");
+  const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
+  const [collectionNames] = useState(getCollectionNames);
+  const aliases: Record<string,string> = {"Jakarta":"Bali","Jacartá":"Bali","Lounge":"Living","Elegance":"Monaco","Concept":"Atelier","Oásis":"Duna","Texas":"Austin","Aura":"Lume","França":"Provence"};
+  const getGroup = (p: Product) => {
+    const n=p.name.toLocaleLowerCase("pt-BR");
+    const found=collectionNames.find(c=>n===c.toLocaleLowerCase("pt-BR")||n.startsWith(c.toLocaleLowerCase("pt-BR")+" "));
+    if(found)return found;
+    const legacy=Object.keys(aliases).find(k=>n===k.toLocaleLowerCase("pt-BR")||n.startsWith(k.toLocaleLowerCase("pt-BR")+" "));
+    return legacy?aliases[legacy]:"Sem coleção";
+  };
   const [productCategoryFilter, setProductCategoryFilter] = useState("");
   const [albums, setAlbums] = useState<Album[]>([]);
   const [foams, setFoams] = useState<Material[]>([]);
@@ -509,7 +519,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
         <div className="text-center text-[#a08060] py-16">Carregando...</div>
       ) : (
         <div className="space-y-3">
-          {products.filter(p => (!productCategoryFilter || p.category === productCategoryFilter) && displayName(p.name, p.category).toLocaleLowerCase("pt-BR").includes(productSearch.toLocaleLowerCase("pt-BR"))).map((p) => (
+          {[...collectionNames,"Sem coleção"].map(group=>{const matching=products.filter(p => (!productCategoryFilter || p.category === productCategoryFilter) && displayName(p.name, p.category).toLocaleLowerCase("pt-BR").includes(productSearch.toLocaleLowerCase("pt-BR")).filter(p=>getGroup(p)===group);if(!matching.length&&group==="Sem coleção")return null;const isOpen=expandedCollection===group||!!productSearch.trim();return <div key={group} className="rounded-xl border border-[#3d2e1e] bg-[#1a1208] overflow-hidden"><button type="button" onClick={()=>setExpandedCollection(isOpen?null:group)} className="w-full px-4 py-3 flex justify-between text-left text-white"><span>{group} <span className="text-xs text-[#a08060]">({matching.length})</span></span><span className="text-[#c9a96e]">{isOpen?"−":"+"}</span></button>{isOpen&&<div className="p-3 space-y-2 border-t border-[#3d2e1e]">{matching.map((p) => (
             <div key={p.id} className="bg-[#1a1208] border border-[#2d1f10] rounded-xl p-3 flex items-center gap-3 min-w-0">
               <img src={p.image} alt={p.name} className="w-20 h-20 object-cover rounded-lg bg-[#261a0e] flex-shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
               <div className="flex-1 min-w-0">
@@ -546,7 +556,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
                 <button onClick={() => setDeleteId(p.id)} className="text-xs text-red-400/80 hover:text-red-300 py-1" aria-label={`Excluir ${p.name}`}>Excluir</button>
               </div>
             </div>
-          ))}
+          ))}</div>}</div>;})}
           {products.length === 0 && (
             <div className="text-center text-[#a08060] py-16 border border-dashed border-[#2d1f10] rounded-xl">
               Nenhum produto cadastrado. Clique em "Adicionar Modelo" para começar.
