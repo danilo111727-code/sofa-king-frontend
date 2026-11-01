@@ -508,9 +508,9 @@ export default function Produto() {
                                 <p className="text-[13px] leading-4 text-muted-foreground mt-1">{a.description.trim()}</p>
                               )}
                               <div className="text-xs opacity-80">
-                                {s > 0 ? `+${brl(s)}` : s < 0 ? brl(s) : "incluso"}
+                                {s > 0 ? `Acréscimo de ${brl(s)}` : s < 0 ? `Desconto de ${brl(Math.abs(s))}` : "Sem acréscimo no valor"}
                                 {a.fabrics.length > 0 && (
-                                  <> · {a.fabrics.length} {a.fabrics.length === 1 ? "tecido" : "tecidos"}</>
+                                  <> · {a.fabrics.length} {a.fabrics.length === 1 ? "opção de tecido" : "opções de tecido"}</>
                                 )}
                               </div>
                             </div>
