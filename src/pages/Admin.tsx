@@ -368,7 +368,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
-    if(!selectedCollection||!form.category||!selectedNumber){flash("err","Selecione coleção, variação e numeração.");return;}\n    if(numberUsed(selectedCollection,form.category,selectedNumber)){flash("err","Essa numeração já está em uso.");return;}\n    if (form.sizes.length === 0) {
+    if(!selectedCollection||!form.category||!selectedNumber){flash("err","Selecione coleção, variação e numeração.");return;}
+    if(numberUsed(selectedCollection,form.category,selectedNumber)){flash("err","Essa numeração já está em uso.");return;}
+    if (form.sizes.length === 0) {
       flash("err", "Adicione pelo menos uma metragem.");
       return;
     }
