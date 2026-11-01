@@ -1021,6 +1021,8 @@ function AlbunsSection({ flash }: { flash: (t: "ok" | "err", s: string) => void 
   const [uploadingIdx, setUploadingIdx] = useState<number | null>(null);
   const [openTagIndex, setOpenTagIndex] = useState<number | null>(null);
   const [customTag, setCustomTag] = useState<Record<number,string>>({});
+  const [copiedFabricTags, setCopiedFabricTags] = useState<string[] | null>(null);
+  const [confirmApplyTags, setConfirmApplyTags] = useState<number | null>(null);
   const fileRefs = useRef<Record<number, HTMLInputElement | null>>({});
 
   useEffect(() => { load(); }, []);
@@ -1075,6 +1077,20 @@ function AlbunsSection({ flash }: { flash: (t: "ok" | "err", s: string) => void 
     const current = form.fabrics[i]?.tags ?? [];
     if (!current.some(t => t.toLowerCase() === tag.toLowerCase())) updateFabric(i, { tags: [...current, tag] });
     setCustomTag(v => ({...v, [i]: ""}));
+  }
+  function copyFabricTags(i: number) {
+    setCopiedFabricTags([...(form.fabrics[i]?.tags ?? [])]);
+    flash("ok", "Etiquetas copiadas. Selecione Colar etiquetas em outro tecido.");
+  }
+  function pasteFabricTags(i: number) {
+    if (copiedFabricTags === null) return;
+    updateFabric(i, { tags: [...copiedFabricTags] });
+  }
+  function applyTagsToAll(i: number) {
+    const tags = [...(form.fabrics[i]?.tags ?? [])];
+    setForm(f => ({ ...f, fabrics: f.fabrics.map(item => ({ ...item, tags: [...tags] })) }));
+    setConfirmApplyTags(null);
+    flash("ok", "Etiquetas aplicadas aos tecidos do álbum. Clique em Salvar para confirmar.");
   }
   function addFabric() {
     setForm((f) => ({ ...f, fabrics: [...f.fabrics, { id: "", name: "", imageUrl: "" }] }));
@@ -1187,7 +1203,15 @@ function AlbunsSection({ flash }: { flash: (t: "ok" | "err", s: string) => void 
                       <div className="flex flex-wrap gap-1.5 items-center">
                         {(f.tags ?? []).map(tag => <button type="button" key={tag} onClick={() => toggleFabricTag(i,tag)} className="text-xs px-2 py-1 rounded-md border border-[#7b633b] text-[#e6c88d]">{tag} ×</button>)}
                         <button type="button" onClick={() => setOpenTagIndex(openTagIndex === i ? null : i)} className={ghostBtn + " text-xs"}>Etiquetas ({f.tags?.length ?? 0}) +</button>
+                        <button type="button" onClick={() => copyFabricTags(i)} className={ghostBtn + " text-xs"}>Copiar etiquetas</button>
+                        <button type="button" disabled={copiedFabricTags === null} onClick={() => pasteFabricTags(i)} className={ghostBtn + " text-xs disabled:opacity-40"}>Colar etiquetas</button>
+                        <button type="button" onClick={() => setConfirmApplyTags(i)} className={ghostBtn + " text-xs"}>Aplicar a todos</button>
                       </div>
+                      {confirmApplyTags === i && <div className="p-3 rounded-lg border border-[#c9a96e] bg-[#241a0c] space-y-2">
+                        <p className="text-sm text-[#e6c88d]">Substituir as etiquetas de todos os {form.fabrics.length} tecidos deste álbum pelas etiquetas de {f.name || "este tecido"}?</p>
+                        <p className="text-xs text-[#a08060]">A alteração só será gravada quando você clicar em Salvar no álbum.</p>
+                        <div className="flex gap-2"><button type="button" className={ghostBtn} onClick={() => setConfirmApplyTags(null)}>Cancelar</button><button type="button" className={goldBtn} onClick={() => applyTagsToAll(i)}>Confirmar aplicação</button></div>
+                      </div>}
                       {openTagIndex === i && <div className="p-3 border border-[#3d2e1e] rounded-lg space-y-3">
                         {FABRIC_TAG_GROUPS.map(group => <div key={group.title} className="space-y-1.5">
                           <p className="text-xs font-semibold text-[#c9a96e]">{group.title}</p>
