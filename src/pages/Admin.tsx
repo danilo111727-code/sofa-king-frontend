@@ -1001,6 +1001,13 @@ interface AlbumForm {
   fabrics: FabricSample[];
   active: boolean;
 }
+const FABRIC_TAG_GROUPS = [
+  { title: "Tipo de tecido", tags: ["Linho", "Bouclé", "Veludo", "Chenille", "Suede", "Sarja", "Jacquard", "Couro natural", "Couro sintético", "Tecido tramado"] },
+  { title: "Proteção e resistência", tags: ["Impermeável", "Repelente a líquidos", "Resistente a pets", "Antimanchas", "Alta resistência", "Resistente ao desbotamento", "Proteção UV"] },
+  { title: "Conforto e textura", tags: ["Toque macio", "Toque aveludado", "Textura em relevo", "Trama natural", "Tecido encorpado", "Toque suave", "Textura felpuda"] },
+  { title: "Praticidade", tags: ["Fácil limpeza", "Fácil manutenção", "Lavável", "Secagem rápida"] },
+  { title: "Indicação de uso", tags: ["Área interna", "Área externa", "Alto tráfego", "Ambientes comerciais"] },
+];
 const EMPTY_ALBUM: AlbumForm = { name: "", description: "", fabrics: [], active: true };
 
 function AlbunsSection({ flash }: { flash: (t: "ok" | "err", s: string) => void }) {
@@ -1012,6 +1019,8 @@ function AlbunsSection({ flash }: { flash: (t: "ok" | "err", s: string) => void 
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [uploadingIdx, setUploadingIdx] = useState<number | null>(null);
+  const [openTagIndex, setOpenTagIndex] = useState<number | null>(null);
+  const [customTag, setCustomTag] = useState<Record<number,string>>({});
   const fileRefs = useRef<Record<number, HTMLInputElement | null>>({});
 
   useEffect(() => { load(); }, []);
@@ -1055,6 +1064,17 @@ function AlbunsSection({ flash }: { flash: (t: "ok" | "err", s: string) => void 
       fabrics[i] = { ...fabrics[i], ...patch };
       return { ...f, fabrics };
     });
+  }
+  function toggleFabricTag(i: number, tag: string) {
+    const current = form.fabrics[i]?.tags ?? [];
+    updateFabric(i, { tags: current.includes(tag) ? current.filter(t => t !== tag) : [...current, tag] });
+  }
+  function addCustomFabricTag(i: number) {
+    const tag = (customTag[i] ?? "").trim();
+    if (!tag) return;
+    const current = form.fabrics[i]?.tags ?? [];
+    if (!current.some(t => t.toLowerCase() === tag.toLowerCase())) updateFabric(i, { tags: [...current, tag] });
+    setCustomTag(v => ({...v, [i]: ""}));
   }
   function addFabric() {
     setForm((f) => ({ ...f, fabrics: [...f.fabrics, { id: "", name: "", imageUrl: "" }] }));
@@ -1138,7 +1158,8 @@ function AlbunsSection({ flash }: { flash: (t: "ok" | "err", s: string) => void 
               <Field label="Cores/tecidos do álbum">
                 <div className="space-y-2">
                   {form.fabrics.map((f, i) => (
-                    <div key={i} className="flex gap-2 items-center bg-[#120d06] border border-[#2d1f10] rounded-lg p-2">
+                    <div key={i} className="bg-[#120d06] border border-[#2d1f10] rounded-lg p-2 space-y-2">
+                      <div className="flex gap-2 items-center">
                       <div className="w-14 h-14 rounded bg-[#261a0e] border border-[#3d2e1e] flex-shrink-0 overflow-hidden">
                         {f.imageUrl && <img src={f.imageUrl} alt={f.name} className="w-full h-full object-cover" />}
                       </div>
@@ -1162,6 +1183,19 @@ function AlbunsSection({ flash }: { flash: (t: "ok" | "err", s: string) => void 
                         {uploadingIdx === i ? "..." : "📷"}
                       </button>
                       <button type="button" onClick={() => removeFabric(i)} className={dangerBtn + " flex-shrink-0"}>✕</button>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5 items-center">
+                        {(f.tags ?? []).map(tag => <button type="button" key={tag} onClick={() => toggleFabricTag(i,tag)} className="text-xs px-2 py-1 rounded-md border border-[#7b633b] text-[#e6c88d]">{tag} ×</button>)}
+                        <button type="button" onClick={() => setOpenTagIndex(openTagIndex === i ? null : i)} className={ghostBtn + " text-xs"}>Etiquetas ({f.tags?.length ?? 0}) +</button>
+                      </div>
+                      {openTagIndex === i && <div className="p-3 border border-[#3d2e1e] rounded-lg space-y-3">
+                        {FABRIC_TAG_GROUPS.map(group => <div key={group.title} className="space-y-1.5">
+                          <p className="text-xs font-semibold text-[#c9a96e]">{group.title}</p>
+                          <div className="flex flex-wrap gap-1.5">{group.tags.map(tag => <button type="button" key={tag} onClick={() => toggleFabricTag(i,tag)} className={`text-xs px-2 py-1 rounded-md border ${(f.tags ?? []).includes(tag) ? "bg-[#c9a96e] text-[#1a1208] border-[#c9a96e]" : "text-[#d9c9a0] border-[#3d2e1e]"}`}>{(f.tags ?? []).includes(tag) ? "✓ " : "+ "}{tag}</button>)}</div>
+                        </div>)}
+                        <div className="flex gap-2"><input className={inputCls} value={customTag[i] ?? ""} onChange={e => setCustomTag(v => ({...v,[i]:e.target.value}))} onKeyDown={e => {if(e.key==="Enter"){e.preventDefault();addCustomFabricTag(i);}}} placeholder="Nova etiqueta personalizada" /><button type="button" className={ghostBtn} onClick={() => addCustomFabricTag(i)}>Adicionar</button></div>
+                        <p className="text-xs text-[#a08060]">Selecione apenas características confirmadas pelo fornecedor.</p>
+                      </div>}
                     </div>
                   ))}
                   <button type="button" onClick={addFabric} className={ghostBtn}>+ Adicionar cor</button>
