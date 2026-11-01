@@ -268,6 +268,11 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   const [products, setProducts] = useState<Product[]>([]);
   const [productSearch, setProductSearch] = useState("");
   const [expandedCollection, setExpandedCollection] = useState<string | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState("");
+  const [selectedVariation, setSelectedVariation] = useState("");
+  const [selectedNumber, setSelectedNumber] = useState("01");
+  const variations = ["Lounge","Fixo","Retrátil","Chaise","Modular","Sofá-cama","Poltrona","Puff","Ilha","Orgânico","Canto"];
+  const suggestNumber=(c:string,v:string)=>{const used=new Set(products.filter(p=>p.id!==editId&&p.name.toLocaleLowerCase("pt-BR").startsWith((c+" "+v+" ").toLocaleLowerCase("pt-BR"))).map(p=>Number(p.name.match(/(\\d+)$/)?.[1]||0)));let i=1;while(used.has(i))i++;return String(i).padStart(2,"0");};
   const [collectionNames] = useState(getCollectionNames);
   const aliases: Record<string,string> = {"Jakarta":"Bali","Jacartá":"Bali","Lounge":"Living","Elegance":"Monaco","Concept":"Atelier","Oásis":"Duna","Texas":"Austin","Aura":"Lume","França":"Provence"};
   const getGroup = (p: Product) => {
@@ -333,8 +338,8 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
     });
   }
 
-  function openNew() { setConfiguration({catalogVariations:{}}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
-  function openEdit(p: Product) {
+  function openNew() { setSelectedCollection("");setSelectedVariation("");setSelectedNumber("01");setConfiguration({catalogVariations:{}}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
+  function openEdit(p: Product) {const group=getGroup(p);setSelectedCollection(group==="Sem coleção"?"":group);const variation=variations.find(v=>p.name.toLocaleLowerCase("pt-BR").includes(v.toLocaleLowerCase("pt-BR")));setSelectedVariation(variation||"");setSelectedNumber(p.name.match(/(\\d+)$/)?.[1]?.padStart(2,"0")||"01");
     setConfiguration({...p.configuration,catalogVariations:p.configuration?.catalogVariations??{}});
     pingApi();
     setEditId(p.id);
@@ -373,7 +378,7 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
       const prazoStr = form.prazoEntrega || "";
       const payload: Omit<Product, "id"> = {
         configuration,
-        name: form.name,
+        name: selectedCollection&&selectedVariation ? selectedCollection+" "+selectedVariation+" "+selectedNumber : form.name,
         category: form.category,
         description: form.description,
         longDescription: form.longDescription,
@@ -573,6 +578,12 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               <button onClick={closeForm} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 rounded-xl border border-[#3d2e1e] p-3">
+                <Field label="Coleção"><select className={inputCls} value={selectedCollection} onChange={e=>{setSelectedCollection(e.target.value);if(selectedVariation)setSelectedNumber(suggestNumber(e.target.value,selectedVariation));}}><option value="">Selecionar</option>{collectionNames.map(c=><option key={c} value={c}>{c}</option>)}</select></Field>
+                <Field label="Variação"><select className={inputCls} value={selectedVariation} onChange={e=>{setSelectedVariation(e.target.value);if(selectedCollection)setSelectedNumber(suggestNumber(selectedCollection,e.target.value));}}><option value="">Selecionar</option>{variations.map(v=><option key={v} value={v}>{v}</option>)}</select></Field>
+                <Field label="Numeração"><select className={inputCls} value={selectedNumber} onChange={e=>setSelectedNumber(e.target.value)}>{Array.from({length:99},(_,i)=>String(i+1).padStart(2,"0")).map(n=><option key={n} value={n}>{n}</option>)}</select></Field>
+                {selectedCollection&&selectedVariation&&<p className="sm:col-span-3 text-sm text-[#c9a96e]">Nome gerado: {selectedCollection} {selectedVariation} {selectedNumber}</p>}
+              </div>
               <div className="rounded-xl border border-[#756044] bg-[#302315] p-4 space-y-3" data-testid="admin-side-options">
                 <p className="font-semibold text-sm text-white">Escolha do lado do sofá</p>
                 <p className="text-xs text-[#e1cdb4]">Habilite as opções que o cliente poderá escolher neste modelo.</p>
