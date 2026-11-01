@@ -80,6 +80,7 @@ export interface FabricSample {
   id: string;
   name: string;
   imageUrl: string;
+  tags?: string[];
 }
 
 export interface Album {
