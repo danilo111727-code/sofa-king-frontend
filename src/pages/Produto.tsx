@@ -497,12 +497,7 @@ export default function Produto() {
                     <div className="flex-1 min-w-0"><div className="text-sm font-semibold truncate">{fabric ? fabric.name : selectedAlbum ? selectedAlbum.name : "Escolha seu tecido"}</div><div className="text-xs text-muted-foreground">{albums.reduce((n,a) => n+a.fabrics.length,0)} tecidos · {albums.length} álbuns</div></div>
                     <span className="text-xs font-semibold text-primary whitespace-nowrap">{fabricOptionsOpen ? "Fechar" : fabric ? "Alterar escolha" : "Ver tecidos"}</span>
                   </button>
-                  {fabricOptionsOpen && <div className="fixed inset-0 z-40 flex flex-col bg-background" role="dialog" aria-modal="true" aria-label="Escolher tecido" data-testid="fabric-fullscreen-picker">
-                    <div className="shrink-0 flex items-center justify-between border-b border-border px-4 py-4 pt-[max(1rem,env(safe-area-inset-top))]">
-                      <div><h2 className="font-semibold text-lg">Escolha seu tecido</h2><p className="text-xs text-muted-foreground">{albums.length} álbuns de tecido</p></div>
-                      <button type="button" aria-label="Fechar seleção de tecidos" data-testid="close-fabric-picker" onClick={() => setFabricOptionsOpen(false)} className="rounded-full p-2 border border-border hover:bg-secondary"><X className="w-5 h-5" /></button>
-                    </div>
-                    <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]"><div className="mx-auto max-w-3xl space-y-3">
+                  {fabricOptionsOpen && <div className="space-y-3" data-testid="fabric-album-list">
                     {albums.map((a, i) => {
                       // Mesma prioridade usada no calculo do preco final:
                       // 1) acrescimo por produto+tamanho (selectedSize.albumSurcharges)
@@ -515,7 +510,7 @@ export default function Produto() {
                         <div key={a.id} className="rounded-xl border border-border/80 overflow-hidden">
                           <button
                             type="button"
-                            onClick={() => setAlbumIdx(isOpen ? -1 : i)}
+                            onClick={() => setAlbumIdx(i)}
                             className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left transition-colors ${
                               isOpen
                                 ? "bg-primary text-primary-foreground"
@@ -549,8 +544,14 @@ export default function Produto() {
                             )}
                           </button>
 
-                          {isOpen && a.fabrics.length > 0 && (
-                            <div className="p-3 bg-secondary/30 border-t border-border">
+                          {isOpen && (
+                            <div className="fixed inset-0 z-[100] flex flex-col bg-background" role="dialog" aria-modal="true" aria-label={`Tecidos do álbum ${a.name}`} data-testid="fabric-fullscreen-picker">
+                              <div className="shrink-0 flex items-center justify-between gap-3 border-b border-border bg-background px-4 py-3 pt-[max(1rem,env(safe-area-inset-top))]">
+                                <div className="min-w-0"><h2 className="text-lg font-semibold truncate">{a.name}</h2><p className="text-xs text-muted-foreground">{a.fabrics.length} opções de tecido</p></div>
+                                <button type="button" aria-label="Fechar álbum de tecidos" data-testid="close-fabric-picker" onClick={() => setAlbumIdx(-1)} className="shrink-0 rounded-full border border-border bg-secondary p-2.5 text-foreground"><X className="w-6 h-6" /></button>
+                              </div>
+                              <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+                                <div className="mx-auto max-w-3xl">
                               <p className="text-xs text-muted-foreground mb-2">
                                 Toque em um tecido para visualizar. Confirme a escolha na janela.
                               </p>
@@ -597,12 +598,13 @@ export default function Produto() {
                                   );
                                 })}
                               </div>
+                              </div>
                             </div>
                           )}
                         </div>
                       );
                     })}
-                    </div></div></div>}
+                  </div>}
                 </div>
               )}
 
@@ -623,7 +625,7 @@ export default function Produto() {
                     <div className="flex-1 min-w-0"><div className="text-sm font-semibold truncate">{selectedFoam ? selectedFoam.name : "Escolha sua espuma"}</div><div className="text-xs text-muted-foreground">{foams.length} opções de espuma</div></div>
                     <span className="text-xs font-semibold text-primary whitespace-nowrap">{foamOptionsOpen ? "Fechar" : selectedFoam ? "Alterar escolha" : "Ver espumas"}</span>
                   </button>
-                  {foamOptionsOpen && <div className="fixed inset-0 z-40 flex flex-col bg-background" role="dialog" aria-modal="true" aria-label="Escolher espuma" data-testid="foam-fullscreen-picker">
+                  {foamOptionsOpen && <div className="fixed inset-0 z-[100] flex flex-col bg-background" role="dialog" aria-modal="true" aria-label="Escolher espuma" data-testid="foam-fullscreen-picker">
                     <div className="shrink-0 flex items-center justify-between border-b border-border px-4 py-4 pt-[max(1rem,env(safe-area-inset-top))]">
                       <div><h2 className="font-semibold text-lg">Escolha sua espuma</h2><p className="text-xs text-muted-foreground">{foams.length} opções de espuma</p></div>
                       <button type="button" aria-label="Fechar seleção de espumas" data-testid="close-foam-picker" onClick={() => setFoamOptionsOpen(false)} className="rounded-full p-2 border border-border hover:bg-secondary"><X className="w-5 h-5" /></button>
