@@ -599,6 +599,7 @@ export default function Produto() {
                                 })}
                               </div>
                               </div>
+                              </div>
                             </div>
                           )}
                         </div>
