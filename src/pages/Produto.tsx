@@ -46,6 +46,7 @@ export default function Produto() {
 
   const [sizeIdx, setSizeIdx] = useState(0);
   const [albumIdx, setAlbumIdx] = useState(-1);
+  const [chosenAlbumId, setChosenAlbumId] = useState<string | null>(null);
   const [fabric, setFabric] = useState<FabricSample | null>(null);
   const [selectedFabricKey, setSelectedFabricKey] = useState<string | null>(null);
   const [foamIdx, setFoamIdx] = useState(-1);
@@ -64,6 +65,7 @@ export default function Produto() {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
+    setAlbumIdx(-1); setChosenAlbumId(null); setFabric(null); setSelectedFabricKey(null);
     Promise.all([fetchProduct(id), fetchAlbums(), fetchMaterials()])
       .then(([p, al, fo]) => {
         setProduct(p);
@@ -86,7 +88,7 @@ export default function Produto() {
   const chooseArmSide = product?.configuration?.sideChoice?.arm ?? false;
   const { pixDiscountPct, maxInstallments } = settings;
   const selectedSize = product?.sizes[sizeIdx];
-  const selectedAlbum = albums[albumIdx];
+  const selectedAlbum = albums.find(a => a.id === chosenAlbumId);
   const selectedFoam = foams[foamIdx];
 
   const albumSurcharge = useMemo(() => {
@@ -188,6 +190,7 @@ export default function Produto() {
 
   const handleAddToCart = (goToCart: boolean) => {
     if (!selectedSize) return;
+    if (albums.length > 0 && (!selectedAlbum || !fabric)) { toast({title:"Selecione um tecido",description:"Escolha o tecido antes de adicionar o produto ao carrinho.",variant:"destructive"}); return; }
     if ((chooseChaiseSide && !selectedSide) || (chooseArmSide && !selectedArmSide)) { toast({title:"Selecione o lado do sofá",description:"Escolha o lado esquerdo ou direito.",variant:"destructive"}); return; }
     add({
       productId: product.id,
@@ -524,7 +527,7 @@ export default function Produto() {
                           {isOpen && a.fabrics.length > 0 && (
                             <div className="p-3 bg-secondary/30 border-t border-border">
                               <p className="text-xs text-muted-foreground mb-2">
-                                Toque em um tecido para ampliar e favoritar.
+                                Toque em um tecido para selecionar e ampliar.
                               </p>
                               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                                 {a.fabrics.map((f, fIdx) => {
@@ -535,7 +538,7 @@ export default function Produto() {
                                     <button
                                       key={`${a.id}-${fIdx}`}
                                       type="button"
-                                      onClick={() => setPreviewFabric({ albumId: a.id, index: fIdx })}
+                                      onClick={() => { setChosenAlbumId(a.id); setFabric(f); setSelectedFabricKey(favKey); setPreviewFabric({ albumId: a.id, index: fIdx }); }}
                                       className={`group relative flex flex-col items-center gap-1 p-2 rounded-md border bg-background transition-all ${
                                         isSelected
                                           ? "border-green-600 ring-2 ring-green-500/30"
@@ -702,8 +705,8 @@ export default function Produto() {
                   </div>
                   <div className="text-xs text-muted-foreground mt-3 space-y-0.5 pt-3 border-t border-border">
                     {selectedSize && <div>• Metragem {selectedSize.label}: {brl(adjustedBasePrice)}</div>}
-                    {selectedAlbum && <div>• {selectedAlbum.name}{fabric ? " — " + fabric.name : ""}{albumSurcharge !== 0 ? (": " + (albumSurcharge > 0 ? "+" : "") + brl(albumSurcharge)) : ""}</div>}
-                    {selectedFoam && <div>• Espuma {selectedFoam.name}{foamAdjustment !== 0 ? (": " + (foamAdjustment > 0 ? "+" : "") + brl(foamAdjustment)) : ""}</div>}
+                    {selectedAlbum && fabric && <div>• Tecido {fabric.name} ({selectedAlbum.name}){albumSurcharge !== 0 ? (": " + (albumSurcharge > 0 ? "+" : "") + brl(albumSurcharge)) : ": sem acréscimo"}</div>}
+                    {selectedFoam && <div>• {/^espuma\b/i.test(selectedFoam.name.trim()) ? selectedFoam.name : `Espuma ${selectedFoam.name}`}{foamAdjustment !== 0 ? (": " + (foamAdjustment > 0 ? "+" : "") + brl(foamAdjustment)) : ""}</div>}
                   </div>
                 </div>
               )}
@@ -934,6 +937,7 @@ export default function Produto() {
               const idx = albums.findIndex((a) => a.id === previewAlbum.id);
               if (idx >= 0) setAlbumIdx(-1);
               setFabricOptionsOpen(false);
+              setChosenAlbumId(previewAlbum.id);
               setFabric(currentFabric);
               setSelectedFabricKey(currentKey);
               setPreviewFabric(null);
