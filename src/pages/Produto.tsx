@@ -547,7 +547,7 @@ export default function Produto() {
                           {isOpen && a.fabrics.length > 0 && (
                             <div className="p-3 bg-secondary/30 border-t border-border">
                               <p className="text-xs text-muted-foreground mb-2">
-                                Toque em um tecido para selecionar e ampliar.
+                                Toque em um tecido para visualizar. Confirme a escolha na janela.
                               </p>
                               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                                 {a.fabrics.map((f, fIdx) => {
@@ -558,7 +558,7 @@ export default function Produto() {
                                     <button
                                       key={`${a.id}-${fIdx}`}
                                       type="button"
-                                      onClick={() => { setChosenAlbumId(a.id); setFabric(f); setSelectedFabricKey(favKey); setPreviewFabric({ albumId: a.id, index: fIdx }); }}
+                                      onClick={() => setPreviewFabric({ albumId: a.id, index: fIdx })}
                                       className={`group relative flex flex-col items-center gap-1 p-2 rounded-md border bg-background transition-all ${
                                         isSelected
                                           ? "border-green-600 ring-2 ring-green-500/30"
@@ -1127,20 +1127,14 @@ function FabricPreviewModal({
               </div>
             )}
           </div>
-          {isSelected ? (
-            <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-green-100 text-green-800 text-sm font-medium border border-green-200">
-              <Check className="w-4 h-4" /> Tecido selecionado
-            </div>
-          ) : (
-            <Button
-              type="button"
-              className="w-full"
-              onClick={onSelect}
-              data-testid="button-select-fabric"
-            >
-              <Check className="w-4 h-4 mr-2" /> Selecionar este tecido
-            </Button>
-          )}
+          <Button
+            type="button"
+            className="w-full"
+            onClick={onSelect}
+            data-testid="button-select-fabric"
+          >
+            <Check className="w-4 h-4 mr-2" /> {isSelected ? "Tecido selecionado" : "Selecionar este tecido"}
+          </Button>
         </div>
       </div>
     </div>
