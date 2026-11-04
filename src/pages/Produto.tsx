@@ -203,6 +203,7 @@ export default function Produto() {
 
   const handleAddToCart = async (goToCart: boolean) => {
     if (!selectedSize || adding) return;
+    if (albums.length > 0 && (!selectedAlbum || !fabric)) { toast({title:"Selecione um tecido",description:"Escolha o tecido antes de adicionar o produto ao carrinho.",variant:"destructive"}); return; }
     if ((chooseChaiseSide && !selectedSide) || (chooseArmSide && !selectedArmSide)) { toast({title:"Selecione o lado do sofá",description:"Escolha o lado esquerdo ou direito.",variant:"destructive"}); return; }
     setAdding(true);
     try {
@@ -546,7 +547,7 @@ export default function Produto() {
                           {isOpen && a.fabrics.length > 0 && (
                             <div className="p-3 bg-secondary/30 border-t border-border">
                               <p className="text-xs text-muted-foreground mb-2">
-                                Toque em um tecido para ampliar e favoritar.
+                                Toque em um tecido para selecionar e ampliar.
                               </p>
                               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                                 {a.fabrics.map((f, fIdx) => {
@@ -557,7 +558,7 @@ export default function Produto() {
                                     <button
                                       key={`${a.id}-${fIdx}`}
                                       type="button"
-                                      onClick={() => setPreviewFabric({ albumId: a.id, index: fIdx })}
+                                      onClick={() => { setChosenAlbumId(a.id); setFabric(f); setSelectedFabricKey(favKey); setPreviewFabric({ albumId: a.id, index: fIdx }); }}
                                       className={`group relative flex flex-col items-center gap-1 p-2 rounded-md border bg-background transition-all ${
                                         isSelected
                                           ? "border-green-600 ring-2 ring-green-500/30"
@@ -724,8 +725,8 @@ export default function Produto() {
                   </div>
                   <div className="text-xs text-muted-foreground mt-3 space-y-0.5 pt-3 border-t border-border">
                     {selectedSize && <div>• Metragem {selectedSize.label}: {brl(adjustedBasePrice)}</div>}
-                    {selectedAlbum && <div>• {selectedAlbum.name}{fabric ? " — " + fabric.name : ""}{albumSurcharge !== 0 ? (": " + (albumSurcharge > 0 ? "+" : "") + brl(albumSurcharge)) : ""}</div>}
-                    {selectedFoam && <div>• Espuma {selectedFoam.name}{foamAdjustment !== 0 ? (": " + (foamAdjustment > 0 ? "+" : "") + brl(foamAdjustment)) : ""}</div>}
+                    {selectedAlbum && fabric && <div>• Tecido {fabric.name} ({selectedAlbum.name}){albumSurcharge !== 0 ? (": " + (albumSurcharge > 0 ? "+" : "") + brl(albumSurcharge)) : ": sem acréscimo"}</div>}
+                    {selectedFoam && <div>• {/^espuma\b/i.test(selectedFoam.name.trim()) ? selectedFoam.name : `Espuma ${selectedFoam.name}`}{foamAdjustment !== 0 ? (": " + (foamAdjustment > 0 ? "+" : "") + brl(foamAdjustment)) : ""}</div>}
                   </div>
                 </div>
               )}
