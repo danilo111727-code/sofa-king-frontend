@@ -981,37 +981,82 @@ function FabricPreviewModal({
   onClose, onToggleFavorite, onSelect, onPrev, onNext,
 }: FabricPreviewModalProps) {
   const [zoomOpen, setZoomOpen] = useState(false);
+  const [imageTransform, setImageTransform] = useState({ scale: 1, x: 0, y: 0 });
+  const imageGesture = useRef({ pinching: false, distance: 0, scale: 1, x: 0, y: 0, touchX: 0, touchY: 0, moved: false });
+  useEffect(() => {
+    setImageTransform({ scale: 1, x: 0, y: 0 });
+    imageGesture.current.pinching = false;
+    imageGesture.current.moved = false;
+  }, [fabric.imageUrl, fabric.name]);
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
+      if (zoomOpen) return;
       if (e.key === "Escape") onClose();
       else if (e.key === "ArrowRight" && onNext) onNext();
       else if (e.key === "ArrowLeft" && onPrev) onPrev();
     };
     document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [onClose, onNext, onPrev, zoomOpen]);
+  useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      document.removeEventListener("keydown", handleKey);
       document.body.style.overflow = prevOverflow;
     };
-  }, [onClose, onNext, onPrev]);
+  }, []);
 
   const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const touchDistance = (touches: ReactTouchEvent["touches"]) => Math.hypot(
+    touches[0].clientX - touches[1].clientX,
+    touches[0].clientY - touches[1].clientY,
+  );
   const handleTouchStart = (e: ReactTouchEvent) => {
+    const g = imageGesture.current;
+    g.moved = false;
+    if (e.touches.length === 2) {
+      g.pinching = true;
+      g.distance = touchDistance(e.touches);
+      g.scale = imageTransform.scale;
+      touchStart.current = null;
+      return;
+    }
     const t = e.touches[0];
+    g.pinching = false;
+    g.touchX = t.clientX; g.touchY = t.clientY;
+    g.x = imageTransform.x; g.y = imageTransform.y;
     touchStart.current = { x: t.clientX, y: t.clientY };
   };
+  const handleTouchMove = (e: ReactTouchEvent) => {
+    const g = imageGesture.current;
+    if (e.touches.length === 2 && g.pinching && g.distance > 0) {
+      const scale = Math.min(5, Math.max(1, g.scale * touchDistance(e.touches) / g.distance));
+      g.moved = true;
+      setImageTransform(prev => ({ scale, x: scale === 1 ? 0 : prev.x, y: scale === 1 ? 0 : prev.y }));
+    } else if (e.touches.length === 1 && imageTransform.scale > 1) {
+      const t = e.touches[0];
+      g.moved = true;
+      setImageTransform(prev => ({ ...prev,
+        x: g.x + (t.clientX - g.touchX) / prev.scale,
+        y: g.y + (t.clientY - g.touchY) / prev.scale,
+      }));
+    }
+  };
   const handleTouchEnd = (e: ReactTouchEvent) => {
+    const g = imageGesture.current;
     const start = touchStart.current;
-    if (!start) return;
+    touchStart.current = null;
+    const wasPinching = g.pinching;
+    g.pinching = false;
+    if (wasPinching || g.moved || imageTransform.scale > 1 || !start || !e.changedTouches.length) return;
     const t = e.changedTouches[0];
     const dx = t.clientX - start.x;
     const dy = t.clientY - start.y;
     if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      g.moved = true;
       if (dx < 0 && onNext) onNext();
       else if (dx > 0 && onPrev) onPrev();
     }
-    touchStart.current = null;
   };
 
   return (
@@ -1024,8 +1069,6 @@ function FabricPreviewModal({
       <div
         className="relative bg-background rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
         onClick={(e) => e.stopPropagation()}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
       >
         <button
           type="button"
@@ -1050,7 +1093,9 @@ function FabricPreviewModal({
           />
         </button>
 
-        <div className="relative aspect-[4/3] bg-muted flex items-center justify-center select-none">
+        <div className="relative aspect-[4/3] bg-muted flex items-center justify-center select-none overflow-hidden"
+          style={{ touchAction: "none" }} onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
           {fabric.imageUrl ? (
             <>
               <img
@@ -1060,7 +1105,8 @@ function FabricPreviewModal({
                 loading="eager"
                 decoding="async"
                 draggable={false}
-                onClick={() => setZoomOpen(true)}
+                style={{ transform: `scale(${imageTransform.scale}) translate(${imageTransform.x}px, ${imageTransform.y}px)` }}
+                onClick={() => { if (imageGesture.current.moved) return; setZoomOpen(true); }}
               />
               <button
                 type="button"
@@ -1136,6 +1182,7 @@ function FabricPreviewModal({
         onNext={() => {}}
         onPrev={() => {}}
         altBase={fabric.name}
+        zIndex={140}
       />
     )}
     </>

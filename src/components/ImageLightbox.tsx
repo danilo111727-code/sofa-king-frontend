@@ -8,9 +8,10 @@ interface Props {
   onNext: () => void;
   onPrev: () => void;
   altBase?: string;
+  zIndex?: number;
 }
 
-export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, altBase = "Foto" }: Props) {
+export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, altBase = "Foto", zIndex = 50 }: Props) {
   const hasPrev = currentIndex > 0;
   const hasNext = currentIndex < images.length - 1;
 
@@ -53,12 +54,15 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
 
   useEffect(() => {
     document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [handleKey]);
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      document.removeEventListener("keydown", handleKey);
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
-  }, [handleKey]);
+  }, []);
 
   const getDist = (touches: React.TouchList) => {
     const dx = touches[0].clientX - touches[1].clientX;
@@ -70,7 +74,6 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
     const s = state.current;
 
     if (e.touches.length === 2) {
-      e.preventDefault();
       s.pinching = true;
       s.dragging = false;
       s.lastDist = getDist(e.touches);
@@ -107,12 +110,10 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
     const s = state.current;
 
     if (e.touches.length === 2 && s.pinching) {
-      e.preventDefault();
       const dist = getDist(e.touches);
       const newScale = Math.min(Math.max(s.lastScale * (dist / s.lastDist), 1), 5);
       setScale(newScale);
     } else if (e.touches.length === 1 && s.dragging) {
-      e.preventDefault();
       const touch = e.touches[0];
       const newTx = (touch.clientX - s.dragStartX) / scale;
       const newTy = (touch.clientY - s.dragStartY) / scale;
@@ -152,6 +153,9 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 animate-in fade-in duration-150"
+      style={{ zIndex }}
+      role="dialog" aria-modal="true" aria-label={`${altBase} ampliada`}
+      data-testid="image-lightbox"
       onClick={handleBackdropClick}
     >
       {/* Close */}
@@ -180,7 +184,7 @@ export function ImageLightbox({ images, currentIndex, onClose, onNext, onPrev, a
         style={{
           width: "92vw",
           height: "90vh",
-          touchAction: isZoomed ? "none" : "pan-y",
+          touchAction: "none",
         }}
         onClick={(e) => e.stopPropagation()}
         onTouchStart={handleTouchStart}
