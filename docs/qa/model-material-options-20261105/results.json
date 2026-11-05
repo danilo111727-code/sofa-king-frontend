@@ -1,0 +1,22 @@
+[
+  {
+    "width": 390,
+    "removeExactlyTwoFoams": true,
+    "saveAndReopen": true,
+    "reloadReadsFreshDespiteStaleList": true,
+    "customerFiltersCorrectly": true,
+    "emptySelectionAndUnconfiguredDefaults": true,
+    "pricesAndOtherConfigurationPreserved": true,
+    "errors": []
+  },
+  {
+    "width": 1366,
+    "removeExactlyTwoFoams": true,
+    "saveAndReopen": true,
+    "reloadReadsFreshDespiteStaleList": true,
+    "customerFiltersCorrectly": true,
+    "emptySelectionAndUnconfiguredDefaults": true,
+    "pricesAndOtherConfigurationPreserved": true,
+    "errors": []
+  }
+]
