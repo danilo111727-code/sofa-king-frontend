@@ -17,7 +17,7 @@ import { useFavorites } from "@/hooks/useFavorites";
 import { displayName } from "@/lib/categories";
 import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
 import { DiagramaViewer } from "@/components/DiagramaViewer";
-import { supportsExtendedDepth } from "@/lib/productConfigurator";
+import { supportsExtendedDepth, isAllowed } from "@/lib/productConfigurator";
 
 // Vector contours traced from the approved artwork: crisp at every zoom level.
 function MeasurementDrawing({kind,label,large=false}:{kind:string;label:string;large?:boolean}) {
@@ -72,8 +72,8 @@ export default function Produto() {
         const referenceLabel = p.displaySizeLabel?.trim();
         const referenceIndex = referenceLabel ? p.sizes.findIndex(size => size.label.trim() === referenceLabel) : -1;
         setSizeIdx(referenceIndex >= 0 ? referenceIndex : 0);
-        setAlbums(al);
-        setFoams(fo.filter((f) => f.active));
+        setAlbums(al.filter(a => a.active && isAllowed(a.id, p.configuration?.allowedAlbumIds)));
+        setFoams(fo.filter(f => f.active && isAllowed(f.id, p.configuration?.allowedFoamIds)));
         trackView({ productId: p.id, productName: p.name, path: `/produto/${p.id}` });
       })
       .catch(() => setNotFound(true))

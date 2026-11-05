@@ -5,6 +5,7 @@ import { useLocation } from "wouter";
 import { useUser, useClerk } from "@clerk/react";
 import {
   fetchProducts,
+  fetchProduct,
   fetchAdminStatus,
   createProduct,
   updateProduct,
@@ -328,7 +329,9 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
   }
 
   function openNew() { setSelectedCollection(""); setSelectedNumber("01"); setConfiguration({}); pingApi(); setEditId(null); setForm(EMPTY_PRODUTO); setShowForm(true); }
-  function openEdit(p: Product) {
+  async function openEdit(p: Product) {
+    try { p = await fetchProduct(p.id); }
+    catch { flash("err", "Não foi possível carregar as opções atuais do modelo. Tente novamente."); return; }
     const group=getGroup(p); setSelectedCollection(group==="Sem coleção"?"":group); setSelectedNumber(p.name.match(/(\d+)$/)?.[1]?.padStart(2,"0")||"01");
     setConfiguration(p.configuration ?? {});
     pingApi();
@@ -566,6 +569,32 @@ function ProdutosTab({ flash }: { flash: (t: "ok" | "err", s: string) => void })
               <button onClick={closeForm} className="text-[#a08060] hover:text-white text-xl leading-none">✕</button>
             </div>
             <form onSubmit={handleSave} className="px-6 py-5 space-y-4">
+              <section className="rounded-xl border border-[#756044] bg-[#302315] p-4 space-y-4" data-testid="admin-material-options">
+                <div>
+                  <h3 className="font-semibold text-sm text-white">Álbuns e espumas deste modelo</h3>
+                  <p className="mt-1 text-xs text-[#e1cdb4]">Marque as opções que o cliente poderá escolher neste modelo. Salve o produto para aplicar.</p>
+                </div>
+                {([
+                  { key: "allowedAlbumIds", title: "Álbuns de tecidos permitidos", options: albums },
+                  { key: "allowedFoamIds", title: "Espumas permitidas", options: foams },
+                ] as const).map(group => (
+                  <fieldset key={group.key} className="space-y-2">
+                    <legend className="mb-2 text-sm font-medium text-[#e1cdb4]">{group.title}</legend>
+                    {group.options.length === 0 && <p className="text-xs text-[#a08060]">Nenhuma opção ativa cadastrada.</p>}
+                    {group.options.map(option => (
+                      <label key={option.id} className="flex items-center gap-3 rounded-lg border border-[#756044]/50 px-3 py-2 text-sm text-white">
+                        <input type="checkbox" data-testid={`${group.key}-${option.id}`}
+                          checked={(configuration[group.key] ?? group.options.map(item => item.id)).includes(option.id)}
+                          onChange={() => setConfiguration(previous => {
+                            const current = previous[group.key] ?? group.options.map(item => item.id);
+                            return { ...previous, [group.key]: current.includes(option.id) ? current.filter(id => id !== option.id) : [...current, option.id] };
+                          })} />
+                        {option.name}
+                      </label>
+                    ))}
+                  </fieldset>
+                ))}
+              </section>
               <div className="rounded-xl border border-[#756044] bg-[#302315] p-4 space-y-3" data-testid="admin-side-options">
                 <p className="font-semibold text-sm text-white">Escolha do lado do sofá</p>
                 <p className="text-xs text-[#e1cdb4]">Habilite as opções que o cliente poderá escolher neste modelo.</p>
