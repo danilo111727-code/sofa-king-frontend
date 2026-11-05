@@ -1040,7 +1040,7 @@ function FabricPreviewModal({
   return (
     <>
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 animate-in fade-in duration-150"
+      className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 p-4 animate-in fade-in duration-150"
       onClick={onClose}
       data-testid="fabric-preview-overlay"
     >
@@ -1080,6 +1080,8 @@ function FabricPreviewModal({
                 src={fabric.imageUrl}
                 alt={fabric.name}
                 className="w-full h-full object-contain cursor-zoom-in"
+                loading="eager"
+                decoding="async"
                 draggable={false}
                 onClick={() => setZoomOpen(true)}
               />
