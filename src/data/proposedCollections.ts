@@ -2,7 +2,7 @@
  * Não renomeia produtos nem altera dados de produção.
  * Vínculos são candidatos e precisam de confirmação visual.
  */
-export const proposedCollections = [
+export const proposedCollections = ([
   ["Brooklyn", ["retratil-brooklyn", "cama-brooklyn", "living-brooklyn", "brooklyn-linear", "brooklyn"]],
   ["Monaco", []],
   ["Urban", []],
@@ -24,4 +24,4 @@ export const proposedCollections = [
   ["Istambul", ["retratil-istambul", "istambul"]],
   ["Bali", ["fixo-jakarta", "jakarta"]],
   ["Atlas", ["lounge-05"]],
-].map(([name, candidateProductIds]) => ({name, candidateProductIds, status:"approved" as const}));
+] satisfies Array<[string, string[]]>).map(([name, candidateProductIds]) => ({name, candidateProductIds, status:"approved" as const}));

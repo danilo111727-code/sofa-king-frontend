@@ -1,0 +1,402 @@
+[
+  {
+    "name": "home",
+    "width": 1024,
+    "height": 768,
+    "overflow": false,
+    "viewport": [
+      1024,
+      768
+    ],
+    "header": 81,
+    "hero": 460.796875
+  },
+  {
+    "name": "product",
+    "width": 1024,
+    "height": 768,
+    "overflow": false,
+    "viewport": [
+      1024,
+      768
+    ],
+    "header": 81,
+    "gallery": {
+      "x": 32,
+      "y": 166,
+      "width": 960,
+      "height": 636,
+      "top": 166,
+      "right": 992,
+      "bottom": 802,
+      "left": 32
+    },
+    "options": {
+      "x": 128,
+      "y": 830,
+      "width": 768,
+      "height": 230.96875,
+      "top": 830,
+      "right": 896,
+      "bottom": 1060.96875,
+      "left": 128
+    }
+  },
+  {
+    "name": "catalog",
+    "width": 1024,
+    "height": 768,
+    "overflow": false,
+    "viewport": [
+      1024,
+      768
+    ],
+    "header": 81
+  },
+  {
+    "name": "cart",
+    "width": 1024,
+    "height": 768,
+    "overflow": false,
+    "viewport": [
+      1024,
+      768
+    ],
+    "header": 81
+  },
+  {
+    "name": "home",
+    "width": 1280,
+    "height": 720,
+    "overflow": false,
+    "viewport": [
+      1280,
+      720
+    ],
+    "header": 81,
+    "hero": 432
+  },
+  {
+    "name": "product",
+    "width": 1280,
+    "height": 720,
+    "overflow": false,
+    "viewport": [
+      1280,
+      720
+    ],
+    "header": 81,
+    "gallery": {
+      "x": 88,
+      "y": 150,
+      "width": 558.171875,
+      "height": 526.53125,
+      "top": 150,
+      "right": 646.171875,
+      "bottom": 676.53125,
+      "left": 88
+    },
+    "options": {
+      "x": 684.5625,
+      "y": 150,
+      "width": 507.4375,
+      "height": 180.203125,
+      "top": 150,
+      "right": 1192,
+      "bottom": 330.203125,
+      "left": 684.5625
+    }
+  },
+  {
+    "name": "catalog",
+    "width": 1280,
+    "height": 720,
+    "overflow": false,
+    "viewport": [
+      1280,
+      720
+    ],
+    "header": 81
+  },
+  {
+    "name": "cart",
+    "width": 1280,
+    "height": 720,
+    "overflow": false,
+    "viewport": [
+      1280,
+      720
+    ],
+    "header": 81
+  },
+  {
+    "name": "home",
+    "width": 1366,
+    "height": 768,
+    "overflow": false,
+    "viewport": [
+      1366,
+      768
+    ],
+    "header": 81,
+    "hero": 460.796875
+  },
+  {
+    "name": "product",
+    "width": 1366,
+    "height": 768,
+    "overflow": false,
+    "viewport": [
+      1366,
+      768
+    ],
+    "header": 81,
+    "gallery": {
+      "x": 131,
+      "y": 150,
+      "width": 556.8125,
+      "height": 525.4375,
+      "top": 150,
+      "right": 687.8125,
+      "bottom": 675.4375,
+      "left": 131
+    },
+    "options": {
+      "x": 728.78125,
+      "y": 150,
+      "width": 506.21875,
+      "height": 180.140625,
+      "top": 150,
+      "right": 1235,
+      "bottom": 330.140625,
+      "left": 728.78125
+    }
+  },
+  {
+    "name": "catalog",
+    "width": 1366,
+    "height": 768,
+    "overflow": false,
+    "viewport": [
+      1366,
+      768
+    ],
+    "header": 81
+  },
+  {
+    "name": "cart",
+    "width": 1366,
+    "height": 768,
+    "overflow": false,
+    "viewport": [
+      1366,
+      768
+    ],
+    "header": 81
+  },
+  {
+    "width": 1366,
+    "flows": "size/fabric-preview/fabric-selection/foam-close/measurements/cart",
+    "passed": true
+  },
+  {
+    "name": "home",
+    "width": 1440,
+    "height": 900,
+    "overflow": false,
+    "viewport": [
+      1440,
+      900
+    ],
+    "header": 81,
+    "hero": 500
+  },
+  {
+    "name": "product",
+    "width": 1440,
+    "height": 900,
+    "overflow": false,
+    "viewport": [
+      1440,
+      900
+    ],
+    "header": 81,
+    "gallery": {
+      "x": 168,
+      "y": 150,
+      "width": 555.65625,
+      "height": 524.515625,
+      "top": 150,
+      "right": 723.65625,
+      "bottom": 674.515625,
+      "left": 168
+    },
+    "options": {
+      "x": 766.84375,
+      "y": 150,
+      "width": 505.15625,
+      "height": 180.09375,
+      "top": 150,
+      "right": 1272,
+      "bottom": 330.09375,
+      "left": 766.84375
+    }
+  },
+  {
+    "name": "catalog",
+    "width": 1440,
+    "height": 900,
+    "overflow": false,
+    "viewport": [
+      1440,
+      900
+    ],
+    "header": 81
+  },
+  {
+    "name": "cart",
+    "width": 1440,
+    "height": 900,
+    "overflow": false,
+    "viewport": [
+      1440,
+      900
+    ],
+    "header": 81
+  },
+  {
+    "name": "home",
+    "width": 1920,
+    "height": 1080,
+    "overflow": false,
+    "viewport": [
+      1920,
+      1080
+    ],
+    "header": 81,
+    "hero": 500
+  },
+  {
+    "name": "product",
+    "width": 1920,
+    "height": 1080,
+    "overflow": false,
+    "viewport": [
+      1920,
+      1080
+    ],
+    "header": 81,
+    "gallery": {
+      "x": 320,
+      "y": 150,
+      "width": 645.328125,
+      "height": 596.25,
+      "top": 150,
+      "right": 965.328125,
+      "bottom": 746.25,
+      "left": 320
+    },
+    "options": {
+      "x": 1013.328125,
+      "y": 150,
+      "width": 586.671875,
+      "height": 185.46875,
+      "top": 150,
+      "right": 1600,
+      "bottom": 335.46875,
+      "left": 1013.328125
+    }
+  },
+  {
+    "name": "catalog",
+    "width": 1920,
+    "height": 1080,
+    "overflow": false,
+    "viewport": [
+      1920,
+      1080
+    ],
+    "header": 81
+  },
+  {
+    "name": "cart",
+    "width": 1920,
+    "height": 1080,
+    "overflow": false,
+    "viewport": [
+      1920,
+      1080
+    ],
+    "header": 81
+  },
+  {
+    "name": "home",
+    "width": 390,
+    "height": 844,
+    "overflow": false,
+    "viewport": [
+      390,
+      844
+    ],
+    "header": 65,
+    "hero": 243.75
+  },
+  {
+    "name": "product",
+    "width": 390,
+    "height": 844,
+    "overflow": false,
+    "viewport": [
+      390,
+      844
+    ],
+    "header": 65,
+    "gallery": {
+      "x": 16,
+      "y": 126,
+      "width": 358,
+      "height": 366.390625,
+      "top": 126,
+      "right": 374,
+      "bottom": 492.390625,
+      "left": 16
+    },
+    "options": {
+      "x": 16,
+      "y": 512.390625,
+      "width": 358,
+      "height": 108.421875,
+      "top": 512.390625,
+      "right": 374,
+      "bottom": 620.8125,
+      "left": 16
+    }
+  },
+  {
+    "name": "catalog",
+    "width": 390,
+    "height": 844,
+    "overflow": false,
+    "viewport": [
+      390,
+      844
+    ],
+    "header": 65
+  },
+  {
+    "name": "cart",
+    "width": 390,
+    "height": 844,
+    "overflow": false,
+    "viewport": [
+      390,
+      844
+    ],
+    "header": 65
+  },
+  {
+    "width": 390,
+    "flows": "size/fabric-preview/fabric-selection/foam-close/measurements/cart",
+    "passed": true
+  }
+]
