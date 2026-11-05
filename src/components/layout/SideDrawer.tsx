@@ -37,14 +37,6 @@ function buildMenu(categories: CategoryDef[]): MenuItem[] {
     return { label: g.label, children };
   }).filter((g) => "children" in g && g.children.length > 0);
 
-  const orphans = categories.filter((c) => !used.has(c.id));
-  if (orphans.length > 0) {
-    groups.push({
-      label: "OUTROS",
-      children: orphans.map((c) => ({ label: c.label, href: `/modelos?categoria=${c.id}` })),
-    });
-  }
-
   return [
     { label: "BESTSELLERS", href: "/modelos?destaque=1" },
     { label: "DESIGN AUTORAIS", href: "/modelos?design=1" },
