@@ -752,12 +752,12 @@ export default function Produto() {
                     className="h-14 text-base font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg"
                     data-testid="button-buy-now"
                   >
-                    {product.disponibilidade ? "Comprar agora" : "Indisponível"}
+                    {product.disponibilidade ? "Enviar meu pedido" : "Indisponível"}
                   </Button>
                 </div>
               )}
               <p className="text-xs text-center text-muted-foreground mt-2">
-                O fechamento do pedido é feito pelo WhatsApp, direto do seu carrinho.
+                Envie seu pedido para a Sofa King e combine os detalhes para finalizar.
               </p>
             </div>
           </div>
