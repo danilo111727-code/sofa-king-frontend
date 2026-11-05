@@ -1,0 +1,49 @@
+[
+  {
+    "width": 390,
+    "ampliar": true,
+    "layerCorrect": true,
+    "pinch": "detail and fullscreen",
+    "doubleTap": true,
+    "escapeReturnsToDetail": true,
+    "noAutomaticSelection": true,
+    "priceUnchanged": true,
+    "galleryPreserved": true,
+    "explicitSelection": true,
+    "noHorizontalOverflow": true,
+    "drag": true,
+    "errors": []
+  },
+  {
+    "width": 375,
+    "ampliar": true,
+    "layerCorrect": true,
+    "pinch": "detail and fullscreen",
+    "doubleTap": true,
+    "escapeReturnsToDetail": true,
+    "noAutomaticSelection": true,
+    "priceUnchanged": true,
+    "galleryPreserved": true,
+    "explicitSelection": true,
+    "noHorizontalOverflow": true,
+    "drag": true,
+    "errors": [
+      "Clerk: Failed to load Clerk JS, failed to load script: https://giving-cowbird-68.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js\n\n(code=\"failed_to_load_clerk_js\")\n\n"
+    ]
+  },
+  {
+    "width": 1366,
+    "ampliar": true,
+    "layerCorrect": true,
+    "pinch": "not applicable",
+    "doubleTap": false,
+    "escapeReturnsToDetail": true,
+    "noAutomaticSelection": true,
+    "priceUnchanged": true,
+    "galleryPreserved": true,
+    "explicitSelection": true,
+    "noHorizontalOverflow": true,
+    "drag": false,
+    "errors": []
+  }
+]
