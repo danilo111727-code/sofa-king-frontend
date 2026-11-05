@@ -1,0 +1,30 @@
+[
+  {
+    "width": 390,
+    "missingBothOpensFabric": true,
+    "fabricPromptVisible": true,
+    "missingFoamOpensPicker": true,
+    "noQuoteOrCartBeforeComplete": true,
+    "includedFoamRequired": true,
+    "completeOrderReachesCart": true,
+    "whatsappInterceptedOnly": true,
+    "legacyPreservesFabricSizeQuantity": true,
+    "noDuplicateCartItem": true,
+    "missingFabricPreservesFoam": true,
+    "errors": []
+  },
+  {
+    "width": 1366,
+    "missingBothOpensFabric": true,
+    "fabricPromptVisible": true,
+    "missingFoamOpensPicker": true,
+    "noQuoteOrCartBeforeComplete": true,
+    "includedFoamRequired": true,
+    "completeOrderReachesCart": true,
+    "whatsappInterceptedOnly": true,
+    "legacyPreservesFabricSizeQuantity": true,
+    "noDuplicateCartItem": true,
+    "missingFabricPreservesFoam": true,
+    "errors": []
+  }
+]
