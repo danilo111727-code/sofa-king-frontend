@@ -23,12 +23,11 @@ export function useCategories(): UseCategoriesResult {
   return useMemo(() => {
     const configured = Array.isArray(settings.categories) && settings.categories.length > 0
       ? settings.categories : DEFAULT_CATEGORIES;
-    // Existing accounts may have saved categories before these two defaults existed.
-    const newDefaults = DEFAULT_CATEGORIES.filter(c =>
-      ["retratil-sem-caixa", "area-externa"].includes(c.id) &&
-      !configured.some(saved => saved.id === c.id)
+    // Do not surface the two unintended categories, including when already saved.
+    // Product records and stored settings remain untouched.
+    const categories = configured.filter(c =>
+      c.id !== "retratil-sem-caixa" && c.id !== "area-externa"
     );
-    const categories = [...configured, ...newDefaults];
     return {
       categories,
       getCategory: (id) => getCategoryFrom(categories, id),
