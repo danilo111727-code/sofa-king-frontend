@@ -476,7 +476,7 @@ export default function Produto() {
                     <div className="flex-1 min-w-0"><div className="text-sm font-semibold truncate">{fabric ? fabric.name : selectedAlbum ? selectedAlbum.name : "Escolha seu tecido"}</div><div className="text-xs text-muted-foreground">{albums.reduce((n,a) => n+a.fabrics.length,0)} tecidos · {albums.length} álbuns</div></div>
                     <span className="text-xs font-semibold text-primary whitespace-nowrap">{fabricOptionsOpen ? "Fechar" : fabric ? "Alterar escolha" : "Ver tecidos"}</span>
                   </button>
-                  {fabricOptionsOpen && <div className="space-y-2">
+                  {fabricOptionsOpen && <div className="space-y-3" data-testid="fabric-album-list">
                     {albums.map((a, i) => {
                       // Mesma prioridade usada no calculo do preco final:
                       // 1) acrescimo por produto+tamanho (selectedSize.albumSurcharges)
@@ -489,7 +489,7 @@ export default function Produto() {
                         <div key={a.id} className="rounded-xl border border-border/80 overflow-hidden">
                           <button
                             type="button"
-                            onClick={() => setAlbumIdx(isOpen ? -1 : i)}
+                            onClick={() => setAlbumIdx(i)}
                             className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left transition-colors ${
                               isOpen
                                 ? "bg-primary text-primary-foreground"
@@ -498,23 +498,22 @@ export default function Produto() {
                             data-testid={`button-album-${a.id}`}
                             aria-expanded={isOpen}
                           >
-                            <div className="min-w-0">
-                              <div className="font-semibold flex items-center gap-2">
-                                {a.name}
+                            <div className="min-w-0 flex-1 space-y-0.5">
+                              <div className="text-[15px] leading-5 font-semibold flex items-center gap-2">
+                                <span className="min-w-0">{a.name}</span>
                                 {selectedFabricKey && selectedFabricKey.startsWith(`fab_${a.id}_`) && (
-                                  <span className="inline-flex items-center gap-1 text-xs bg-green-500/90 text-white px-1.5 py-0.5 rounded">
+                                  <span className="inline-flex shrink-0 items-center gap-1 text-[11px] bg-green-500/90 text-white px-1.5 py-0.5 rounded">
                                     <Check className="w-3 h-3" /> selecionado
                                   </span>
                                 )}
                               </div>
                               {a.description?.trim() && (
-                                <p className="text-[13px] leading-4 text-muted-foreground mt-1">{a.description.trim()}</p>
+                                <p className="text-[13px] leading-4 opacity-80">{a.description.trim()}</p>
                               )}
-                              <div className="text-xs opacity-80">
-                                {s > 0 ? `Acréscimo de ${brl(s)}` : s < 0 ? `Desconto de ${brl(Math.abs(s))}` : "Sem acréscimo no valor"}
-                                {a.fabrics.length > 0 && (
-                                  <> · {a.fabrics.length} {a.fabrics.length === 1 ? "opção de tecido" : "opções de tecido"}</>
-                                )}
+                              <div className="flex flex-wrap items-center gap-x-1.5 text-xs leading-4 opacity-85">
+                                <span>{a.fabrics.length} {a.fabrics.length === 1 ? "opção de tecido" : "opções de tecido"}</span>
+                                <span aria-hidden="true">·</span>
+                                <span className="font-medium">{s > 0 ? `Acréscimo de ${brl(s)}` : s < 0 ? `Desconto de ${brl(Math.abs(s))}` : "Sem acréscimo no valor"}</span>
                               </div>
                             </div>
                             {isOpen ? (
@@ -524,8 +523,14 @@ export default function Produto() {
                             )}
                           </button>
 
-                          {isOpen && a.fabrics.length > 0 && (
-                            <div className="p-3 bg-secondary/30 border-t border-border">
+                          {isOpen && (
+                            <div className="fixed inset-0 z-[100] flex flex-col bg-background" role="dialog" aria-modal="true" aria-label={`Tecidos do álbum ${a.name}`} data-testid="fabric-fullscreen-picker">
+                              <div className="shrink-0 flex items-center justify-between gap-3 border-b border-border bg-background px-4 py-3 pt-[max(1rem,env(safe-area-inset-top))]">
+                                <div className="min-w-0"><h2 className="text-lg font-semibold truncate">{a.name}</h2><p className="text-xs text-muted-foreground">{a.fabrics.length} opções de tecido</p></div>
+                                <button type="button" aria-label="Fechar álbum de tecidos" data-testid="close-fabric-picker" onClick={() => setAlbumIdx(-1)} className="shrink-0 rounded-full border border-border bg-secondary p-2.5 text-foreground"><X className="w-6 h-6" /></button>
+                              </div>
+                              <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+                                <div className="mx-auto max-w-3xl">
                               <p className="text-xs text-muted-foreground mb-2">
                                 Toque em um tecido para visualizar. Confirme a escolha na janela.
                               </p>
@@ -567,10 +572,12 @@ export default function Produto() {
                                       <span className="text-[11px] font-medium text-center line-clamp-1 w-full">
                                         {f.name}
                                       </span>
-                                      {!!f.tags?.length && <div className="flex flex-wrap justify-center gap-1 w-full">{f.tags.filter(tag => ["Linho", "Bouclé", "Veludo", "Chenille", "Suede", "Sarja", "Jacquard", "Couro natural", "Couro sintético", "Tecido tramado"].includes(tag)).map(tag => <span key={tag} className="text-[9px] leading-tight px-1.5 py-0.5 rounded bg-secondary text-secondary-foreground border border-border">{tag}</span>)}</div>}
+                                      {f.tags?.some(tag => ["Linho", "Bouclé", "Veludo", "Chenille", "Suede", "Sarja", "Jacquard", "Couro natural", "Couro sintético", "Tecido tramado"].includes(tag)) && <div className="flex flex-wrap justify-center gap-1 w-full">{f.tags.filter(tag => ["Linho", "Bouclé", "Veludo", "Chenille", "Suede", "Sarja", "Jacquard", "Couro natural", "Couro sintético", "Tecido tramado"].includes(tag)).map(tag => <span key={tag} className="text-[9px] leading-tight px-1.5 py-0.5 rounded bg-secondary text-secondary-foreground border border-border">{tag}</span>)}</div>}
                                     </button>
                                   );
                                 })}
+                              </div>
+                              </div>
                               </div>
                             </div>
                           )}
@@ -598,7 +605,12 @@ export default function Produto() {
                     <div className="flex-1 min-w-0"><div className="text-sm font-semibold truncate">{selectedFoam ? selectedFoam.name : "Escolha sua espuma"}</div><div className="text-xs text-muted-foreground">{foams.length} opções de espuma</div></div>
                     <span className="text-xs font-semibold text-primary whitespace-nowrap">{foamOptionsOpen ? "Fechar" : selectedFoam ? "Alterar escolha" : "Ver espumas"}</span>
                   </button>
-                  {foamOptionsOpen && <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {foamOptionsOpen && <div className="fixed inset-0 z-[100] flex flex-col bg-background" role="dialog" aria-modal="true" aria-label="Escolher espuma" data-testid="foam-fullscreen-picker">
+                    <div className="shrink-0 flex items-center justify-between border-b border-border px-4 py-4 pt-[max(1rem,env(safe-area-inset-top))]">
+                      <div><h2 className="font-semibold text-lg">Escolha sua espuma</h2><p className="text-xs text-muted-foreground">{foams.length} opções de espuma</p></div>
+                      <button type="button" aria-label="Fechar seleção de espumas" data-testid="close-foam-picker" onClick={() => setFoamOptionsOpen(false)} className="rounded-full p-2 border border-border hover:bg-secondary"><X className="w-5 h-5" /></button>
+                    </div>
+                    <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]"><div className="mx-auto max-w-3xl grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {foams.map((f, i) => {
                       // Mesma prioridade usada no calculo do preco final:
                       // 1) acrescimo por produto+tamanho (selectedSize.foamSurcharges)
@@ -635,7 +647,7 @@ export default function Produto() {
                       </button>
                       );
                     })}
-                  </div>}
+                    </div></div></div>}
                   {selectedFoam && (selectedFoam.weightSupport || selectedFoam.comfortLevel || selectedFoam.useIndication || selectedFoam.longTermBehavior) && (
                     <button
                       type="button"
@@ -1005,7 +1017,7 @@ function FabricPreviewModal({
   return (
     <>
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 animate-in fade-in duration-150"
+      className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 p-4 animate-in fade-in duration-150"
       onClick={onClose}
       data-testid="fabric-preview-overlay"
     >
@@ -1045,6 +1057,8 @@ function FabricPreviewModal({
                 src={fabric.imageUrl}
                 alt={fabric.name}
                 className="w-full h-full object-contain cursor-zoom-in"
+                loading="eager"
+                decoding="async"
                 draggable={false}
                 onClick={() => setZoomOpen(true)}
               />
