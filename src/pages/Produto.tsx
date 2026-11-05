@@ -238,12 +238,12 @@ export default function Produto() {
           </div>
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10">
-          <div className="flex flex-col gap-5 sm:gap-7 max-w-5xl mx-auto">
+        <div className="product-content container mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10">
+          <div className="product-detail-layout flex flex-col gap-5 sm:gap-7 max-w-5xl mx-auto">
             {/* Image Gallery */}
-            <div aria-label="Galeria de fotos do sofá" className="space-y-3">
+            <div aria-label="Galeria de fotos do sofá" className="product-gallery-panel space-y-3">
               <div
-                className={`aspect-[5/4] sm:aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-border/70 relative group shadow-sm ${
+                className={`product-main-gallery aspect-[5/4] sm:aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-border/70 relative group shadow-sm ${
                   galleryImages[mainImageIdx] !== DIAGRAMA_SENTINEL ? "cursor-zoom-in" : ""
                 }`}
                 data-testid="img-product-main"
@@ -294,7 +294,7 @@ export default function Produto() {
             </div>
 
             {/* Info */}
-            <div className="flex flex-col w-full max-w-3xl mx-auto">
+            <div className="product-options-panel flex flex-col w-full max-w-3xl mx-auto">
               {!product.disponibilidade && (
                 <span className="self-start mb-3 px-3 py-1 bg-red-100 text-red-700 text-sm rounded-full font-medium">Indisponível</span>
               )}

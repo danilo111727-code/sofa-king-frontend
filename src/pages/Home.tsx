@@ -142,7 +142,7 @@ export default function Home() {
       <main className="flex-grow pb-20 sm:pb-8">
         {/* Hero Section */}
           <section className="bg-secondary/30">
-            <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] overflow-hidden bg-secondary/50 group">
+            <div className="home-hero relative w-full aspect-[16/10] sm:aspect-[21/9] overflow-hidden bg-secondary/50 group">
                 {heroImages.map((src, i) => (
                   <img
                     key={`${src}-${i}`}
