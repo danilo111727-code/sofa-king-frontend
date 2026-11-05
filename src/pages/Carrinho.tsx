@@ -317,10 +317,10 @@ import { Link } from "wouter";
                       onClick={handleSend}
                       data-testid="button-whatsapp-checkout"
                     >
-                      Solicitar contato no WhatsApp
+                      Enviar meu pedido
                     </Button>
                     <p className="text-[11px] text-muted-foreground text-center mt-2 leading-snug">
-                      Você será direcionado para o WhatsApp com o resumo do seu pedido para fecharmos juntos.
+                      Envie seu pedido para a Sofa King e combine os detalhes para finalizar.
                     </p>
                   </div>
                 </aside>
