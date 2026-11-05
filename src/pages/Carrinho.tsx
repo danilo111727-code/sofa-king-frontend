@@ -1,5 +1,6 @@
-import { Link } from "wouter";
-  import { ArrowLeft, Trash2, Minus, Plus, ShoppingBag } from "lucide-react";
+import { Link, useLocation } from "wouter";
+  import { missingSelection, selectionRequirements, type SelectionRequirements, type RequiredChoice } from "@/lib/requiredSelections";
+  import { ArrowLeft, Trash2, Minus, Plus, ShoppingBag, Info } from "lucide-react";
   import { useState, useMemo } from "react";
   import { useUser } from "@clerk/react";
   import { Navbar } from "@/components/layout/Navbar";
@@ -7,7 +8,7 @@ import { Link } from "wouter";
   import { Button } from "@/components/ui/button";
   import { Separator } from "@/components/ui/separator";
   import { useCart } from "@/contexts/CartContext";
-  import { trackWhatsapp, type OrderSnapshot, type OrderItemSnapshot } from "@/lib/api";
+  import { trackWhatsapp, fetchProduct, fetchAlbums, fetchMaterials, type OrderSnapshot, type OrderItemSnapshot } from "@/lib/api";
   import { useSiteSettings, applyCardMarkup } from "@/contexts/SiteSettingsContext";
 
   const WHATSAPP = "5575991495793";
@@ -43,6 +44,10 @@ import { Link } from "wouter";
   export default function Carrinho() {
     const { items, subtotal, setQty, remove, clear } = useCart();
     const { user } = useUser();
+    const [, navigate] = useLocation();
+    const [checkedRequirements, setCheckedRequirements] = useState<Record<string, SelectionRequirements>>({});
+    const [checking, setChecking] = useState(false);
+    const [sendNotice, setSendNotice] = useState("");
     const { pixDiscountPct, maxInstallments } = useSiteSettings();
     const [payment, setPayment] = useState<Payment>("pix");
     const [notes, setNotes] = useState("");
@@ -53,7 +58,37 @@ import { Link } from "wouter";
     const installment = useMemo(() => cardTotal / maxInstallments, [cardTotal]);
     const finalTotal = payment === "pix" ? pixTotal : cardTotal;
 
+    function completeChoice(itemId: string, productId: string, choice: RequiredChoice) {
+      const params = new URLSearchParams({ itemId, escolher: choice });
+      navigate(`/produto/${encodeURIComponent(productId)}?${params}`);
+    }
     function handleSend() {
+      if (checking || empty) return;
+      const unresolved = items.filter(item => !item.requiredSelections && !checkedRequirements[item.id]
+        && (!item.album || !item.fabric || !item.foam));
+      if (unresolved.length) {
+        setChecking(true); setSendNotice("");
+        Promise.all([fetchAlbums(), fetchMaterials(), Promise.all(unresolved.map(item => fetchProduct(item.productId)))])
+          .then(([albums, foams, products]) => {
+            const resolved = Object.fromEntries(unresolved.map((item, index) => [item.id,
+              selectionRequirements(products[index].configuration, albums, foams)]));
+            setCheckedRequirements(previous => ({ ...previous, ...resolved }));
+            for (const item of items) {
+              const requirements = item.requiredSelections ?? checkedRequirements[item.id] ?? resolved[item.id] ?? { fabric: false, foam: false };
+              const missing = missingSelection(requirements, { fabric: item.album && item.fabric, foam: item.foam });
+              if (missing) { completeChoice(item.id, item.productId, missing); return; }
+            }
+            setSendNotice("Suas escolhas foram conferidas. Toque em Enviar meu pedido para continuar.");
+          })
+          .catch(() => setSendNotice("Não conseguimos conferir as escolhas agora. Tente enviar novamente em instantes."))
+          .finally(() => setChecking(false));
+        return;
+      }
+      for (const item of items) {
+        const requirements = item.requiredSelections ?? checkedRequirements[item.id] ?? { fabric: false, foam: false };
+        const missing = missingSelection(requirements, { fabric: item.album && item.fabric, foam: item.foam });
+        if (missing) { completeChoice(item.id, item.productId, missing); return; }
+      }
       const customerName = (
         user?.fullName ||
         [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
@@ -311,13 +346,15 @@ import { Link } from "wouter";
                       )}
                     </div>
 
+                    {sendNotice && <div role="status" className="mb-3 flex items-start gap-2 rounded-xl border border-primary/20 bg-primary/5 p-3 text-sm text-primary"><Info className="mt-0.5 h-4 w-4 shrink-0" />{sendNotice}</div>}
                     <Button
                       size="lg"
+                      disabled={checking}
                       className="w-full h-14 bg-green-600 hover:bg-green-700 text-white font-semibold shadow-lg"
                       onClick={handleSend}
                       data-testid="button-whatsapp-checkout"
                     >
-                      Enviar meu pedido
+                      {checking ? "Conferindo suas escolhas…" : "Enviar meu pedido"}
                     </Button>
                     <p className="text-[11px] text-muted-foreground text-center mt-2 leading-snug">
                       Envie seu pedido para a Sofa King e combine os detalhes para finalizar.

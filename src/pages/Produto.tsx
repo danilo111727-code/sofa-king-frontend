@@ -1,9 +1,10 @@
+import { missingSelection, choiceMessage, type RequiredChoice } from "@/lib/requiredSelections";
 import {resolveCatalogVariations,type VariationAlbum} from '@/lib/catalogVariations';
 import {fetchVariationAlbums} from '@/lib/api';
 import { calculateVariationTotal, deliveryLabel, isAllowed, supportsExtendedDepth, type VariationSelection } from "@/lib/productConfigurator";
 import { fetchQuote } from "@/lib/api";
 import { VariationPicker } from "@/components/VariationPicker";
-import { useParams, Link, useLocation } from "wouter";
+import { useParams, Link, useLocation, useSearch } from "wouter";
 import { ChevronRight, ArrowLeft, ChevronLeft, Ruler, Info, Check, ShieldCheck, WalletCards, ShoppingCart, ChevronDown, ChevronUp, X, Heart, ZoomIn } from "lucide-react";
 import { useState, useEffect, useMemo, useCallback, useRef, type TouchEvent as ReactTouchEvent } from "react";
 import { ImageLightbox } from "@/components/ImageLightbox";
@@ -41,7 +42,14 @@ function brl(v: number | null | undefined): string {
 export default function Produto() {
   const { id } = useParams<{ id: string }>();
   const [, navigate] = useLocation();
-  const { add } = useCart();
+  const { add, items, update } = useCart();
+  const query = new URLSearchParams(useSearch());
+  const editItem = items.find(item => item.id === query.get("itemId") && item.productId === id);
+  const requestedChoice = query.get("escolher");
+  const [requiredChoice, setRequiredChoice] = useState<RequiredChoice | null>(null);
+  const fabricSectionRef = useRef<HTMLDivElement>(null);
+  const foamSectionRef = useRef<HTMLDivElement>(null);
+  const requiredNoticeRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const [product, setProduct] = useState<Product | null>(null);
   const [albums, setAlbums] = useState<Album[]>([]);
@@ -75,6 +83,8 @@ export default function Produto() {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
+    setRequiredChoice(null);
+    setFabricOptionsOpen(false); setFoamOptionsOpen(false);
     setNotFound(false); setSizeIdx(0); setAlbumIdx(-1); setFoamIdx(-1); setFabric(null); setSelectedFabricKey(null); setChosenAlbumId(null); setSelectedSide(null); setSelectedArmSide(null);
     Promise.all([fetchProduct(id), fetchAlbums(), fetchMaterials(),fetchVariationAlbums()])
       .then(([p, al, fo, vars]) => {
@@ -88,11 +98,51 @@ export default function Produto() {
         setAlbums(al.filter(a=>a.active&&isAllowed(a.id,c?.allowedAlbumIds)).map(a=>({...a,fabrics:a.fabrics.filter(f=>isAllowed(f.id,c?.allowedFabricIds))})));
         setFoams(fo.filter(f=>f.active&&isAllowed(f.id,c?.allowedFoamIds)));
         setSelections(resolveCatalogVariations(c,vars).flatMap(g=>g.mode==="quantity"?g.options.filter(o=>(o.minQuantity??0)>0).map(o=>({groupId:g.id,optionId:o.id,quantity:o.minQuantity!})):[]));
+        if (editItem) {
+          const savedSize = p.sizes.findIndex(size => size.label === editItem.size.label);
+          if (savedSize >= 0) setSizeIdx(savedSize);
+          const savedAlbum = al.filter(a => a.active && isAllowed(a.id, c?.allowedAlbumIds))
+            .map(a => ({ ...a, fabrics: a.fabrics.filter(f => isAllowed(f.id, c?.allowedFabricIds)) }))
+            .find(a => a.id === editItem.album?.id);
+          const savedFabricIndex = savedAlbum?.fabrics.findIndex(f => (editItem.fabric?.id ? f.id === editItem.fabric.id
+            : f.name === editItem.fabric?.name && f.imageUrl === editItem.fabric?.imageUrl) && isAllowed(f.id, c?.allowedFabricIds)) ?? -1;
+          if (savedAlbum && savedFabricIndex >= 0) {
+            setChosenAlbumId(savedAlbum.id); setFabric(savedAlbum.fabrics[savedFabricIndex]);
+            setSelectedFabricKey(`fab_${savedAlbum.id}_${savedFabricIndex}`);
+          }
+          const availableFoams = fo.filter(f => f.active && isAllowed(f.id, c?.allowedFoamIds));
+          setFoamIdx(availableFoams.findIndex(f => f.id === editItem.foam?.id));
+          setSelectedSide(editItem.side ?? null); setSelectedArmSide(editItem.armSide ?? null);
+          const groups = resolveCatalogVariations(c, vars);
+          setSelections(groups.flatMap(g => g.options.flatMap(o => {
+            const saved = editItem.variations?.find(v => v.groupName === g.name && v.optionName === o.name);
+            return saved ? [{ groupId: g.id, optionId: o.id, quantity: saved.quantity }]
+              : g.mode === "quantity" && (o.minQuantity ?? 0) > 0 ? [{ groupId: g.id, optionId: o.id, quantity: o.minQuantity! }] : [];
+          })));
+        }
         trackView({ productId: p.id, productName: p.name, path: `/produto/${p.id}` });
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, editItem?.id]);
+
+  const promptRequiredChoice = (choice: RequiredChoice) => {
+    setRequiredChoice(choice);
+    setPreviewFabric(null); setFoamSheetOpen(false);
+    setFabricOptionsOpen(choice === "fabric"); setFoamOptionsOpen(choice === "foam");
+    setAlbumIdx(-1);
+  };
+  useEffect(() => {
+    if (!loading && (requestedChoice === "fabric" || requestedChoice === "foam")) promptRequiredChoice(requestedChoice);
+  }, [loading, requestedChoice]);
+  useEffect(() => {
+    if (!requiredChoice) return;
+    const frame = requestAnimationFrame(() => {
+      (requiredNoticeRef.current ?? (requiredChoice === "fabric" ? fabricSectionRef.current : foamSectionRef.current))?.scrollIntoView({ behavior: "smooth", block: "center" });
+      requiredNoticeRef.current?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [requiredChoice, fabricOptionsOpen, foamOptionsOpen]);
 
   const gallerySwipeStart = useRef<{ x: number; y: number } | null>(null);
   const settings = useSiteSettings();
@@ -203,13 +253,16 @@ export default function Produto() {
 
   const handleAddToCart = async (goToCart: boolean) => {
     if (!selectedSize || adding) return;
-    if (albums.length > 0 && (!selectedAlbum || !fabric)) { toast({title:"Selecione um tecido",description:"Escolha o tecido antes de adicionar o produto ao carrinho.",variant:"destructive"}); return; }
+    const requirements = { fabric: albums.some(a => a.fabrics.length > 0), foam: foams.length > 0 };
+    const missing = missingSelection(requirements, { fabric: selectedAlbum && fabric, foam: selectedFoam });
+    if (missing) { promptRequiredChoice(missing); return; }
     if ((chooseChaiseSide && !selectedSide) || (chooseArmSide && !selectedArmSide)) { toast({title:"Selecione o lado do sofá",description:"Escolha o lado esquerdo ou direito.",variant:"destructive"}); return; }
     setAdding(true);
     try {
     const verified=await fetchQuote(product.id,{sizeLabel:selectedSize.label,albumId:selectedAlbum?.id,fabricId:fabric?.id,foamId:selectedFoam?.id,selections});
     if(verified.total!==finalPrice) { toast({title:"As opções foram atualizadas",description:"Recarregue o modelo para conferir os preços atuais.",variant:"destructive"});return; }
-    add({
+    const configuredItem = {
+      requiredSelections: requirements,
       productId: product.id,
       productName: fullName,
       productImage: galleryImages[0] || product.image,
@@ -226,8 +279,10 @@ export default function Produto() {
       side: chooseChaiseSide ? selectedSide : null,
       armSide: chooseArmSide ? selectedArmSide : null,
       unitPrice: verified.total,
-    });
-    if (goToCart) {
+    };
+    if (editItem) update(editItem.id, configuredItem);
+    else add(configuredItem);
+    if (goToCart || editItem) {
       navigate("/carrinho");
     } else {
       toast({
@@ -480,7 +535,8 @@ export default function Produto() {
 
               {/* Step 2: album */}
               {albums.length > 0 && (
-                <div className="mb-5">
+                <div className="mb-5" ref={fabricSectionRef}>
+                  {requiredChoice === "fabric" && <div ref={requiredNoticeRef} tabIndex={-1} role="status" data-testid="required-fabric-notice" className="mb-3 flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4 text-primary outline-none focus:ring-2 focus:ring-primary/30"><Info className="mt-0.5 h-5 w-5 shrink-0" /><div><p className="font-semibold">Seu sofá, do seu jeito</p><p className="mt-1 text-sm">{choiceMessage("fabric")}</p></div></div>}
                   <h3 className="text-sm font-semibold tracking-tight mb-2.5 text-foreground">
                     2. Escolha o álbum de tecido
                   </h3>
@@ -611,7 +667,7 @@ export default function Produto() {
 
               {/* Step 3: foam */}
               {foams.length > 0 && (
-                <div className="mb-5">
+                <div className="mb-5" ref={foamSectionRef}>
                   <h3 className="text-sm font-semibold tracking-tight mb-2.5 text-foreground">
                     3. Escolha a espuma
                   </h3>
@@ -631,7 +687,9 @@ export default function Produto() {
                       <div><h2 className="font-semibold text-lg">Escolha sua espuma</h2><p className="text-xs text-muted-foreground">{foams.length} opções de espuma</p></div>
                       <button type="button" aria-label="Fechar seleção de espumas" data-testid="close-foam-picker" onClick={() => setFoamOptionsOpen(false)} className="rounded-full p-2 border border-border hover:bg-secondary"><X className="w-5 h-5" /></button>
                     </div>
-                    <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]"><div className="mx-auto max-w-3xl grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+                      {requiredChoice === "foam" && <div ref={requiredNoticeRef} tabIndex={-1} role="status" data-testid="required-foam-notice" className="mx-auto mb-4 flex max-w-3xl items-start gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4 text-primary outline-none focus:ring-2 focus:ring-primary/30"><Info className="mt-0.5 h-5 w-5 shrink-0" /><div><p className="font-semibold">O conforto também é sua escolha</p><p className="mt-1 text-sm">{choiceMessage("foam")}</p></div></div>}
+                      <div className="mx-auto max-w-3xl grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {foams.map((f, i) => {
                       // Mesma prioridade usada no calculo do preco final:
                       // 1) acrescimo por produto+tamanho (selectedSize.foamSurcharges)
@@ -643,7 +701,7 @@ export default function Produto() {
                       return (
                       <button
                         key={f.id}
-                        onClick={() => { setFoamIdx(i); setFoamOptionsOpen(false); setFoamSheetOpen(true); }}
+                        onClick={() => { setRequiredChoice(null); setFoamIdx(i); setFoamOptionsOpen(false); setFoamSheetOpen(true); }}
                         className={`relative p-2 rounded-md text-sm font-medium border transition-all text-left flex flex-col ${
                           isSelected
                             ? "bg-primary text-primary-foreground border-primary ring-2 ring-green-500/40"
@@ -969,6 +1027,7 @@ export default function Produto() {
             onClose={() => setPreviewFabric(null)}
             onToggleFavorite={() => toggleFabricFavorite(currentKey)}
             onSelect={() => {
+              setRequiredChoice(null);
               const idx = albums.findIndex((a) => a.id === previewAlbum.id);
               if (idx >= 0) setAlbumIdx(-1);
               setFabricOptionsOpen(false);

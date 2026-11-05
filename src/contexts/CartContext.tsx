@@ -15,6 +15,7 @@ export interface CartItem {
   armSide?: "left" | "right" | null;
   unitPrice: number;
   qty: number;
+  requiredSelections?: { fabric: boolean; foam: boolean };
 }
 
 interface CartContextValue {
@@ -22,6 +23,7 @@ interface CartContextValue {
   count: number;
   subtotal: number;
   add: (item: Omit<CartItem, "id" | "qty">, qty?: number) => void;
+  update: (id: string, item: Omit<CartItem, "id" | "qty">) => void;
   remove: (id: string) => void;
   setQty: (id: string, qty: number) => void;
   clear: () => void;
@@ -55,6 +57,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     ]);
   }
 
+  function update(id: string, item: Omit<CartItem, "id" | "qty">) {
+    setItems(prev => prev.map(current => current.id === id ? { ...item, id: current.id, qty: current.qty } : current));
+  }
+
   function remove(id: string) {
     setItems((prev) => prev.filter((i) => i.id !== id));
   }
@@ -68,7 +74,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   function clear() { setItems([]); }
 
   return (
-    <CartContext.Provider value={{ items, count, subtotal, add, remove, setQty, clear }}>
+    <CartContext.Provider value={{ items, count, subtotal, add, update, remove, setQty, clear }}>
       {children}
     </CartContext.Provider>
   );
