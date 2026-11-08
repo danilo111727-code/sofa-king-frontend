@@ -1,6 +1,6 @@
 {
-  "backup_date": "2026-08-16",
-  "total_products": 105,
+  "backup_date": "2026-11-08",
+  "total_products": 106,
   "products": [
     {
       "id": "retratil-istambul",
@@ -445,7 +445,7 @@
     },
     {
       "id": "retratil-brooklyn",
-      "name": "Brooklyn",
+      "name": "Brooklyn Retrátil 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/f0e2eabe-6c88-483c-8334-17d4030dc50e.jpg",
       "price": 4026.38,
       "sizes": [
@@ -660,7 +660,16 @@
       "disponibilidade": true,
       "longDescription": "Estrutura reforçada em madeira de eucalipto tratado, assentos com espuma de alta densidade (D33) selada para maior durabilidade e almofadas com fibra siliconada que garantem conforto e excelente recuperação.",
       "displaySizeLabel": "2,00 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "measurements": {
+          "totalDepth": 105,
+          "extendedDepth": 150,
+          "seatHeight": 45,
+          "armWidth": 20
+        }
+      },
+      "designAutoral": false
     },
     {
       "id": "retratil-londres",
@@ -1762,7 +1771,7 @@
     },
     {
       "id": "cama-brooklyn",
-      "name": "Brooklyn",
+      "name": "Brooklyn Retrátil sem Caixa 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c99c15b4-4876-4d79-9428-8587de6bb55a.jpg",
       "price": 4291.97,
       "sizes": [
@@ -1969,7 +1978,7 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ea479594-52a3-48ab-a0e0-06d6a0db1f4e.jpg"
       ],
       "fabrics": [],
-      "category": "sofa-cama",
+      "category": "",
       "bestseller": false,
       "dimensions": "",
       "description": "",
@@ -1977,12 +1986,18 @@
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos retráteis com espuma D33 selada e almofadas em fibra siliconada para máximo conforto.\nSistema sem caixa, garantindo leveza visual e melhor aproveitamento do espaço.",
       "displaySizeLabel": "2,00 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "measurements": {
+          "armWidth": 20
+        }
+      },
+      "designAutoral": false
     },
     {
       "id": "cama-londres",
       "name": "Londres",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ea5ea7d3-a5ed-458b-aa63-bd4523e8b771.jpg",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ae507b77-429a-44d8-bfc4-afc4fd2a7574.jpg",
       "price": 4291.97,
       "sizes": [
         {
@@ -2183,10 +2198,10 @@
       ],
       "colors": [],
       "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ea5ea7d3-a5ed-458b-aa63-bd4523e8b771.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d3df7f99-e8c5-48f9-b06d-7c24ba768769.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/8d92ff79-9eae-4216-a23d-4aac14b2ac7f.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/66301434-d37b-4fa5-8999-bacf3278b458.jpg"
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ae507b77-429a-44d8-bfc4-afc4fd2a7574.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c468c0eb-11ad-4727-8ca4-8f7d58e83da8.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6f5c8ff4-0b6e-45ff-b674-94c2608e618a.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/e2d55f4d-2eaa-457f-9318-0a45c5aeb0d3.jpg"
       ],
       "fabrics": [],
       "category": "sofa-cama",
@@ -2197,7 +2212,16 @@
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos retráteis com espuma D33 selada e almofadas em fibra siliconada para máximo conforto.\nSistema sem caixa, garantindo leveza visual e melhor aproveitamento do espaço.",
       "displaySizeLabel": "2,00 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "measurements": {
+          "seatHeight": 45,
+          "totalDepth": 105,
+          "extendedDepth": 145,
+          "armWidth": 10
+        }
+      },
+      "designAutoral": false
     },
     {
       "id": "canto-aspen-deck",
@@ -2789,7 +2813,7 @@
     },
     {
       "id": "organicos-fluid",
-      "name": "Fluid",
+      "name": "Fluid Orgânico 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b664637e-f41b-430b-b011-870eea093efb.jpg",
       "price": 5634.67,
       "sizes": [
@@ -3005,7 +3029,14 @@
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "2,60 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": false,
+          "arm": true
+        }
+      },
+      "designAutoral": false
     },
     {
       "id": "living-viena",
@@ -3450,7 +3481,7 @@
     },
     {
       "id": "living-brooklyn",
-      "name": "Brooklyn L01",
+      "name": "Brooklyn Reto 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d5889b41-06ca-44e4-83c1-c0ef8dcc0a02.jpg",
       "price": 4566.22,
       "sizes": [
@@ -3664,11 +3695,19 @@
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "2,40 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "measurements": {
+          "seatDepth": 75,
+          "totalDepth": 95,
+          "seatHeight": 42,
+          "armWidth": 25
+        }
+      }
     },
     {
       "id": "living-cannes",
-      "name": "Cannes",
+      "name": "Cannes Reto 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/0253640a-a7be-4305-a106-8a4ccff7b73d.jpg",
       "price": 4566.22,
       "sizes": [
@@ -3884,11 +3923,12 @@
       "disponibilidade": true,
       "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
       "displaySizeLabel": "2,40 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {}
     },
     {
       "id": "living-suica",
-      "name": "Suíça",
+      "name": "Atelier Reto 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6a13039e-381d-4220-950a-386bd428f66b.jpg",
       "price": 4566.22,
       "sizes": [
@@ -3980,21 +4020,6 @@
             "esp-d45-selada": 500,
             "esp-soft-molas": 500,
             "esp-d33-soft-molas": 750
-          }
-        },
-        {
-          "label": "2,80 m",
-          "basePrice": 5326.22,
-          "albumSurcharges": {
-            "album-1530178d": 750,
-            "album-2038d5a4": 1050,
-            "album-f1a7ebc0": 1050
-          },
-          "foamSurcharges": {
-            "esp-d33-soft": 0,
-            "esp-d45-selada": 600,
-            "esp-soft-molas": 600,
-            "esp-d33-soft-molas": 900
           }
         },
         {
@@ -4094,8 +4119,7 @@
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/be5389c1-30d8-46ad-98a1-dd69a91e7070.jpg",
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c988a93a-2a74-48af-a6dd-dc5f5ab325e9.jpg",
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/376709b0-446d-40db-ae9e-89fc1eaa475a.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/3169f74b-55b2-4cad-b1de-3818ae9577de.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/cbaa61be-0a42-4343-826e-316f4b4f16e0.jpg"
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/4ba8c2c2-c513-4a8a-bf75-f0823e0e1fce.jpg"
       ],
       "fabrics": [],
       "category": "fixo",
@@ -4107,7 +4131,19 @@
       "disponibilidade": true,
       "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
       "displaySizeLabel": "2,40 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "measurements": {
+          "seatHeight": 45,
+          "armWidth": 20,
+          "seatDepth": 75,
+          "totalDepth": 87
+        },
+        "sideChoice": {
+          "chaiseOrCorner": false,
+          "arm": true
+        }
+      }
     },
     {
       "id": "living-texas",
@@ -4774,7 +4810,7 @@
     {
       "id": "fixo-franca",
       "name": "França",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/f79c62e9-b13b-4fd7-ac43-7b50b9ab9c71.jpg",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6521aa22-8687-4c2e-8f8c-5ba4e1ad0d9d.jpg",
       "price": 3114.2,
       "sizes": [
         {
@@ -4975,7 +5011,6 @@
       ],
       "colors": [],
       "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/f79c62e9-b13b-4fd7-ac43-7b50b9ab9c71.jpg",
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6521aa22-8687-4c2e-8f8c-5ba4e1ad0d9d.jpg"
       ],
       "fabrics": [],
@@ -4984,6 +5019,7 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
       "displaySizeLabel": "2,00 m",
@@ -5642,6 +5678,12 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": true
+        }
+      },
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
       "displaySizeLabel": "3,20 m",
@@ -6080,6 +6122,12 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "A consultar",
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": true
+        }
+      },
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "2,60 m",
@@ -7264,7 +7312,7 @@
       "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 10
+      "priceAdjustmentPercent": 20
     },
     {
       "id": "jakarta",
@@ -7301,11 +7349,11 @@
       "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 10
+      "priceAdjustmentPercent": 20
     },
     {
       "id": "puerto",
-      "name": "Elegance 02",
+      "name": "Monaco Poltrona 02",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/38de0807-387f-40f0-bfc8-4a0e778568d0.jpg",
       "price": 900,
       "sizes": [
@@ -7337,7 +7385,14 @@
       "prazoEntrega": "",
       "disponibilidade": true,
       "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "measurements": {
+          "totalDepth": 65,
+          "seatHeight": 45
+        }
+      },
+      "designAutoral": false
     },
     {
       "id": "san-juan",
@@ -7369,7 +7424,8 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
-      "disponibilidade": true,
+      "designAutoral": false,
+      "disponibilidade": false,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
       "priceAdjustmentPercent": 0
     },
@@ -7463,9 +7519,10 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura aparente em madeira de Angelim, combinada com estrutura interna reforçada em eucalipto tratado.\nAssentos com espuma de alta densidade (D33) selada, que garantem sustentação e durabilidade.\nAlmofadas em fibra siliconada, proporcionando conforto macio e excelente recuperação.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 20
     },
     {
       "id": "toronto",
@@ -7505,7 +7562,7 @@
     {
       "id": "oassis",
       "name": "Elegance 01",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/50cef85c-817c-4e55-a760-156981cb38ed.jpg",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ebd0f6a3-1514-4531-85d2-a651ffc37654.jpg",
       "price": 2180,
       "sizes": [
         {
@@ -7515,9 +7572,8 @@
       ],
       "colors": [],
       "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/50cef85c-817c-4e55-a760-156981cb38ed.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d616cac6-e9b5-4a11-b861-ed9e64caa1ce.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ebd0f6a3-1514-4531-85d2-a651ffc37654.jpg"
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/ebd0f6a3-1514-4531-85d2-a651ffc37654.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d616cac6-e9b5-4a11-b861-ed9e64caa1ce.jpg"
       ],
       "fabrics": [],
       "category": "poltronas",
@@ -7525,6 +7581,7 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio e almofadas em fibra siliconada.\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes, aliado a uma base giratória que proporciona mais funcionalidade e versatilidade ao uso.",
       "priceAdjustmentPercent": 0
@@ -7797,7 +7854,8 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
-      "disponibilidade": true,
+      "designAutoral": false,
+      "disponibilidade": false,
       "longDescription": "Estrutura em eucalipto tratado, assentos com espuma soft e molas para conforto extremamente macio e almofadas em fibra siliconada.\nDesign orgânico com base baixa, valorizando formas suaves e aconchegantes.",
       "priceAdjustmentPercent": 0
     },
@@ -8042,7 +8100,7 @@
     {
       "id": "elegance-1777219989255",
       "name": "Elegance",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6efebe6c-33a6-4480-b536-ab8e829d4751.jpg",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/fe65a35e-f05d-4e9a-b533-a16e744a356c.jpg",
       "price": 3950,
       "sizes": [
         {
@@ -8088,8 +8146,10 @@
       ],
       "colors": [],
       "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6efebe6c-33a6-4480-b536-ab8e829d4751.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6c59d117-42c8-407d-a79c-c30e5d832618.jpg"
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/fe65a35e-f05d-4e9a-b533-a16e744a356c.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/a48e9ce6-cd17-433a-a7a8-e8d8b32e8fc5.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/571a06b1-6b8d-45d0-9410-e7a7a35193b4.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/7739f3ec-b1c2-4d8f-945b-55ca96b35128.jpg"
       ],
       "fabrics": [],
       "category": "cama",
@@ -8097,6 +8157,7 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "Casal padrão",
@@ -8386,7 +8447,7 @@
     },
     {
       "id": "cannes-02",
-      "name": "Cannes 02",
+      "name": "Cannes Reto 02",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6074819d-1d1d-4c75-b8e5-7bf4ce769ea1.jpg",
       "price": 4186.22,
       "sizes": [
@@ -8604,7 +8665,8 @@
       "disponibilidade": true,
       "longDescription": "Sofá moderno com almofadas soltas e assentos amplos, proporcionando máximo conforto. Estrutura em madeira de eucalipto, almofadas em fibra de silicone e assentos com espuma D33 + soft, garantindo durabilidade, firmeza e maciez em um design clean e sofisticado.",
       "displaySizeLabel": "2,20 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {}
     },
     {
       "id": "urban",
@@ -9045,7 +9107,7 @@
     },
     {
       "id": "fluid-02",
-      "name": "Fluid 02",
+      "name": "Fluid Orgânico 02",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/efa62875-b244-468e-92ef-a9780b6046e3.jpg",
       "price": 3474.67,
       "sizes": [
@@ -9260,7 +9322,13 @@
       "designAutoral": true,
       "disponibilidade": true,
       "longDescription": "Sofá Fluid 02, com design orgânico de curvas suaves e formas contínuas que trazem leveza e sofisticação ao ambiente. Produzido em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone, com base elevada e acabamento linear dourado que valoriza o conjunto.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": false,
+          "arm": true
+        }
+      }
     },
     {
       "id": "fluid-03",
@@ -9480,7 +9548,7 @@
     },
     {
       "id": "fluid-04",
-      "name": "Fluid 04",
+      "name": "Fluid Orgânico 04",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/627d37ca-1293-4cc6-b580-e68a5e5f8d67.jpg",
       "price": 3046.22,
       "sizes": [
@@ -9693,11 +9761,18 @@
       "prazoEntrega": "",
       "disponibilidade": true,
       "longDescription": "Sofá Fluid 04, com linhas orgânicas e design fluido que trazem modernidade e exclusividade ao ambiente. Estrutura em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone para máximo conforto e durabilidade.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": false,
+          "arm": true
+        }
+      },
+      "designAutoral": false
     },
     {
       "id": "fluid-05",
-      "name": "Fluid 05",
+      "name": "Fluid Orgânico 05",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c87ba97d-8f79-4187-8cdb-4de43f6d0765.jpg",
       "price": 3046.22,
       "sizes": [
@@ -9910,11 +9985,18 @@
       "prazoEntrega": "",
       "disponibilidade": true,
       "longDescription": "Sofá Fluid 01, com linhas orgânicas e design fluido que trazem modernidade e exclusividade ao ambiente. Estrutura em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone para máximo conforto e durabilidade.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": false,
+          "arm": true
+        }
+      },
+      "designAutoral": false
     },
     {
       "id": "fluid-06",
-      "name": "Fluid 06",
+      "name": "Fluid Orgânico 06",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/bdd20f93-8a15-4cf1-94e5-04a6b4ccd4e6.jpg",
       "price": 3046.22,
       "sizes": [
@@ -10127,7 +10209,14 @@
       "prazoEntrega": "",
       "disponibilidade": true,
       "longDescription": "Sofá Fluid 01, com linhas orgânicas e design fluido que destacam o ambiente com modernidade e exclusividade. Estrutura em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone, com base elevada e detalhe dourado que reforça seu padrão sofisticado.",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": false,
+          "arm": true
+        }
+      },
+      "designAutoral": false
     },
     {
       "id": "elegance-02",
@@ -10342,10 +10431,11 @@
       "dimensions": "",
       "description": "",
       "prazoEntrega": "",
+      "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "Sofá Elegance 02, com visual elegante e acabamento detalhado no encosto, que traz sofisticação e presença ao ambiente. Estrutura em madeira de eucalipto, espuma D33 soft e almofadas em fibra de silicone, com pés elevados que garantem leveza e um toque moderno.",
       "displaySizeLabel": "2,60 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 20
     },
     {
       "id": "urban-03",
@@ -14116,7 +14206,7 @@
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "2,80 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 15
     },
     {
       "id": "lounge-05-1779648560474",
@@ -14778,7 +14868,7 @@
     },
     {
       "id": "brooklyn",
-      "name": "Brooklyn ",
+      "name": "Brooklyn Chaise 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/8c59e444-eb45-4a4e-9078-ac7a332b47a6.jpg",
       "price": 5344.89,
       "sizes": [
@@ -14981,7 +15071,8 @@
       "colors": [],
       "images": [
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/8c59e444-eb45-4a4e-9078-ac7a332b47a6.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/0e87c535-6123-4dcf-8851-556ba6efebf2.jpg"
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/0e87c535-6123-4dcf-8851-556ba6efebf2.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d55122a4-a219-49c2-b46b-0ed226293144.jpg"
       ],
       "fabrics": [],
       "category": "chaise",
@@ -14993,7 +15084,21 @@
       "disponibilidade": true,
       "longDescription": "Modelo modular de estética minimalista, com estrutura em eucalipto, almofadas em fibra siliconada e conforto amplo para diferentes composições.",
       "displaySizeLabel": "2,40 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": true,
+          "arm": false
+        },
+        "measurements": {
+          "seatHeight": 42,
+          "backHeight": 75,
+          "seatDepth": 75,
+          "totalDepth": 90,
+          "extendedDepth": 130,
+          "armWidth": 20
+        }
+      }
     },
     {
       "id": "oasis",
@@ -15030,7 +15135,7 @@
     },
     {
       "id": "fluid-10",
-      "name": "Fluid 10",
+      "name": "Fluid Orgânico 10",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/6736b88c-73be-4591-b855-6f51cd36b852.jpg",
       "price": 3046.22,
       "sizes": [
@@ -15243,11 +15348,17 @@
       "designAutoral": false,
       "disponibilidade": true,
       "longDescription": "",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": false,
+          "arm": true
+        }
+      }
     },
     {
       "id": "brooklyn-linear",
-      "name": "Brooklyn L02",
+      "name": "Brooklyn Reto 02",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/9e0fb1b9-3185-4dd3-9a2b-e4266a7e08fa.jpg",
       "price": 7606.22,
       "sizes": [
@@ -15451,7 +15562,8 @@
       "images": [
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/9e0fb1b9-3185-4dd3-9a2b-e4266a7e08fa.jpg",
         "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b713b863-977e-4a7d-be64-7b34d8a62f65.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/4a864c2f-a1a1-425a-84de-7d7db95190f1.jpg"
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/4a864c2f-a1a1-425a-84de-7d7db95190f1.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d930187b-fad3-421f-a356-66b35cc94715.jpg"
       ],
       "fabrics": [],
       "category": "fixo",
@@ -15463,7 +15575,16 @@
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "4,00 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "measurements": {
+          "totalDepth": 100,
+          "seatHeight": 40,
+          "seatDepth": 80,
+          "backHeight": 65,
+          "armWidth": 20
+        }
+      }
     },
     {
       "id": "sofa-cama-m01",
@@ -15678,75 +15799,6 @@
       "bestseller": false,
       "dimensions": "",
       "description": "",
-      "prazoEntrega": "",
-      "designAutoral": false,
-      "disponibilidade": true,
-      "longDescription": "",
-      "displaySizeLabel": "2,00 m",
-      "priceAdjustmentPercent": 0
-    },
-    {
-      "id": "sofa-cama-plataforma",
-      "name": "Sofá Cama Plataforma ",
-      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b0fa9f28-19e8-4292-b656-b144e0740780.jpg",
-      "price": 4291.97,
-      "sizes": [
-        {
-          "label": "1,60 m",
-          "basePrice": 3433.77,
-          "albumSurcharges": {
-            "album-1530178d": 500,
-            "album-2038d5a4": 700,
-            "album-f1a7ebc0": 700
-          },
-          "foamSurcharges": {
-            "esp-d33-soft": 225,
-            "esp-d45-selada": 300,
-            "esp-soft-molas": 300,
-            "esp-d33-soft-molas": 450
-          }
-        },
-        {
-          "label": "1,80 m",
-          "basePrice": 3862.87,
-          "albumSurcharges": {
-            "album-1530178d": 750,
-            "album-2038d5a4": 1050,
-            "album-f1a7ebc0": 1050
-          },
-          "foamSurcharges": {
-            "esp-d33-soft": 300,
-            "esp-d45-selada": 400,
-            "esp-soft-molas": 400,
-            "esp-d33-soft-molas": 600
-          }
-        },
-        {
-          "label": "2,00 m",
-          "basePrice": 4291.97,
-          "albumSurcharges": {
-            "album-1530178d": 750,
-            "album-2038d5a4": 1050,
-            "album-f1a7ebc0": 1050
-          },
-          "foamSurcharges": {
-            "esp-d33-soft": 300,
-            "esp-d45-selada": 400,
-            "esp-soft-molas": 400,
-            "esp-d33-soft-molas": 600
-          }
-        }
-      ],
-      "colors": [],
-      "images": [
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b0fa9f28-19e8-4292-b656-b144e0740780.jpg",
-        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/c77b4cf1-1cb2-4994-bfc7-f19253ea877d.jpg"
-      ],
-      "fabrics": [],
-      "category": "sofa-cama",
-      "bestseller": false,
-      "dimensions": "",
-      "description": "Sofá-cama modular multifuncional, moderno e minimalista, com mesa lateral integrada, e espaço para carregamento.",
       "prazoEntrega": "",
       "designAutoral": false,
       "disponibilidade": true,
@@ -15974,6 +16026,454 @@
       "longDescription": "Estrutura reforçada em madeira de eucalipto tratado, assentos com espuma de alta densidade (D33) selada para maior durabilidade e almofadas com fibra siliconada que garantem conforto e excelente recuperação.",
       "displaySizeLabel": "2,40 m",
       "priceAdjustmentPercent": 0
+    },
+    {
+      "configuration": {
+        "measurements": {
+          "totalDepth": 92,
+          "seatHeight": 45,
+          "armWidth": 25,
+          "seatDepth": 75
+        }
+      },
+      "name": "Horizon Reto 01",
+      "price": 5904.2,
+      "description": "",
+      "longDescription": "",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/2e2faeb5-8808-449e-b83e-73ff5f97eae4.jpg",
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/2e2faeb5-8808-449e-b83e-73ff5f97eae4.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/e0593a75-64c0-471c-8359-090adcfcb45c.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/21963f08-f59d-410e-93be-74ff8e56e71e.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/a419757e-ec80-4f78-af6e-182ce7a310e0.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/d576260c-23ae-4abf-a2a3-e0f8d2ac132e.jpg"
+      ],
+      "category": "fixo",
+      "dimensions": "",
+      "colors": [],
+      "fabrics": [],
+      "disponibilidade": true,
+      "prazoEntrega": "",
+      "bestseller": true,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 2494.2,
+          "albumSurcharges": {
+            "album-1530178d": 300,
+            "album-2038d5a4": 420,
+            "album-f1a7ebc0": 420
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 225,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 2804.2,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 3114.2,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 3424.2,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 3734.2,
+          "albumSurcharges": {
+            "album-1530178d": 600,
+            "album-2038d5a4": 840,
+            "album-f1a7ebc0": 840
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 300,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 4044.2,
+          "albumSurcharges": {
+            "album-1530178d": 650,
+            "album-2038d5a4": 910,
+            "album-f1a7ebc0": 910
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 375,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "2,80 m",
+          "basePrice": 4354.2,
+          "albumSurcharges": {
+            "album-1530178d": 750,
+            "album-2038d5a4": 1050,
+            "album-f1a7ebc0": 1050
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 450,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 4664.2,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 450,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 4974.2,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 5284.2,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 5594.2,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 525,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 5904.2,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 600,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 6214.2,
+          "albumSurcharges": {
+            "album-1530178d": 1250,
+            "album-2038d5a4": 1750,
+            "album-f1a7ebc0": 1750
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 600,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        }
+      ],
+      "priceAdjustmentPercent": 0,
+      "displaySizeLabel": "3,80 m",
+      "designAutoral": false,
+      "id": "horizon-reto-01"
+    },
+    {
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": false,
+          "arm": true
+        },
+        "measurements": {
+          "seatHeight": 45,
+          "seatDepth": 75,
+          "totalDepth": 90,
+          "armWidth": 15
+        }
+      },
+      "name": "Atelier Reto 02",
+      "price": 3046.22,
+      "description": "",
+      "longDescription": "",
+      "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/0122ae1d-6565-491c-ab12-ea9e905cbcc8.jpg",
+      "images": [
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/0122ae1d-6565-491c-ab12-ea9e905cbcc8.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/e429ce68-5ee0-4107-957f-7edc673a69c4.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/b444dc7c-22b8-427f-89df-43e7ae477031.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/378b2224-5475-43e0-8236-0a61a53736a7.jpg",
+        "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/df942d85-b094-43a0-8b5c-d92ece72b40e.jpg"
+      ],
+      "category": "fixo",
+      "dimensions": "",
+      "colors": [],
+      "fabrics": [],
+      "disponibilidade": true,
+      "prazoEntrega": "",
+      "bestseller": false,
+      "sizes": [
+        {
+          "label": "1,60 m",
+          "basePrice": 3046.22,
+          "albumSurcharges": {
+            "album-1530178d": 300,
+            "album-2038d5a4": 420,
+            "album-f1a7ebc0": 420
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 300,
+            "esp-soft-molas": 300,
+            "esp-d33-soft-molas": 450
+          }
+        },
+        {
+          "label": "1,80 m",
+          "basePrice": 3426.22,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,00 m",
+          "basePrice": 3806.22,
+          "albumSurcharges": {
+            "album-1530178d": 450,
+            "album-2038d5a4": 630,
+            "album-f1a7ebc0": 630
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,20 m",
+          "basePrice": 4186.22,
+          "albumSurcharges": {
+            "album-1530178d": 500,
+            "album-2038d5a4": 700,
+            "album-f1a7ebc0": 700
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,40 m",
+          "basePrice": 4566.22,
+          "albumSurcharges": {
+            "album-1530178d": 600,
+            "album-2038d5a4": 840,
+            "album-f1a7ebc0": 840
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 400,
+            "esp-soft-molas": 400,
+            "esp-d33-soft-molas": 600
+          }
+        },
+        {
+          "label": "2,60 m",
+          "basePrice": 4946.22,
+          "albumSurcharges": {
+            "album-1530178d": 650,
+            "album-2038d5a4": 910,
+            "album-f1a7ebc0": 910
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 500,
+            "esp-soft-molas": 500,
+            "esp-d33-soft-molas": 750
+          }
+        },
+        {
+          "label": "3,00 m",
+          "basePrice": 5706.22,
+          "albumSurcharges": {
+            "album-1530178d": 800,
+            "album-2038d5a4": 1120,
+            "album-f1a7ebc0": 1120
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 600,
+            "esp-soft-molas": 600,
+            "esp-d33-soft-molas": 900
+          }
+        },
+        {
+          "label": "3,20 m",
+          "basePrice": 6086.22,
+          "albumSurcharges": {
+            "album-1530178d": 950,
+            "album-2038d5a4": 1330,
+            "album-f1a7ebc0": 1330
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,40 m",
+          "basePrice": 6466.22,
+          "albumSurcharges": {
+            "album-1530178d": 1050,
+            "album-2038d5a4": 1470,
+            "album-f1a7ebc0": 1470
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,60 m",
+          "basePrice": 6846.22,
+          "albumSurcharges": {
+            "album-1530178d": 1100,
+            "album-2038d5a4": 1540,
+            "album-f1a7ebc0": 1540
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 700,
+            "esp-soft-molas": 700,
+            "esp-d33-soft-molas": 1050
+          }
+        },
+        {
+          "label": "3,80 m",
+          "basePrice": 7226.22,
+          "albumSurcharges": {
+            "album-1530178d": 1200,
+            "album-2038d5a4": 1680,
+            "album-f1a7ebc0": 1680
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        },
+        {
+          "label": "4,00 m",
+          "basePrice": 7606.22,
+          "albumSurcharges": {
+            "album-1530178d": 1250,
+            "album-2038d5a4": 1750,
+            "album-f1a7ebc0": 1750
+          },
+          "foamSurcharges": {
+            "esp-d33-soft": 0,
+            "esp-d45-selada": 800,
+            "esp-soft-molas": 800,
+            "esp-d33-soft-molas": 1200
+          }
+        }
+      ],
+      "priceAdjustmentPercent": 0,
+      "designAutoral": true,
+      "id": "atelier-reto-02"
     }
   ]
 }
