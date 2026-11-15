@@ -1,5 +1,5 @@
 {
-  "backup_date": "2026-11-08",
+  "backup_date": "2026-11-15",
   "total_products": 106,
   "products": [
     {
@@ -3924,7 +3924,12 @@
       "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
       "displaySizeLabel": "2,40 m",
       "priceAdjustmentPercent": 0,
-      "configuration": {}
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": false,
+          "arm": true
+        }
+      }
     },
     {
       "id": "living-suica",
@@ -4367,7 +4372,7 @@
     },
     {
       "id": "living-gomos",
-      "name": "Gomos",
+      "name": "Gomos Reto 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/db15058b-396b-45c0-b1a9-1b0b5ad756ad.jpg",
       "price": 5202.67,
       "sizes": [
@@ -4585,7 +4590,13 @@
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos em espuma D33  e almofadas em fibra siliconada.\nDesign lounge com acabamento em gomos, unindo conforto, amplitude e estilo contemporâneo.",
       "displaySizeLabel": "2,40 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": false,
+          "arm": true
+        }
+      }
     },
     {
       "id": "fixo-louvre",
@@ -6355,7 +6366,7 @@
     },
     {
       "id": "chaise-cannes",
-      "name": "Cannes",
+      "name": "Cannes Chaise 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/44e1b5e4-a6f3-4a22-aa1a-e77a31b11e5d.jpg",
       "price": 5790.29,
       "sizes": [
@@ -6571,7 +6582,13 @@
       "disponibilidade": true,
       "longDescription": "\n\nEstrutura em eucalipto tratado, assentos em espuma D33 selada e almofadas em fibra siliconada para máximo conforto e durabilidade.\nBase elevada com pés em aço carbono, garantindo resistência, estabilidade e estética moderna.",
       "displaySizeLabel": "2,60 m",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": true
+        }
+      },
+      "designAutoral": false
     },
     {
       "id": "ilha-orla",
@@ -6795,7 +6812,7 @@
     },
     {
       "id": "ilha-gomos",
-      "name": "Gomos",
+      "name": "Gomos Ilha 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/f49ae288-5670-4e12-8db4-577aa005276c.jpg",
       "price": 7980,
       "sizes": [
@@ -7015,7 +7032,12 @@
       "disponibilidade": true,
       "longDescription": "Estrutura em eucalipto tratado, assentos em espuma D33 soft e encostos móveis com ajuste manual.\nDesign tipo ilha com acabamento em gomos, unindo conforto, versatilidade e identidade moderna.",
       "displaySizeLabel": "2,40 m x 1,70",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "sideChoice": {
+          "chaiseOrCorner": true
+        }
+      }
     },
     {
       "id": "puff01",
@@ -8165,7 +8187,7 @@
     },
     {
       "id": "frame-1777220361797",
-      "name": "Frame",
+      "name": "Frame Cama 01",
       "image": "https://raw.githubusercontent.com/danilo111727-code/sofa-king-frontend/main/public/images/uploads/961ff40e-8c41-423d-804d-40aa6cdc3a81.jpg",
       "price": 3950,
       "sizes": [
@@ -8223,7 +8245,13 @@
       "disponibilidade": true,
       "longDescription": "",
       "displaySizeLabel": "Casal padrão",
-      "priceAdjustmentPercent": 0
+      "priceAdjustmentPercent": 0,
+      "configuration": {
+        "allowedFoamIds": [
+          "esp-d33-selada"
+        ]
+      },
+      "designAutoral": false
     },
     {
       "id": "concept-modular",
